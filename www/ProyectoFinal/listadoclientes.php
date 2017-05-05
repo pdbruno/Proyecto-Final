@@ -7,11 +7,12 @@ $resultado = mysqli_query($mysqli, $sql);
 if (!$resultado) {
     die("Error");
 } else {
-    $Vec["data"] = [];
-    while ($data = mysqli_fetch_assoc($resultado)) {
-        $Vec["data"][] = array_map("utf8_encode", $data);
+    $outp = array();
+    $outp = $resultado->fetch_all(MYSQLI_ASSOC);
+    foreach ($outp[0] as $key => $value) {
+        $output[$key] = htmlentities($value);
     }
-    echo json_encode($Vec);
+    echo json_encode($outp);
 }
 mysqli_free_result($result);
 mysqli_close($mysqli);
