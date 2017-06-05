@@ -62,10 +62,54 @@ class producto_Model extends Model {
         $this->con->consultaSimple($sql);
     }
 
+    public function agregarCompra($info) {
+        $caca = json_decode($info, TRUE);
+        foreach ($caca as $indice => $elemento) {
+            $data[$indice] = htmlentities($elemento, ENT_QUOTES);
+//            if ($data[$indice] != "") {
+//                if (gettype($data[$indice]) == 'string') {
+//                    $data[$indice] = "'" . $data[$indice] . "'";
+//                }
+//            } else {
+//                $data[$x] = 'null';
+//            }
+        }
+        for ($x = 0; $x <= 4; $x++) {
+            if ($data[$x] != "") {
+                if (gettype($data[$x]) == 'string') {
+                    $data[$x] = "'" . $data[$x] . "'";
+                }
+            } else {
+                $data[$x] = 'null';
+            }
+        }
+        array_shift($data);
+        $sql = "INSERT INTO
+                    registrocompras(
+                    Fecha,
+                    idProductos,
+                    MontoInd,
+                    Cantidad,)
+                    VALUES($data[0],
+                    $data[1],
+                    $data[2],
+                    $data[3],
+                    $data[4])";
+        $this->con->consultaSimple($sql);
+        //HAY QUE TRAER EL CAMPO STOCK DE PRODUCTO,OPERAR Y UPDATE
+    }
+
     public function agregarModificarProducto($info) {
         $caca = json_decode($info, TRUE);
         foreach ($caca as $indice => $elemento) {
             $data[$indice] = htmlentities($elemento, ENT_QUOTES);
+//            if ($data[$indice] != "") {
+//                if (gettype($data[$indice]) == 'string') {
+//                    $data[$indice] = "'" . $data[$indice] . "'";
+//                }
+//            } else {
+//                $data[$x] = 'null';
+//            }
         }
         for ($x = 0; $x <= 5; $x++) {
             if ($data[$x] != "") {
@@ -102,7 +146,6 @@ class producto_Model extends Model {
                     Avisar = $data[5],
                     WHERE idProductos=$data[0]";
         }
-        var_dump($sql);
         $this->con->consultaSimple($sql);
     }
 

@@ -32,7 +32,7 @@ class producto extends Controller {
             $error = new Error_();
             $error->index("Hubo un error en la transferencia de datos");
         }
-        $datos = $this->model->agregarModificarProducto($data);
+        $this->model->agregarModificarProducto($data);
     }
 
     public function eliminarProducto() {
@@ -43,7 +43,7 @@ class producto extends Controller {
             $error = new Error_();
             $error->index("Hubo un error en la transferencia de datos");
         }
-        $datos = $this->model->eliminarProducto($idProductos);
+        $this->model->eliminarProducto($idProductos);
     }
 
     function index() {
@@ -52,6 +52,17 @@ class producto extends Controller {
 
     function ingresostock() {
         $this->view->render('ingresostock/index');
+    }
+
+    function agregarVenta() {
+        if (isset($_POST['data'])) {
+            $data = $_POST['data'];
+        } else {
+            require 'controllers/error_.php';
+            $error = new Error_();
+            $error->index("Hubo un error en la transferencia de datos");
+        }
+        $this->model->agregarCompra($data);
     }
 
     public function __construct() {

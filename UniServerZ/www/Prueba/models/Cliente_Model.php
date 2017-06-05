@@ -82,6 +82,13 @@ class cliente_Model extends Model {
         $caca = json_decode($info, TRUE);
         foreach ($caca as $indice => $elemento) {
             $data[$indice] = htmlentities($elemento, ENT_QUOTES);
+//            if ($data[$indice] != "") {
+//                if (gettype($data[$indice]) == 'string') {
+//                    $data[$indice] = "'" . $data[$indice] . "'";
+//                }
+//            } else {
+//                $data[$x] = 'null';
+//            }
         }
         for ($x = 0; $x <= 40; $x++) {
             if ($data[$x] != "") {
