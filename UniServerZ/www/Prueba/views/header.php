@@ -7,28 +7,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Bootstrap Core CSS -->
-        <link href="<?php echo URL; ?>views/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="<?php echo URL; ?>views/recursos/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- MetisMenu CSS -->
-        <link href="<?php echo URL; ?>views/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+        <link href="<?php echo URL; ?>views/recursos/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
         <!-- DataTables CSS -->
-        <link href="<?php echo URL; ?>views/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+        <link href="<?php echo URL; ?>views/recursos/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
 
         <!-- DataTables Responsive CSS -->
-        <link href="<?php echo URL; ?>views/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
-        <link href="<?php echo URL; ?>views/select.dataTables.min.css" rel="stylesheet">
-        <link href="<?php echo URL; ?>views/scroller.dataTables.min.css" rel="stylesheet">
+        <link href="<?php echo URL; ?>views/recursos/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+        <link href="<?php echo URL; ?>views/recursos/select.dataTables.min.css" rel="stylesheet">
+        <link href="<?php echo URL; ?>views/recursos/scroller.dataTables.min.css" rel="stylesheet">
 
 
         <!-- Custom CSS -->
-        <link href="<?php echo URL; ?>views/dist/css/sb-admin-2.css" rel="stylesheet">
+        <link href="<?php echo URL; ?>views/recursos/dist/css/sb-admin-2.css" rel="stylesheet">
 
         <!-- Custom Fonts -->
-        <link href="<?php echo URL; ?>views/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="<?php echo URL; ?>views/recursos/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <!-- jQuery -->
-        <script src="<?php echo URL; ?>views/vendor/jquery/jquery.min.js"></script>
-        <script src="<?php echo URL; ?>views/vendor/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="<?php echo URL; ?>views/recursos/vendor/jquery/jquery.min.js"></script>
+        <script src="<?php echo URL; ?>views/recursos/vendor/datatables/js/jquery.dataTables.min.js"></script>
+        
 
         <title>Hola</title>
 

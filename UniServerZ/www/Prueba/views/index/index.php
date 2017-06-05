@@ -7,6 +7,7 @@
             <a href="<?php echo URL; ?>help/index/Localidades">abmLocalidades</a>
             <a href="<?php echo URL; ?>help/index/Distribuidores">abmDistribuidores</a>
             <a href="<?php echo URL; ?>producto/">abmProductos</a>
+            <a href="<?php echo URL; ?>producto/ingresostock">ingresostock</a>
 
         </div>
     </div>
