@@ -54,7 +54,7 @@ class producto extends Controller {
         $this->view->render('ingresostock/index');
     }
 
-    function agregarVenta() {
+    function agregarCompra() {
         if (isset($_POST['data'])) {
             $data = $_POST['data'];
         } else {

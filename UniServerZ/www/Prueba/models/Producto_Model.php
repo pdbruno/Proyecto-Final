@@ -66,21 +66,12 @@ class producto_Model extends Model {
         $caca = json_decode($info, TRUE);
         foreach ($caca as $indice => $elemento) {
             $data[$indice] = htmlentities($elemento, ENT_QUOTES);
-//            if ($data[$indice] != "") {
-//                if (gettype($data[$indice]) == 'string') {
-//                    $data[$indice] = "'" . $data[$indice] . "'";
-//                }
-//            } else {
-//                $data[$x] = 'null';
-//            }
-        }
-        for ($x = 0; $x <= 4; $x++) {
-            if ($data[$x] != "") {
-                if (gettype($data[$x]) == 'string') {
-                    $data[$x] = "'" . $data[$x] . "'";
+            if ($data[$indice] != "") {
+                if (gettype($data[$indice]) == 'string') {
+                    $data[$indice] = "'" . $data[$indice] . "'";
                 }
             } else {
-                $data[$x] = 'null';
+                $data[$indice] = 'null';
             }
         }
         array_shift($data);
@@ -103,24 +94,15 @@ class producto_Model extends Model {
         $caca = json_decode($info, TRUE);
         foreach ($caca as $indice => $elemento) {
             $data[$indice] = htmlentities($elemento, ENT_QUOTES);
-//            if ($data[$indice] != "") {
-//                if (gettype($data[$indice]) == 'string') {
-//                    $data[$indice] = "'" . $data[$indice] . "'";
-//                }
-//            } else {
-//                $data[$x] = 'null';
-//            }
-        }
-        for ($x = 0; $x <= 5; $x++) {
-            if ($data[$x] != "") {
-                if (gettype($data[$x]) == 'string') {
-                    $data[$x] = "'" . $data[$x] . "'";
+            if ($data[$indice] != "") {
+                if (gettype($data[$indice]) == 'string') {
+                    $data[$indice] = "'" . $data[$indice] . "'";
                 }
             } else {
-                $data[$x] = 'null';
+                $data[$indice] = 'null';
             }
         }
-
+        echo 'la id es ' . $data[0];
         if ($data[0] == 'null') {
             array_shift($data);
             $sql = "INSERT INTO
@@ -143,9 +125,10 @@ class producto_Model extends Model {
                     idDistribuidores = $data[2],
                     Precio = $data[3],
                     Stock = $data[4],
-                    Avisar = $data[5],
-                    WHERE idProductos=$data[0]";
+                    Avisar = $data[5]
+                    WHERE idProductos = $data[0]";
         }
+
         $this->con->consultaSimple($sql);
     }
 
