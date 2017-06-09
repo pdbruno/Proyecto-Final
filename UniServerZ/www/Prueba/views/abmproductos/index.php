@@ -1,100 +1,95 @@
-<div class="container-fluid">
-    <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-6">				
-                <div class="panel panel-default">
-                    <div class="panel-heading">Listado de Productos
-                    </div>
-                    <div class="table-responsive col-sm-12">
-                        <table  id="TablaProductos" class="table table-hover" cellspacing="0" width="100%"  >
-                            <thead>
-                                <tr>
-                                    <th>Descripción</th>
-                                </tr> 
-                            </thead>
-                        </table>
-                    </div>
-                </div>
+<div class="row">
+    <div class="col-lg-6">				
+        <div class="panel panel-default">
+            <div class="panel-heading">Listado de Productos
             </div>
-            <div id="Formu" class="col-lg-6" >
-                <div class="panel panel-default" style="height: 80%; overflow-y: scroll;">
-                    <ul class="list-group">
-                        <form class="form-horizontal">
-                            <li class="list-group-item">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Id:</label>
-                                    <div class="col-sm-10">
-                                        <p id="idProductos" class="form-control-static"></p>
-                                        <input type="text" style="display: none;" class="form-control" id="idProductosForm" placeholder="Se mira y no se toca" disabled>
-
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="form-group">
-
-                                    <label class="col-sm-2 control-label">Descripción:</label>
-                                    <div class="col-sm-10">
-                                        <p id="Descripcion" class="form-control-static"></p>
-                                        <input type="text" style="display: none;" class="form-control" id="DescripcionForm" placeholder="Descripción">
-                                    </div>
-
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="form-group">
-
-                                    <label class="col-sm-2 control-label">Distribuidor:</label>
-                                    <div class="col-sm-10">
-                                        <p id="disNombre" class="form-control-static"></p>
-                                        <select id="idDistribuidoresSelect" class="form-control"style="display: none;">
-                                        </select>
-                                        <input type="text" style="display: none; visibility: hidden;" class="form-control" id="disNombreForm">
-
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Precio:</label>
-                                    <div class="col-sm-10">
-                                        <p id="Precio" class="form-control-static"></p>
-                                        <input type="text" style="display: none;" class="form-control" id="PrecioForm" placeholder="Precio">
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="form-group">
-
-                                    <label class="col-sm-2 control-label">Stock:</label>
-                                    <div class="col-sm-10">
-                                        <p id="Stock" class="form-control-static"></p>
-                                        <input type="text" style="display: none;" class="form-control" id="StockForm" placeholder="Stock">
-                                    </div>
-
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="form-group">
-
-                                    <label class="col-sm-2 control-label">Avisar cuando el stock llegue a esta cantidad:</label>
-                                    <div class="col-sm-10">
-                                        <p id="Avisar" class="form-control-static"></p>
-                                        <input type="text" style="display: none;" class="form-control" id="AvisarForm" placeholder="Avisar cuando el stock llegue a esta cantidad">
-                                    </div>
-
-                                </div>
-                            </li>
-                        </form>
-                    </ul>
-                </div>
-                <button type="button" id="BtnAgregar" onclick="AgregarProducto()" class="btn btn-default">Agregar Producto</button>
-                <button type="button" id="BtnModificar"onclick="ModificarProducto()" class="btn btn-primary">Modificar Producto</button>
-                <button type="button" id="BtnAceptar" onclick="EnviarProducto()" class="btn btn-success">Aceptar</button>
-                <button type="button" id="BtnEliminar"id="BtnAgregar"onclick="EliminarProducto()" class="btn btn-danger">Eliminar Producto</button>
+            <div class="table-responsive col-sm-12">
+                <table  id="TablaProductos" class="table table-hover" cellspacing="0" width="100%"  >
+                    <thead>
+                        <tr>
+                            <th>Descripciï¿½n</th>
+                        </tr> 
+                    </thead>
+                </table>
             </div>
-
         </div>
+    </div>
+    <div id="Formu" class="col-lg-6" >
+        <div class="panel panel-default" style="height: 80%; overflow-y: scroll;">
+            <ul class="list-group">
+                <form class="form-horizontal">
+                    <li class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Id:</label>
+                            <div class="col-sm-10">
+                                <p id="idProductos" class="form-control-static"></p>
+                                <input type="text" style="display: none;" class="form-control" id="idProductosForm" placeholder="Se mira y no se toca" disabled>
+
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="form-group">
+
+                            <label class="col-sm-2 control-label">Descripciï¿½n:</label>
+                            <div class="col-sm-10">
+                                <p id="Descripcion" class="form-control-static"></p>
+                                <input type="text" style="display: none;" class="form-control" id="DescripcionForm" placeholder="Descripciï¿½n">
+                            </div>
+
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="form-group">
+
+                            <label class="col-sm-2 control-label">Distribuidor:</label>
+                            <div class="col-sm-10">
+                                <p id="disNombre" class="form-control-static"></p>
+                                <select id="idDistribuidoresSelect" class="form-control"style="display: none;">
+                                </select>
+                                <input type="text" style="display: none; visibility: hidden;" class="form-control" id="disNombreForm">
+
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Precio:</label>
+                            <div class="col-sm-10">
+                                <p id="Precio" class="form-control-static"></p>
+                                <input type="text" style="display: none;" class="form-control" id="PrecioForm" placeholder="Precio">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="form-group">
+
+                            <label class="col-sm-2 control-label">Stock:</label>
+                            <div class="col-sm-10">
+                                <p id="Stock" class="form-control-static"></p>
+                                <input type="text" style="display: none;" class="form-control" id="StockForm" placeholder="Stock">
+                            </div>
+
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="form-group">
+
+                            <label class="col-sm-2 control-label">Avisar cuando el stock llegue a esta cantidad:</label>
+                            <div class="col-sm-10">
+                                <p id="Avisar" class="form-control-static"></p>
+                                <input type="text" style="display: none;" class="form-control" id="AvisarForm" placeholder="Avisar cuando el stock llegue a esta cantidad">
+                            </div>
+
+                        </div>
+                    </li>
+                </form>
+            </ul>
+        </div>
+        <button type="button" id="BtnAgregar" onclick="AgregarProducto()" class="btn btn-default">Agregar Producto</button>
+        <button type="button" id="BtnModificar"onclick="ModificarProducto()" class="btn btn-primary">Modificar Producto</button>
+        <button type="button" id="BtnAceptar" onclick="EnviarProducto()" class="btn btn-success">Aceptar</button>
+        <button type="button" id="BtnEliminar"id="BtnAgregar"onclick="EliminarProducto()" class="btn btn-danger">Eliminar Producto</button>
     </div>
 </div>
 <script>
@@ -111,7 +106,7 @@
             for (element in myObj) {
                 txt += "<option value='" + myObj[element].id + "'>" + myObj[element].Nombre + "</option>";
             }
-                document.getElementById("idDistribuidoresSelect").innerHTML = txt
+            document.getElementById("idDistribuidoresSelect").innerHTML = txt
         }
     });
     var VecProductos = [];
@@ -215,9 +210,9 @@
     {
         var descripcion = document.getElementById("DescripcionForm").value;
         var stock = document.getElementById("StockForm").value;
-        if (descripcion === "" || stock ==="")
+        if (descripcion === "" || stock === "")
         {
-            alert("Por favor llene la descripción de producto y el stock muchas gracias jeje");
+            alert("Por favor llene la descripciï¿½n de producto y el stock muchas gracias jeje");
         } else {
             vec = [];
             var x = document.getElementById("Formu").getElementsByTagName("input");
@@ -256,7 +251,7 @@
 
     }
     function EliminarProducto() {
-        var r = confirm("Estás muy recontra segurísima que querés borrar este producto?");
+        var r = confirm("Estï¿½s muy recontra segurï¿½sima que querï¿½s borrar este producto?");
         if (r == true) {
             $.ajax({
                 type: "POST",

@@ -49,7 +49,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html">Sistema BBG</a>
+                    <a class="navbar-brand" href="<?php echo URL;?>">Sistema BBG</a>
                 </div>
                 <!-- /.navbar-header -->
 
