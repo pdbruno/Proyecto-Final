@@ -15,7 +15,7 @@
         </div>
     </div>
     <div id="Formu" class="col-lg-6" >
-        <div class="panel panel-default" style="height: 80%; overflow-y: scroll;">
+        <div class="panel panel-default">
             <ul class="list-group">
                 <form class="form-horizontal">
                     <li class="list-group-item">
@@ -54,10 +54,10 @@
                     </li>
                     <li class="list-group-item">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Precio:</label>
+                            <label class="col-sm-2 control-label">Precio: $</label>
                             <div class="col-sm-10">
                                 <p id="Precio" class="form-control-static"></p>
-                                <input type="text" style="display: none;" class="form-control" id="PrecioForm" placeholder="Precio">
+                                <input type="number" min="0" style="display: none;" class="form-control" id="PrecioForm" placeholder="Precio">
                             </div>
                         </div>
                     </li>
@@ -67,7 +67,7 @@
                             <label class="col-sm-2 control-label">Stock:</label>
                             <div class="col-sm-10">
                                 <p id="Stock" class="form-control-static"></p>
-                                <input type="text" style="display: none;" class="form-control" id="StockForm" placeholder="Stock">
+                                <input type="number" min="0" style="display: none;" class="form-control" id="StockForm" placeholder="Stock">
                             </div>
 
                         </div>
@@ -78,7 +78,7 @@
                             <label class="col-sm-2 control-label">Avisar cuando el stock llegue a esta cantidad:</label>
                             <div class="col-sm-10">
                                 <p id="Avisar" class="form-control-static"></p>
-                                <input type="text" style="display: none;" class="form-control" id="AvisarForm" placeholder="Avisar cuando el stock llegue a esta cantidad">
+                                <input type="number" min="0" style="display: none;" class="form-control" id="AvisarForm" placeholder="Avisar cuando el stock llegue a esta cantidad">
                             </div>
 
                         </div>

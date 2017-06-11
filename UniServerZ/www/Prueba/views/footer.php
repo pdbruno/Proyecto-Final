@@ -2,8 +2,6 @@
 </div>
 </div>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="<?php echo URL; ?>views/recursos/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 <!-- Metis Menu Plugin JavaScript -->
 <script src="<?php echo URL; ?>views/recursos/vendor/metisMenu/metisMenu.min.js"></script>

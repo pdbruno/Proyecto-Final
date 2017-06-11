@@ -1,4 +1,7 @@
-<div class="row">
+<script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+<link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
+<div class="row" style="height:100%;">
     <div class="col-lg-6">				
         <div class="panel panel-default">
             <div class="panel-heading">Listado de Clientes
@@ -15,8 +18,8 @@
             </div>
         </div>
     </div>
-    <div id="Formu" class="col-lg-6" >
-        <div class="panel panel-default" style="height: 80%; overflow-y: scroll;">
+    <div id="Formu" class="col-lg-6" style="height: 100%"> 
+        <div class="panel panel-default" style="height: 90%; overflow-y: scroll;">
             <ul class="list-group">
                 <form class="form-horizontal">
                     <li class="list-group-item">
@@ -55,7 +58,7 @@
                             <label class="col-sm-2 control-label">Fecha de Nacimiento:</label>
                             <div class="col-sm-10">
                                 <p id="FechaNacimiento" class="form-control-static"></p>
-                                <input type="date" style="display: none;" class="form-control" id="FechaNacimientoForm" placeholder="En formato aaaa-dd-mm">
+                                <input type="date" style="display: none;" class="form-control" id="FechaNacimientoForm" placeholder="Fecha de Nacimiento">
                             </div>
                         </div>
                     </li>
@@ -64,7 +67,7 @@
                             <label class="col-sm-2 control-label">DNI:</label>
                             <div class="col-sm-10">
                                 <p id="DNI" class="form-control-static"></p>
-                                <input type="text" style="display: none;" class="form-control" id="DNIForm" placeholder="DNI">
+                                <input type="number" min="0" style="display: none;" class="form-control" id="DNIForm" placeholder="DNI">
 
                             </div>
                         </div>
@@ -110,7 +113,7 @@
                             <label class="col-sm-2 control-label">Teléfono/</br>Celular:</label>
                             <div class="col-sm-10">
                                 <p id="TelCel" class="form-control-static"></p>
-                                <input type="tel" style="display: none;" class="form-control" id="TelCelForm" placeholder="Teléfono/Celular">
+                                <input type="tel" min="0" style="display: none;" class="form-control" id="TelCelForm" placeholder="Teléfono/Celular">
 
                             </div>
                         </div>
@@ -132,7 +135,7 @@
                             <label class="col-sm-2 control-label">E-mail:</label>
                             <div class="col-sm-10">
                                 <p id="Email" class="form-control-static"></p>
-                                <input type="text" style="display: none;" class="form-control" id="EmailForm" placeholder="E-mail">
+                                <input type="email" style="display: none;" class="form-control" id="EmailForm" placeholder="E-mail">
 
                             </div>
                         </div>
@@ -195,7 +198,7 @@
                             <label class="col-sm-2 control-label">Teléfono de emergencias:</label>
                             <div class="col-sm-10">
                                 <p id="TelEmergencias" class="form-control-static"></p>
-                                <input type="tel" style="display: none;" class="form-control" id="TelEmergenciasForm" placeholder="Teléfono de emergencias">
+                                <input type="tel" min="0" style="display: none;" class="form-control" id="TelEmergenciasForm" placeholder="Teléfono de emergencias">
                             </div>
                         </div>
                     </li>
@@ -293,7 +296,7 @@
                             <label class="col-sm-2 control-label">Teléfono Padre/Madre/Tutor:</label>
                             <div class="col-sm-10">
                                 <p id="TelPadMadTut" class="form-control-static"></p>
-                                <input type="text" style="display: none;" class="form-control" id="TelPadMadTutForm" placeholder="Teléfono Padre/Madre/Tutor">
+                                <input type="tel" min="0" style="display: none;" class="form-control" id="TelPadMadTutForm" placeholder="Teléfono Padre/Madre/Tutor">
                             </div>
                         </div>
                     </li>
@@ -303,7 +306,7 @@
                             <label class="col-sm-2 control-label">Celular Padre/Madre/Tutor:</label>
                             <div class="col-sm-10">
                                 <p id="CelPadMadTut" class="form-control-static"></p>
-                                <input type="text" style="display: none;" class="form-control" id="CelPadMadTutForm" placeholder="Celular Padre/Madre/Tutor">
+                                <input type="tel" min="0" style="display: none;" class="form-control" id="CelPadMadTutForm" placeholder="Celular Padre/Madre/Tutor">
                             </div>
                         </div>
                     </li>
@@ -344,7 +347,7 @@
                             <label class="col-sm-2 control-label">Autorizado a retirar 1 DNI:</label>
                             <div class="col-sm-10">
                                 <p id="Retirar1DNI" class="form-control-static"></p>
-                                <input type="text" style="display: none;" class="form-control" id="Retirar1DNIForm" placeholder="Autorizado a retirar 1 DNI">
+                                <input type="number" min="0" style="display: none;" class="form-control" id="Retirar1DNIForm" placeholder="Autorizado a retirar 1 DNI">
                             </div>
                         </div>
                     </li>
@@ -364,7 +367,7 @@
                             <label class="col-sm-2 control-label">Autorizado a retirar 2 DNI:</label>
                             <div class="col-sm-10">
                                 <p id="Retirar2DNI" class="form-control-static"></p>
-                                <input type="text" style="display: none;" class="form-control" id="Retirar2DNIForm" placeholder="Autorizado a retirar 2 DNI">
+                                <input type="number" min="0" style="display: none;" class="form-control" id="Retirar2DNIForm" placeholder="Autorizado a retirar 2 DNI">
                             </div>
                         </div>
                     </li>
@@ -384,7 +387,7 @@
                             <label class="col-sm-2 control-label">Autorizado a retirar 3 DNI:</label>
                             <div class="col-sm-10">
                                 <p id="Retirar3DNI" class="form-control-static"></p>
-                                <input type="text" style="display: none;" class="form-control" id="Retirar3DNIForm" placeholder="Autorizado a retirar 3 DNI">
+                                <input type="number" min="0" style="display: none;" class="form-control" id="Retirar3DNIForm" placeholder="Autorizado a retirar 3 DNI">
                             </div>
                         </div>
                     </li>
@@ -460,6 +463,12 @@
     </div>
 </div>
 <script>
+    $('#FechaNacimientoForm').datepicker({
+        format: "dd/mm/yyyy",
+        endDate: "today",
+        language: "es",
+        autoclose: true,
+    });
     document.getElementById("BtnModificar").style.display = 'none';
     document.getElementById("BtnEliminar").style.display = 'none';
     document.getElementById("BtnAceptar").style.display = 'none';
