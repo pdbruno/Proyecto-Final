@@ -55,9 +55,8 @@ class cliente_Model extends Model {
 
     public function traerCliente($idClientes) {
         $sql = "SELECT clientes.idClientes,clientes.Nombres,clientes.Apellidos,clientes.FechaNacimiento,clientes.DNI,clientes.Domicilio, localidades.Nombre as locNombre,clientes.CPostal,clientes.TelCel,clientes.Ocupacion,clientes.Email,clientes.Facebook,clientes.AutorizaWeb,clientes.AptoMedico,clientes.CoberturaMedica,clientes.NumSocioMed,clientes.TelEmergencias, grupofactorsanguineo.Nombre as sangNombre,clientes.Alergia,clientes.Patologia,clientes.IntQuirurgica,clientes.Lesion,clientes.Medicacion,clientes.Observaciones,clientes.PadMadTut,clientes.TelPadMadTut,clientes.CelPadMadTut,clientes.EmailPadMadTut,clientes.SeVaSolo,clientes.Retirar1NomAp,clientes.Retirar1DNI,clientes.Retirar2NomAp,clientes.Retirar2DNI,clientes.Retirar3NomAp,clientes.Retirar3DNI,clientes.Activo,clientes.EsInstructor,
-                actividades.Nombre as actNombre, categorias.Nombre as catNombre, sedes.Nombre as sedNombre
+                categorias.Nombre as catNombre, sedes.Nombre as sedNombre
                 FROM clientes
-                LEFT JOIN actividades ON clientes.idActividades = actividades.IdActividades
                 LEFT JOIN categorias ON clientes.idCategorias = categorias.idCategorias
                 LEFT JOIN grupofactorsanguineo ON clientes.IdGrupoFactorSanguineo = grupofactorsanguineo.idGrupoFactorSanguineo
                 LEFT JOIN localidades ON clientes.IdLocalidades = localidades.idLocalidades
@@ -173,7 +172,6 @@ class cliente_Model extends Model {
                     $data[34],
                     $data[35],
                     $data[36],
-                    $data[37],
                     $data[38])";
         } else {
             $sql = "UPDATE
@@ -216,7 +214,6 @@ class cliente_Model extends Model {
                     Activo = $data[35],
                     EsInstructor = $data[36],
                     IdCategorias = $data[37],
-                    IdActividades = $data[38],
                     IdSedes = $data[39]
                     WHERE idClientes=$data[0]";
         }

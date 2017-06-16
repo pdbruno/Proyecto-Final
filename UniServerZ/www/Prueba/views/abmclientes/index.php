@@ -431,12 +431,96 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Actividades:</label>
                             <div class="col-sm-10">
-                                <p id="actNombre" class="form-control-static"></p>
-                                <select id="IdActividadesSelect" class="form-control" style="display: none;">
+                                <button type="button" id="actNombre" class="btn btn-link" data-toggle="modal" data-target="#ModalVer">Ver actividad/es</button>
 
-                                </select>
-                                <input type="text" style="display: none; visibility: hidden;" class="form-control" id="actNombreForm">
-                            </div>
+
+
+
+
+
+                                <div class="modal fade" tabindex="-1" role="dialog" id="ModalVer">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title">Modal title</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>One fine body&hellip;</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                                <button type="button" id="IdActividadesSelect" class="btn btn-link" data-toggle="modal" data-target="#ModalSel">Seleccionar actividad/es</button>
+
+
+
+
+
+
+
+
+
+                                <div class="modal fade" tabindex="-1" role="dialog" id="ModalSel">
+                                    <div class="modal-dialog" role="document" >
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title">Seleccionar actividad/es</h4>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <select id="IdActividadesSelect" class="form-control" onchange="$('#IdModalidadesSelect').show();">
+                                                            <option value="volvo">Volvo</option>
+                                                            <option value="saab">Saab</option>
+                                                            <option value="mercedes">Mercedes</option>
+                                                            <option value="audi">Audi</option>
+                                                        </select>
+                                                        <select id="IdModalidadesSelect" class="form-control hidden" onchange="Precio()">
+
+                                                        </select>
+                                                        <select id="IdNivelesSelect" class="form-control hidden">
+
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <button type="button" id="AddAct1" class="btn btn-link" onclick="$(this).hide();" data-toggle="collapse" href="#Act1">+AgregarActividad</button>
+
+                                                <div class="collapse" id="Act1">
+                                                    <button type="button" id="AddAct2" class="btn btn-link" data-toggle="collapse" href="#Act2">+AgregarActividad</button>
+                                                    <div class="collapse" id="Act2">
+                                                        <button type="button" id="AddAct3" class="btn btn-link" data-toggle="collapse" href="#Act3">+AgregarActividad</button>
+
+                                                    </div>
+                                                </div>
+
+
+
+
+
+
+
+
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                            <input type="text" style="display: none; visibility: hidden;" class="form-control" id="actNombreForm">
                         </div>
                     </li>
                     <li class="list-group-item">
@@ -464,307 +548,299 @@
 </div>
 <script>
     $('#FechaNacimientoForm').datepicker({
-        format: "dd/mm/yyyy",
-        endDate: "today",
-        language: "es",
-        autoclose: true,
+    format: "dd/mm/yyyy",
+            endDate: "today",
+            language: "es",
+            autoclose: true,
     });
     document.getElementById("BtnModificar").style.display = 'none';
     document.getElementById("BtnEliminar").style.display = 'none';
     document.getElementById("BtnAceptar").style.display = 'none';
     var VecElementos = [];
     $.ajax({
-        type: "POST",
-        url: "<?php echo URL; ?>cliente/listadoDropdowns",
-        success: function (respuesta) {
+    type: "POST",
+            url: "<?php echo URL; ?>cliente/listadoDropdowns",
+            success: function (respuesta) {
             var myObj = JSON.parse(respuesta);
             for (vector in myObj) {
-                var txt = "";
-                for (element in myObj[vector]) {
+            var txt = "";
+            for (element in myObj[vector]) {
 
-                    txt += "<option value='" + myObj[vector][element].id + "'>" + myObj[vector][element].Nombre + "</option>";
-                }
-                VecElementos.push(txt);
+            txt += "<option value='" + myObj[vector][element].id + "'>" + myObj[vector][element].Nombre + "</option>";
+            }
+            VecElementos.push(txt);
             }
             var i = 0;
             var selects = document.getElementById("Formu").getElementsByTagName("select");
             for (select in selects) {
-                selects[select].innerHTML = VecElementos[i];
-                i++;
+            selects[select].innerHTML = VecElementos[i];
+            i++;
             }
-        }
+            }
     });
     var VecClientes = [];
     $(document).ready(function () {
-        listadoclientes();
+    listadoclientes();
     });
     var listadoclientes = function ()
     {
-        var table = $("#TablaClientes").DataTable(
-                {
-                    "ajax":
-                            {
-                                "method": "POST",
-                                "url": "<?php echo URL; ?>cliente/listadoClientes",
-                                "dataSrc": function (txt)
-                                {
-                                    VecClientes = [];
+    var table = $("#TablaClientes").DataTable(
+    {
+    "ajax":
+    {
+    "method": "POST",
+            "url": "<?php echo URL; ?>cliente/listadoClientes",
+            "dataSrc": function (txt)
+            {
+            VecClientes = [];
+            for (i in txt)
+            {
 
-                                    for (i in txt)
-                                    {
-
-                                        var Cliente =
-                                                {
-                                                    idClientes: txt[i].idClientes,
-                                                    Nombres: txt[i].Nombres,
-                                                    Apellidos: txt[i].Apellidos,
-                                                };
-
-
-                                        VecClientes.push(Cliente);
-                                    }
-                                    return VecClientes;
-                                }
-                            },
-                    "columns": [
-                        {data: "Nombres"},
-                        {data: "Apellidos"}
-                    ],
-                    select: {
-                        style: 'single'
-                    }
+            var Cliente =
+            {
+            idClientes: txt[i].idClientes,
+                    Nombres: txt[i].Nombres,
+                    Apellidos: txt[i].Apellidos,
+            };
+            VecClientes.push(Cliente);
+            }
+            return VecClientes;
+            }
+    },
+            "columns": [
+            {data: "Nombres"},
+            {data: "Apellidos"}
+            ],
+            select: {
+            style: 'single'
+            }
 //                        "language": {
 //                        "url": "dataTables.spanish.lang"
 //                          Hacer algo con el idioma de la tabla y de la extension select
 
-                });
-        table.on('select', function (e, dt, type, indexes) {
-            if (type === 'row') {
-                var id = VecClientes[indexes].idClientes;
-                var url = "<?php echo URL; ?>cliente/traerCliente";
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: "data=" + id,
-                    success: function (respuesta)
-                    {
-                        var obj = JSON.parse(respuesta)[0];
-                        for (x in obj) {
-                            document.getElementById(x).innerHTML = obj[x];
-                            document.getElementById(x).style.display = 'block';
-
-                            var input = document.getElementById(x + "Form");
-                            input.style.display = 'none';
-
-                            if (input.type == 'checkbox') {
-                                if (obj[x] == 1) {
-                                    input.checked = true;
-                                } else {
-                                    input.checked = false;
-                                }
-
-                            } else {
-                                input.value = obj[x];
-                            }
-
-
-                        }
-                        var y = document.getElementsByClassName("checkbox");
-                        var z = document.getElementsByClassName("intro");
-                        for (i = 0; i < y.length; i++) {
-                            y[i].style.display = 'block';
-                            if (z[i].innerHTML == 1) {
-                                y[i].checked = true;
-
-                            } else {
-                                y[i].checked = false;
-                            }
-                            z[i].style.display = 'none';
-                        }
-                        document.getElementById("IdLocalidadesSelect").style.display = 'none';
-                        document.getElementById("IdGrupoFactorSanguineoSelect").style.display = 'none';
-                        document.getElementById("IdCategoriasSelect").style.display = 'none';
-                        document.getElementById("IdActividadesSelect").style.display = 'none';
-                        document.getElementById("IdSedesSelect").style.display = 'none';
-                        document.getElementById("BtnModificar").style.display = 'inline-block';
-                        document.getElementById("BtnEliminar").style.display = 'inline-block';
-                        document.getElementById("BtnAceptar").style.display = 'none';
-
-
-                    }
-                });
+    });
+    table.on('select', function (e, dt, type, indexes) {
+    if (type === 'row') {
+    var id = VecClientes[indexes].idClientes;
+    var url = "<?php echo URL; ?>cliente/traerCliente";
+    $.ajax({
+    type: "POST",
+            url: url,
+            data: "data=" + id,
+            success: function (respuesta)
+            {
+            var obj = JSON.parse(respuesta)[0];
+            for (x in obj) {
+            document.getElementById(x).innerHTML = obj[x];
+            document.getElementById(x).style.display = 'block';
+            var input = document.getElementById(x + "Form");
+            input.style.display = 'none';
+            if (input.type == 'checkbox') {
+            if (obj[x] == 1) {
+            input.checked = true;
+            } else {
+            input.checked = false;
             }
-        });
+
+            } else {
+            input.value = obj[x];
+            }
+
+
+            }
+            var y = document.getElementsByClassName("checkbox");
+            var z = document.getElementsByClassName("intro");
+            for (i = 0; i < y.length; i++) {
+            y[i].style.display = 'block';
+            if (z[i].innerHTML == 1) {
+            y[i].checked = true;
+            } else {
+            y[i].checked = false;
+            }
+            z[i].style.display = 'none';
+            }
+            document.getElementById("IdLocalidadesSelect").style.display = 'none';
+            document.getElementById("IdGrupoFactorSanguineoSelect").style.display = 'none';
+            document.getElementById("IdCategoriasSelect").style.display = 'none';
+            document.getElementById("IdActividadesSelect").style.display = 'none';
+            document.getElementById("IdSedesSelect").style.display = 'none';
+            document.getElementById("BtnModificar").style.display = 'inline-block';
+            document.getElementById("BtnEliminar").style.display = 'inline-block';
+            document.getElementById("BtnAceptar").style.display = 'none';
+            }
+    });
+    }
+    });
     }
 
 
     function AgregarUsuario()
     {
-        document.getElementById("IdLocalidadesSelect").style.display = 'none';
-        document.getElementById("IdGrupoFactorSanguineoSelect").style.display = 'none';
-        document.getElementById("IdCategoriasSelect").style.display = 'none';
-        document.getElementById("IdActividadesSelect").style.display = 'none';
-        document.getElementById("IdSedesSelect").style.display = 'none';
-        var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
-        var y = document.getElementById("Formu").getElementsByClassName("form-control");
-        for (var i = 0; i < x.length; i++) {
-            x[i].style.display = 'none';
-        }
-        for (var i = 0; i < y.length; i++) {
-            y[i].style.display = 'block';
-            y[i].value = null;
-        }
-        var z = document.getElementsByClassName("checkbox");
-        for (var i = 0; i < z.length; i++) {
-            z[i].disabled = false;
-            z[i].style.display = 'block';
-        }
-        document.getElementById("BtnAceptar").style.display = 'inline-block';
-        document.getElementById("BtnAgregar").style.display = 'none';
-        document.getElementById("BtnModificar").style.display = 'none';
-        document.getElementById("BtnEliminar").style.display = 'none';
+    document.getElementById("IdLocalidadesSelect").style.display = 'none';
+    document.getElementById("IdGrupoFactorSanguineoSelect").style.display = 'none';
+    document.getElementById("IdCategoriasSelect").style.display = 'none';
+    document.getElementById("IdActividadesSelect").style.display = 'none';
+    document.getElementById("IdSedesSelect").style.display = 'none';
+    var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
+    var y = document.getElementById("Formu").getElementsByClassName("form-control");
+    for (var i = 0; i < x.length; i++) {
+    x[i].style.display = 'none';
+    }
+    for (var i = 0; i < y.length; i++) {
+    y[i].style.display = 'block';
+    y[i].value = null;
+    }
+    var z = document.getElementsByClassName("checkbox");
+    for (var i = 0; i < z.length; i++) {
+    z[i].disabled = false;
+    z[i].style.display = 'block';
+    }
+    document.getElementById("BtnAceptar").style.display = 'inline-block';
+    document.getElementById("BtnAgregar").style.display = 'none';
+    document.getElementById("BtnModificar").style.display = 'none';
+    document.getElementById("BtnEliminar").style.display = 'none';
     }
     function ModificarUsuario()
     {
-        var selects = document.getElementById("Formu").getElementsByTagName("select");
-        for (select in selects) {
-            var options = selects[select].options;
-            for (option in options) {
-                if (options[option].text == document.getElementById("locNombreForm").value) {
-                    selects[select].selectedIndex = options[option].value - 1;
-                } else if (options[option].text == document.getElementById("sangNombreForm").value) {
-                    selects[select].selectedIndex = options[option].value - 1;
-                } else if (options[option].text == document.getElementById("catNombreForm").value) {
-                    selects[select].selectedIndex = options[option].value - 1;
-                } else if (options[option].text == document.getElementById("actNombreForm").value) {
-                    selects[select].selectedIndex = options[option].value - 1;
-                } else if (options[option].text == document.getElementById("sedNombreForm").value) {
-                    selects[select].selectedIndex = options[option].value - 1;
-                }
-            }
-        }
+    var selects = document.getElementById("Formu").getElementsByTagName("select");
+    for (select in selects) {
+    var options = selects[select].options;
+    for (option in options) {
+    if (options[option].text == document.getElementById("locNombreForm").value) {
+    selects[select].selectedIndex = options[option].value - 1;
+    } else if (options[option].text == document.getElementById("sangNombreForm").value) {
+    selects[select].selectedIndex = options[option].value - 1;
+    } else if (options[option].text == document.getElementById("catNombreForm").value) {
+    selects[select].selectedIndex = options[option].value - 1;
+    } else if (options[option].text == document.getElementById("actNombreForm").value) {
+    selects[select].selectedIndex = options[option].value - 1;
+    } else if (options[option].text == document.getElementById("sedNombreForm").value) {
+    selects[select].selectedIndex = options[option].value - 1;
+    }
+    }
+    }
 
-        var x = document.getElementsByClassName("form-control-static");
-        var y = document.getElementsByClassName("form-control");
-        for (var i = 0; i < x.length; i++) {
-            x[i].style.display = 'none';
-        }
-        for (var i = 0; i < y.length; i++) {
-            y[i].style.display = 'block';
-        }
-        var z = document.getElementsByClassName("checkbox");
-        for (var i = 0; i < z.length; i++) {
-            z[i].disabled = false;
-            z[i].style.display = 'block';
-        }
-        document.getElementById("BtnAceptar").style.display = 'inline-block';
-        document.getElementById("BtnAgregar").style.display = 'none';
-        document.getElementById("BtnModificar").style.display = 'none';
-        document.getElementById("BtnEliminar").style.display = 'none';
+    var x = document.getElementsByClassName("form-control-static");
+    var y = document.getElementsByClassName("form-control");
+    for (var i = 0; i < x.length; i++) {
+    x[i].style.display = 'none';
+    }
+    for (var i = 0; i < y.length; i++) {
+    y[i].style.display = 'block';
+    }
+    var z = document.getElementsByClassName("checkbox");
+    for (var i = 0; i < z.length; i++) {
+    z[i].disabled = false;
+    z[i].style.display = 'block';
+    }
+    document.getElementById("BtnAceptar").style.display = 'inline-block';
+    document.getElementById("BtnAgregar").style.display = 'none';
+    document.getElementById("BtnModificar").style.display = 'none';
+    document.getElementById("BtnEliminar").style.display = 'none';
     }
     var vec = [];
     function EnviarUsuario()
     {
-        var nombre = document.getElementById("NombresForm").value;
-        var apellido = document.getElementById("ApellidosForm").value;
-        var actividades = document.getElementById("IdActividadesSelect").value;
-        var sede = document.getElementById("IdSedesSelect").value;
-        var categoria = document.getElementById("IdCategoriasSelect").value;
-        if (nombre === "" || apellido == "" || actividades == "" || sede == "" || categoria == "")
-        {
-            alert("Los siguientes campos son absolutamente obligatorios: Nombre, Apelliido, Sede, Actividades y Categor�a\n\
+    var nombre = document.getElementById("NombresForm").value;
+    var apellido = document.getElementById("ApellidosForm").value;
+    var actividades = document.getElementById("IdActividadesSelect").value;
+    var sede = document.getElementById("IdSedesSelect").value;
+    var categoria = document.getElementById("IdCategoriasSelect").value;
+    if (nombre === "" || apellido == "" || actividades == "" || sede == "" || categoria == "")
+    {
+    alert("Los siguientes campos son absolutamente obligatorios: Nombre, Apelliido, Sede, Actividades y Categor�a\n\
 (Se recomienda llenar todos)");
-        } else {
-            vec = [];
-            var x = document.getElementById("Formu").getElementsByTagName("input");
-            var z = document.getElementsByClassName("checkbox");
-            document.getElementById("locNombreForm").value = document.getElementById("IdLocalidadesSelect").value;
-            document.getElementById("sangNombreForm").value = document.getElementById("IdGrupoFactorSanguineoSelect").value;
-            document.getElementById("catNombreForm").value = document.getElementById("IdCategoriasSelect").value;
-            document.getElementById("actNombreForm").value = document.getElementById("IdActividadesSelect").value;
-            document.getElementById("sedNombreForm").value = document.getElementById("IdSedesSelect").value;
-            for (var i = 0; i < z.length; i++) {
-                if (z[i].checked == true) {
-                    z[i].value = 1;
-                } else {
-                    z[i].value = 0;
-                }
-            }
+    } else {
+    vec = [];
+    var x = document.getElementById("Formu").getElementsByTagName("input");
+    var z = document.getElementsByClassName("checkbox");
+    document.getElementById("locNombreForm").value = document.getElementById("IdLocalidadesSelect").value;
+    document.getElementById("sangNombreForm").value = document.getElementById("IdGrupoFactorSanguineoSelect").value;
+    document.getElementById("catNombreForm").value = document.getElementById("IdCategoriasSelect").value;
+    document.getElementById("actNombreForm").value = document.getElementById("IdActividadesSelect").value;
+    document.getElementById("sedNombreForm").value = document.getElementById("IdSedesSelect").value;
+    for (var i = 0; i < z.length; i++) {
+    if (z[i].checked == true) {
+    z[i].value = 1;
+    } else {
+    z[i].value = 0;
+    }
+    }
 
+    for (var i = 0; i < x.length; i++) {
+    if (x[i].value === "") {
+    x[i].value = null;
+    }
+    vec.push(x[i].value);
+    }
+
+
+    var url = "<?php echo URL; ?>cliente/agregarModificarCliente";
+    $.ajax({
+    type: "POST",
+            url: url,
+            data: "data=" + JSON.stringify(vec),
+            success: function (respuesta)
+            {
+            var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
+            var y = document.getElementById("Formu").getElementsByClassName("form-control");
             for (var i = 0; i < x.length; i++) {
-                if (x[i].value === "") {
-                    x[i].value = null;
-                }
-                vec.push(x[i].value);
+            x[i].style.display = 'block';
+            x[i].innerHTML = "";
+            }
+            for (var i = 0; i < y.length; i++) {
+            y[i].style.display = 'none';
+            }
+            var z = document.getElementById("Formu").getElementsByClassName("checkbox");
+            for (var i = 0; i < z.length; i++) {
+            z[i].disabled = true;
+            z[i].style.display = 'none';
             }
 
-
-            var url = "<?php echo URL; ?>cliente/agregarModificarCliente";
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: "data=" + JSON.stringify(vec),
-                success: function (respuesta)
-                {
-                    var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
-                    var y = document.getElementById("Formu").getElementsByClassName("form-control");
-                    for (var i = 0; i < x.length; i++) {
-                        x[i].style.display = 'block';
-                        x[i].innerHTML = "";
-                    }
-                    for (var i = 0; i < y.length; i++) {
-                        y[i].style.display = 'none';
-                    }
-                    var z = document.getElementById("Formu").getElementsByClassName("checkbox");
-                    for (var i = 0; i < z.length; i++) {
-                        z[i].disabled = true;
-                        z[i].style.display = 'none';
-                    }
-
-                    document.getElementById("BtnAgregar").style.display = 'inline-block';
-                    document.getElementById("BtnModificar").style.display = 'none';
-                    document.getElementById("BtnEliminar").style.display = 'none';
-                    document.getElementById("BtnAceptar").style.display = 'none';
-                    $('#TablaClientes').DataTable().clear().draw().ajax.reload();
-                }
-            });
-        }
+            document.getElementById("BtnAgregar").style.display = 'inline-block';
+            document.getElementById("BtnModificar").style.display = 'none';
+            document.getElementById("BtnEliminar").style.display = 'none';
+            document.getElementById("BtnAceptar").style.display = 'none';
+            $('#TablaClientes').DataTable().clear().draw().ajax.reload();
+            }
+    });
+    }
 
 
     }
     function EliminarUsuario() {
-        var r = confirm("Est�s muy recontra segur�sima que quer�s borrar a este alumno?\n\
+    var r = confirm("Est�s muy recontra segur�sima que quer�s borrar a este alumno?\n\
                         Esta funcionalidad se ha creado solo para casos extremos.");
-        if (r == true) {
-            $.ajax({
-                type: "POST",
-                url: '<?php echo URL; ?>cliente/eliminarCliente',
-                data: "data=" + document.getElementById("idClientes").innerHTML,
-                success: function (respuesta)
-                {
-                    var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
-                    var y = document.getElementById("Formu").getElementsByClassName("form-control");
-                    for (var i = 0; i < x.length; i++) {
-                        x[i].style.display = 'block';
-                        x[i].innerHTML = "";
-                    }
-                    for (var i = 0; i < y.length; i++) {
-                        y[i].style.display = 'none';
-                    }
-                    var z = document.getElementById("Formu").getElementsByClassName("checkbox");
-                    for (var i = 0; i < z.length; i++) {
-                        z[i].disabled = true;
-                        z[i].style.display = 'none';
-                    }
+    if (r == true) {
+    $.ajax({
+    type: "POST",
+            url: '<?php echo URL; ?>cliente/eliminarCliente',
+            data: "data=" + document.getElementById("idClientes").innerHTML,
+            success: function (respuesta)
+            {
+            var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
+            var y = document.getElementById("Formu").getElementsByClassName("form-control");
+            for (var i = 0; i < x.length; i++) {
+            x[i].style.display = 'block';
+            x[i].innerHTML = "";
+            }
+            for (var i = 0; i < y.length; i++) {
+            y[i].style.display = 'none';
+            }
+            var z = document.getElementById("Formu").getElementsByClassName("checkbox");
+            for (var i = 0; i < z.length; i++) {
+            z[i].disabled = true;
+            z[i].style.display = 'none';
+            }
 
-                    document.getElementById("BtnAgregar").style.display = 'inline-block';
-                    document.getElementById("BtnModificar").style.display = 'none';
-                    document.getElementById("BtnEliminar").style.display = 'none';
-                    document.getElementById("BtnAceptar").style.display = 'none';
-                    $('#TablaClientes').DataTable().clear().draw().ajax.reload();
-                }
-            });
-        }
+            document.getElementById("BtnAgregar").style.display = 'inline-block';
+            document.getElementById("BtnModificar").style.display = 'none';
+            document.getElementById("BtnEliminar").style.display = 'none';
+            document.getElementById("BtnAceptar").style.display = 'none';
+            $('#TablaClientes').DataTable().clear().draw().ajax.reload();
+            }
+    });
+    }
     }
 
 </script>
