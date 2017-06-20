@@ -11,7 +11,7 @@ class producto_Model extends Model {
 
     public function listadoProductos() {
 
-        $sql = "SELECT idProductos, Descripcion FROM productos";
+        $sql = "SELECT idProductos, Descripcion, Precio FROM productos";
 
         $outp = $this->con->consultaRetorno($sql);
         foreach ($outp as $indice => $elemento) {
@@ -62,32 +62,98 @@ class producto_Model extends Model {
         $this->con->consultaSimple($sql);
     }
 
-    public function agregarCompra($info) {
+    public function registrarCompra($info) {
         $caca = json_decode($info, TRUE);
-        foreach ($caca as $indice => $elemento) {
-            $data[$indice] = htmlentities($elemento, ENT_QUOTES);
-            if ($data[$indice] != "") {
-                if (gettype($data[$indice]) == 'string') {
-                    $data[$indice] = "'" . $data[$indice] . "'";
+        $i = 0;
+        foreach ($caca as $indice) {
+            $data[$i] = htmlentities($indice["value"], ENT_QUOTES);
+            if ($data[$i] != "") {
+                if (gettype($data[$i]) == 'string') {
+                    $data[$i] = "'" . $data[$i] . "'";
                 }
             } else {
-                $data[$indice] = 'null';
+                $data[$i] = 'null';
             }
+            $i++;
         }
-        array_shift($data);
         $sql = "INSERT INTO
                     registrocompras(
                     Fecha,
                     idProductos,
                     MontoInd,
-                    Cantidad,)
+                    Cantidad)
                     VALUES($data[0],
                     $data[1],
                     $data[2],
-                    $data[3],
-                    $data[4])";
+                    $data[3])";
         $this->con->consultaSimple($sql);
-        //HAY QUE TRAER EL CAMPO STOCK DE PRODUCTO,OPERAR Y UPDATE
+        $stock = $this->traerStock($data[1]);
+        $stock = $stock[0]["Stock"];
+        $stock = $stock + $caca[3]["value"];
+        $this->actualizarStock($stock, $data[1]);
+    }
+
+    public function cerrarConexion() {
+        $this->con->cerrarConexion();
+    }
+
+    private function actualizarStock($stock, $id) {
+        $sql = "UPDATE
+                    productos
+                    SET
+                    Stock = $stock
+                    WHERE idProductos = $id";
+        $this->con->consultaSimple($sql);
+    }
+
+    private function traerStock($id) {
+        $sql = "SELECT Stock, Avisar FROM productos WHERE idProductos = $id";
+        $outp = $this->con->consultaRetorno($sql);
+        foreach ($outp as $indice => $elemento) {
+            foreach ($elemento as $key => $value) {
+                $output[$indice][$key] = preg_replace_callback("/(&#[0-9]+;)/", function($m) {
+                    return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES");
+                }, $value);
+            }
+        }
+        return $output;
+    }
+
+    public function registrarVenta($info) {
+        $caca = json_decode($info, TRUE);
+        $i = 0;
+        foreach ($caca as $indice) {
+            $data[$i] = htmlentities($indice["value"], ENT_QUOTES);
+            if ($data[$i] != "") {
+                if (gettype($data[$i]) == 'string') {
+                    $data[$i] = "'" . $data[$i] . "'";
+                }
+            } else {
+                $data[$i] = 'null';
+            }
+            $i++;
+        }
+
+
+        $sql = "INSERT INTO
+                    registroventas(
+                    Fecha,
+                    idProductos,
+                    Monto,
+                    Cantidad)
+                    VALUES($data[0],
+                    $data[1],
+                    $data[2],
+                    $data[3])";
+        $this->con->consultaSimple($sql);
+        $papasfritas = $this->traerStock($data[1]);
+        $stock = $papasfritas[0]["Stock"];
+        $avisar = $papasfritas[0]["Avisar"];
+        $stock = $stock - $caca[3]["value"];
+        $this->actualizarStock($stock, $data[1]);
+        if ($stock <= $avisar) {
+            echo json_encode("El stock está por debajo de las $avisar unidades (más específicamente está en $stock unidades)");
+        }
     }
 
     public function agregarModificarProducto($info) {

@@ -13,8 +13,11 @@ class Conexion_Model extends Model {
     private $mysqli;
 
     public function __construct() {
-
         $this->mysqli = new mysqli($this->datos['host'], $this->datos['user'], $this->datos['password'], $this->datos['db']);
+    }
+
+    public function cerrarConexion() {
+        $this->mysqli->close();
     }
 
     public function consultaSimple($sql) {
@@ -22,7 +25,6 @@ class Conexion_Model extends Model {
         if (!$resultado) {
             die("Connection failed: " . $this->mysqli->connect_error);
         }
-        $this->mysqli->close();
     }
 
     public function consultaRetorno($sql) {
@@ -33,8 +35,6 @@ class Conexion_Model extends Model {
             $outp = $resultado->fetch_all(MYSQLI_ASSOC);
             return $outp;
         }
-
-        $this->mysqli->close();
     }
 
     public function multiQuery($sql) {
@@ -59,8 +59,6 @@ class Conexion_Model extends Model {
         } else {
             die("Connection failed: " . $this->mysqli->connect_error);
         }
-
-        $this->mysqli->close();
     }
 
 }

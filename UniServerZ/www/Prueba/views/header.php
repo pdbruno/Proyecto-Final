@@ -6,7 +6,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
+
         <!-- Bootstrap Core CSS -->
         <link href="<?php echo URL; ?>views/recursos/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -30,7 +30,10 @@
         <!-- jQuery -->
         <script src="<?php echo URL; ?>views/recursos/vendor/jquery/jquery.min.js"></script>
         <script src="<?php echo URL; ?>views/recursos/vendor/datatables/js/jquery.dataTables.min.js"></script>
-        
+
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="<?php echo URL; ?>views/recursos/vendor/bootstrap/js/bootstrap.min.js"></script>
 
         <title>Hola</title>
 
@@ -38,7 +41,7 @@
     </head>
     <body>
 
-        <div id="wrapper">
+        <div id="wrapper" style="height: 100vh;">
 
             <!-- Navigation -->
             <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -49,7 +52,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html">Sistema BBG</a>
+                    <a class="navbar-brand" href="<?php echo URL; ?>">Sistema BBG</a>
                 </div>
                 <!-- /.navbar-header -->
 
@@ -371,4 +374,4 @@
                 <!-- /.navbar-static-side -->
             </nav>
 
-            <div id="page-wrapper" style="height:100%;">
+            <div id="page-wrapper" style="height: 94.9%">

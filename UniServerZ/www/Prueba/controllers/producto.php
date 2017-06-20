@@ -4,11 +4,13 @@ class producto extends Controller {
 
     public function listadoProductos() {
         $datos = $this->model->listadoProductos();
+        $this->model->cerrarConexion();
         echo $datos;
     }
 
     public function listadoDropdowns() {
         $datos = $this->model->listadodropdowns();
+        $this->model->cerrarConexion();
         echo $datos;
     }
 
@@ -21,6 +23,7 @@ class producto extends Controller {
             $error->index("Hubo un error en la transferencia de datos");
         }
         $datos = $this->model->traerProducto($idProductos);
+        $this->model->cerrarConexion();
         echo $datos;
     }
 
@@ -33,6 +36,7 @@ class producto extends Controller {
             $error->index("Hubo un error en la transferencia de datos");
         }
         $this->model->agregarModificarProducto($data);
+        $this->model->cerrarConexion();
     }
 
     public function eliminarProducto() {
@@ -44,6 +48,7 @@ class producto extends Controller {
             $error->index("Hubo un error en la transferencia de datos");
         }
         $this->model->eliminarProducto($idProductos);
+        $this->model->cerrarConexion();
     }
 
     function index() {
@@ -54,7 +59,17 @@ class producto extends Controller {
         $this->view->render('ingresostock/index');
     }
 
-    function agregarCompra() {
+    function egresostock() {
+        $this->view->render('egresostock/index');
+    }
+
+    function dropdown() {
+        $datos = $this->model->dropdown();
+        $this->model->cerrarConexion();
+        echo $datos;
+    }
+
+    function registrarCompra() {
         if (isset($_POST['data'])) {
             $data = $_POST['data'];
         } else {
@@ -62,7 +77,21 @@ class producto extends Controller {
             $error = new Error_();
             $error->index("Hubo un error en la transferencia de datos");
         }
-        $this->model->agregarCompra($data);
+        $this->model->registrarCompra($data);
+        $this->model->cerrarConexion();
+    }
+
+    function registrarVenta() {
+        if (isset($_POST['data'])) {
+            $data = $_POST['data'];
+        } else {
+            require 'controllers/error_.php';
+            $error = new Error_();
+            $error->index("Hubo un error en la transferencia de datos");
+        }
+        $datos = $this->model->registrarVenta($data);
+        echo $datos;
+        $this->model->cerrarConexion();
     }
 
     public function __construct() {
