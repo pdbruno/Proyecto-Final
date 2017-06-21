@@ -47,6 +47,7 @@ class Bootstrap {
                 $controller->index();
             }
         }
+        
     }
 
     function error() {

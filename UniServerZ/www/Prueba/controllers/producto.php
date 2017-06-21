@@ -4,13 +4,11 @@ class producto extends Controller {
 
     public function listadoProductos() {
         $datos = $this->model->listadoProductos();
-        $this->model->cerrarConexion();
         echo $datos;
     }
 
     public function listadoDropdowns() {
         $datos = $this->model->listadodropdowns();
-        $this->model->cerrarConexion();
         echo $datos;
     }
 
@@ -23,7 +21,6 @@ class producto extends Controller {
             $error->index("Hubo un error en la transferencia de datos");
         }
         $datos = $this->model->traerProducto($idProductos);
-        $this->model->cerrarConexion();
         echo $datos;
     }
 
@@ -35,8 +32,9 @@ class producto extends Controller {
             $error = new Error_();
             $error->index("Hubo un error en la transferencia de datos");
         }
-        $this->model->agregarModificarProducto($data);
-        $this->model->cerrarConexion();
+        $caca = json_decode($data, TRUE);
+        $producto = $this->model->nuevoObjeto($caca);
+        $this->model->agregarModificarProducto($producto);
     }
 
     public function eliminarProducto() {
@@ -48,7 +46,6 @@ class producto extends Controller {
             $error->index("Hubo un error en la transferencia de datos");
         }
         $this->model->eliminarProducto($idProductos);
-        $this->model->cerrarConexion();
     }
 
     function index() {
@@ -65,7 +62,6 @@ class producto extends Controller {
 
     function dropdown() {
         $datos = $this->model->dropdown();
-        $this->model->cerrarConexion();
         echo $datos;
     }
 
@@ -78,7 +74,6 @@ class producto extends Controller {
             $error->index("Hubo un error en la transferencia de datos");
         }
         $this->model->registrarCompra($data);
-        $this->model->cerrarConexion();
     }
 
     function registrarVenta() {
@@ -91,7 +86,6 @@ class producto extends Controller {
         }
         $datos = $this->model->registrarVenta($data);
         echo $datos;
-        $this->model->cerrarConexion();
     }
 
     public function __construct() {

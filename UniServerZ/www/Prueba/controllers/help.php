@@ -36,7 +36,7 @@ class Help extends Controller {
             $error = new Error_();
             $error->index("Hubo un error en la transferencia de datos");
         }
-        $datos = $this->model->eliminarFila($tipo, $id);
+        $this->model->eliminarFila($tipo, $id);
     }
 
     public function agregarModificarFila($tipo) {
@@ -47,7 +47,9 @@ class Help extends Controller {
             $error = new Error_();
             $error->index("Hubo un error en la transferencia de datos");
         }
-        $datos = $this->model->agregarModificarFila($data, $tipo);
+        $caca = json_decode($data, TRUE);
+        $cosa = $this->model->nuevoObjeto($caca);
+        $this->model->agregarModificarFila($cosa, $tipo);
     }
 
 }
