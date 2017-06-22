@@ -433,7 +433,7 @@
                             <div class="col-sm-10">
                                 <button type="button" id="actNombre" class="btn btn-link" data-toggle="modal" data-target="#ModalVer">Ver actividad/es</button>
 
-<!--
+
 
 
 
@@ -452,9 +452,9 @@
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 <button type="button" class="btn btn-primary">Save changes</button>
                                             </div>
-                                        </div> /.modal-content 
-                                    </div> /.modal-dialog 
-                                </div> /.modal 
+                                        </div><!-- /.modal-content--> 
+                                    </div> <!--/.modal-dialog --> 
+                                </div> <!--/.modal -->  
                                 <button type="button" id="IdActividadesSelect" class="btn btn-link" data-toggle="modal" data-target="#ModalSel">Seleccionar actividad/es</button>
 
 
@@ -476,17 +476,27 @@
 
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <select id="IdActividadesSelect" class="form-control" onchange="$('#IdModalidadesSelect').show();">
+                                                        <select id="IdActividadesSelect1" class="form-control" oninput="$('#IdModalidadesSelect1').removeClass('hidden');">
                                                             <option value="volvo">Volvo</option>
                                                             <option value="saab">Saab</option>
                                                             <option value="mercedes">Mercedes</option>
                                                             <option value="audi">Audi</option>
                                                         </select>
-                                                        <select id="IdModalidadesSelect" class="form-control hidden" onchange="Precio()">
-
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <select id="IdModalidadesSelect1" class="form-control hidden" oninput="$('#IdNivelesSelect1').removeClass('hidden');">
+                                                            <option value="volvo">Volvo</option>
+                                                            <option value="saab">Saab</option>
+                                                            <option value="mercedes">Mercedes</option>
+                                                            <option value="audi">Audi</option>
                                                         </select>
-                                                        <select id="IdNivelesSelect" class="form-control hidden">
-
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <select id="IdNivelesSelect1" class="form-control hidden">
+                                                            <option value="volvo">Volvo</option>
+                                                            <option value="saab">Saab</option>
+                                                            <option value="mercedes">Mercedes</option>
+                                                            <option value="audi">Audi</option>
                                                         </select>
                                                     </div>
 
@@ -496,6 +506,33 @@
                                                 <button type="button" id="AddAct1" class="btn btn-link" onclick="$(this).hide();" data-toggle="collapse" href="#Act1">+AgregarActividad</button>
 
                                                 <div class="collapse" id="Act1">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <select id="IdActividadesSelect2" class="form-control" oninput="$('#IdModalidadesSelect2').removeClass('hidden');">
+                                                                <option value="volvo">Volvo</option>
+                                                                <option value="saab">Saab</option>
+                                                                <option value="mercedes">Mercedes</option>
+                                                                <option value="audi">Audi</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <select id="IdModalidadesSelect2" class="form-control hidden" oninput="$('#IdNivelesSelect2').removeClass('hidden');">
+                                                                <option value="volvo">Volvo</option>
+                                                                <option value="saab">Saab</option>
+                                                                <option value="mercedes">Mercedes</option>
+                                                                <option value="audi">Audi</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <select id="IdNivelesSelect2" class="form-control hidden">
+                                                                <option value="volvo">Volvo</option>
+                                                                <option value="saab">Saab</option>
+                                                                <option value="mercedes">Mercedes</option>
+                                                                <option value="audi">Audi</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
                                                     <button type="button" id="AddAct2" class="btn btn-link" data-toggle="collapse" href="#Act2">+AgregarActividad</button>
                                                     <div class="collapse" id="Act2">
                                                         <button type="button" id="AddAct3" class="btn btn-link" data-toggle="collapse" href="#Act3">+AgregarActividad</button>
@@ -517,10 +554,10 @@
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                             <button type="button" class="btn btn-primary">Save changes</button>
                                         </div>
-                                    </div> /.modal-content 
-                                </div> /.modal-dialog 
-                            </div> /.modal -->
-                            <!--<input type="text" style="display: none; visibility: hidden;" class="form-control" id="actNombreForm">-->
+                                    </div><!-- /.modal-content--> 
+                                </div> <!--/.modal-dialog --> 
+                            </div> <!--/.modal --> 
+                            <input type="text" style="display: none; visibility: hidden;" class="form-control" id="actNombreForm">
                         </div>
                     </li>
                     <li class="list-group-item">
@@ -557,27 +594,26 @@
     document.getElementById("BtnEliminar").style.display = 'none';
     document.getElementById("BtnAceptar").style.display = 'none';
     var VecElementos = [];
-    $.ajax({
-        type: "POST",
-        url: "<?php echo URL; ?>cliente/listadoDropdowns",
-        success: function (respuesta) {
-            var myObj = JSON.parse(respuesta);
-            for (vector in myObj) {
-                var txt = "";
-                for (element in myObj[vector]) {
-
-                    txt += "<option value='" + myObj[vector][element].id + "'>" + myObj[vector][element].Nombre + "</option>";
-                }
-                VecElementos.push(txt);
-            }
-            var i = 0;
-            var selects = document.getElementById("Formu").getElementsByTagName("select");
-            for (select in selects) {
-                selects[select].innerHTML = VecElementos[i];
-                i++;
-            }
-        }
-    });
+//    $.ajax({
+//        type: "POST",
+//        url: "<?php echo URL; ?>cliente/listadoDropdowns",
+//        success: function (respuesta) {
+//            var myObj = JSON.parse(respuesta);
+//            for (vector in myObj) {
+//                var txt = "";
+//                for (element in myObj[vector]) {
+//                    txt += "<option value='" + myObj[vector][element].id + "'>" + myObj[vector][element].Nombre + "</option>";
+//                }
+//                VecElementos.push(txt);
+//            }
+//            var i = 0;
+//            var selects = document.getElementById("Formu").getElementsByTagName("select");
+//            for (select in selects) {
+//                selects[select].innerHTML = VecElementos[i];
+//                i++;
+//            }
+//        }
+//    });
     var VecClientes = [];
     $(document).ready(function () {
         listadoclientes();
@@ -595,7 +631,6 @@
                                     VecClientes = [];
                                     for (i in txt)
                                     {
-
                                         var Cliente =
                                                 {
                                                     idClientes: txt[i].idClientes,
@@ -617,7 +652,6 @@
 //                        "language": {
 //                        "url": "dataTables.spanish.lang"
 //                          Hacer algo con el idioma de la tabla y de la extension select
-
                 });
         table.on('select', function (e, dt, type, indexes) {
             if (type === 'row') {
@@ -641,12 +675,9 @@
                                 } else {
                                     input.checked = false;
                                 }
-
                             } else {
                                 input.value = obj[x];
                             }
-
-
                         }
                         var y = document.getElementsByClassName("checkbox");
                         var z = document.getElementsByClassName("intro");
@@ -672,8 +703,6 @@
             }
         });
     }
-
-
     function AgregarUsuario()
     {
         document.getElementById("IdLocalidadesSelect").style.display = 'none';
@@ -717,7 +746,6 @@
                 }
             }
         }
-
         var x = document.getElementsByClassName("form-control-static");
         var y = document.getElementsByClassName("form-control");
         for (var i = 0; i < x.length; i++) {
@@ -763,15 +791,12 @@
                     z[i].value = 0;
                 }
             }
-
             for (var i = 0; i < x.length; i++) {
                 if (x[i].value === "") {
                     x[i].value = null;
                 }
                 vec.push(x[i].value);
             }
-
-
             var url = "<?php echo URL; ?>cliente/agregarModificarCliente";
             $.ajax({
                 type: "POST",
@@ -793,7 +818,6 @@
                         z[i].disabled = true;
                         z[i].style.display = 'none';
                     }
-
                     document.getElementById("BtnAgregar").style.display = 'inline-block';
                     document.getElementById("BtnModificar").style.display = 'none';
                     document.getElementById("BtnEliminar").style.display = 'none';
@@ -802,8 +826,6 @@
                 }
             });
         }
-
-
     }
     function EliminarUsuario() {
         var r = confirm("Est�s muy recontra segur�sima que quer�s borrar a este alumno?\n\
@@ -829,7 +851,6 @@
                         z[i].disabled = true;
                         z[i].style.display = 'none';
                     }
-
                     document.getElementById("BtnAgregar").style.display = 'inline-block';
                     document.getElementById("BtnModificar").style.display = 'none';
                     document.getElementById("BtnEliminar").style.display = 'none';
@@ -839,5 +860,4 @@
             });
         }
     }
-
 </script>

@@ -10,7 +10,7 @@
             </div>
             <div class="form-group">
                 <label class="sr-only" for="IdProductosForm">Producto</label>
-                <select id="IdProductosForm" name="IdProductosForm" onchange="Precio()" class="form-control">
+                <select id="IdProductosForm" name="IdProductosForm" oninput="Precio()" class="form-control">
                 </select>
             </div>
             <label class="sr-only" for="MontoForm">Monto total</label>

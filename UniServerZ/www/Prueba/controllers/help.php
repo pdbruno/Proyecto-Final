@@ -48,7 +48,7 @@ class Help extends Controller {
             $error->index("Hubo un error en la transferencia de datos");
         }
         $caca = json_decode($data, TRUE);
-        $cosa = $this->model->nuevoObjeto($caca);
+        $cosa = $this->model->nuevoObjeto($caca, $tipo);
         $this->model->agregarModificarFila($cosa, $tipo);
     }
 

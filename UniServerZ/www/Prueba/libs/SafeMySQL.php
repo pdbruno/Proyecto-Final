@@ -551,13 +551,13 @@ class SafeMySQL
 		return $value;
 	}
 
-	protected function escapeString($value)
+	protected function escapeString($value,$encoding='UTF-8')
 	{
 		if ($value === NULL || $value == "")
 		{
 			return 'NULL';
 		}
-		return	"'".mysqli_real_escape_string($this->conn,$value)."'";
+		return	"'".mysqli_real_escape_string($this->conn,htmlspecialchars($value,ENT_QUOTES | ENT_HTML401,$encoding))."'";
 	}
 
 	protected function escapeIdent($value)

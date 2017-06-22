@@ -34,6 +34,12 @@ class producto extends Controller {
         }
         $caca = json_decode($data, TRUE);
         $producto = $this->model->nuevoObjeto($caca);
+//        VALIDAR
+//        $producto['Precio']
+//        $producto['Stock']
+//        $producto['Avisar']
+
+
         $this->model->agregarModificarProducto($producto);
     }
 
@@ -73,7 +79,14 @@ class producto extends Controller {
             $error = new Error_();
             $error->index("Hubo un error en la transferencia de datos");
         }
-        $this->model->registrarCompra($data);
+        $caca = json_decode($data, TRUE);
+//        VALIDAR
+//        $caca['Fecha']
+//        $caca['idProductos']
+//        $caca['MontoInd']
+//        $caca['Cantidad']
+
+        $datos = $this->model->registrarVenta($caca);
     }
 
     function registrarVenta() {
@@ -84,7 +97,13 @@ class producto extends Controller {
             $error = new Error_();
             $error->index("Hubo un error en la transferencia de datos");
         }
-        $datos = $this->model->registrarVenta($data);
+        $caca = json_decode($data, TRUE);
+//        VALIDAR
+//        $caca['Fecha']
+//        $caca['idProductos']
+//        $caca['Monto']
+//        $caca['Cantidad']
+        $datos = $this->model->registrarVenta($caca);
         echo $datos;
     }
 
