@@ -2,7 +2,7 @@
 <script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
 <div class="row" style="height:100%;">
-    <div class="col-lg-6">				
+    <div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">Listado de Clientes
             </div>
@@ -12,13 +12,13 @@
                         <tr>
                             <th>Nombres</th>
                             <th>Apellidos</th>
-                        </tr> 
+                        </tr>
                     </thead>
                 </table>
             </div>
         </div>
     </div>
-    <div id="Formu" class="col-lg-6" style="height: 100%"> 
+    <div id="Formu" class="col-lg-6" style="height: 100%">
         <div class="panel panel-default" style="height: 90%; overflow-y: scroll;">
             <ul class="list-group">
                 <form class="form-horizontal">
@@ -58,7 +58,7 @@
                             <label class="col-sm-2 control-label">Fecha de Nacimiento:</label>
                             <div class="col-sm-10">
                                 <p id="FechaNacimiento" class="form-control-static"></p>
-                                <input type="date" style="display: none;" class="form-control" id="FechaNacimientoForm" placeholder="Fecha de Nacimiento">
+                                <input type="text" style="display: none;" class="form-control" id="FechaNacimientoForm" placeholder="Fecha de Nacimiento">
                             </div>
                         </div>
                     </li>
@@ -431,7 +431,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Actividades:</label>
                             <div class="col-sm-10">
-                                <button type="button" id="actNombre" class="btn btn-link" data-toggle="modal" data-target="#ModalVer">Ver actividad/es</button>
+                                <button type="button" id="IdActividadesVer" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalVer">Ver actividad/es</button>
 
                                 <div class="modal fade" tabindex="-1" role="dialog" id="ModalVer">
                                     <div class="modal-dialog" role="document">
@@ -447,10 +447,10 @@
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 <button type="button" class="btn btn-primary">Save changes</button>
                                             </div>
-                                        </div><!-- /.modal-content--> 
-                                    </div> <!--/.modal-dialog --> 
-                                </div> <!--/.modal -->  
-                                <button type="button" id="IdActividadesSelect" class="btn btn-link" data-toggle="modal" data-target="#ModalSel">Seleccionar actividad/es</button>
+                                        </div><!-- /.modal-content-->
+                                    </div> <!--/.modal-dialog -->
+                                </div> <!--/.modal -->
+                                <button type="button" id="IdActividadesSelect" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalSel">Seleccionar actividad/es</button>
 
                                 <input type="text" style="display: none; visibility: hidden;" class="form-control" id="actNombreForm">
                             </div>
@@ -484,7 +484,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Seleccionar actividad/es</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="Selec">
 
                     <div class="row" id="Act1">
                         <div class="col-md-4">
@@ -508,7 +508,7 @@
                                 <option value='1'>Inicial</option>
                                 <option value='2'>Infantiles A</option>
                                 <option value='3'>Infantiles B</option>
-                                <option value='4'>Juveniles y Adultos B</option>
+                                <option value='4'>Juveniles y Adultos</option>
                             </select>
                         </div>
                     </div>
@@ -533,7 +533,7 @@
                                     <option value='1'>Inicial</option>
                                     <option value='2'>Infantiles A</option>
                                     <option value='3'>Infantiles B</option>
-                                    <option value='4'>Juveniles y Adultos B</option>
+                                    <option value='4'>Juveniles y Adultos</option>
                                 </select>
                             </div>
                         </div>
@@ -558,7 +558,7 @@
                                         <option value='1'>Inicial</option>
                                         <option value='2'>Infantiles A</option>
                                         <option value='3'>Infantiles B</option>
-                                        <option value='4'>Juveniles y Adultos B</option>
+                                        <option value='4'>Juveniles y Adultos</option>
                                     </select>
                                 </div>
 
@@ -570,11 +570,23 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" onclick="aceptarModal()"> Aceptar</button>
             </div>
-        </div><!-- /.modal-content--> 
-    </div> <!--/.modal-dialog --> 
-</div> <!--/.modal --> 
+        </div><!-- /.modal-content-->
+    </div> <!--/.modal-dialog -->
+</div> <!--/.modal -->
 </div>
 <script>
+function deshacerModal(){
+    var uno = document.getElementById("Selec").getElementsByTagName("select");
+    var dos = document.getElementById("Selec").getElementsByTagName("button");
+    for (cosa in uno) {
+      $("#"+uno[cosa].id).addClass("hidden");
+    }
+    for (cosa in dos) {
+      $("#"+dos[cosa].id).addClass("hidden");
+    }
+    $("#IdActividadesSelect1").removeClass("hidden");
+}
+
     $('#FechaNacimientoForm').datepicker({
         format: "dd/mm/yyyy",
         endDate: "today",
@@ -594,10 +606,10 @@
     Ids = [1, 2, 3, 4];
     Nombres = ["Inicial", "Infantiles A", "Infantiles B", "Juveniles y Adultos"]
     var VecNiveles = repetitivaCrear(Ids, Nombres);
+    var bien = true;
+    var final = [];
     function aceptarModal() {
         $('#ModalSel').modal('hide')
-        var resul = [];
-        var bien = true;
         var todo = [];
         todo.push(document.getElementById("Act1").getElementsByTagName("select"));
         todo.push(document.getElementById("Act2").getElementsByTagName("select"));
@@ -617,19 +629,24 @@
                     }
             }
         }
-        if (bien == true) {
-            resul.push(todo[0]);
-            if (todo[1][0].value != "") {
-                resul.push(todo[1]);
-                if (todo[2][0].value != "") {
-                    resul.push(todo[2]);
-                }
-            }
+        if (todo[0][0].value=="") {
+          bien = false;
         }
+        for (var i = 0; i < 3; i++) {
+          var resul = [];
+          for (var j = 0; j < 3; j++) {
+            if (todo[i][j].value != "") {
+              resul.push(todo[i][j].value);
+            }
+          }
+          final.push(resul);
+        }
+        final = JSON.stringify(final);
 
 
     }
     function ActividadesSelect1() {
+      $("#AddAct1").removeClass('hidden');
         switch ($('#IdActividadesSelect1').val()) {
             case "1":
                 $('#IdModalidadesSelect1').removeClass('hidden');
@@ -651,6 +668,7 @@
         }
     }
     function ActividadesSelect2() {
+      $("#AddAct2").removeClass('hidden');
         switch ($('#IdActividadesSelect2').val()) {
             case "1":
                 $('#IdModalidadesSelect2').removeClass('hidden');
@@ -672,7 +690,6 @@
         }
     }
     function ActividadesSelect3() {
-        $('#IdNivelesSelect1').addClass('disabled');
         switch ($('#IdActividadesSelect3').val()) {
             case "1":
                 $('#IdModalidadesSelect3').removeClass('hidden');
@@ -693,16 +710,20 @@
     function AddAct1() {
         $('#IdActividadesSelect1').prop("disabled", true);
         $("#AddAct1").addClass('hidden');
+        $("#AddAct2").removeClass('hidden');
+        $("#IdActividadesSelect2").removeClass('hidden');
         $("#IdActividadesSelect2").html($("#IdActividadesSelect2").html() + optionCrear(VecActividades));
     }
     function AddAct2() {
         $('#IdActividadesSelect2').prop("disabled", true);
         $("#AddAct2").addClass('hidden');
+        $("#AddAct3").removeClass('hidden');
+        $("#IdActividadesSelect3").removeClass('hidden');
         $("#IdActividadesSelect3").html($("#IdActividadesSelect3").html() + optionCrear(VecActividades));
     }
 
     function optionCrear(vec) {
-        var txt;
+        var txt="";
         for (var i = 0; i < vec.length; i++) {
             if (vec[i].Nombre.length > 1) {
                 txt += "<option value='" + vec[i].id + "'>" + vec[i].Nombre + "</option>";
@@ -731,9 +752,9 @@
             }
             var i = 0;
             var selects = document.getElementById("Formu").getElementsByTagName("select");
-            for (select in selects) {
-                selects[select].innerHTML = VecElementos[i];
-                i++;
+
+            for (var i = 0; i < selects.length; i++) {
+              selects[i].innerHTML = VecElementos[i];
             }
         }
     });
@@ -786,6 +807,7 @@
                     data: "data=" + id,
                     success: function (respuesta)
                     {
+                        deshacerModal();
                         var obj = JSON.parse(respuesta)[0];
                         for (x in obj) {
                             document.getElementById(x).innerHTML = obj[x];
@@ -816,7 +838,8 @@
                         document.getElementById("IdLocalidadesSelect").style.display = 'none';
                         document.getElementById("IdGrupoFactorSanguineoSelect").style.display = 'none';
                         document.getElementById("IdCategoriasSelect").style.display = 'none';
-//                        document.getElementById("IdActividadesSelect").style.display = 'none';
+                        $("#IdActividadesVer").removeClass("hidden");
+                        $("#IdActividadesSelect").addClass("hidden");
                         document.getElementById("IdSedesSelect").style.display = 'none';
                         document.getElementById("BtnModificar").style.display = 'inline-block';
                         document.getElementById("BtnEliminar").style.display = 'inline-block';
@@ -831,8 +854,10 @@
         document.getElementById("IdLocalidadesSelect").style.display = 'none';
         document.getElementById("IdGrupoFactorSanguineoSelect").style.display = 'none';
         document.getElementById("IdCategoriasSelect").style.display = 'none';
-        //document.getElementById("IdActividadesSelect").style.display = 'none';
         document.getElementById("IdSedesSelect").style.display = 'none';
+        $("#IdActividadesSelect").removeClass("hidden");
+        $("#IdActividadesVer").addClass("hidden");
+        mostrarOcultar();
         var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
         var y = document.getElementById("Formu").getElementsByClassName("form-control");
         for (var i = 0; i < x.length; i++) {
@@ -847,13 +872,20 @@
             z[i].disabled = false;
             z[i].style.display = 'block';
         }
-        document.getElementById("BtnAceptar").style.display = 'inline-block';
-        document.getElementById("BtnAgregar").style.display = 'none';
-        document.getElementById("BtnModificar").style.display = 'none';
-        document.getElementById("BtnEliminar").style.display = 'none';
+
+    }
+    function mostrarOcultar(){
+
+      document.getElementById("BtnAceptar").style.display = 'inline-block';
+      document.getElementById("BtnAgregar").style.display = 'none';
+      document.getElementById("BtnModificar").style.display = 'none';
+      document.getElementById("BtnEliminar").style.display = 'none';
     }
     function ModificarUsuario()
     {
+        $("#IdActividadesSelect").removeClass("hidden");
+        $("#IdActividadesVer").addClass("hidden");
+        mostrarOcultar();
         var selects = document.getElementById("Formu").getElementsByTagName("select");
         for (select in selects) {
             var options = selects[select].options;
@@ -882,10 +914,9 @@
             z[i].disabled = false;
             z[i].style.display = 'block';
         }
-        document.getElementById("BtnAceptar").style.display = 'inline-block';
-        document.getElementById("BtnAgregar").style.display = 'none';
-        document.getElementById("BtnModificar").style.display = 'none';
-        document.getElementById("BtnEliminar").style.display = 'none';
+
+
+
     }
     var vec = [];
     function EnviarUsuario()
@@ -905,7 +936,6 @@
             document.getElementById("locNombreForm").value = document.getElementById("IdLocalidadesSelect").value;
             document.getElementById("sangNombreForm").value = document.getElementById("IdGrupoFactorSanguineoSelect").value;
             document.getElementById("catNombreForm").value = document.getElementById("IdCategoriasSelect").value;
-            //document.getElementById("actNombreForm").value = document.getElementById("IdActividadesSelect").value;
             document.getElementById("sedNombreForm").value = document.getElementById("IdSedesSelect").value;
             for (var i = 0; i < z.length; i++) {
                 if (z[i].checked == true) {
@@ -924,7 +954,7 @@
             $.ajax({
                 type: "POST",
                 url: url,
-                data: "data=" + JSON.stringify(vec),
+                data: "data1=" + JSON.stringify(vec) + "&data2=" + final,
                 success: function (respuesta)
                 {
                     var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
@@ -941,14 +971,18 @@
                         z[i].disabled = true;
                         z[i].style.display = 'none';
                     }
-                    document.getElementById("BtnAgregar").style.display = 'inline-block';
-                    document.getElementById("BtnModificar").style.display = 'none';
-                    document.getElementById("BtnEliminar").style.display = 'none';
-                    document.getElementById("BtnAceptar").style.display = 'none';
+                    $("#IdActividadesSelect").addClass("hidden");
+                    mostrarOcultar2();
                     $('#TablaClientes').DataTable().clear().draw().ajax.reload();
                 }
             });
         }
+    }
+    function mostrarOcultar2(){
+      document.getElementById("BtnAgregar").style.display = 'inline-block';
+      document.getElementById("BtnModificar").style.display = 'none';
+      document.getElementById("BtnEliminar").style.display = 'none';
+      document.getElementById("BtnAceptar").style.display = 'none';
     }
     function EliminarUsuario() {
         var r = confirm("Est�s muy recontra segur�sima que quer�s borrar a este alumno?\n\
@@ -974,10 +1008,7 @@
                         z[i].disabled = true;
                         z[i].style.display = 'none';
                     }
-                    document.getElementById("BtnAgregar").style.display = 'inline-block';
-                    document.getElementById("BtnModificar").style.display = 'none';
-                    document.getElementById("BtnEliminar").style.display = 'none';
-                    document.getElementById("BtnAceptar").style.display = 'none';
+                    mostrarOcultar2();
                     $('#TablaClientes').DataTable().clear().draw().ajax.reload();
                 }
             });

@@ -6,7 +6,7 @@
 
 class cliente extends Controller {
 
-    
+
     public function listadoClientes() {
         $datos = $this->model->listadoClientes();
         echo $datos;
@@ -30,16 +30,19 @@ class cliente extends Controller {
     }
 
     public function agregarModificarCliente() {
-        if (isset($_POST['data'])) {
-            $data = $_POST['data'];
+        if (isset($_POST['data1'])&&isset($_POST['data2'])) {
+            $data1 = $_POST['data1'];
+            $data2 = $_POST['data2'];
         } else {
             require 'controllers/error_.php';
             $error = new Error_();
             $error->index("Hubo un error en la transferencia de datos");
         }
-        $caca = json_decode($data, TRUE);
-        $cliente = $this->model->nuevoObjeto($caca);
+        $cliente = json_decode($data1, TRUE);
+        $actividades = json_decode($data2, TRUE);
+        $cliente = $this->model->nuevoObjeto($cliente);
         $this->model->agregarModificarCliente($cliente);
+        $this->model->asignarActividades($data2, $cliente["idClientes"]);
     }
 
     public function eliminarCliente() {

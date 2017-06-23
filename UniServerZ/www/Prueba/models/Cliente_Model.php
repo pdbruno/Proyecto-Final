@@ -125,13 +125,10 @@ class cliente_Model extends Model {
             $parte[] = $this->db->parse("3");
         }
         for ($i = 0; $i < count($parte); $i++) {
-            $sql[] = $this->db->parse("SELECT idActividadesModalidadesNiveles FROM actividadesmodalidadesniveles WHERE idActividades = ?p", $parte[$i]);
+            $outp = $this->db->getAll("SELECT idActividadesModalidadesNiveles FROM actividadesmodalidadesniveles WHERE idActividades = ?p", $parte[$i]);
+            $this->db->query("INSERT INTO clientesactividades SET `idClientes`= ?i, `idActividadesModalidadesNiveles`= ?i", $idClientes, $outp[$i][0]["idActividadesModalidadesNiveles"]);
         }
-        $res = $this->repetitivaQuery($sql);
-        for ($i = 0; $i < count($parte); $i++) {
-            $this->db->query("INSERT INTO clientesactividades SET `idClientes`= ?i, `idActividadesModalidadesNiveles`= ?i", $idClientes, $res[$i][0]["idActividadesModalidadesNiveles"]);
-        }
-        
+
     }
 
     public function agregarModificarCliente($data) {
