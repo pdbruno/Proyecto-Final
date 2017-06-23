@@ -58,19 +58,26 @@ class cliente_Model extends Model {
         echo json_encode($outp);
     }
 
+    public function repetitivaQuery($sql, $cant) {
+        for ($index = 0; $index < $cant; $index++) {
+            $outp = $this->db->getAll($sql[$index]);
+            $todo[] = $outp;
+        }
+        return $todo;
+    }
+
     public function listadodropdowns() {
         $sql = array();
         $sql[0] = "SELECT idLocalidades as id, Nombre FROM localidades;";
         $sql[1] = "SELECT idGrupoFactorSanguineo as id, Nombre FROM grupofactorsanguineo;";
         $sql[2] = "SELECT idCategorias as id, Nombre FROM categorias;";
-        //$sql[3] = "SELECT idActividades as id, Nombre FROM actividades;";
         $sql[3] = "SELECT idSedes as id, Nombre FROM sedes;";
-        $caca = $sql[0] . $sql[1] . $sql[2] . $sql[3];
-        for ($index = 0; $index < count($sql); $index++) {
-            $outp = $this->db->getAll($sql[$index]);
-            $todo[] = $outp;
-        }
-        echo json_encode($todo);
+        $res[] = $this->repetitivaQuery($sql, 4);
+//        $sql[0] = "SELECT `idActividades` as 'id', `Nombre` FROM `actividades`";
+//        $sql[1] = "SELECT `idModalidades` as 'id', `Nombre` FROM `modalidades`";
+//        $sql[2] = "SELECT `idNiveles` as 'id', `Nombre` FROM `niveles`";
+//        $res[] = $this->repetitivaQuery($sql, 3);
+        echo json_encode($res);
     }
 
     public function traerCliente($idClientes) {

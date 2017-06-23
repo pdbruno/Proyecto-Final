@@ -11,6 +11,7 @@
             <div class="form-group">
                 <label class="sr-only" for="IdProductosForm">Producto</label>
                 <select id="IdProductosForm" name="IdProductosForm" oninput="Precio()" class="form-control">
+                    <option disabled hidden selected value> -- Seleccione un producto -- </option>
                 </select>
             </div>
             <label class="sr-only" for="MontoForm">Monto total</label>
@@ -50,8 +51,7 @@
             for (element in myObj) {
                 txt += "<option value='" + myObj[element].idProductos + "'>" + myObj[element].Descripcion + "</option>";
             }
-            var select = document.getElementById("IdProductosForm");
-            select.innerHTML += txt;
+            document.getElementById("IdProductosForm").innerHTML += txt;
         }
     });
     function Precio()

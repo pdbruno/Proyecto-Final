@@ -433,11 +433,6 @@
                             <div class="col-sm-10">
                                 <button type="button" id="actNombre" class="btn btn-link" data-toggle="modal" data-target="#ModalVer">Ver actividad/es</button>
 
-
-
-
-
-
                                 <div class="modal fade" tabindex="-1" role="dialog" id="ModalVer">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -457,108 +452,8 @@
                                 </div> <!--/.modal -->  
                                 <button type="button" id="IdActividadesSelect" class="btn btn-link" data-toggle="modal" data-target="#ModalSel">Seleccionar actividad/es</button>
 
-
-
-
-
-
-
-
-
-                                <div class="modal fade" tabindex="-1" role="dialog" id="ModalSel">
-                                    <div class="modal-dialog" role="document" >
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title">Seleccionar actividad/es</h4>
-                                            </div>
-                                            <div class="modal-body">
-
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <select id="IdActividadesSelect1" class="form-control" oninput="$('#IdModalidadesSelect1').removeClass('hidden');">
-                                                            <option value="volvo">Volvo</option>
-                                                            <option value="saab">Saab</option>
-                                                            <option value="mercedes">Mercedes</option>
-                                                            <option value="audi">Audi</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <select id="IdModalidadesSelect1" class="form-control hidden" oninput="$('#IdNivelesSelect1').removeClass('hidden');">
-                                                            <option value="volvo">Volvo</option>
-                                                            <option value="saab">Saab</option>
-                                                            <option value="mercedes">Mercedes</option>
-                                                            <option value="audi">Audi</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <select id="IdNivelesSelect1" class="form-control hidden">
-                                                            <option value="volvo">Volvo</option>
-                                                            <option value="saab">Saab</option>
-                                                            <option value="mercedes">Mercedes</option>
-                                                            <option value="audi">Audi</option>
-                                                        </select>
-                                                    </div>
-
-                                                </div>
-
-
-                                                <button type="button" id="AddAct1" class="btn btn-link" onclick="$(this).hide();" data-toggle="collapse" href="#Act1">+AgregarActividad</button>
-
-                                                <div class="collapse" id="Act1">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <select id="IdActividadesSelect2" class="form-control" oninput="$('#IdModalidadesSelect2').removeClass('hidden');">
-                                                                <option value="volvo">Volvo</option>
-                                                                <option value="saab">Saab</option>
-                                                                <option value="mercedes">Mercedes</option>
-                                                                <option value="audi">Audi</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <select id="IdModalidadesSelect2" class="form-control hidden" oninput="$('#IdNivelesSelect2').removeClass('hidden');">
-                                                                <option value="volvo">Volvo</option>
-                                                                <option value="saab">Saab</option>
-                                                                <option value="mercedes">Mercedes</option>
-                                                                <option value="audi">Audi</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <select id="IdNivelesSelect2" class="form-control hidden">
-                                                                <option value="volvo">Volvo</option>
-                                                                <option value="saab">Saab</option>
-                                                                <option value="mercedes">Mercedes</option>
-                                                                <option value="audi">Audi</option>
-                                                            </select>
-                                                        </div>
-
-                                                    </div>
-                                                    <button type="button" id="AddAct2" class="btn btn-link" data-toggle="collapse" href="#Act2">+AgregarActividad</button>
-                                                    <div class="collapse" id="Act2">
-                                                        <button type="button" id="AddAct3" class="btn btn-link" data-toggle="collapse" href="#Act3">+AgregarActividad</button>
-
-                                                    </div>
-                                                </div>
-
-
-
-
-
-
-
-
-
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </div><!-- /.modal-content--> 
-                                </div> <!--/.modal-dialog --> 
-                            </div> <!--/.modal --> 
-                            <input type="text" style="display: none; visibility: hidden;" class="form-control" id="actNombreForm">
-                        </div>
+                                <input type="text" style="display: none; visibility: hidden;" class="form-control" id="actNombreForm">
+                            </div>
                     </li>
                     <li class="list-group-item">
 
@@ -582,6 +477,102 @@
         <button type="button" id="BtnAceptar" onclick="EnviarUsuario()" class="btn btn-success">Aceptar</button>
         <button type="button" id="BtnEliminar"id="BtnAgregar"onclick="EliminarUsuario()" class="btn btn-danger">Eliminar Usuario</button>
     </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="ModalSel">
+        <div class="modal-dialog" role="document" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Seleccionar actividad/es</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row" id="Act1">
+                        <div class="col-md-4">
+                            <select id="IdActividadesSelect1" class="form-control" onchange="ActividadesSelect1()">
+                                <option disabled selected value>Actividad:</option>
+                                <option value='1'>Taekwon-Do</option>
+                                <option value='2'>Funcional</option>
+                                <option value='3'>Personalizado</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select id="IdModalidadesSelect1" class="form-control hidden">
+                                <option disabled selected value>Modalidad</option>
+                                <option value='1'>1 a 2 veces por semana</option>
+                                <option value='2'>Pase Libre</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select id="IdNivelesSelect1" class="form-control hidden">
+                                <option disabled selected value>Nivel</option>
+                                <option value='1'>Inicial</option>
+                                <option value='2'>Infantiles A</option>
+                                <option value='3'>Infantiles B</option>
+                                <option value='4'>Juveniles y Adultos B</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" id="AddAct1" class="btn btn-link" onclick="AddAct1()" data-toggle="collapse" href="#Act2">+AgregarActividad</button>
+                    <div class="collapse" id="Act2">
+                        <div class="row" style="margin-top: 50px;">
+                            <div class="col-md-4">
+                                <select id="IdActividadesSelect2" class="form-control" onchange="ActividadesSelect2()">
+                                    <option disabled selected value>Actividad:</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select id="IdModalidadesSelect2" class="form-control hidden">
+                                    <option disabled selected value>Modalidad</option>
+                                    <option value='1'>1 a 2 veces por semana</option>
+                                    <option value='2'>Pase Libre</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select id="IdNivelesSelect2" class="form-control hidden">
+                                    <option disabled selected value>Nivel</option>
+                                    <option value='1'>Inicial</option>
+                                    <option value='2'>Infantiles A</option>
+                                    <option value='3'>Infantiles B</option>
+                                    <option value='4'>Juveniles y Adultos B</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" id="AddAct2" class="btn btn-link" onclick="AddAct2();" data-toggle="collapse" href="#Act3">+AgregarActividad</button>
+                        <div class="collapse" id="Act3">
+                            <div class="row" style="margin-top: 50px;">
+                                <div class="col-md-4">
+                                    <select id="IdActividadesSelect3" class="form-control" onchange="ActividadesSelect3()">
+                                        <option disabled selected value>Actividad:</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="IdModalidadesSelect3" class="form-control hidden">
+                                        <option disabled selected value>Modalidad</option>
+                                        <option value='1'>1 a 2 veces por semana</option>
+                                        <option value='2'>Pase Libre</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="IdNivelesSelect3" class="form-control hidden">
+                                        <option disabled selected value>Nivel</option>
+                                        <option value='1'>Inicial</option>
+                                        <option value='2'>Infantiles A</option>
+                                        <option value='3'>Infantiles B</option>
+                                        <option value='4'>Juveniles y Adultos B</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="aceptarModal()"> Aceptar</button>
+            </div>
+        </div><!-- /.modal-content--> 
+    </div> <!--/.modal-dialog --> 
+</div> <!--/.modal --> 
 </div>
 <script>
     $('#FechaNacimientoForm').datepicker({
@@ -593,27 +584,159 @@
     document.getElementById("BtnModificar").style.display = 'none';
     document.getElementById("BtnEliminar").style.display = 'none';
     document.getElementById("BtnAceptar").style.display = 'none';
+    var Cosavacia = {id: 0, Nombre: ""};
+    var Ids = [1, 2, 3];
+    var Nombres = ["Taekwon-Do", "Funcional", "Personalizado"]
+    var VecActividades = repetitivaCrear(Ids, Nombres);
+    Ids = [1, 2];
+    Nombres = ["1 a 2 veces por semana", "Pase libre"]
+    var VecModalidades = repetitivaCrear(Ids, Nombres);
+    Ids = [1, 2, 3, 4];
+    Nombres = ["Inicial", "Infantiles A", "Infantiles B", "Juveniles y Adultos"]
+    var VecNiveles = repetitivaCrear(Ids, Nombres);
+    function aceptarModal() {
+        $('#ModalSel').modal('hide')
+        var resul = [];
+        var bien = true;
+        var todo = [];
+        todo.push(document.getElementById("Act1").getElementsByTagName("select"));
+        todo.push(document.getElementById("Act2").getElementsByTagName("select"));
+        todo.push(document.getElementById("Act3").getElementsByTagName("select"));
+        for (var i = 0; i < 3; i++) {
+            switch (todo[i][0].value) {
+                case "1":
+                    if (todo[i][1].value == "" || todo[i][2].value == "") {
+                        alert("Llena todo forro");
+                        bien = false;
+                    }
+                    break;
+                case "2":
+                    if (todo[i][1].value == "") {
+                        alert("Llena todo forro");
+                        bien = false;
+                    }
+            }
+        }
+        if (bien == true) {
+            resul.push(todo[0]);
+            if (todo[1][0].value != "") {
+                resul.push(todo[1]);
+                if (todo[2][0].value != "") {
+                    resul.push(todo[2]);
+                }
+            }
+        }
+
+
+    }
+    function ActividadesSelect1() {
+        switch ($('#IdActividadesSelect1').val()) {
+            case "1":
+                $('#IdModalidadesSelect1').removeClass('hidden');
+                $('#IdNivelesSelect1').removeClass('hidden');
+                VecActividades[0] = Cosavacia;
+                break;
+            case "2":
+                $('#IdModalidadesSelect1').removeClass('hidden');
+                $('#IdNivelesSelect1').addClass('hidden');
+                $('#IdNivelesSelect1').val('');
+                VecActividades[1] = Cosavacia;
+                break;
+            case "3":
+                $('#IdModalidadesSelect1').addClass('hidden');
+                $('#IdNivelesSelect1').addClass('hidden');
+                $('#IdModalidadesSelect1').val('');
+                $('#IdNivelesSelect1').val('');
+                VecActividades[2] = Cosavacia;
+        }
+    }
+    function ActividadesSelect2() {
+        switch ($('#IdActividadesSelect2').val()) {
+            case "1":
+                $('#IdModalidadesSelect2').removeClass('hidden');
+                $('#IdNivelesSelect2').removeClass('hidden');
+                VecActividades[0] = Cosavacia;
+                break;
+            case "2":
+                $('#IdModalidadesSelect2').removeClass('hidden');
+                $('#IdNivelesSelect2').addClass('hidden');
+                $('#IdNivelesSelect2').val('');
+                VecActividades[1] = Cosavacia;
+                break;
+            case "3":
+                $('#IdModalidadesSelect2').addClass('hidden');
+                $('#IdNivelesSelect2').addClass('hidden');
+                $('#IdModalidadesSelect2').val('');
+                $('#IdNivelesSelect2').val('');
+                VecActividades[2] = Cosavacia;
+        }
+    }
+    function ActividadesSelect3() {
+        $('#IdNivelesSelect1').addClass('disabled');
+        switch ($('#IdActividadesSelect3').val()) {
+            case "1":
+                $('#IdModalidadesSelect3').removeClass('hidden');
+                $('#IdNivelesSelect3').removeClass('hidden');
+                break;
+            case "2":
+                $('#IdModalidadesSelect3').removeClass('hidden');
+                $('#IdNivelesSelect3').addClass('hidden');
+                $('#IdNivelesSelect3').val('');
+                break;
+            case "3":
+                $('#IdModalidadesSelect3').addClass('hidden');
+                $('#IdNivelesSelect3').addClass('hidden');
+                $('#IdModalidadesSelect3').val('');
+                $('#IdNivelesSelect3').val('');
+        }
+    }
+    function AddAct1() {
+        $('#IdActividadesSelect1').prop("disabled", true);
+        $("#AddAct1").addClass('hidden');
+        $("#IdActividadesSelect2").html($("#IdActividadesSelect2").html() + optionCrear(VecActividades));
+    }
+    function AddAct2() {
+        $('#IdActividadesSelect2').prop("disabled", true);
+        $("#AddAct2").addClass('hidden');
+        $("#IdActividadesSelect3").html($("#IdActividadesSelect3").html() + optionCrear(VecActividades));
+    }
+
+    function optionCrear(vec) {
+        var txt;
+        for (var i = 0; i < vec.length; i++) {
+            if (vec[i].Nombre.length > 1) {
+                txt += "<option value='" + vec[i].id + "'>" + vec[i].Nombre + "</option>";
+            }
+        }
+        return txt;
+    }
+    function repetitivaCrear(Ids, Nombres) {
+        var Cosa = [];
+        var Vec = [];
+        for (var i = 0; i < Ids.length; i++) {
+            Cosa = {id: Ids[i], Nombre: Nombres[i]};
+            Vec.push(Cosa);
+        }
+        return Vec;
+    }
     var VecElementos = [];
-//    $.ajax({
-//        type: "POST",
-//        url: "<?php echo URL; ?>cliente/listadoDropdowns",
-//        success: function (respuesta) {
-//            var myObj = JSON.parse(respuesta);
-//            for (vector in myObj) {
-//                var txt = "";
-//                for (element in myObj[vector]) {
-//                    txt += "<option value='" + myObj[vector][element].id + "'>" + myObj[vector][element].Nombre + "</option>";
-//                }
-//                VecElementos.push(txt);
-//            }
-//            var i = 0;
-//            var selects = document.getElementById("Formu").getElementsByTagName("select");
-//            for (select in selects) {
-//                selects[select].innerHTML = VecElementos[i];
-//                i++;
-//            }
-//        }
-//    });
+    $.ajax({
+        type: "POST",
+        url: "<?php echo URL; ?>cliente/listadoDropdowns",
+        success: function (respuesta) {
+            var myObj = JSON.parse(respuesta);
+            for (vector in myObj[0]) {
+                var txt = optionCrear(myObj[0][vector]);
+                VecElementos.push(txt);
+            }
+            var i = 0;
+            var selects = document.getElementById("Formu").getElementsByTagName("select");
+            for (select in selects) {
+                selects[select].innerHTML = VecElementos[i];
+                i++;
+            }
+        }
+    });
     var VecClientes = [];
     $(document).ready(function () {
         listadoclientes();
@@ -771,9 +894,9 @@
         var apellido = document.getElementById("ApellidosForm").value;
         var sede = document.getElementById("IdSedesSelect").value;
         var categoria = document.getElementById("IdCategoriasSelect").value;
-        if (nombre === "" || apellido == "" || sede == "" || categoria == "")
+        if (nombre === "" || apellido == "" || sede == "" || categoria == "" || bien == false)
         {
-            alert("Los siguientes campos son absolutamente obligatorios: Nombre, Apelliido, Sede, Actividades y Categor�a\n\
+            alert("Los siguientes campos son absolutamente obligatorios: Nombre, Apelliido, Sede, Actividades (llenar correctamente en case de no haberlo) y Categor�a\n\
 (Se recomienda llenar todos)");
         } else {
             vec = [];
