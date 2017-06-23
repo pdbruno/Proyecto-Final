@@ -58,8 +58,8 @@ class cliente_Model extends Model {
         echo json_encode($outp);
     }
 
-    public function repetitivaQuery($sql, $cant) {
-        for ($index = 0; $index < $cant; $index++) {
+    public function repetitivaQuery($sql) {
+        for ($index = 0; $index < count($sql); $index++) {
             $outp = $this->db->getAll($sql[$index]);
             $todo[] = $outp;
         }
@@ -72,7 +72,7 @@ class cliente_Model extends Model {
         $sql[1] = "SELECT idGrupoFactorSanguineo as id, Nombre FROM grupofactorsanguineo;";
         $sql[2] = "SELECT idCategorias as id, Nombre FROM categorias;";
         $sql[3] = "SELECT idSedes as id, Nombre FROM sedes;";
-        $res[] = $this->repetitivaQuery($sql, 4);
+        $res[] = $this->repetitivaQuery($sql);
 //        $sql[0] = "SELECT `idActividades` as 'id', `Nombre` FROM `actividades`";
 //        $sql[1] = "SELECT `idModalidades` as 'id', `Nombre` FROM `modalidades`";
 //        $sql[2] = "SELECT `idNiveles` as 'id', `Nombre` FROM `niveles`";
@@ -96,6 +96,42 @@ class cliente_Model extends Model {
     public function eliminarCliente($idClientes) {
         $sql = "DELETE FROM clientes WHERE idClientes = ?i";
         $this->db->query($sql, $idClientes);
+    }
+
+    public function asignarActividades($actividades, $idClientes) {
+        for ($i = 0; $i < 3; $i++) {
+            switch ($actividades[$i][0]) {
+                case 1:
+                    $tkd = true;
+                    $modtkd = $actividades[$i][1];
+                    $nivtkd = $actividades[$i][2];
+                    break;
+                case 2:
+                    $fun = true;
+                    $modfun = $actividades[$i][1];
+                    break;
+                case 3:
+                    $per = true;
+            }
+        }
+
+        if ($tkd) {
+            $parte[] = $this->db->parse("1 AND idModalidades = ?i AND idNiveles = ?i", $modtkd, $nivtkd);
+        }
+        if ($fun) {
+            $parte[] = $this->db->parse("2 AND idModalidades = ?i", $modfun);
+        }
+        if ($per) {
+            $parte[] = $this->db->parse("3");
+        }
+        for ($i = 0; $i < count($parte); $i++) {
+            $sql[] = $this->db->parse("SELECT idActividadesModalidadesNiveles FROM actividadesmodalidadesniveles WHERE idActividades = ?p", $parte[$i]);
+        }
+        $res = $this->repetitivaQuery($sql);
+        for ($i = 0; $i < count($parte); $i++) {
+            $this->db->query("INSERT INTO clientesactividades SET `idClientes`= ?i, `idActividadesModalidadesNiveles`= ?i", $idClientes, $res[$i][0]["idActividadesModalidadesNiveles"]);
+        }
+        
     }
 
     public function agregarModificarCliente($data) {
