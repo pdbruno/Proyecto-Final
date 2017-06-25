@@ -42,7 +42,7 @@ class cliente extends Controller {
         $actividades = json_decode($data2, TRUE);
         $cliente = $this->model->nuevoObjeto($cliente);
         $this->model->agregarModificarCliente($cliente);
-        $this->model->asignarActividades($data2, $cliente["idClientes"]);
+        $this->model->asignarActividades($actividades, $cliente["idClientes"]);
     }
 
     public function eliminarCliente() {
