@@ -86,7 +86,7 @@ class producto extends Controller {
 //        $caca['MontoInd']
 //        $caca['Cantidad']
 
-        $datos = $this->model->registrarVenta($caca);
+        $datos = $this->model->registrarCompra($caca);
     }
 
     function registrarVenta() {

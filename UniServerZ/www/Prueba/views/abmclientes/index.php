@@ -594,7 +594,7 @@
   }
 
   $('#FechaNacimientoForm').datepicker({
-    format: "dd/mm/yyyy",
+    format: "yyyy/mm/dd",
     endDate: "today",
     language: "es",
     autoclose: true,
@@ -627,7 +627,6 @@
         if (todo[i][1].value == "") {
           alert("Llena todo forro");
           bien = false;
-
         }
       }
     }

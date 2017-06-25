@@ -48,7 +48,6 @@ class producto_Model extends Model {
     }
 
     public function registrarCompra($data) {
-
         $sql = "INSERT INTO
                     registrocompras(
                     Fecha,
@@ -59,13 +58,11 @@ class producto_Model extends Model {
                     ?i,
                     ?s,
                     ?i)";
-        $data = json_decode($data);
-        var_dump($data[0]->value);
-        $this->db->query($sql, $data[0]->value,$data[1]->value,$data[2]->value,$data[3]->value);
-        $stock = $this->traerStock($data[1]->value);
+        $this->db->query($sql, $data[0]["value"],$data[1]["value"],$data[2]["value"],$data[3]["value"]);
+        $stock = $this->traerStock($data[1]["value"]);
         $stock = $stock[0]["Stock"];
-        $stock = $stock + $data[3]->value;
-        $this->actualizarStock($stock, $data[1]->value);
+        $stock = $stock + $data[3]["value"];
+        $this->actualizarStock($stock, $data[1]["value"]);
     }
 
     private function actualizarStock($stock, $id) {
@@ -94,13 +91,12 @@ class producto_Model extends Model {
                     ?i,
                     ?s,
                     ?i)";
-        $data = json_decode($data);
-        $this->db->query($sql, $data[0]->value,$data[1]->value,$data[2]->value,$data[3]->value);
-        $papasfritas = $this->traerStock($data[1]->value);
+        $this->db->query($sql, $data[0]["value"],$data[1]["value"],$data[2]["value"],$data[3]["value"]);
+        $papasfritas = $this->traerStock($data[1]["value"]);
         $stock = $papasfritas[0]["Stock"];
         $avisar = $papasfritas[0]["Avisar"];
-        $stock = $stock - $data[3]->value;
-        $this->actualizarStock($stock, $data[1]->value);
+        $stock = $stock - $data[3]["value"];
+        $this->actualizarStock($stock, $data[1]["value"]);
         if ($stock <= $avisar) {
             echo json_encode("El stock está por debajo de las $avisar unidades (más específicamente está en $stock unidades)");
         }

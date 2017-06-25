@@ -56,11 +56,11 @@
     });
     function Precio()
     {
-        document.getElementById("MontoForm").value = caca[document.getElementById("IdProductosForm").selectedIndex].Precio;
+        document.getElementById("MontoForm").value = caca[document.getElementById("IdProductosForm").selectedIndex-1].Precio;
     }
     function Multiplicar()
     {
-        document.getElementById("MontoForm").value = caca[document.getElementById("IdProductosForm").selectedIndex].Precio * document.getElementById("CantidadForm").value;
+        document.getElementById("MontoForm").value = caca[document.getElementById("IdProductosForm").selectedIndex-1].Precio * document.getElementById("CantidadForm").value;
     }
     function Agregar()
     {
