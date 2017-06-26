@@ -512,6 +512,10 @@
                     <option value='2'>Infantiles A</option>
                     <option value='3'>Infantiles B</option>
                     <option value='4'>Juveniles y Adultos</option>
+                    <option value='5'>Mañana</option>
+                    <option value='6'>Tarde</option>
+                    <option value='7'>Noche</option>
+
                   </select>
                 </div>
               </div>
@@ -536,6 +540,9 @@
                       <option value='2'>Infantiles A</option>
                       <option value='3'>Infantiles B</option>
                       <option value='4'>Juveniles y Adultos</option>
+                      <option value='5'>Mañana</option>
+                      <option value='6'>Tarde</option>
+                      <option value='7'>Noche</option>
                     </select>
                   </div>
                 </div>
@@ -560,9 +567,11 @@
                         <option value='2'>Infantiles A</option>
                         <option value='3'>Infantiles B</option>
                         <option value='4'>Juveniles y Adultos</option>
+                        <option value='5'>Mañana</option>
+                        <option value='6'>Tarde</option>
+                        <option value='7'>Noche</option>
                       </select>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -606,6 +615,12 @@
   var Ids = [1, 2, 3];
   var Nombres = ["Taekwon-Do", "Funcional", "Personalizado"];
   var VecActividades = repetitivaCrear(Ids, Nombres);
+  var IdsNiv = [1, 2, 3, 4];
+  var NombresNiv = ["Inicial", "Infantiles A", "Infantiles B", "Juveniles y Adultos"];
+  var VecNiveles1 = repetitivaCrear(IdsNiv, NombresNiv);
+  IdsNiv = [5, 6, 7];
+  NombresNiv = ["Mañana", "Tarde", "Noche"];
+  var VecNiveles2 = repetitivaCrear(IdsNiv, NombresNiv);
   var bien = true;
   var final = [];
   function aceptarModal() {
@@ -624,7 +639,7 @@
         }
         break;
         case "2":
-        if (todo[i][1].value == "") {
+        if (todo[i][2].value == "") {
           alert("Llena todo forro");
           bien = false;
         }
@@ -650,11 +665,14 @@
       case "1":
       $('#IdModalidadesSelect1').removeClass('hidden');
       $('#IdNivelesSelect1').removeClass('hidden');
+      document.getElementById("IdNivelesSelect1").innerHTML= optionCrear(VecNiveles1);
       break;
       case "2":
-      $('#IdModalidadesSelect1').removeClass('hidden');
-      $('#IdNivelesSelect1').addClass('hidden');
-      $('#IdNivelesSelect1').val('');
+      $('#IdModalidadesSelect1').addClass('hidden');
+      $('#IdNivelesSelect1').removeClass('hidden');
+      $('#IdModalidadesSelect1').val('');
+      document.getElementById("IdNivelesSelect1").innerHTML= optionCrear(VecNiveles2);
+
       break;
       case "3":
       $('#IdModalidadesSelect1').addClass('hidden');
@@ -669,11 +687,13 @@
       case "1":
       $('#IdModalidadesSelect2').removeClass('hidden');
       $('#IdNivelesSelect2').removeClass('hidden');
+      document.getElementById("IdNivelesSelect2").innerHTML= optionCrear(VecNiveles1);
       break;
       case "2":
-      $('#IdModalidadesSelect2').removeClass('hidden');
-      $('#IdNivelesSelect2').addClass('hidden');
-      $('#IdNivelesSelect2').val('');
+      $('#IdModalidadesSelect2').addClass('hidden');
+      $('#IdNivelesSelect2').removeClass('hidden');
+      $('#IdModalidadesSelect2').val('');
+      document.getElementById("IdNivelesSelect2").innerHTML= optionCrear(VecNiveles2);
       break;
       case "3":
       $('#IdModalidadesSelect2').addClass('hidden');
@@ -687,11 +707,13 @@
       case "1":
       $('#IdModalidadesSelect3').removeClass('hidden');
       $('#IdNivelesSelect3').removeClass('hidden');
+      document.getElementById("IdNivelesSelect3").innerHTML= optionCrear(VecNiveles1);
       break;
       case "2":
-      $('#IdModalidadesSelect3').removeClass('hidden');
-      $('#IdNivelesSelect3').addClass('hidden');
-      $('#IdNivelesSelect3').val('');
+      $('#IdModalidadesSelect3').addClass('hidden');
+      $('#IdNivelesSelect3').removeClass('hidden');
+      $('#IdModalidadesSelect3').val('');
+      document.getElementById("IdNivelesSelect3").innerHTML= optionCrear(VecNiveles2);
       break;
       case "3":
       $('#IdModalidadesSelect3').addClass('hidden');
@@ -864,6 +886,15 @@
                     break;
                     case "Juveniles y Adultos":
                     sub.push("4");
+                    break;
+                    case "Mañana":
+                    sub.push("5");
+                    break;
+                    case "Tarde":
+                    sub.push("6");
+                    break;
+                    case "Noche":
+                    sub.push("7");
                     break;
                   }
                   if (actividades[act][prop] != null) {

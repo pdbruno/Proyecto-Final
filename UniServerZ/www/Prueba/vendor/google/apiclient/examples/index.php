@@ -1,5 +1,4 @@
 <?php include_once "templates/base.php" ?>
-
 <?php if (!isWebRequest()): ?>
   To view this example, run the following command from the root directory of this repository:
 

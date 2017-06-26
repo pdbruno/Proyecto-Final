@@ -121,7 +121,7 @@ class cliente_Model extends Model {
         break;
         case "2":
         $fun = true;
-        $modfun = $actividades[$i][1];
+        $nivfun = $actividades[$i][1];
         break;
         case "3":
         $per = true;
@@ -132,15 +132,15 @@ class cliente_Model extends Model {
       $parte[] = $this->db->parse("1 AND idModalidades = ?i AND idNiveles = ?i", $modtkd, $nivtkd);
     }
     if (isset($fun)) {
-      $parte[] = $this->db->parse("2 AND idModalidades = ?i", $modfun);
+      $parte[] = $this->db->parse("2 AND idNiveles = ?i", $nivfun);
     }
     if (isset($per)) {
       $parte[] = $this->db->parse("3");
     }
     $this->db->query("DELETE FROM clientesactividades WHERE idClientes = ?i", $idClientes);
     for ($i = 0; $i < count($parte); $i++) {
-      $outp = $this->db->getAll("SELECT idActividadesModalidadesNiveles FROM actividadesmodalidadesniveles WHERE idActividades = ?p", $parte[$i]);
-      $this->db->query("INSERT INTO clientesactividades SET `idClientes`= ?i, `idActividadesModalidadesNiveles`= ?i", $idClientes, $outp[0]["idActividadesModalidadesNiveles"]);
+      $outp = $this->db->getOne("SELECT idActividadesModalidadesNiveles FROM actividadesmodalidadesniveles WHERE idActividades = ?p", $parte[$i]);
+      $this->db->query("INSERT INTO clientesactividades SET `idClientes`= ?i, `idActividadesModalidadesNiveles`= ?i", $idClientes, $outp);
     }
 
   }

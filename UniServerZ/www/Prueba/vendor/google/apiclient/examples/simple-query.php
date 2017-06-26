@@ -14,8 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-include_once __DIR__ . '/../vendor/autoload.php';
+include_once __DIR__ . '/../../../autoload.php';
 include_once "templates/base.php";
 
 echo pageHeader("Simple API Access");
