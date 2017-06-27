@@ -13,7 +13,14 @@ class actividad extends Controller {
   }
   public function mostrar()
   {
-    echo $this->model->mostrar();
+    if (isset($_POST['data'])) {
+        $idActividades = $_POST['data'];
+    } else {
+        require 'controllers/error_.php';
+        $error = new Error_();
+        $error->index("Hubo un error en la transferencia de datos");
+    }
+    echo $this->model->mostrar($idActividades);
   }
   public function manejar()
   {

@@ -8,18 +8,11 @@ class actividad_Model extends Model {
   public function setServicio($servicio)
   {
     $this->calendar = $servicio;
-    var_dump($this->calendar);
   }
-  public function mostrar()
+  public function mostrar($idActividades)
   {
-    $calendarId = 'primary';
-    $optParams = array(
-      'maxResults' => 10,
-      'orderBy' => 'startTime',
-      'singleEvents' => TRUE,
-      'timeMin' => date('c'),
-    );
-    $results = $this->calendar->events->listEvents($calendarId, $optParams);
+    $event = $this->calendar->events->get('primary', $idActividades);
+    return $event->getSummary();
     //var_dump($results);
   }
   public function nuevoEvento($service, $data)
