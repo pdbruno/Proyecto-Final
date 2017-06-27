@@ -11,27 +11,22 @@ class actividad extends Controller {
     $datos = $this->model->traerActividades();
     echo $datos;
   }
+  public function mostrar()
+  {
+    echo $this->model->mostrar();
+  }
   public function manejar()
   {
     session_start();
 
     $client = new Google_Client();
     $client->setAuthConfig('client_secrets.json');
-    $client->addScope(Google_Service_Calendar::CALENDAR);
-
     if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
-      $client->setAccessToken($_SESSION['access_token']);
+      $google_token= $_SESSION['access_token'];
+      $client->refreshToken($google_token);
+      $_SESSION['access_token']= $client->getAccessToken();
       $service = new Google_Service_Calendar($client);
-
-      $calendarId = 'primary';
-      $optParams = array(
-        'maxResults' => 10,
-        'orderBy' => 'startTime',
-        'singleEvents' => TRUE,
-        'timeMin' => date('c'),
-      );
-      $results = $service->events->listEvents($calendarId, $optParams);
-      var_dump($results);
+      $this->model->setServicio($service);
     } else {
       $redirect_uri = URL . 'actividad/calendar';
       header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
@@ -45,7 +40,7 @@ class actividad extends Controller {
     $client->setRedirectUri(URL . 'actividad/calendar');
     $client->setAccessType("offline");
     $client->setIncludeGrantedScopes(true);
-    $client->addScope(Google_Service_Calendar::CALENDAR);
+    $client->addScope('https://www.googleapis.com/auth/calendar');
     if (! isset($_GET['code'])) {
       $auth_url = $client->createAuthUrl();
       header('Location: ' . filter_var($auth_url, FILTER_SANITIZE_URL));

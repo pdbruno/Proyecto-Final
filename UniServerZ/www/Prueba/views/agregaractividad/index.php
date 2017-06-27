@@ -14,7 +14,14 @@
 </div>
 <script>
 function caca (valor){
-  alert(valor);
+  $.ajax({
+    type: "POST",
+    url: "<?php echo URL; ?>actividad/mostrar",
+    success: function (respuesta)
+    {
+      alert(respuesta);
+    }
+  });
 }
 var texto = "";
 $.ajax({

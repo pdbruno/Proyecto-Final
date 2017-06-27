@@ -4,6 +4,24 @@ class actividad_Model extends Model {
   public function __construct() {
     parent::__construct();
   }
+  public $calendar;
+  public function setServicio($servicio)
+  {
+    $this->calendar = $servicio;
+    var_dump($this->calendar);
+  }
+  public function mostrar()
+  {
+    $calendarId = 'primary';
+    $optParams = array(
+      'maxResults' => 10,
+      'orderBy' => 'startTime',
+      'singleEvents' => TRUE,
+      'timeMin' => date('c'),
+    );
+    $results = $this->calendar->events->listEvents($calendarId, $optParams);
+    //var_dump($results);
+  }
   public function nuevoEvento($service, $data)
   {
     $event = new Google_Service_Calendar_Event(array(

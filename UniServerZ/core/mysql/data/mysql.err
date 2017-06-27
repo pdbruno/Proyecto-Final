@@ -2974,3 +2974,20 @@ Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
 2017-06-26 01:09:04 8800 [Note] Shutting down plugin 'binlog'
 2017-06-26 01:09:04 8800 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
 
+2017-06-26 18:19:51 22420 [Note] Plugin 'FEDERATED' is disabled.
+2017-06-26 18:19:51 22420 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-06-26 18:19:51 22420 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-06-26 18:19:51 22420 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-06-26 18:19:51 22420 [Note] InnoDB: Memory barrier is not used
+2017-06-26 18:19:51 22420 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-06-26 18:19:51 22420 [Note] InnoDB: Not using CPU crc32 instructions
+2017-06-26 18:19:51 22420 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-06-26 18:19:51 22420 [Note] InnoDB: Completed initialization of buffer pool
+2017-06-26 18:19:51 22420 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-06-26 18:19:53 22420 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-06-26 18:19:53 22420 [Note] InnoDB: Waiting for purge to start
+2017-06-26 18:19:53 22420 [Note] InnoDB: 5.6.35 started; log sequence number 9239267
+2017-06-26 18:19:53 22420 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-06-26 18:19:53 22420 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-06-26 18:19:53 22420 [Note] Server socket created on IP: '127.0.0.1'.
+2
