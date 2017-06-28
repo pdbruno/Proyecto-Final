@@ -11,15 +11,17 @@ class actividad_Model extends Model {
   }
   public function mostrar($idActividades)
   {
-    $event = $this->calendar->events->get('primary', $idActividades);
+    $event = $servicio->events->get('primary', $idActividades);
     return $event->getSummary();
-    //var_dump($results);
   }
-  public function nuevoEvento($service, $data)
+  public function format($data)
+  {
+    # code...
+  }
+  public function editarEvento($data)
   {
     $event = new Google_Service_Calendar_Event(array(
       'summary' => $data["titulo"],
-      'description' => "",
       'start' => array(
         'dateTime' => $data["inicio"], //'2015-05-28T09:00:00-07:00'
         'timeZone' => 'America/Buenos_Aires',
@@ -27,25 +29,12 @@ class actividad_Model extends Model {
       'end' => array(
         'dateTime' => $data["fin"], //'2015-05-28T09:00:00-07:00'
         'timeZone' => 'America/Buenos_Aires',
-      ),
-      'recurrence' => array(
-        'RRULE:FREQ=DAILY;COUNT=2'
-      ),
-      'attendees' => array(
-        array('email' => 'lpage@example.com'),
-        array('email' => 'sbrin@example.com'),
-      ),
-      'reminders' => array(
-        'useDefault' => FALSE,
-        'overrides' => array(
-          array('method' => 'email', 'minutes' => 24 * 60),
-          array('method' => 'popup', 'minutes' => 10),
-        ),
-      ),
+      )
     ));
-    $calendarId = 'primary';
-    $event = $service->events->insert($calendarId, $event);
-
+    if (count($data["recurrencia"])!=0) {
+      $event['recurrence'] = $data["recurrencia"];
+    }
+    $updatedEvent = $service->events->update('primary', $data["id"], $event);
   }
   public function traerActividades() {
     $sql = "SELECT actividades.Nombre as actNombre, niveles.Nombre as nivNombre FROM actividadesmodalidadesniveles LEFT JOIN actividades ON actividadesmodalidadesniveles.idActividades = actividades.idActividades LEFT JOIN niveles ON actividadesmodalidadesniveles.idNiveles = niveles.idNiveles WHERE actividades.idActividades != 3 GROUP BY `nivNombre` ";

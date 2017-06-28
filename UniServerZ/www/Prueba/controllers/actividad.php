@@ -3,9 +3,11 @@ class actividad extends Controller {
 
   function __construct() {
     parent::__construct();
+    session_start();
   }
   function index() {
     $this->view->render('agregaractividad/index');
+    $this->manejar();
   }
   public function traerActividades() {
     $datos = $this->model->traerActividades();
@@ -24,8 +26,6 @@ class actividad extends Controller {
   }
   public function manejar()
   {
-    session_start();
-
     $client = new Google_Client();
     $client->setAuthConfig('client_secrets.json');
     if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
@@ -39,6 +39,26 @@ class actividad extends Controller {
       header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
     }
   }
+
+  public function editarActividad() {
+        if (isset($_POST['data1'])&&isset($_POST['data2'])) {
+            $data1 = $_POST['data1'];
+            $data2 = $_POST['data2'];
+        } else {
+            require 'controllers/error_.php';
+            $error = new Error_();
+            $error->index("Hubo un error en la transferencia de datos");
+        }
+        $actividad = json_decode($data1, TRUE);
+        $repeticion = json_decode($data2, TRUE);
+        $evento = $this->model->format($actividad);
+        //DARLE FORMATO AL EVENTO Y ENVIARLO (BORRAR TODOS LOS QUE TENGAN LA MISMA ID)
+        $this->model->editarEvento($evento);
+        $this->model->asignarActividades($actividades, $cliente["idClientes"]);
+    }
+
+
+
   public function calendar() {
     session_start();
 

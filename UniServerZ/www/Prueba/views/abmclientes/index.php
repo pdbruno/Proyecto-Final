@@ -156,7 +156,7 @@
               <label class="col-sm-2 control-label">Autoriza su imagen en la web:</label>
               <div class="col-sm-10">
                 <p class="intro" id="AutorizaWeb" hidden></p>
-                <input type="checkbox"class="checkbox"style="display: none;" id="AutorizaWebForm" disabled>
+                <input type="checkbox"class="checkbox disabled"style="display: none;" id="AutorizaWebForm" disabled>
               </div>
             </div>
           </li>
