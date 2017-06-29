@@ -1,6 +1,8 @@
 <script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
+<script type="text/javascript" src="<?php echo URL; ?>views/recursos/jquery.timepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo URL; ?>views/recursos/jquery.timepicker.css" />
 <div class="row" style="height:100%;">
   <div class="col-lg-6">
     <div class="panel panel-default">
@@ -59,8 +61,8 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">Horario de inicio:</label>
               <div class="col-sm-10">
-                <p id="DNI" class="form-control-static"></p>
-                <input type="number" min="0" style="display: none;" class="form-control" id="InicioForm" placeholder="Horario de inicio">
+                <p id="Inicio" class="form-control-static"></p>
+                <input type="text" style="display: none;" class="form-control" id="InicioForm" placeholder="Horario de inicio">
 
               </div>
             </div>
@@ -70,7 +72,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">Horario de finalización:</label>
               <div class="col-sm-10">
-                <p id="Domicilio" class="form-control-static"></p>
+                <p id="Finalizacion" class="form-control-static"></p>
                 <input type="text" style="display: none;" class="form-control" id="FinalizacionForm" placeholder="Horario de finalización">
 
               </div>
@@ -82,7 +84,7 @@
               <label class="col-sm-2 control-label">Se repite:</label>
               <div class="col-sm-10">
                 <input type="checkbox" onclick='check()' class="checkbox hidden disabled" id="SeRepiteForm">
-                <button type="button" id="RepeticionSelect"  class="btn btn-link hidden" data-toggle="modal" data-target="#RepEdit">Elegir repetición</button>
+                <button type="button" id="RepeticionSelect" onclick="$('#DiaFin').datepicker({language: 'es',startDate: $('#FechaForm').val() + '+1d',autoclose: true})" class="btn btn-link hidden" data-toggle="modal" data-target="#RepEdit">Elegir repetición</button>
               </div>
             </div>
           </li>
@@ -98,138 +100,254 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Seleccionar actividad/es</h4>
+        <h4 class="modal-title">Repetición</h4>
       </div>
       <div class="modal-body" id="Selec">
-
-        <div class="row" id="Act1">
-          <div class="col-md-4">
-            <select id="IdActividadesSelect1" class="form-control" onchange="ActividadesSelect1()">
-            </select>
-          </div>
-          <div class="col-md-4">
-            <select id="IdModalidadesSelect1" class="form-control hidden">
-              <option disabled selected value>Modalidad</option>
-              <option value='1'>1 a 2 veces por semana</option>
-              <option value='2'>Pase Libre</option>
-            </select>
-          </div>
-          <div class="col-md-4">
-            <select id="IdNivelesSelect1" class="form-control hidden">
-              <option disabled selected value>Nivel</option>
-              <option value='1'>Inicial</option>
-              <option value='2'>Infantiles A</option>
-              <option value='3'>Infantiles B</option>
-              <option value='4'>Juveniles y Adultos</option>
-              <option value='5'>Mañana</option>
-              <option value='6'>Tarde</option>
-              <option value='7'>Noche</option>
-
-            </select>
-          </div>
-        </div>
-        <button type="button" id="AddAct1" class="btn btn-link" onclick="AddAct1()" >+AgregarActividad</button>
-        <div class="collapse" id="Act2">
-          <div class="row" style="margin-top: 50px;">
-            <div class="col-md-4">
-              <select id="IdActividadesSelect2" class="form-control" onchange="ActividadesSelect2()">
-              </select>
-            </div>
-            <div class="col-md-4">
-              <select id="IdModalidadesSelect2" class="form-control hidden">
-                <option disabled selected value>Modalidad</option>
-                <option value='1'>1 a 2 veces por semana</option>
-                <option value='2'>Pase Libre</option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <select id="IdNivelesSelect2" class="form-control hidden">
-                <option disabled selected value>Nivel</option>
-                <option value='1'>Inicial</option>
-                <option value='2'>Infantiles A</option>
-                <option value='3'>Infantiles B</option>
-                <option value='4'>Juveniles y Adultos</option>
-                <option value='5'>Mañana</option>
-                <option value='6'>Tarde</option>
-                <option value='7'>Noche</option>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Se repite:</label>
+            <div class="col-sm-4">
+              <select id="RepSelect" class="form-control" onchange="byebye()">
+                <option  value="0" title="Todos los días">Todos los días</option>
+                <option value="1" title="Todos los días hábiles (de lunes a viernes)">Todos los días hábiles (de lunes a viernes)</option>
+                <option value="2" title="Todos los lunes, miércoles y viernes">Todos los lunes, miércoles y viernes</option>
+                <option value="3" title="Todos los martes y jueves">Todos los martes y jueves</option>
+                <option value="4" title="Todas las semanas">Todas las semanas</option>
+                <option value="5" title="Todos los meses">Todos los meses</option>
+                <option value="6" title="Todos los años">Todos los años</option>
               </select>
             </div>
           </div>
-          <button type="button" id="AddAct2" class="btn btn-link" onclick="AddAct2();">+AgregarActividad</button>
-          <div class="collapse" id="Act3">
-            <div class="row" style="margin-top: 50px;">
-              <div class="col-md-4">
-                <select id="IdActividadesSelect3" class="form-control" onchange="ActividadesSelect3()">
+          <div class="form-group" id="intervalo">
+            <label class="col-sm-2 control-label">Repetir cada:</label>
+            <div class="col-sm-4">
+              <span>
+                <select  class="form-control" id="RepCada">
+                  <option value="1" selected="selected">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
                 </select>
-              </div>
-              <div class="col-md-4">
-                <select id="IdModalidadesSelect3" class="form-control hidden">
-                  <option disabled selected value>Modalidad</option>
-                  <option value='1'>1 a 2 veces por semana</option>
-                  <option value='2'>Pase Libre</option>
-                </select>
-              </div>
-              <div class="col-md-4">
-                <select id="IdNivelesSelect3" class="form-control hidden">
-                  <option disabled selected value>Nivel</option>
-                  <option value='1'>Inicial</option>
-                  <option value='2'>Infantiles A</option>
-                  <option value='3'>Infantiles B</option>
-                  <option value='4'>Juveniles y Adultos</option>
-                  <option value='5'>Mañana</option>
-                  <option value='6'>Tarde</option>
-                  <option value='7'>Noche</option>
-                </select>
-              </div>
+                <p id="unidad"> días</p>
+              </span>
             </div>
+          </div>
+          <div class="form-group hidden" id="diasmes">
+            <label class="col-sm-2 control-label">Repetir el:</label>
+            <label class="radio-inline">
+              <input type="radio" name="diadelmes" id="diadelmes" onclick="fdiadelmes()" value="diames"> día del mes (Ej.: "el cuarto miércoles del mes")
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="diadelasemana" id="diadelasemana" onclick="fdiadelasemana()" value="diasemana" checked> día de la semana (Ej.: "el 28 de cada mes")
+            </label>
+          </div>
+          <div class="form-group hidden" id="diassemana">
+            <label class="col-sm-2 control-label">Repetir el:</label>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="lunes" value="lunes"> L
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="martes" value="martes"> M
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="miercoles" value="miercoles"> X
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="jueves" value="jueves"> J
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="viernes" value="viernes"> V
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="sabado" value="sabado"> S
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="domingo" value="domingo"> D
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Termina:</label>
+            <div class="col-sm-10">
+              <div class="radio">
+                <label>
+                  <input type="radio" onclick="radio1()" id="optionsRadios1" checked value="option1">
+                  Nunca
+                </label>
+              </div>
+            </br>
+            <div class="radio form-inline">
+              <label>
+                <input type="radio" onclick="radio2()" id="optionsRadios2" value="option2">
+                Después de
+                <input type="number" id="NumVeces" class="form-control" disabled>
+                veces
+              </label>
+            </div>
+          </br>
+          <div class="radio form-inline">
+            <label>
+              <input type="radio" onclick="radio3()" id="optionsRadios3" value="option3">
+              El
+              <input type="date" id="DiaFin" class="form-control" disabled>
+            </label>
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default"onclick="deshacerModal()" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" onclick="aceptarModal()"> Aceptar</button>
-      </div>
-    </div>
-  </div><!-- /.modal-content-->
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default"onclick="document.getElementById('SeRepiteForm').checked=false" data-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-primary" onclick="aceptarModal()"> Aceptar</button>
+  </div>
+</div>
+</div><!-- /.modal-content-->
 </div> <!--/.modal-dialog -->
 </div> <!--/.modal -->
 <script>
+$('#InicioForm').timepicker({ 'timeFormat': 'H:i:s' });
+$('#FinalizacionForm').timepicker({ 'timeFormat': 'H:i:s' });
+var RepFinal = {};
+function aceptarModal(){
+  RepFinal['TipoRepeticion'] = document.getElementById("RepSelect").value;
+  switch (document.getElementById("RepSelect").value) {
+    case "0":
+    RepFinal['RepCadaXDias'] = document.getElementById("RepCada").value;
+    break;
+    case "4":
+    RepFinal['RepCadaXSemanas'] = document.getElementById("RepCada").value;
+    var dias = document.getElementById("diassemana").document.getElementByTag("input");
+    var diasvec = [];
+    for (day in dias) {
+      if (dias[day].checked==true) {
+        diasvec.push(dias[day].value);
+      }
+    }
+    if (diasvec.toString()=='') {
+      var diaEvento = new Date($('#FechaForm').val());
+      var days = ["domingo","lunes","martes","miercoles","jueves","viernes","sabado"];
+      diaEvento = diaEvento.getDay();
+      diasvec.push(days[diaEvento].value);
+    }
+    RepFinal['DiasARepXSemana'] = diasvec;
+    break;
+    case "5":
+    RepFinal['RepCadaXMeses'] = document.getElementById("RepCada").value;
+    var modo = document.getElementById("diasmes").document.getElementByTag("input");
+    for (caca in modo) {
+      if (modo[caca].checked==true) {
+        RepFinal['ModoRepMes'] = modo[caca].value;
+      }
+    }
+    break;
+    case "6":
+    RepFinal['RepCadaXAno'] = document.getElementById("RepCada").value;
+    break;
+  }
+}
+RepFinal = JSON.stringify(RepFinal);
+$('#FechaForm').datepicker({
+  language: "es",
+  startDate: "today",
+  autoclose: true,
+  format: "yyyy-mm-dd"
+});
+function byebye(){
+  switch (document.getElementById("RepSelect").value) {
+    case "0":
+    $("#unidad").text(' días');
+    $("#intervalo").removeClass('hidden');
+    $("#diassemana").addClass('hidden');
+    $("#diasmes").addClass('hidden');
+
+    break;
+    case "4":
+    $("#intervalo").removeClass('hidden');
+    $("#unidad").text(' semanas');
+    $("#diassemana").removeClass('hidden');
+    $("#diasmes").addClass('hidden');
+
+    break;
+    case "5":
+    $("#intervalo").removeClass('hidden');
+    $("#unidad").text(' meses');
+    $("#diassemana").addClass('hidden');
+    $("#diasmes").removeClass('hidden');
+    break;
+    case "6":
+    $("#intervalo").removeClass('hidden');
+    $("#unidad").text(' años');
+    $("#diassemana").addClass('hidden');
+    $("#diasmes").addClass('hidden');
+    break;
+    default:
+    $("#intervalo").addClass('hidden');
+    $("#unidad").addClass('hidden');
+    $("#diassemana").addClass('hidden');
+    $("#diasmes").addClass('hidden');
+  }
+}
+function fdiadelmes(){
+  document.getElementById("diadelasemana").checked = false;
+}
+function fdiadelasemana(){
+  document.getElementById("diadelmes").checked = false;
+}
+function radio1(){
+  document.getElementById("optionsRadios2").checked = false;
+  document.getElementById("optionsRadios3").checked = false;
+  document.getElementById("NumVeces").disabled = true;
+  document.getElementById("DiaFin").disabled = true;
+}
+function radio2(){
+  document.getElementById("optionsRadios1").checked = false;
+  document.getElementById("optionsRadios3").checked = false;
+  document.getElementById("NumVeces").disabled = false;
+  document.getElementById("DiaFin").disabled = true;
+}
+function radio3(){
+  document.getElementById("optionsRadios2").checked = false;
+  document.getElementById("optionsRadios1").checked = false;
+  document.getElementById("NumVeces").disabled = true;
+  document.getElementById("DiaFin").disabled = false;
+}
 document.getElementById("SeRepiteForm").disabled = true;
-function check (checkbox){
+function check (){
   var check = document.getElementById("SeRepiteForm");
   if (check.checked == true) {
     $("#RepeticionSelect").removeClass("hidden");
+  }else {
+    $("#RepeticionSelect").addClass("hidden");
   }
 }
-$('#Fecha').datepicker({
-  format: "yyyy/mm/dd",
-  endDate: "today",
-  language: "es",
-  autoclose: true,
-});
 document.getElementById("BtnModificar").style.display = 'none';
 document.getElementById("BtnAceptar").style.display = 'none';
-
-function optionCrear(vec) {
-  var txt = "";
-  for (var i = 0; i < vec.length; i++) {
-    if (vec[i].Nombre.length > 1) {
-      txt += "<option value='" + vec[i].id + "'>" + vec[i].Nombre + "</option>";
-    }
-  }
-  return txt;
-}
-function repetitivaCrear(Ids, Nombres) {
-  var Cosa = [];
-  var Vec = [];
-  for (var i = 0; i < Ids.length; i++) {
-    Cosa = {id: Ids[i], Nombre: Nombres[i]};
-    Vec.push(Cosa);
-  }
-  return Vec;
-}
-var VecClientes = [];
-
 function mostrarOcultar() {
   document.getElementById("BtnAceptar").style.display = 'inline-block';
   document.getElementById("BtnModificar").style.display = 'none';
@@ -257,35 +375,25 @@ function ModificarActividad()
 var vec = [];
 function EnviarActividad()
 {
-  var nombre = document.getElementById("NombresForm").value;
-  var fecha = document.getElementById("FechaForm").value;
-  var inicio = document.getElementById("InicioForm").value;
-  var finalizacion = document.getElementById("FinalizacionForm").value;
-  if (nombre === "" || fecha == "" || inicio == "" || finalizacion == "")
+  var data = "";
+  var datos = {};
+  datos['Inicio'] = document.getElementById("FechaForm").value +'T'+document.getElementById("InicioForm").value+'−03:00';
+  datos['Finalizacion'] = document.getElementById("FechaForm").value +'T'+document.getElementById("FinalizacionForm").value+'−03:00';
+  datos['Nombre'] = document.getElementById("NombresForm").value;
+  if (datos['Nombre'] === "" || datos['Inicio'].length != 22 || datos['Inicio'].length != 22)
   {
-    alert("Los siguientes campos son absolutamente obligatorios: Nombre, fecha, inicio, finalizacion");
+    alert("Ingrese los campos correctamente");
   } else {
-    vec = [];
-    var x = document.getElementById("Formu").getElementsByTagName("input");
-    var z = document.getElementsByClassName("checkbox");
-    for (var i = 0; i < z.length; i++) {
-      if (z[i].checked == true) {
-        z[i].value = 1;
-      } else {
-        z[i].value = 0;
-      }
-    }
-    for (var i = 0; i < x.length; i++) {
-      if (x[i].value === "") {
-        x[i].value = null;
-      }
-      vec.push(x[i].value);
+    if (RepFinal.length != 2) {
+      data = "data1=" + JSON.stringify(datos)+ "&data2=" + RepFinal;
+    }else {
+      data = "data1=" + JSON.stringify(datos)+ "&data2='no'";
     }
     var url = "<?php echo URL; ?>actividad/editarActividad";
     $.ajax({
       type: "POST",
       url: url,
-      data: "data1=" + JSON.stringify(vec) + "&data2=" + final,
+      data: data,
       success: function (respuesta)
       {
         var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
