@@ -3,6 +3,8 @@
 <link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
 <script type="text/javascript" src="<?php echo URL; ?>views/recursos/jquery.timepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo URL; ?>views/recursos/jquery.timepicker.css" />
+<script src="<?php echo URL; ?>views/recursos/rrule/rrule.js"></script>
+<script src="<?php echo URL; ?>views/recursos/rrule/nlp.js"></script>
 <div class="row" style="height:100%;">
   <div class="col-lg-6">
     <div class="panel panel-default">
@@ -23,7 +25,7 @@
       </div>
     </div>
   </div>
-  <div id="Formu" class="col-lg-6" style="height: 100%">
+  <div id="Formu" class="col-lg-6" style="height: 90%">
     <div class="panel panel-default">
       <ul class="list-group">
         <form class="form-horizontal">
@@ -31,8 +33,8 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">Id:</label>
               <div class="col-sm-10">
-                <p id="idClientes" class="form-control-static"></p>
-                <input type="text" style="display: none;" class="form-control" id="idClientesForm" placeholder="Se mira y no se toca" disabled>
+                <p id="idActividades" class="form-control-static"></p>
+                <input type="text" class="form-control hidden" id="idActividadesForm" placeholder="Se mira y no se toca" disabled>
 
               </div>
             </div>
@@ -42,8 +44,8 @@
 
               <label class="col-sm-2 control-label">Nombre del evento:</label>
               <div class="col-sm-10">
-                <p id="Nombres" class="form-control-static"></p>
-                <input type="text" style="display: none;" class="form-control" id="NombresForm" placeholder="Nombres">
+                <p id="Nombre" class="form-control-static"></p>
+                <input type="text"  class="form-control hidden" id="NombreForm" placeholder="Nombres">
               </div>
 
             </div>
@@ -53,7 +55,7 @@
               <label class="col-sm-2 control-label">Fecha:</label>
               <div class="col-sm-10">
                 <p id="Fecha" class="form-control-static"></p>
-                <input type="text" style="display: none;" class="form-control" id="FechaForm" placeholder="Fecha">
+                <input type="text" class="form-control hidden" id="FechaForm" placeholder="Fecha">
               </div>
             </div>
           </li>
@@ -62,7 +64,7 @@
               <label class="col-sm-2 control-label">Horario de inicio:</label>
               <div class="col-sm-10">
                 <p id="Inicio" class="form-control-static"></p>
-                <input type="text" style="display: none;" class="form-control" id="InicioForm" placeholder="Horario de inicio">
+                <input type="text" class="form-control hidden" id="InicioForm" placeholder="Horario de inicio">
 
               </div>
             </div>
@@ -73,7 +75,7 @@
               <label class="col-sm-2 control-label">Horario de finalización:</label>
               <div class="col-sm-10">
                 <p id="Finalizacion" class="form-control-static"></p>
-                <input type="text" style="display: none;" class="form-control" id="FinalizacionForm" placeholder="Horario de finalización">
+                <input type="text" class="form-control hidden" id="FinalizacionForm" placeholder="Horario de finalización">
 
               </div>
             </div>
@@ -82,9 +84,14 @@
           <li class="list-group-item">
             <div class="form-group">
               <label class="col-sm-2 control-label">Se repite:</label>
-              <div class="col-sm-10">
+              <div class="col-sm-1">
                 <input type="checkbox" onclick='check()' class="checkbox hidden disabled" id="SeRepiteForm">
-                <button type="button" id="RepeticionSelect" onclick="$('#DiaFin').datepicker({language: 'es',startDate: $('#FechaForm').val() + '+1d',autoclose: true})" class="btn btn-link hidden" data-toggle="modal" data-target="#RepEdit">Elegir repetición</button>
+              </div>
+              <div class="col-sm-3">
+                <button type="button" id="RepeticionSelect" onclick="$('#DiaFin').datepicker({language: 'es',startDate: $('#FechaForm').val() + '+1d',autoclose: true,format: 'yyyy-mm-dd'})" class="btn btn-link hidden" data-toggle="modal" data-target="#RepEdit">Elegir repetición</button>
+              </div>
+              <div class="col-sm-6">
+                <p  id="resumen"></p>
               </div>
             </div>
           </li>
@@ -92,7 +99,9 @@
       </ul>
     </div>
     <button type="button" id="BtnModificar"onclick="ModificarActividad()" class="btn btn-primary">Editar Actividad</button>
-    <button type="button" id="BtnAceptar" onclick="EnviarActividad()" class="btn btn-success">Aceptar</button>
+    <button type="button" id="BtnAgregar"onclick="AgregarActividad()" class="btn btn-default">Agregar Actividad</button>
+    <button type="button" id="BtnAceptarAgr" onclick="addAct()" class="btn btn-success">Aceptar</button>
+    <button type="button" id="BtnAceptar" onclick="editAct()" class="btn btn-success">Aceptar</button>
   </div>
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" id="RepEdit">
@@ -161,11 +170,34 @@
           <div class="form-group hidden" id="diasmes">
             <label class="col-sm-2 control-label">Repetir el:</label>
             <label class="radio-inline">
-              <input type="radio" name="diadelmes" id="diadelmes" onclick="fdiadelmes()" value="diames"> día del mes (Ej.: "el cuarto miércoles del mes")
+              <input type="radio" name="diadelmes" id="diadelmes" onclick="fdiadelmes()" value="diames"> día del mes (Ej.: "el 28 de cada mes")
             </label>
             <label class="radio-inline">
-              <input type="radio" name="diadelasemana" id="diadelasemana" onclick="fdiadelasemana()" value="diasemana" checked> día de la semana (Ej.: "el 28 de cada mes")
+              <input type="radio" name="diadelasemana" id="diadelasemana" onclick="fdiadelasemana()" value="diasemana" checked> día de la semana (Ej.: "el cuarto miércoles del mes")
             </label>
+          </div>
+          <div class="form-group hidden" id="cosaloca">
+            <label class="col-sm-2 control-label">Repetir el:</label>
+            <div class="col-sm-4">
+              <select id="OrdinalSelect" class="form-control" onchange="byebye()">
+                <option  value="1">Primer</option>
+                <option value="2">Segundo</option>
+                <option value="3">Tercer</option>
+                <option value="4">Cuarto</option>
+                <option value="-1">Último</option>
+              </select>
+            </div>
+            <div class="col-sm-4">
+              <select id="SemSelect" class="form-control" onchange="byebye()">
+                <option  value="lunes">Lunes</option>
+                <option value="martes">Martes</option>
+                <option value="miercoles">Miércoles</option>
+                <option value="jueves">Jueves</option>
+                <option value="viernes">Viernes</option>
+                <option value="sabadp">Sábado</option>
+                <option value="domingo">Domingo</option>
+              </select>
+            </div>
           </div>
           <div class="form-group hidden" id="diassemana">
             <label class="col-sm-2 control-label">Repetir el:</label>
@@ -193,17 +225,17 @@
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">Termina:</label>
-            <div class="col-sm-10">
+            <div class="col-sm-10" id="radiostermina">
               <div class="radio">
                 <label>
-                  <input type="radio" onclick="radio1()" id="optionsRadios1" checked value="option1">
+                  <input type="radio" class="radiomitre"onclick="radio1()" id="optionsRadios1" checked value="option1">
                   Nunca
                 </label>
               </div>
             </br>
             <div class="radio form-inline">
               <label>
-                <input type="radio" onclick="radio2()" id="optionsRadios2" value="option2">
+                <input type="radio" class="radiomitre" onclick="radio2()" id="optionsRadios2" value="option2">
                 Después de
                 <input type="number" id="NumVeces" class="form-control" disabled>
                 veces
@@ -212,9 +244,9 @@
           </br>
           <div class="radio form-inline">
             <label>
-              <input type="radio" onclick="radio3()" id="optionsRadios3" value="option3">
+              <input type="radio" class="radiomitre" onclick="radio3()" id="optionsRadios3" value="option3">
               El
-              <input type="date" id="DiaFin" class="form-control" disabled>
+              <input type="text" id="DiaFin" class="form-control" disabled>
             </label>
           </div>
         </div>
@@ -223,60 +255,153 @@
 
   </div>
   <div class="modal-footer">
+    <button type="button" class="btn btn-primary" onclick="aceptarModal()" > Aceptar</button>
     <button type="button" class="btn btn-default"onclick="document.getElementById('SeRepiteForm').checked=false" data-dismiss="modal">Cancelar</button>
-    <button type="button" class="btn btn-primary" onclick="aceptarModal()"> Aceptar</button>
   </div>
 </div>
 </div><!-- /.modal-content-->
 </div> <!--/.modal-dialog -->
 </div> <!--/.modal -->
 <script>
+function AgregarActividad()
+{
+  $("#SeRepiteForm").removeAttr("disabled");
+  $("#SeRepiteForm").removeClass("disabled");
+  $("#BtnAceptarAgr").removeClass('hidden');
+  $("#BtnModificar").addClass('hidden');
+  $("#BtnAgregar").addClass('hidden');
+  var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
+  var y = document.getElementById("Formu").getElementsByClassName("form-control");
+  for (var i = 0; i < x.length; i++) {
+    $("#" + x[i].id).addClass('hidden');
+  }
+  for (var i = 0; i < y.length; i++) {
+    $("#" + y[i].id).removeClass('hidden');
+    y[i].value = null;
+  }
+  var z = document.getElementsByClassName("checkbox");
+  for (var i = 0; i < z.length; i++) {
+    z[i].disabled = false;
+    $("#" + z[i].id).removeClass('hidden');
+  }
+
+}
 $('#InicioForm').timepicker({ 'timeFormat': 'H:i:s' });
 $('#FinalizacionForm').timepicker({ 'timeFormat': 'H:i:s' });
 var RepFinal = {};
+var rule;
 function aceptarModal(){
-  RepFinal['TipoRepeticion'] = document.getElementById("RepSelect").value;
+  var texto = {dtstart: new Date($('#FechaForm').val())};
+  RepFinal = {};
+  $('#RepEdit').modal('hide');
+
   switch (document.getElementById("RepSelect").value) {
     case "0":
-    RepFinal['RepCadaXDias'] = document.getElementById("RepCada").value;
+    texto.freq = RRule.DAILY;
+    texto.interval = document.getElementById("RepCada").value;
+    break;
+    case "1":
+    texto.freq = RRule.DAILY;
+    texto.byweekday = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR];
+    break;
+    case "2":
+    texto.freq = RRule.DAILY;
+    texto.byweekday = [RRule.MO, RRule.WE, RRule.FR];
+    break;
+    case "3":
+    texto.freq = RRule.DAILY;
+    texto.byweekday = [RRule.TU, RRule.TH];
     break;
     case "4":
-    RepFinal['RepCadaXSemanas'] = document.getElementById("RepCada").value;
-    var dias = document.getElementById("diassemana").document.getElementByTag("input");
+    texto.freq = RRule.WEEKLY;
+    texto.interval = document.getElementById("RepCada").value;
+    var dias = document.getElementById("diassemana").getElementsByTagName("input");
     var diasvec = [];
     for (day in dias) {
       if (dias[day].checked==true) {
-        diasvec.push(dias[day].value);
+        switch (dias[day].value) {
+          case "lunes":
+          dia =RRule.MO;
+          break;
+          case "martes":
+          dia =RRule.TU;
+          break;
+          case "miercoles":
+          dia =RRule.WE;
+          break;
+          case "jueves":
+          dia =RRule.TH;
+          break;
+          case "viernes":
+          dia =RRule.FR;
+          break;
+          case "sabado":
+          dia =RRule.SA;
+          break;
+          case "domingo":
+          dia =RRule.SU;
+        }
       }
     }
-    if (diasvec.toString()=='') {
-      var diaEvento = new Date($('#FechaForm').val());
-      var days = ["domingo","lunes","martes","miercoles","jueves","viernes","sabado"];
-      diaEvento = diaEvento.getDay();
-      diasvec.push(days[diaEvento].value);
+    if (diasvec!=null) {
+      texto.byweekday = diasvec;
     }
-    RepFinal['DiasARepXSemana'] = diasvec;
     break;
     case "5":
-    RepFinal['RepCadaXMeses'] = document.getElementById("RepCada").value;
-    var modo = document.getElementById("diasmes").document.getElementByTag("input");
-    for (caca in modo) {
-      if (modo[caca].checked==true) {
-        RepFinal['ModoRepMes'] = modo[caca].value;
+    texto.freq = RRule.MONTHLY;
+    texto.interval = document.getElementById("RepCada").value;
+    if (document.getElementById("diadelasemana").checked == true) {
+      var dia;
+      switch (document.getElementById("SemSelect").value) {
+        case "lunes":
+        dia = RRule.MO;
+        break;
+        case "martes":
+        dia = RRule.TU;
+        break;
+        case "miercoles":
+        dia = RRule.WE;
+        break;
+        case "jueves":
+        dia = RRule.TH;
+        break;
+        case "viernes":
+        dia = RRule.FR;
+        break;
+        case "sabado":
+        dia = RRule.SA;
+        break;
+        case "domingo":
+        dia = RRule.SU;
       }
+      var ord = document.getElementById("OrdinalSelect").value;
+      texto.byweekday= [dia.nth(ord)];
     }
     break;
     case "6":
-    RepFinal['RepCadaXAno'] = document.getElementById("RepCada").value;
+    texto.freq = RRule.YEARLY;
     break;
   }
+  var radios = document.getElementsByClassName("radiomitre");
+  for (radio in radios) {
+    if (radios[radio].checked==true) {
+      switch (radios[radio].id) {
+        case "optionsRadios2":
+        texto.count = $("#NumVeces").val();
+        break;
+        case "optionsRadios3":
+        texto.until = new Date($("#DiaFin").val());
+      }
+    }
+  }
+  rule  = new RRule(texto);
+  $("#resumen").text(rule.toText());
 }
-RepFinal = JSON.stringify(RepFinal);
 $('#FechaForm').datepicker({
   language: "es",
   startDate: "today",
   autoclose: true,
-  format: "yyyy-mm-dd"
+  format: 'yyyy-mm-dd'
 });
 function byebye(){
   switch (document.getElementById("RepSelect").value) {
@@ -284,6 +409,7 @@ function byebye(){
     $("#unidad").text(' días');
     $("#intervalo").removeClass('hidden');
     $("#diassemana").addClass('hidden');
+    $("#cosaloca").addClass('hidden');
     $("#diasmes").addClass('hidden');
 
     break;
@@ -291,6 +417,7 @@ function byebye(){
     $("#intervalo").removeClass('hidden');
     $("#unidad").text(' semanas');
     $("#diassemana").removeClass('hidden');
+    $("#cosaloca").addClass('hidden');
     $("#diasmes").addClass('hidden');
 
     break;
@@ -298,6 +425,7 @@ function byebye(){
     $("#intervalo").removeClass('hidden');
     $("#unidad").text(' meses');
     $("#diassemana").addClass('hidden');
+    $("#cosaloca").removeClass('hidden');
     $("#diasmes").removeClass('hidden');
     break;
     case "6":
@@ -305,18 +433,22 @@ function byebye(){
     $("#unidad").text(' años');
     $("#diassemana").addClass('hidden');
     $("#diasmes").addClass('hidden');
+    $("#cosaloca").addClass('hidden');
     break;
     default:
     $("#intervalo").addClass('hidden');
     $("#unidad").addClass('hidden');
     $("#diassemana").addClass('hidden');
+    $("#cosaloca").addClass('hidden');
     $("#diasmes").addClass('hidden');
   }
 }
 function fdiadelmes(){
   document.getElementById("diadelasemana").checked = false;
+  $("#cosaloca").addClass('hidden');
 }
 function fdiadelasemana(){
+  $("#cosaloca").removeClass('hidden');
   document.getElementById("diadelmes").checked = false;
 }
 function radio1(){
@@ -337,7 +469,9 @@ function radio3(){
   document.getElementById("NumVeces").disabled = true;
   document.getElementById("DiaFin").disabled = false;
 }
+
 document.getElementById("SeRepiteForm").disabled = true;
+
 function check (){
   var check = document.getElementById("SeRepiteForm");
   if (check.checked == true) {
@@ -346,49 +480,57 @@ function check (){
     $("#RepeticionSelect").addClass("hidden");
   }
 }
-document.getElementById("BtnModificar").style.display = 'none';
-document.getElementById("BtnAceptar").style.display = 'none';
-function mostrarOcultar() {
-  document.getElementById("BtnAceptar").style.display = 'inline-block';
-  document.getElementById("BtnModificar").style.display = 'none';
-}
+
+$("#BtnModificar").addClass("hidden");
+$("#BtnAceptar").addClass("hidden");
+$("#BtnAceptarAgr").addClass("hidden");
+
 function ModificarActividad()
 {
   $("#SeRepiteForm").removeAttr("disabled");
   $("#SeRepiteForm").removeClass("disabled");
-  mostrarOcultar();
-  var x = document.getElementsByClassName("form-control-static");
-  var y = document.getElementsByClassName("form-control");
+  $("#BtnAceptar").removeClass("hidden");
+  $("#BtnModificar").addClass("hidden");
+  var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
+  var y = document.getElementById("Formu").getElementsByClassName("form-control");
   for (var i = 0; i < x.length; i++) {
-    x[i].style.display = 'none';
+    $("#" + x[i].id).addClass('hidden');
   }
   for (var i = 0; i < y.length; i++) {
-    y[i].style.display = 'block';
+    $("#" + y[i].id).removeClass('hidden');
   }
   var z = document.getElementsByClassName("checkbox");
   for (var i = 0; i < z.length; i++) {
     z[i].disabled = false;
-    z[i].style.display = 'block';
+    $("#" + z[i].id).removeClass('hidden');
   }
 
 }
 var vec = [];
-function EnviarActividad()
-{
-  var data = "";
+var data = "";
+function format(){
+  data = "";
   var datos = {};
+  datos['idActividades'] = document.getElementById("idActividadesForm").value;
   datos['Inicio'] = document.getElementById("FechaForm").value +'T'+document.getElementById("InicioForm").value+'−03:00';
   datos['Finalizacion'] = document.getElementById("FechaForm").value +'T'+document.getElementById("FinalizacionForm").value+'−03:00';
-  datos['Nombre'] = document.getElementById("NombresForm").value;
-  if (datos['Nombre'] === "" || datos['Inicio'].length != 22 || datos['Inicio'].length != 22)
+  datos['Nombre'] = document.getElementById("NombreForm").value;
+  if (datos['Nombre'] === "" || datos['Inicio'].length != 25 || datos['Inicio'].length != 25)
   {
     alert("Ingrese los campos correctamente");
   } else {
-    if (RepFinal.length != 2) {
-      data = "data1=" + JSON.stringify(datos)+ "&data2=" + RepFinal;
+    if (document.getElementById("SeRepiteForm").checked == true) {
+
+      datos['Recurrencia'] = 'RRULE:' + rule.toString();
     }else {
-      data = "data1=" + JSON.stringify(datos)+ "&data2='no'";
+      datos['Recurrencia'] = 'no';
     }
+    data = "data1=" + JSON.stringify(datos);
+  }
+}
+function editAct(){
+  format();
+  if (data != "") {
     var url = "<?php echo URL; ?>actividad/editarActividad";
     $.ajax({
       type: "POST",
@@ -396,66 +538,106 @@ function EnviarActividad()
       data: data,
       success: function (respuesta)
       {
+        alert(respuesta);
+        $("#BtnAgregar").removeClass("hidden");
+        $("#BtnAceptarAgr").addClass("hidden");
+        $("#BtnAceptar").addClass("hidden");
+        $("#BtnModificar").addClass("hidden");
         var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
         var y = document.getElementById("Formu").getElementsByClassName("form-control");
         for (var i = 0; i < x.length; i++) {
-          x[i].style.display = 'block';
+          $("#" + x[i].id).removeClass('hidden');
           x[i].innerHTML = "";
         }
         for (var i = 0; i < y.length; i++) {
-          y[i].style.display = 'none';
+          $("#" + y[i].id).addClass('hidden');
+          y[i].value = '';
         }
-        var z = document.getElementById("Formu").getElementsByClassName("checkbox");
-        for (var i = 0; i < z.length; i++) {
-          z[i].disabled = true;
-          z[i].style.display = 'none';
-        }
-        $("#IdActividadesSelect").addClass("hidden");
-        mostrarOcultar2();
+        $("#SeRepiteForm").addClass("hidden");
+        $("#RepeticionSelect").addClass("hidden")
       }
     });
   }
 }
-function mostrarOcultar2() {
-  document.getElementById("BtnModificar").style.display = 'none';
-  document.getElementById("BtnAceptar").style.display = 'none';
+
+function addAct(){
+  format();
+  if (data != "") {
+
+    var url = "<?php echo URL; ?>actividad/agregarActividad";
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: data,
+      success: function (respuesta)
+      {
+        alert(respuesta);
+        $("#BtnAgregar").removeClass("hidden");
+        $("#BtnAceptarAgr").addClass("hidden");
+        $("#BtnAceptar").addClass("hidden");
+        $("#BtnModificar").addClass("hidden");
+        var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
+        var y = document.getElementById("Formu").getElementsByClassName("form-control");
+        for (var i = 0; i < x.length; i++) {
+          $("#" + x[i].id).removeClass('hidden');
+          x[i].innerHTML = "";
+        }
+        for (var i = 0; i < y.length; i++) {
+          $("#" + y[i].id).addClass('hidden');
+          y[i].value = '';
+        }
+        $("#SeRepiteForm").addClass("hidden");
+        $("#RepeticionSelect").addClass("hidden")
+      }
+    });
+  }
 }
+
 function traerActividad(valor) {
-  document.getElementById("BtnModificar").style.display = 'block';
+  $("#BtnModificar").removeClass('hidden');
+  $("#BtnAgregar").addClass('hidden');
+  $("#SeRepiteForm").removeClass("hidden");
+  $("#BtnAceptar").addClass("hidden");
+  $("#BtnAceptarAgr").addClass("hidden");
   var id = valor.substr(0, 1);
   var Nombre = valor.substr(2).trim();
-  alert("Id: " + id);
-  alert("Nombre: " + Nombre);
+  $("#NombreForm").val(Nombre);
+  $("#Nombre").text(Nombre);
+  $("#idActividadesForm").val(id);
+  $("#idActividades").text(id);
   $.ajax({
     type: "POST",
     data: "data=" + id,
     url: "<?php echo URL; ?>actividad/mostrar",
     success: function (respuesta)
     {
-      // var obj = JSON.parse(respuesta)[0][0];
-      // var actividades = JSON.parse(respuesta)[1];
-      // var texto = "";
-      // for (x in obj) {
-      //   document.getElementById(x).innerHTML = obj[x];
-      //   document.getElementById(x).style.display = 'block';
-      //   var input = document.getElementById(x + "Form");
-      //   input.style.display = 'none';
-      //   if (input.type == 'checkbox') {
-      //     if (obj[x] == 1) {
-      //       input.checked = true;
-      //     } else {
-      //       input.checked = false;
-      //     }
-      //   } else {
-      //     input.value = obj[x];
-      //   }
-      // }
-      var y = document.getElementsByClassName("checkbox");
-      for (i = 0; i < y.length; i++) {
-        $("#" + y[i].id).removeClass("hidden");
-      }
-      document.getElementById("BtnModificar").style.display = 'inline-block';
-      document.getElementById("BtnAceptar").style.display = 'none';
+      var obj = JSON.parse(respuesta);
+      $("#idActividades").removeClass("hidden");
+      $("#idActividades").text(obj["idActividades"]);
+      $("#idActividadesForm").val(obj["idActividades"]);
+      $("#idActividadesForm").addClass("hidden");
+
+      $("#Nombre").removeClass("hidden");
+      $("#Nombre").text(obj["Nombre"]);
+      $("#NombreForm").val(obj["Nombre"]);
+      $("#NombreForm").addClass("hidden");
+
+      $("#Inicio").removeClass("hidden");
+      $("#Inicio").text(obj["Inicio"]);
+      $("#InicioForm").val(obj["Inicio"]);
+      $("#InicioForm").addClass("hidden");
+
+      $("#Finalizacion").removeClass("hidden");
+      $("#Finalizacion").text(obj["Finalizacion"]);
+      $("#FinalizacionForm").val(obj["Finalizacion"]);
+      $("#FinalizacionForm").addClass("hidden");
+
+      $("#Fecha").removeClass("hidden");
+      $("#Fecha").text(obj["Finalizacion"].substr(0,10));
+      $("#FechaForm").val(obj["Finalizacion"].substr(0,10));
+      $("#FechaForm").addClass("hidden");
+      var lala = rrulestr('RRULE:FREQ=MONTHLY;COUNT=5;DTSTART=20120201T023000Z');
+      $("#resumen").text(lala.toText());
     }
   });
 }

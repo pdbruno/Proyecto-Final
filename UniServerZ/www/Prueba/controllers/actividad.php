@@ -7,7 +7,9 @@ class actividad extends Controller {
   }
   function index() {
     $this->view->render('agregaractividad/index');
-    $this->manejar();
+  }
+  function prueba() {
+    $this->view->render('Prueba/index');
   }
   public function traerActividades() {
     $datos = $this->model->traerActividades();
@@ -34,6 +36,8 @@ class actividad extends Controller {
       $_SESSION['access_token']= $client->getAccessToken();
       $service = new Google_Service_Calendar($client);
       $this->model->setServicio($service);
+      $redirect_uri = URL . 'actividad/';
+      header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
     } else {
       $redirect_uri = URL . 'actividad/calendar';
       header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
@@ -41,22 +45,28 @@ class actividad extends Controller {
   }
 
   public function editarActividad() {
-        if (isset($_POST['data1'])&&isset($_POST['data2'])) {
-            $data1 = $_POST['data1'];
-            $data2 = $_POST['data2'];
-        } else {
-            require 'controllers/error_.php';
-            $error = new Error_();
-            $error->index("Hubo un error en la transferencia de datos");
-        }
-        $actividad = json_decode($data1, TRUE);
-        $repeticion = json_decode($data2, TRUE);
+        $actividad= $this->getActividad();
         $evento = $this->model->format($actividad);
-        //DARLE FORMATO AL EVENTO Y ENVIARLO (BORRAR TODOS LOS QUE TENGAN LA MISMA ID)
+        var_dump($evento);
         $this->model->editarEvento($evento);
-        $this->model->asignarActividades($actividades, $cliente["idClientes"]);
     }
-
+    public function agregarActividad() {
+          $actividad=$this-getActividad();
+          $evento = $this->model->format($actividad);
+          var_dump($evento);
+          $this->model->agregarEvento($evento);
+      }
+public function getActividad(){
+  if (isset($_POST['data1'])) {
+      $data1 = $_POST['data1'];
+  } else {
+      require 'controllers/error_.php';
+      $error = new Error_();
+      $error->index("Hubo un error en la transferencia de datos");
+  }
+  $actividad = json_decode($data1, TRUE);
+  return $actividad;
+}
 
 
   public function calendar() {

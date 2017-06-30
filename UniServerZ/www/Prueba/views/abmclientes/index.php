@@ -625,7 +625,7 @@
   var final = [];
   function aceptarModal() {
     final = [];
-    $('#ModalSel').modal('hide')
+    $('#ModalSel').modal('hide');
     var todo = [];
     todo.push(document.getElementById("Act1").getElementsByTagName("select"));
     todo.push(document.getElementById("Act2").getElementsByTagName("select"));
