@@ -23,7 +23,8 @@ class actividad extends Controller {
       $error->index("Hubo un error en la transferencia de datos");
     }
     $data = json_decode($data, TRUE);
-    echo $this->model->traerEventos($data);
+    $service = $this->getService();
+    echo $this->model->traerEventos($data, $service);
   }
 
   function traerAnotados() {
@@ -35,7 +36,8 @@ class actividad extends Controller {
       $error->index("Hubo un error en la transferencia de datos");
     }
     $data = json_decode($data, TRUE);
-    echo $this->model->traerAnotados($data);
+    $service = $this->getService();
+    echo $this->model->traerAnotados($data, $service);
   }
 
   public function traerActividades() {
@@ -52,20 +54,27 @@ class actividad extends Controller {
       $error = new Error_();
       $error->index("Hubo un error en la transferencia de datos");
     }
-    echo $this->model->mostrar($idActividades);
+      $service = $this->getService();
+      echo $this->model->mostrar($idActividades, $service);
   }
-
+  public function getService() {
+    $client = new Google_Client();
+    $google_token= $_SESSION['access_token'];
+    $client->setAccessToken($google_token);
+    $service = new Google_Service_Calendar($client);
+    return $service;
+  }
   public function editarActividad() {
     $actividad= $this->getActividad();
     $evento = $this->model->format($actividad);
-    var_dump($evento);
-    $this->model->editarEvento($evento);
+    $service = $this->getService();
+    echo $this->model->editarEvento($evento, $actividad["idActividades"], $service);
   }
   public function addActividad() {
-    $actividad=$this-getActividad();
+    $actividad=$this->getActividad();
     $evento = $this->model->format($actividad);
-    var_dump($evento);
-    $this->model->agregarEvento($evento);
+    $service = $this->getService();
+    $this->model->agregarEvento($evento, $service);
   }
   public function getActividad(){
     if (isset($_POST['data1'])) {
@@ -79,7 +88,7 @@ class actividad extends Controller {
     return $actividad;
   }
 
-  public function manejar($pagina)
+  public function manejar($pagina=false)
   {
     $client = new Google_Client();
     $client->setAuthConfig('client_secrets.json');
@@ -87,8 +96,6 @@ class actividad extends Controller {
       $google_token= $_SESSION['access_token'];
       $client->refreshToken($google_token);
       $_SESSION['access_token']= $client->getAccessToken();
-      $service = new Google_Service_Calendar($client);
-      $this->model->setServicio($service);
       $redirect_uri = URL . 'actividad/' . $pagina;
       header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
     } else {
@@ -98,7 +105,6 @@ class actividad extends Controller {
   }
   public function calendar($pagina = false) {
     session_start();
-
     $client = new Google_Client();
     $client->setAuthConfigFile('client_secrets.json');
     $client->setRedirectUri(URL . 'actividad/calendar');

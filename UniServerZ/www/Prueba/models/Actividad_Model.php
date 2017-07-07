@@ -4,34 +4,28 @@ class actividad_Model extends Model {
   public function __construct() {
     parent::__construct();
   }
-  private $calendar;
-  public function setServicio($servicio)
-  {
-    $this->calendar = clone $servicio;
-
-  }
-  public function traerEventos($data) {
+  public function traerEventos($data, $servicio) {
     $optParams = array(
       'orderBy' => 'startTime',
       'singleEvents' => TRUE,
       'timeMax' => $data['timeMax'],
       'timeMin' => $data['timeMin']
     );
-    $results = $this->calendar->events->listEvents('primary', $optParams);
+    $results = $servicio->events->listEvents('primary', $optParams);
     if (count($results->getItems()) == 0) {
       $datos = "No hay eventos para ese día";
     } else {
       foreach ($results->getItems() as $event) {
         $evento['idEvento'] =  $event->getId();
         $evento['Nombre'] = $event->getSummary();
+        $datos[] = $evento;
       }
-      $datos[] = $evento;
       $evento = [];
     }
-    return $datos;
+    return json_encode($datos);
   }
 
-  public function traerAnotados($datos)
+  public function traerAnotados($datos, $servicio)
   {
     switch ($datos[0]) {
       case "Taekwon-Do":
@@ -70,22 +64,21 @@ class actividad_Model extends Model {
     }
     $UsersCond = "";
     if ($sql != "") {
-      $UsersCond = $this->db->parse("IN (SELECT `idClientes` FROM `clientesactividades` WHERE ?p)", $sql);
+      $UsersCond = $this->db->parse(" WHERE `idClientes` IN (SELECT `idClientes` FROM `clientesactividades` WHERE ?p)", $sql);
     }
-    $UsersFinal = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS Nombre FROM `clientes` ?p", $UsersCond);
+    $UsersFinal = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientes` ?p", $UsersCond);
     return json_encode($UsersFinal) ;
   }
 
-  public function mostrar($idActividades)
+  public function mostrar($idActividades, $servicio)
   {
-    var_dump($this->calendar);
-    $event = $this->calendar->events->get('primary', $idActividades);
+    $event = $servicio->events->get('primary', $idActividades);
     $datos["Nombre"] = $event->getSummary();
     $datos["idActividades"] = $idActividades;
     $datos["Finalizacion"] = $event->getEnd();
     $datos["Inicio"] = $event->getStart();
     $datos["Recurrencia"] = $event->getRecurrence();
-    return $datos;
+    return json_encode($datos);
   }
   public function format($data)
   {
@@ -105,15 +98,15 @@ class actividad_Model extends Model {
     }
     return $evento;
   }
-  public function editarEvento($data)
+  public function editarEvento($data, $id, $servicio)
   {
     $event = new Google_Service_Calendar_Event($data);
-    $updatedEvent = $this->calendar->events->update('primary', $data["idActividades"], $event);
+    return $updatedEvent = $servicio->events->update('primary', $id, $event);
   }
-  public function agregarEvento($data)
+  public function agregarEvento($data, $servicio)
   {
     $event = new Google_Service_Calendar_Event($data);
-    $event = $this->calendar->events->insert('primary', $event);
+    $event = $servicio->events->insert('primary', $event);
   }
   public function traerActividades() {
     $sql = "SELECT actividades.Nombre as actNombre, niveles.Nombre as nivNombre FROM actividadesmodalidadesniveles LEFT JOIN actividades ON actividadesmodalidadesniveles.idActividades = actividades.idActividades LEFT JOIN niveles ON actividadesmodalidadesniveles.idNiveles = niveles.idNiveles WHERE actividades.idActividades != 3 GROUP BY `nivNombre` ";

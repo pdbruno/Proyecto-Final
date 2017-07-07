@@ -265,6 +265,7 @@
 <script>
 function AgregarActividad()
 {
+  var rule;
   $("#SeRepiteForm").removeAttr("disabled");
   $("#SeRepiteForm").removeClass("disabled");
   $("#BtnAceptarAgr").removeClass('hidden');
@@ -289,7 +290,6 @@ function AgregarActividad()
 $('#InicioForm').timepicker({ 'timeFormat': 'H:i:s' });
 $('#FinalizacionForm').timepicker({ 'timeFormat': 'H:i:s' });
 var RepFinal = {};
-var rule;
 function aceptarModal(){
   var texto = {dtstart: new Date($('#FechaForm').val())};
   RepFinal = {};
@@ -314,35 +314,38 @@ function aceptarModal(){
     break;
     case "4":
     texto.freq = RRule.WEEKLY;
-    texto.interval = document.getElementById("RepCada").value;
+    if (document.getElementById("RepCada").value!=1) {
+      texto.interval = document.getElementById("RepCada").value;
+    }
     var dias = document.getElementById("diassemana").getElementsByTagName("input");
     var diasvec = [];
     for (day in dias) {
       if (dias[day].checked==true) {
         switch (dias[day].value) {
           case "lunes":
-          dia =RRule.MO;
+          diasvec.push(RRule.MO);
           break;
           case "martes":
-          dia =RRule.TU;
+          diasvec.push(RRule.TU);
           break;
           case "miercoles":
-          dia =RRule.WE;
+          diasvec.push(RRule.WE);
           break;
           case "jueves":
-          dia =RRule.TH;
+          diasvec.push(RRule.TH);
           break;
           case "viernes":
-          dia =RRule.FR;
+          diasvec.push(RRule.FR);
           break;
           case "sabado":
-          dia =RRule.SA;
+          diasvec.push(RRule.SA);
           break;
           case "domingo":
-          dia =RRule.SU;
+          diasvec.push(RRule.SU);
         }
       }
     }
+    diasvec = diasvec.slice(0, diasvec.length/2);
     if (diasvec!=null) {
       texto.byweekday = diasvec;
     }
@@ -512,8 +515,8 @@ function format(){
   data = "";
   var datos = {};
   datos['idActividades'] = document.getElementById("idActividadesForm").value;
-  datos['Inicio'] = document.getElementById("FechaForm").value +'T'+document.getElementById("InicioForm").value+'−03:00';
-  datos['Finalizacion'] = document.getElementById("FechaForm").value +'T'+document.getElementById("FinalizacionForm").value+'−03:00';
+  datos['Inicio'] = document.getElementById("FechaForm").value +'T'+document.getElementById("InicioForm").value+'-03:00';
+  datos['Finalizacion'] = document.getElementById("FechaForm").value +'T'+document.getElementById("FinalizacionForm").value+'-03:00';
   datos['Nombre'] = document.getElementById("NombreForm").value;
   if (datos['Nombre'] === "" || datos['Inicio'].length != 25 || datos['Inicio'].length != 25)
   {
@@ -521,7 +524,7 @@ function format(){
   } else {
     if (document.getElementById("SeRepiteForm").checked == true) {
 
-      datos['Recurrencia'] = 'RRULE:' + rule.toString();
+      datos['Recurrencia'] = 'RRULE:' + rule.toString().substr(25) + ";WKST=0";
     }else {
       datos['Recurrencia'] = 'no';
     }
@@ -538,7 +541,6 @@ function editAct(){
       data: data,
       success: function (respuesta)
       {
-        alert(respuesta);
         $("#BtnAgregar").removeClass("hidden");
         $("#BtnAceptarAgr").addClass("hidden");
         $("#BtnAceptar").addClass("hidden");
@@ -549,6 +551,7 @@ function editAct(){
           $("#" + x[i].id).removeClass('hidden');
           x[i].innerHTML = "";
         }
+        $("#resumen").text("");
         for (var i = 0; i < y.length; i++) {
           $("#" + y[i].id).addClass('hidden');
           y[i].value = '';
@@ -571,7 +574,6 @@ function addAct(){
       data: data,
       success: function (respuesta)
       {
-        alert(respuesta);
         $("#BtnAgregar").removeClass("hidden");
         $("#BtnAceptarAgr").addClass("hidden");
         $("#BtnAceptar").addClass("hidden");
@@ -582,6 +584,7 @@ function addAct(){
           $("#" + x[i].id).removeClass('hidden');
           x[i].innerHTML = "";
         }
+        $("#resumen").text("");
         for (var i = 0; i < y.length; i++) {
           $("#" + y[i].id).addClass('hidden');
           y[i].value = '';
@@ -607,7 +610,7 @@ function traerActividad(valor) {
   $("#idActividades").text(id);
   $.ajax({
     type: "POST",
-    data: "data=" + id,
+    data: "data=" + "0000"+id,
     url: "<?php echo URL; ?>actividad/mostrar",
     success: function (respuesta)
     {
@@ -623,21 +626,25 @@ function traerActividad(valor) {
       $("#NombreForm").addClass("hidden");
 
       $("#Inicio").removeClass("hidden");
-      $("#Inicio").text(obj["Inicio"]);
-      $("#InicioForm").val(obj["Inicio"]);
+      $("#Inicio").text(obj["Inicio"].dateTime.substr(11,8));
+      $("#InicioForm").val(obj["Inicio"].dateTime.substr(11,8));
       $("#InicioForm").addClass("hidden");
 
       $("#Finalizacion").removeClass("hidden");
-      $("#Finalizacion").text(obj["Finalizacion"]);
-      $("#FinalizacionForm").val(obj["Finalizacion"]);
+      $("#Finalizacion").text(obj["Finalizacion"].dateTime.substr(11,8));
+      $("#FinalizacionForm").val(obj["Finalizacion"].dateTime.substr(11,8));
       $("#FinalizacionForm").addClass("hidden");
 
       $("#Fecha").removeClass("hidden");
-      $("#Fecha").text(obj["Finalizacion"].substr(0,10));
-      $("#FechaForm").val(obj["Finalizacion"].substr(0,10));
+      $("#Fecha").text(obj["Finalizacion"].dateTime.substr(0,10));
+      $("#FechaForm").val(obj["Finalizacion"].dateTime.substr(0,10));
       $("#FechaForm").addClass("hidden");
-      var lala = rrulestr(obj["Recurrencia"]);
-      $("#resumen").text(lala.toText());
+      if (obj["Recurrencia"] != null) {
+        rule = rrulestr(obj["Recurrencia"][0]);
+        $("#resumen").text(rule.toText());
+      }else {
+        $("#resumen").text("");
+      }
     }
   });
 }
