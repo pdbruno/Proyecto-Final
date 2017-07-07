@@ -7,21 +7,52 @@ class actividad_Model extends Model {
   private $calendar;
   public function setServicio($servicio)
   {
-    $this->calendar = $servicio;
-//     $calendarId = 'primary';
-//     $optParams = array(
-//       'maxResults' => 10,
-//       'orderBy' => 'startTime',
-//       'singleEvents' => TRUE,
-//       'timeMin' => date('c'),
-//     );
-//     $results = $servicio->events->listEvents($calendarId, $optParams);
-//
-// var_dump($results);
+    $this->calendar = clone $servicio;
 
   }
+  public function traerEventos($data) {
+    $optParams = array(
+      'orderBy' => 'startTime',
+      'singleEvents' => TRUE,
+      'timeMax' => $data['timeMax'],
+      'timeMin' => $data['timeMin']
+    );
+    $results = $this->calendar->events->listEvents('primary', $optParams);
+    if (count($results->getItems()) == 0) {
+      $datos = "No hay eventos para ese día";
+    } else {
+      foreach ($results->getItems() as $event) {
+        $evento['idEvento'] =  $event->getId();
+        $evento['Nombre'] = $event->getSummary();
+      }
+      $datos[] = $evento;
+      $evento = [];
+    }
+    return $datos;
+  }
+
+  public function traerAnotados($datos)
+  {
+
+
+
+
+    switch ($datos[0]) {
+      case "Taekwon-Do":
+      //hacer otro switch
+      break;
+
+      case "Funcional":
+      //hacer otro switch
+      break;
+
+      default:
+    }
+  }
+
   public function mostrar($idActividades)
   {
+    var_dump($this->calendar);
     $event = $this->calendar->events->get('primary', $idActividades);
     $datos["Nombre"] = $event->getSummary();
     $datos["idActividades"] = $idActividades;

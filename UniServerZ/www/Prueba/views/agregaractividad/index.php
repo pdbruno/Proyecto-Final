@@ -564,7 +564,7 @@ function addAct(){
   format();
   if (data != "") {
 
-    var url = "<?php echo URL; ?>actividad/agregarActividad";
+    var url = "<?php echo URL; ?>actividad/addActividad";
     $.ajax({
       type: "POST",
       url: url,
@@ -636,7 +636,7 @@ function traerActividad(valor) {
       $("#Fecha").text(obj["Finalizacion"].substr(0,10));
       $("#FechaForm").val(obj["Finalizacion"].substr(0,10));
       $("#FechaForm").addClass("hidden");
-      var lala = rrulestr('RRULE:FREQ=MONTHLY;COUNT=5;DTSTART=20120201T023000Z');
+      var lala = rrulestr(obj["Recurrencia"]);
       $("#resumen").text(lala.toText());
     }
   });
