@@ -33,21 +33,47 @@ class actividad_Model extends Model {
 
   public function traerAnotados($datos)
   {
-
-
-
-
     switch ($datos[0]) {
       case "Taekwon-Do":
-      //hacer otro switch
+      switch ($datos[1]) {
+        case 'Inicial':
+        $sql = " `idActividadesModalidadesNiveles` = 1 OR `idActividadesModalidadesNiveles` = 5";
+        break;
+        case 'Infantiles A':
+        $sql = " `idActividadesModalidadesNiveles` = 2 OR `idActividadesModalidadesNiveles` = 6";
+        break;
+        case 'Infantiles B':
+        $sql = " `idActividadesModalidadesNiveles` = 3 OR `idActividadesModalidadesNiveles` = 7";
+        break;
+        case 'Juveniles y Adultos':
+        $sql = " `idActividadesModalidadesNiveles` = 4 OR `idActividadesModalidadesNiveles` = 8";
+        break;
+        default:
+        $sql= " `idActividadesModalidadesNiveles` BETWEEN 1 AND 8";
+      }
       break;
 
       case "Funcional":
-      //hacer otro switch
+      switch ($datos[1]) {
+        case 'Mañana':
+        $sql = " `idActividadesModalidadesNiveles` = 9";
+        break;
+        case 'Tarde':
+        $sql = " `idActividadesModalidadesNiveles` = 13";
+        break;
+        case 'Noche':
+        $sql = " `idActividadesModalidadesNiveles` = 14";
+      }
       break;
-
       default:
+      $sql = "";
     }
+    $UsersCond = "";
+    if ($sql != "") {
+      $UsersCond = $this->db->parse("IN (SELECT `idClientes` FROM `clientesactividades` WHERE ?p)", $sql);
+    }
+    $UsersFinal = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS Nombre FROM `clientes` ?p", $UsersCond);
+    return json_encode($UsersFinal) ;
   }
 
   public function mostrar($idActividades)

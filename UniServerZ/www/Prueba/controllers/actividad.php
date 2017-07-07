@@ -15,24 +15,24 @@ class actividad extends Controller {
   }
 
   function traerEventos() {
-      if (isset($_POST['data'])) {
-        $data = $_POST['data'];
+    if (isset($_POST['data'])) {
+      $data = $_POST['data'];
     } else {
-        require 'controllers/error_.php';
-        $error = new Error_();
-        $error->index("Hubo un error en la transferencia de datos");
+      require 'controllers/error_.php';
+      $error = new Error_();
+      $error->index("Hubo un error en la transferencia de datos");
     }
     $data = json_decode($data, TRUE);
     echo $this->model->traerEventos($data);
   }
 
   function traerAnotados() {
-      if (isset($_POST['data'])) {
-        $data = $_POST['data'];
+    if (isset($_POST['data'])) {
+      $data = $_POST['data'];
     } else {
-        require 'controllers/error_.php';
-        $error = new Error_();
-        $error->index("Hubo un error en la transferencia de datos");
+      require 'controllers/error_.php';
+      $error = new Error_();
+      $error->index("Hubo un error en la transferencia de datos");
     }
     $data = json_decode($data, TRUE);
     echo $this->model->traerAnotados($data);
@@ -46,13 +46,37 @@ class actividad extends Controller {
   public function mostrar()
   {
     if (isset($_POST['data'])) {
-        $idActividades = $_POST['data'];
+      $idActividades = $_POST['data'];
     } else {
-        require 'controllers/error_.php';
-        $error = new Error_();
-        $error->index("Hubo un error en la transferencia de datos");
+      require 'controllers/error_.php';
+      $error = new Error_();
+      $error->index("Hubo un error en la transferencia de datos");
     }
     echo $this->model->mostrar($idActividades);
+  }
+
+  public function editarActividad() {
+    $actividad= $this->getActividad();
+    $evento = $this->model->format($actividad);
+    var_dump($evento);
+    $this->model->editarEvento($evento);
+  }
+  public function addActividad() {
+    $actividad=$this-getActividad();
+    $evento = $this->model->format($actividad);
+    var_dump($evento);
+    $this->model->agregarEvento($evento);
+  }
+  public function getActividad(){
+    if (isset($_POST['data1'])) {
+      $data1 = $_POST['data1'];
+    } else {
+      require 'controllers/error_.php';
+      $error = new Error_();
+      $error->index("Hubo un error en la transferencia de datos");
+    }
+    $actividad = json_decode($data1, TRUE);
+    return $actividad;
   }
 
   public function manejar($pagina)
@@ -68,37 +92,11 @@ class actividad extends Controller {
       $redirect_uri = URL . 'actividad/' . $pagina;
       header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
     } else {
-      $redirect_uri = URL . 'actividad/calendar';
+      $redirect_uri = URL . 'actividad/calendar/' . $pagina;
       header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
     }
   }
-
-  public function editarActividad() {
-        $actividad= $this->getActividad();
-        $evento = $this->model->format($actividad);
-        var_dump($evento);
-        $this->model->editarEvento($evento);
-    }
-    public function addActividad() {
-          $actividad=$this-getActividad();
-          $evento = $this->model->format($actividad);
-          var_dump($evento);
-          $this->model->agregarEvento($evento);
-      }
-public function getActividad(){
-  if (isset($_POST['data1'])) {
-      $data1 = $_POST['data1'];
-  } else {
-      require 'controllers/error_.php';
-      $error = new Error_();
-      $error->index("Hubo un error en la transferencia de datos");
-  }
-  $actividad = json_decode($data1, TRUE);
-  return $actividad;
-}
-
-
-  public function calendar() {
+  public function calendar($pagina = false) {
     session_start();
 
     $client = new Google_Client();
@@ -113,7 +111,7 @@ public function getActividad(){
     } else {
       $client->authenticate($_GET['code']);
       $_SESSION['access_token'] = $client->getAccessToken();
-      $redirect_uri = URL . 'actividad/manejar';
+      $redirect_uri = URL . 'actividad/manejar/' . $pagina;
       header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
     }
   }
