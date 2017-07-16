@@ -6,11 +6,13 @@ class actividad extends Controller {
     session_start();
   }
 
-  function agregaractividad() {
-    $this->view->render('agregaractividad/index');
+  function actividades() {
+    $this->manejar("actividades");
+    $this->view->render('actividades/index');
   }
 
   public function tomarlista() {
+    $this->manejar("tomarlista");
     $this->view->render('tomarlista/index');
   }
 
@@ -26,8 +28,22 @@ class actividad extends Controller {
     $service = $this->getService();
     echo $this->model->traerEventos($data, $service);
   }
-
-  function traerAnotados() {
+  public function asignarAsistencia()
+  {
+    if (isset($_POST['data'])&&isset($_POST['data2'])) {
+      $data = $_POST['data'];
+      $data2 = $_POST['data2'];
+    } else {
+      require 'controllers/error_.php';
+      $error = new Error_();
+      $error->index("Hubo un error en la transferencia de datos");
+    }
+    $data = json_decode($data, TRUE);
+    $id = trim($data2);
+    $service = $this->getService();
+    echo $this->model->asignarAsistencia($data,$id, $service);
+  }
+  public  function traerAnotados() {
     if (isset($_POST['data'])) {
       $data = $_POST['data'];
     } else {
@@ -54,11 +70,12 @@ class actividad extends Controller {
       $error = new Error_();
       $error->index("Hubo un error en la transferencia de datos");
     }
-      $service = $this->getService();
-      echo $this->model->mostrar($idActividades, $service);
+    $service = $this->getService();
+    echo $this->model->mostrar($idActividades, $service);
   }
   public function getService() {
     $client = new Google_Client();
+    $client->setAccessType("offline");
     $google_token= $_SESSION['access_token'];
     $client->setAccessToken($google_token);
     $service = new Google_Service_Calendar($client);
@@ -88,23 +105,22 @@ class actividad extends Controller {
     return $actividad;
   }
 
-  public function manejar($pagina=false)
+  public function manejar($pagina)
   {
+    $_SESSION['page'] = $pagina;
     $client = new Google_Client();
+    $client->setAccessType("offline");
     $client->setAuthConfig('client_secrets.json');
     if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
       $google_token= $_SESSION['access_token'];
       $client->refreshToken($google_token);
       $_SESSION['access_token']= $client->getAccessToken();
-      $redirect_uri = URL . 'actividad/' . $pagina;
-      header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
     } else {
       $redirect_uri = URL . 'actividad/calendar/' . $pagina;
       header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
     }
   }
-  public function calendar($pagina = false) {
-    session_start();
+  public function calendar() {
     $client = new Google_Client();
     $client->setAuthConfigFile('client_secrets.json');
     $client->setRedirectUri(URL . 'actividad/calendar');
@@ -117,7 +133,7 @@ class actividad extends Controller {
     } else {
       $client->authenticate($_GET['code']);
       $_SESSION['access_token'] = $client->getAccessToken();
-      $redirect_uri = URL . 'actividad/manejar/' . $pagina;
+      $redirect_uri = URL . 'actividad/' . $_SESSION['page'];
       header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
     }
   }

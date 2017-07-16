@@ -38,6 +38,7 @@
 </div>
 <script>
 var VecAsistio = [];
+var idEvento = "";
 var d = new Date();
 var n = d.toISOString();
 n = n.substr(0,10);
@@ -53,37 +54,53 @@ $('#FechaForm').datepicker({
   todayHighlight: true
 });
 function enviar(){
-  alert(JSON.stringify(VecAsistio))
-}
-function ingresoFecha(){
-  var dia={};
-  dia["timeMax"] = document.getElementById("FechaForm").value +'T23:59:59-03:00';
-  dia["timeMin"] = document.getElementById("FechaForm").value +'T00:00:00-03:00';
   $.ajax({
     type: "POST",
-    url: "<?php echo URL; ?>actividad/traerEventos",
-    data: "data=" + JSON.stringify(dia),
+    url: "<?php echo URL; ?>actividad/asignarAsistencia",
+    data: "data=" + JSON.stringify(VecAsistio) + "&data2="+idEvento,
     success: function (respuesta)
     {
-      if (respuesta == 'No hay eventos para ese día') {
-        alert(respuesta)
-      }else {
-        var eventos = JSON.parse(respuesta);
-        var i = 0;
-        var texto = "";
-        for (act in eventos) {
-          texto += "<tr onclick='traerEvento($(this))' id='" + i + "'>";
-          texto += "<td class='hidden'>" + eventos[act].idEvento + " </td>";
-          texto += "<td>" + eventos[act].Nombre + " </td>";
-          texto += "</tr>";
-          i++;
-        }
-        texto += "</tr>"
-        $("#ListaEventos").removeClass('hidden');
-        $("#TablaActividades").html(texto);
-      }
+      alert('Se ha asignado la asistencia al evento');
+      VecAsistio=[];
+      $("#Asistencia").addClass("hidden");
     }
   });
+}
+
+function ingresoFecha(){
+
+  if ($("#FechaForm").val()=="") {
+    alert("Ingrese una fecha")
+  }else {
+    var dia={};
+    dia["timeMax"] = document.getElementById("FechaForm").value +'T23:59:59-03:00';
+    dia["timeMin"] = document.getElementById("FechaForm").value +'T00:00:00-03:00';
+    $.ajax({
+      type: "POST",
+      url: "<?php echo URL; ?>actividad/traerEventos",
+      data: "data=" + JSON.stringify(dia),
+      success: function (respuesta)
+      {
+        if (respuesta == '"no papu"') {
+          alert('No hay eventos para ese día')
+        }else {
+          var eventos = JSON.parse(respuesta);
+          var i = 0;
+          var texto = "";
+          for (act in eventos) {
+            texto += "<tr onclick='traerEvento($(this))' id='" + i + "'>";
+            texto += "<td class='hidden'>" + eventos[act].idEvento + " </td>";
+            texto += "<td>" + eventos[act].Nombre + " </td>";
+            texto += "</tr>";
+            i++;
+          }
+          texto += "</tr>"
+          $("#ListaEventos").removeClass('hidden');
+          $("#TablaActividades").html(texto);
+        }
+      }
+    });
+  }
 }
 function elegir(boton, id){
   boton.toggleClass("list-group-item-info");
@@ -94,10 +111,12 @@ function elegir(boton, id){
   }
 }
 function traerEvento(boton){
+  VecAsistio = [];
   filas = document.getElementById("TablaActividades").rows;
   for (row in filas) {
     if (filas[row].id == boton.attr('id')) {
       $("#" + filas[row].id).addClass("success");
+      idEvento = filas[row].cells[0].innerHTML;
     } else {
       $("#" + filas[row].id).removeClass("success");
     }
@@ -123,9 +142,23 @@ function traerEvento(boton){
       $("#ListaClientes").html(texto);
       $('#NombreForm').typeahead('destroy')
       $("#NombreForm").typeahead({
-      showHintOnFocus: "all",
-      source: respuesta
-    });
+        source: respuesta,
+        afterSelect: function(item){
+          var botones =  document.getElementById("ListaClientes").getElementsByTagName("button");
+          for (row in botones) {
+            if (botones[row].innerHTML == item.name) {
+              if (VecAsistio.indexOf(item.idClientes) == -1) {
+                VecAsistio.push(item.idClientes);
+                botones[row].className = "list-group-item list-group-item-info";
+              } else {
+                VecAsistio.splice(VecAsistio.indexOf(item.idClientes), 1);
+                botones[row].className = "list-group-item";
+              }
+            }
+          }
+          $("#NombreForm").val("");
+        }
+      });
     }
   });
 }

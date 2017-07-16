@@ -13,7 +13,7 @@ class actividad_Model extends Model {
     );
     $results = $servicio->events->listEvents('primary', $optParams);
     if (count($results->getItems()) == 0) {
-      $datos = "No hay eventos para ese día";
+      $datos = "no papu";
     } else {
       foreach ($results->getItems() as $event) {
         $evento['idEvento'] =  $event->getId();
@@ -94,14 +94,28 @@ class actividad_Model extends Model {
       )
     );
     if ($data["Recurrencia"]!="no") {
-      $evento['recurrence'] = $data["Recurrencia"];
+      $evento['recurrence'] = array($data["Recurrencia"]);
     }
     return $evento;
   }
   public function editarEvento($data, $id, $servicio)
   {
+    var_dump($data);
     $event = new Google_Service_Calendar_Event($data);
-    return $updatedEvent = $servicio->events->update('primary', $id, $event);
+    $updatedEvent = $servicio->events->update('primary', $id, $event);
+    return $updatedEvent->getUpdated();
+  }
+  public function asignarAsistencia($data, $id, $servicio)
+  {
+    $evento = array(
+      'extendedProperties' => array(
+        'private' => array(
+          'asistencia' => json_encode($data)
+        )
+      )
+    );
+    $event = new Google_Service_Calendar_Event($evento);
+    return $servicio->events->patch('primary', $id, $event);
   }
   public function agregarEvento($data, $servicio)
   {
