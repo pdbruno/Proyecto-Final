@@ -4,4 +4,4 @@ spl_autoload_register(function ($class) {
 });
 require_once 'vendor/autoload.php';
 require_once 'config/paths.php';
-$app = new Bootstrap();
+$bootstrap = new Bootstrap();
