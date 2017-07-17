@@ -73,37 +73,7 @@ class cliente_Model extends Model {
     $sql[2] = "SELECT idCategorias as id, Nombre FROM categorias;";
     $sql[3] = "SELECT idSedes as id, Nombre FROM sedes;";
     $res[] = $this->repetitivaQuery($sql);
-    //        $sql[0] = "SELECT `idActividades` as 'id', `Nombre` FROM `actividades`";
-    //        $sql[1] = "SELECT `idModalidades` as 'id', `Nombre` FROM `modalidades`";
-    //        $sql[2] = "SELECT `idNiveles` as 'id', `Nombre` FROM `niveles`";
-    //        $res[] = $this->repetitivaQuery($sql, 3);
     echo json_encode($res);
-  }
-
-  public function traerCliente($idClientes) {
-    $actividades=[];
-    $sql = "SELECT clientes.idClientes,clientes.Nombres,clientes.Apellidos,clientes.FechaNacimiento,clientes.DNI,clientes.Domicilio, localidades.Nombre as locNombre,clientes.CPostal,clientes.TelCel,clientes.Ocupacion,clientes.Email,clientes.Facebook,clientes.AutorizaWeb,clientes.AptoMedico,clientes.CoberturaMedica,clientes.NumSocioMed,clientes.TelEmergencias, grupofactorsanguineo.Nombre as sangNombre,clientes.Alergia,clientes.Patologia,clientes.IntQuirurgica,clientes.Lesion,clientes.Medicacion,clientes.Observaciones,clientes.PadMadTut,clientes.TelPadMadTut,clientes.CelPadMadTut,clientes.EmailPadMadTut,clientes.SeVaSolo,clientes.Retirar1NomAp,clientes.Retirar1DNI,clientes.Retirar2NomAp,clientes.Retirar2DNI,clientes.Retirar3NomAp,clientes.Retirar3DNI,clientes.Activo,clientes.EsInstructor,
-    categorias.Nombre as catNombre, sedes.Nombre as sedNombre
-    FROM clientes
-    LEFT JOIN categorias ON clientes.idCategorias = categorias.idCategorias
-    LEFT JOIN grupofactorsanguineo ON clientes.IdGrupoFactorSanguineo = grupofactorsanguineo.idGrupoFactorSanguineo
-    LEFT JOIN localidades ON clientes.IdLocalidades = localidades.idLocalidades
-    LEFT JOIN sedes ON clientes.IdSedes = sedes.idSedes
-    WHERE idClientes=?i";
-    $outp[] = $this->db->getAll($sql, $idClientes);
-    $sql = "SELECT `idActividadesModalidadesNiveles` FROM `clientesactividades` WHERE `idClientes` = ?i";
-    $res = $this->db->getCol($sql, $idClientes);
-    for ($i=0; $i < count($res); $i++) {
-      $sql = "SELECT actividades.Nombre as actNombre, modalidades.Nombre as modNombre, niveles.Nombre as nivNombre
-      FROM actividadesmodalidadesniveles
-      LEFT JOIN actividades ON actividadesmodalidadesniveles.idActividades = actividades.idActividades
-      LEFT JOIN modalidades ON actividadesmodalidadesniveles.idModalidades = modalidades.idModalidades
-      LEFT JOIN niveles ON actividadesmodalidadesniveles.idNiveles = niveles.idNiveles
-      WHERE idActividadesModalidadesNiveles=?i";
-      $actividades[]=$this->db->getRow($sql, $res[$i]);
-    }
-    $outp[] = $actividades;
-    echo json_encode($outp);
   }
 
   public function eliminarCliente($idClientes) {
@@ -150,4 +120,29 @@ class cliente_Model extends Model {
     $this->db->query($sql, (array) $data, (array) $data);
   }
 
+  public function traerCliente($idClientes) {
+    $actividades=[];
+    $sql = "SELECT clientes.idClientes,clientes.Nombres,clientes.Apellidos,clientes.FechaNacimiento,clientes.DNI,clientes.Domicilio, localidades.Nombre as locNombre,clientes.CPostal,clientes.TelCel,clientes.Ocupacion,clientes.Email,clientes.Facebook,clientes.AutorizaWeb,clientes.AptoMedico,clientes.CoberturaMedica,clientes.NumSocioMed,clientes.TelEmergencias, grupofactorsanguineo.Nombre as sangNombre,clientes.Alergia,clientes.Patologia,clientes.IntQuirurgica,clientes.Lesion,clientes.Medicacion,clientes.Observaciones,clientes.PadMadTut,clientes.TelPadMadTut,clientes.CelPadMadTut,clientes.EmailPadMadTut,clientes.SeVaSolo,clientes.Retirar1NomAp,clientes.Retirar1DNI,clientes.Retirar2NomAp,clientes.Retirar2DNI,clientes.Retirar3NomAp,clientes.Retirar3DNI,clientes.Activo,clientes.EsInstructor,
+    categorias.Nombre as catNombre, sedes.Nombre as sedNombre
+    FROM clientes
+    LEFT JOIN categorias ON clientes.idCategorias = categorias.idCategorias
+    LEFT JOIN grupofactorsanguineo ON clientes.IdGrupoFactorSanguineo = grupofactorsanguineo.idGrupoFactorSanguineo
+    LEFT JOIN localidades ON clientes.IdLocalidades = localidades.idLocalidades
+    LEFT JOIN sedes ON clientes.IdSedes = sedes.idSedes
+    WHERE idClientes=?i";
+    $outp[] = $this->db->getAll($sql, $idClientes);
+    $sql = "SELECT `idActividadesModalidadesNiveles` FROM `clientesactividades` WHERE `idClientes` = ?i";
+    $res = $this->db->getCol($sql, $idClientes);
+    for ($i=0; $i < count($res); $i++) {
+      $sql = "SELECT actividades.Nombre as actNombre, modalidades.Nombre as modNombre, niveles.Nombre as nivNombre
+      FROM actividadesmodalidadesniveles
+      LEFT JOIN actividades ON actividadesmodalidadesniveles.idActividades = actividades.idActividades
+      LEFT JOIN modalidades ON actividadesmodalidadesniveles.idModalidades = modalidades.idModalidades
+      LEFT JOIN niveles ON actividadesmodalidadesniveles.idNiveles = niveles.idNiveles
+      WHERE idActividadesModalidadesNiveles=?i";
+      $actividades[]=$this->db->getRow($sql, $res[$i]);
+    }
+    $outp[] = $actividades;
+    echo json_encode($outp);
+  }
 }

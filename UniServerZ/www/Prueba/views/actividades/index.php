@@ -263,6 +263,9 @@
 </div> <!--/.modal-dialog -->
 </div> <!--/.modal -->
 <script>
+$( document ).ajaxError(function(e, xhr, opt){
+  alert("Error requesting " + opt.url + ": " + xhr.status + " " + xhr.statusText);
+});
 function AgregarActividad()
 {
   var rule;
@@ -532,68 +535,51 @@ function format(){
 function editAct(){
   format();
   if (data != "") {
-    var url = "<?php echo URL; ?>actividad/editarActividad";
-    $.ajax({
-      type: "POST",
-      url: url,
+    var request = $.ajax({
+      url: "<?php echo URL; ?>actividad/editarActividad",
+      type: "post",
       data: data,
-      success: function (respuesta)
-      {
-        $("#BtnAgregar").removeClass("hidden");
-        $("#BtnAceptarAgr").addClass("hidden");
-        $("#BtnAceptar").addClass("hidden");
-        $("#BtnModificar").addClass("hidden");
-        var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
-        var y = document.getElementById("Formu").getElementsByClassName("form-control");
-        for (var i = 0; i < x.length; i++) {
-          $("#" + x[i].id).removeClass('hidden');
-          x[i].innerHTML = "";
-        }
-        $("#resumen").text("");
-        for (var i = 0; i < y.length; i++) {
-          $("#" + y[i].id).addClass('hidden');
-          y[i].value = '';
-        }
-        $("#SeRepiteForm").addClass("hidden");
-        $("#RepeticionSelect").addClass("hidden")
-      }
+
     });
+    request.done(function (respuesta){
+      OcultarMOstrar();
+    }
   }
 }
 
 function addAct(){
   format();
   if (data != "") {
-
-    var url = "<?php echo URL; ?>actividad/addActividad";
-    $.ajax({
-      type: "POST",
-      url: url,
+    var request = $.ajax({
+      url: "<?php echo URL; ?>actividad/addActividad",
+      type: "post",
       data: data,
-      success: function (respuesta)
-      {
-        $("#BtnAgregar").removeClass("hidden");
-        $("#BtnAceptarAgr").addClass("hidden");
-        $("#BtnAceptar").addClass("hidden");
-        $("#BtnModificar").addClass("hidden");
-        var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
-        var y = document.getElementById("Formu").getElementsByClassName("form-control");
-        for (var i = 0; i < x.length; i++) {
-          $("#" + x[i].id).removeClass('hidden');
-          x[i].innerHTML = "";
-        }
-        $("#resumen").text("");
-        for (var i = 0; i < y.length; i++) {
-          $("#" + y[i].id).addClass('hidden');
-          y[i].value = '';
-        }
-        $("#SeRepiteForm").addClass("hidden");
-        $("#RepeticionSelect").addClass("hidden")
-      }
     });
+    request.done(function (respuesta){
+      OcultarMOstrar();
+    }
+
   }
 }
-
+function OcultarMOstrar(){
+  $("#BtnAgregar").removeClass("hidden");
+  $("#BtnAceptarAgr").addClass("hidden");
+  $("#BtnAceptar").addClass("hidden");
+  $("#BtnModificar").addClass("hidden");
+  var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
+  var y = document.getElementById("Formu").getElementsByClassName("form-control");
+  for (var i = 0; i < x.length; i++) {
+    $("#" + x[i].id).removeClass('hidden');
+    x[i].innerHTML = "";
+  }
+  $("#resumen").text("");
+  for (var i = 0; i < y.length; i++) {
+    $("#" + y[i].id).addClass('hidden');
+    y[i].value = '';
+  }
+  $("#SeRepiteForm").addClass("hidden");
+  $("#RepeticionSelect").addClass("hidden")
+}
 function traerActividad(valor) {
   $("#BtnModificar").removeClass('hidden');
   $("#BtnAgregar").addClass('hidden');
@@ -607,76 +593,77 @@ function traerActividad(valor) {
   $("#Nombre").text(Nombre);
   $("#idActividadesForm").val(id);
   $("#idActividades").text(id);
-  $.ajax({
-    type: "POST",
-    data: "data=" + "0000"+id,
+  var request = $.ajax({
     url: "<?php echo URL; ?>actividad/mostrar",
-    success: function (respuesta)
-    {
-      var obj = JSON.parse(respuesta);
-      $("#idActividades").removeClass("hidden");
-      $("#idActividades").text(obj["idActividades"]);
-      $("#idActividadesForm").val(obj["idActividades"]);
-      $("#idActividadesForm").addClass("hidden");
+    type: "post",
+    data: "data=" + "0000"+id,
 
-      $("#Nombre").removeClass("hidden");
-      $("#Nombre").text(obj["Nombre"]);
-      $("#NombreForm").val(obj["Nombre"]);
-      $("#NombreForm").addClass("hidden");
-
-      $("#Inicio").removeClass("hidden");
-      $("#Inicio").text(obj["Inicio"].dateTime.substr(11,8));
-      $("#InicioForm").val(obj["Inicio"].dateTime.substr(11,8));
-      $("#InicioForm").addClass("hidden");
-
-      $("#Finalizacion").removeClass("hidden");
-      $("#Finalizacion").text(obj["Finalizacion"].dateTime.substr(11,8));
-      $("#FinalizacionForm").val(obj["Finalizacion"].dateTime.substr(11,8));
-      $("#FinalizacionForm").addClass("hidden");
-
-      $("#Fecha").removeClass("hidden");
-      $("#Fecha").text(obj["Finalizacion"].dateTime.substr(0,10));
-      $("#FechaForm").val(obj["Finalizacion"].dateTime.substr(0,10));
-      $("#FechaForm").addClass("hidden");
-      if (obj["Recurrencia"] != null) {
-        rule = rrulestr(obj["Recurrencia"][0]);
-        var cucu = rule.toText();
-        cucu = cucu.charAt(0).toUpperCase() + cucu.slice(1);
-        $("#resumen").text(cucu);
-        document.getElementById("SeRepiteForm").setAttribute("checked", true);
-        $("#RepeticionSelect").removeClass("hidden");
-      } else {
-        document.getElementById("SeRepiteForm").setAttribute("checked", false);
-        $("#RepeticionSelect").addClass("hidden");
-        $("#resumen").text("");
-      }
-    }
   });
+  request.done(function (respuesta){
+    var obj = JSON.parse(respuesta);
+    $("#idActividades").removeClass("hidden");
+    $("#idActividades").text(obj["idActividades"]);
+    $("#idActividadesForm").val(obj["idActividades"]);
+    $("#idActividadesForm").addClass("hidden");
+
+    $("#Nombre").removeClass("hidden");
+    $("#Nombre").text(obj["Nombre"]);
+    $("#NombreForm").val(obj["Nombre"]);
+    $("#NombreForm").addClass("hidden");
+
+    $("#Inicio").removeClass("hidden");
+    $("#Inicio").text(obj["Inicio"].dateTime.substr(11,8));
+    $("#InicioForm").val(obj["Inicio"].dateTime.substr(11,8));
+    $("#InicioForm").addClass("hidden");
+
+    $("#Finalizacion").removeClass("hidden");
+    $("#Finalizacion").text(obj["Finalizacion"].dateTime.substr(11,8));
+    $("#FinalizacionForm").val(obj["Finalizacion"].dateTime.substr(11,8));
+    $("#FinalizacionForm").addClass("hidden");
+
+    $("#Fecha").removeClass("hidden");
+    $("#Fecha").text(obj["Finalizacion"].dateTime.substr(0,10));
+    $("#FechaForm").val(obj["Finalizacion"].dateTime.substr(0,10));
+    $("#FechaForm").addClass("hidden");
+    if (obj["Recurrencia"] != null) {
+      rule = rrulestr(obj["Recurrencia"][0]);
+      var cucu = rule.toText();
+      cucu = cucu.charAt(0).toUpperCase() + cucu.slice(1);
+      $("#resumen").text(cucu);
+      document.getElementById("SeRepiteForm").setAttribute("checked", true);
+      $("#RepeticionSelect").removeClass("hidden");
+    } else {
+      document.getElementById("SeRepiteForm").setAttribute("checked", false);
+      $("#RepeticionSelect").addClass("hidden");
+      $("#resumen").text("");
+    }
+  }
+
 }
 var texto = "";
-$.ajax({
-  type: "POST",
+var request = $.ajax({
   url: "<?php echo URL; ?>actividad/traerActividades",
-  success: function (respuesta)
-  {
-    var actividades = JSON.parse(respuesta);
-    var i = 0;
-    for (act in actividades) {
-      texto += "<tr onclick='traerActividad($(this).text())'>";
-      texto += "<td style='display:none;'>" + i + " </td>";
-      for (prop in actividades[act]) {
-        if (actividades[act][prop] != null) {
-          texto += "<td>" + actividades[act][prop] + " </td>";
-        } else {
-          texto += "<td>-</td>";
-        }
-      }
-      i++;
-      texto += "</tr>";
-      sub = [];
-    }
-    texto += "</tr>"
-    $("#TablaActividades").html(texto);
-  }
+  type: "post",
 });
+request.done(function (respuesta){
+  var actividades = JSON.parse(respuesta);
+  var i = 0;
+  for (act in actividades) {
+    texto += "<tr onclick='traerActividad($(this).text())'>";
+    texto += "<td style='display:none;'>" + i + " </td>";
+    for (prop in actividades[act]) {
+      if (actividades[act][prop] != null) {
+        texto += "<td>" + actividades[act][prop] + " </td>";
+      } else {
+        texto += "<td>-</td>";
+      }
+    }
+    i++;
+    texto += "</tr>";
+    sub = [];
+  }
+  texto += "</tr>"
+  $("#TablaActividades").html(texto);
+}
+
 </script>

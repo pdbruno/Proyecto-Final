@@ -17,63 +17,33 @@ class actividad extends Controller {
   }
 
   function traerEventos() {
-    if (isset($_POST['data'])) {
-      $data = $_POST['data'];
-    } else {
-      require 'controllers/error_.php';
-      $error = new Error_();
-      $error->index("Hubo un error en la transferencia de datos");
-    }
+    $data = $_POST['data'];
     $data = json_decode($data, TRUE);
     $service = $this->getService();
     echo $this->model->traerEventos($data, $service);
   }
   public function asignarAsistencia()
   {
-    if (isset($_POST['data'])&&isset($_POST['data2'])) {
-      $data = $_POST['data'];
-      $data2 = $_POST['data2'];
-    } else {
-      require 'controllers/error_.php';
-      $error = new Error_();
-      $error->index("Hubo un error en la transferencia de datos");
-    }
-    $data = json_decode($data, TRUE);
-    $id = trim($data2);
+    $data = json_decode($_POST['data'], TRUE);
+    $id = trim($_POST['data2']);
     $service = $this->getService();
     echo $this->model->asignarAsistencia($data,$id, $service);
   }
   public  function traerAnotados() {
-    if (isset($_POST['data'])) {
-      $data = $_POST['data'];
-    } else {
-      require 'controllers/error_.php';
-      $error = new Error_();
-      $error->index("Hubo un error en la transferencia de datos");
-    }
     $data = json_decode($data, TRUE);
     $service = $this->getService();
     echo $this->model->traerAnotados($data, $service);
   }
 
   public function traerActividades() {
-    $datos = $this->model->traerActividades();
-    echo $datos;
+    echo $this->model->traerActividades();
   }
 
   public function mostrar()
   {
-    if (isset($_POST['data'])) {
-      $idActividades = $_POST['data'];
-    } else {
-      require 'controllers/error_.php';
-      $error = new Error_();
-      $error->index("Hubo un error en la transferencia de datos");
-    }
-    $service = $this->getService();
     echo $this->model->mostrar($idActividades, $service);
   }
-  public function getService() {
+  private function getService() {
     $client = new Google_Client();
     $client->setAccessType("offline");
     $google_token= $_SESSION['access_token'];
@@ -82,27 +52,16 @@ class actividad extends Controller {
     return $service;
   }
   public function editarActividad() {
-    $actividad= $this->getActividad();
+    $actividad = json_decode($_POST['data1'], TRUE);
     $evento = $this->model->format($actividad);
     $service = $this->getService();
     echo $this->model->editarEvento($evento, $actividad["idActividades"], $service);
   }
   public function addActividad() {
-    $actividad=$this->getActividad();
+    $actividad = json_decode($_POST['data1'], TRUE);
     $evento = $this->model->format($actividad);
     $service = $this->getService();
     $this->model->agregarEvento($evento, $service);
-  }
-  public function getActividad(){
-    if (isset($_POST['data1'])) {
-      $data1 = $_POST['data1'];
-    } else {
-      require 'controllers/error_.php';
-      $error = new Error_();
-      $error->index("Hubo un error en la transferencia de datos");
-    }
-    $actividad = json_decode($data1, TRUE);
-    return $actividad;
   }
 
   public function manejar($pagina)

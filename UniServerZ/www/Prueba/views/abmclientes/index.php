@@ -586,6 +586,9 @@
     </div> <!--/.modal -->
   </div>
   <script>
+  $( document ).ajaxError(function(e, xhr, opt){
+    alert("Error requesting " + opt.url + ": " + xhr.status + " " + xhr.statusText);
+  });
   function deshacerModal(){
     for (var i = 1; i < 4; i++) {
       $("#IdModalidadesSelect" + i).addClass("hidden");
@@ -769,23 +772,25 @@
     return Vec;
   }
   var VecElementos = [];
-  $.ajax({
-    type: "POST",
+  var request = $.ajax({
     url: "<?php echo URL; ?>cliente/listadoDropdowns",
-    success: function (respuesta) {
-      var myObj = JSON.parse(respuesta);
-      for (vector in myObj[0]) {
-        var txt = optionCrear(myObj[0][vector]);
-        VecElementos.push(txt);
-      }
-      var i = 0;
-      var selects = document.getElementById("Formu").getElementsByTagName("select");
+    type: "post",
+  });
+  request.done(function (respuesta){
+    var myObj = JSON.parse(respuesta);
+    for (vector in myObj[0]) {
+      var txt = optionCrear(myObj[0][vector]);
+      VecElementos.push(txt);
+    }
+    var i = 0;
+    var selects = document.getElementById("Formu").getElementsByTagName("select");
 
-      for (var i = 0; i < selects.length; i++) {
-        selects[i].innerHTML = VecElementos[i];
-      }
+    for (var i = 0; i < selects.length; i++) {
+      selects[i].innerHTML = VecElementos[i];
     }
   });
+
+
   var VecClientes = [];
   $(document).ready(function () {
     listadoclientes();
@@ -827,104 +832,104 @@
       });
       table.on('select', function (e, dt, type, indexes) {
         if (type === 'row') {
-          var id = VecClientes[indexes].idClientes;
-          var url = "<?php echo URL; ?>cliente/traerCliente";
-          $.ajax({
-            type: "POST",
-            url: url,
-            data: "data=" + id,
-            success: function (respuesta)
-            {
-              var obj = JSON.parse(respuesta)[0][0];
-              var actividades = JSON.parse(respuesta)[1];
-              var texto = "";
-              for (x in obj) {
-                document.getElementById(x).innerHTML = obj[x];
-                document.getElementById(x).style.display = 'block';
-                var input = document.getElementById(x + "Form");
-                input.style.display = 'none';
-                if (input.type == 'checkbox') {
-                  if (obj[x] == 1) {
-                    input.checked = true;
-                  } else {
-                    input.checked = false;
-                  }
-                } else {
-                  input.value = obj[x];
-                }
-              }
-              var y = document.getElementsByClassName("checkbox");
-              var z = document.getElementsByClassName("intro");
-              for (i = 0; i < y.length; i++) {
-                y[i].style.display = 'block';
-                if (z[i].innerHTML == 1) {
-                  y[i].checked = true;
-                } else {
-                  y[i].checked = false;
-                }
-                z[i].style.display = 'none';
-              }
-              var casifinal = [];
-              var sub=[];
-              for (act in actividades) {
-                texto += "<tr>"
-                for (prop in actividades[act]) {
-                  switch (actividades[act][prop]) {
-                    case "Taekwon-Do":
-                    case "1 a 2 veces por semana":
-                    case "Inicial":
-                    sub.push("1");
-                    break;
-                    case "Funcional":
-                    case "Pase libre":
-                    case "Infantiles A":
-                    sub.push("2");
-                    break;
-                    case "Personalizado":
-                    case "Infantiles B":
-                    sub.push("3");
-                    break;
-                    case "Juveniles y Adultos":
-                    sub.push("4");
-                    break;
-                    case "Mañana":
-                    sub.push("5");
-                    break;
-                    case "Tarde":
-                    sub.push("6");
-                    break;
-                    case "Noche":
-                    sub.push("7");
-                    break;
-                  }
-                  if (actividades[act][prop] != null) {
-                    texto+="<td>" + actividades[act][prop] + "</td>"
-                  } else {
-                    texto+="<td>-</td>"
-                  }
-                }
-                texto+="</tr>"
-                casifinal.push(sub);
-                sub=[];
-              }
-              if (casifinal.length<3) {
-                for (var i = 0; i < 3-casifinal.length; i++) {
-                  casifinal.push(sub);
-                }
-              }
-              final =JSON.stringify(casifinal);
-              $("#TablaActividades").html(texto);
-              document.getElementById("IdLocalidadesSelect").style.display = 'none';
-              document.getElementById("IdGrupoFactorSanguineoSelect").style.display = 'none';
-              document.getElementById("IdCategoriasSelect").style.display = 'none';
-              $("#IdActividadesVer").removeClass("hidden");
-              $("#IdActividadesSelect").addClass("hidden");
-              document.getElementById("IdSedesSelect").style.display = 'none';
-              document.getElementById("BtnModificar").style.display = 'inline-block';
-              document.getElementById("BtnEliminar").style.display = 'inline-block';
-              document.getElementById("BtnAceptar").style.display = 'none';
-            }
+          request = $.ajax({
+            url: "<?php echo URL; ?>cliente/traerCliente",
+            type: "post",
+            data: "data=" + VecClientes[indexes].idClientes,
           });
+          // Callback handler that will be called on success
+          request.done(function (respuesta)
+          {
+            var obj = JSON.parse(respuesta)[0][0];
+            var actividades = JSON.parse(respuesta)[1];
+            var texto = "";
+            for (x in obj) {
+              document.getElementById(x).innerHTML = obj[x];
+              document.getElementById(x).style.display = 'block';
+              var input = document.getElementById(x + "Form");
+              input.style.display = 'none';
+              if (input.type == 'checkbox') {
+                if (obj[x] == 1) {
+                  input.checked = true;
+                } else {
+                  input.checked = false;
+                }
+              } else {
+                input.value = obj[x];
+              }
+            }
+            var y = document.getElementsByClassName("checkbox");
+            var z = document.getElementsByClassName("intro");
+            for (i = 0; i < y.length; i++) {
+              y[i].style.display = 'block';
+              if (z[i].innerHTML == 1) {
+                y[i].checked = true;
+              } else {
+                y[i].checked = false;
+              }
+              z[i].style.display = 'none';
+            }
+            var casifinal = [];
+            var sub=[];
+            for (act in actividades) {
+              texto += "<tr>"
+              for (prop in actividades[act]) {
+                switch (actividades[act][prop]) {
+                  case "Taekwon-Do":
+                  case "1 a 2 veces por semana":
+                  case "Inicial":
+                  sub.push("1");
+                  break;
+                  case "Funcional":
+                  case "Pase libre":
+                  case "Infantiles A":
+                  sub.push("2");
+                  break;
+                  case "Personalizado":
+                  case "Infantiles B":
+                  sub.push("3");
+                  break;
+                  case "Juveniles y Adultos":
+                  sub.push("4");
+                  break;
+                  case "Mañana":
+                  sub.push("5");
+                  break;
+                  case "Tarde":
+                  sub.push("6");
+                  break;
+                  case "Noche":
+                  sub.push("7");
+                  break;
+                }
+                if (actividades[act][prop] != null) {
+                  texto+="<td>" + actividades[act][prop] + "</td>"
+                } else {
+                  texto+="<td>-</td>"
+                }
+              }
+              texto+="</tr>"
+              casifinal.push(sub);
+              sub=[];
+            }
+            if (casifinal.length<3) {
+              for (var i = 0; i < 3-casifinal.length; i++) {
+                casifinal.push(sub);
+              }
+            }
+            final =JSON.stringify(casifinal);
+            $("#TablaActividades").html(texto);
+            document.getElementById("IdLocalidadesSelect").style.display = 'none';
+            document.getElementById("IdGrupoFactorSanguineoSelect").style.display = 'none';
+            document.getElementById("IdCategoriasSelect").style.display = 'none';
+            $("#IdActividadesVer").removeClass("hidden");
+            $("#IdActividadesSelect").addClass("hidden");
+            document.getElementById("IdSedesSelect").style.display = 'none';
+            document.getElementById("BtnModificar").style.display = 'inline-block';
+            document.getElementById("BtnEliminar").style.display = 'inline-block';
+            document.getElementById("BtnAceptar").style.display = 'none';
+          });
+
         }
       });
     }
@@ -951,7 +956,7 @@
         z[i].disabled = false;
         z[i].style.display = 'block';
       }
-
+      document.getElementById("ActivoForm").checked = true;
     }
     function mostrarOcultar(){
       deshacerModal();
@@ -1030,68 +1035,58 @@
           }
           vec.push(x[i].value);
         }
-        var url = "<?php echo URL; ?>cliente/agregarModificarCliente";
-        $.ajax({
-          type: "POST",
-          url: url,
-          data: "data1=" + JSON.stringify(vec) + "&data2=" + final,
-          success: function (respuesta)
-          {
-            var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
-            var y = document.getElementById("Formu").getElementsByClassName("form-control");
-            for (var i = 0; i < x.length; i++) {
-              x[i].style.display = 'block';
-              x[i].innerHTML = "";
-            }
-            for (var i = 0; i < y.length; i++) {
-              y[i].style.display = 'none';
-            }
-            var z = document.getElementById("Formu").getElementsByClassName("checkbox");
-            for (var i = 0; i < z.length; i++) {
-              z[i].disabled = true;
-              z[i].style.display = 'none';
-            }
-            $("#IdActividadesSelect").addClass("hidden");
-            mostrarOcultar2();
-            $('#TablaClientes').DataTable().clear().draw().ajax.reload();
-          }
+
+        request = $.ajax({
+          url: "<?php echo URL; ?>cliente/agregarModificarCliente",
+          type: "post",
+          data:  "data1=" + JSON.stringify(vec) + "&data2=" + final,
         });
+        // Callback handler that will be called on success
+        request.done(function (respuesta){
+          // Log a message to the console
+          mostrarOcultar3();
+        });
+
       }
     }
-    function mostrarOcultar2(){
+    function mostrarOcultar3(){
+      var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
+      var y = document.getElementById("Formu").getElementsByClassName("form-control");
+      for (var i = 0; i < x.length; i++) {
+        x[i].style.display = 'block';
+        x[i].innerHTML = "";
+      }
+      for (var i = 0; i < y.length; i++) {
+        y[i].style.display = 'none';
+      }
+      var z = document.getElementById("Formu").getElementsByClassName("checkbox");
+      for (var i = 0; i < z.length; i++) {
+        z[i].disabled = true;
+        z[i].style.display = 'none';
+      }
+      $("#IdActividadesSelect").addClass("hidden");
       document.getElementById("BtnAgregar").style.display = 'inline-block';
       document.getElementById("BtnModificar").style.display = 'none';
       document.getElementById("BtnEliminar").style.display = 'none';
       document.getElementById("BtnAceptar").style.display = 'none';
+      $('#TablaClientes').DataTable().clear().draw().ajax.reload();
     }
+
     function EliminarUsuario() {
-      var r = confirm("Est�s muy recontra segur�sima que quer�s borrar a este alumno?\n\
+      var r = confirm("Estás muy recontra segurísima que querés borrar a este cliente?\n\
       Esta funcionalidad se ha creado solo para casos extremos.");
       if (r == true) {
-        $.ajax({
-          type: "POST",
-          url: '<?php echo URL; ?>cliente/eliminarCliente',
+        request = $.ajax({
+          url: "<?php echo URL; ?>cliente/eliminarCliente",
+          type: "post",
           data: "data=" + document.getElementById("idClientes").innerHTML,
-          success: function (respuesta)
-          {
-            var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
-            var y = document.getElementById("Formu").getElementsByClassName("form-control");
-            for (var i = 0; i < x.length; i++) {
-              x[i].style.display = 'block';
-              x[i].innerHTML = "";
-            }
-            for (var i = 0; i < y.length; i++) {
-              y[i].style.display = 'none';
-            }
-            var z = document.getElementById("Formu").getElementsByClassName("checkbox");
-            for (var i = 0; i < z.length; i++) {
-              z[i].disabled = true;
-              z[i].style.display = 'none';
-            }
-            mostrarOcultar2();
-            $('#TablaClientes').DataTable().clear().draw().ajax.reload();
-          }
         });
+        // Callback handler that will be called on success
+        request.done(function (respuesta){
+          // Log a message to the console
+          mostrarOcultar3();
+        });
+
       }
     }
     </script>

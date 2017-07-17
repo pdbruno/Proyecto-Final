@@ -37,6 +37,9 @@
   <button class="btn btn-default" onclick="enviar()" type="button">Enviar lista de asistencia</button>
 </div>
 <script>
+$( document ).ajaxError(function(e, xhr, opt){
+  alert("Error requesting " + opt.url + ": " + xhr.status + " " + xhr.statusText);
+});
 var VecAsistio = [];
 var idEvento = "";
 var d = new Date();
@@ -54,17 +57,18 @@ $('#FechaForm').datepicker({
   todayHighlight: true
 });
 function enviar(){
-  $.ajax({
-    type: "POST",
+  var request = $.ajax({
     url: "<?php echo URL; ?>actividad/asignarAsistencia",
+    type: "post",
     data: "data=" + JSON.stringify(VecAsistio) + "&data2="+idEvento,
-    success: function (respuesta)
-    {
-      alert('Se ha asignado la asistencia al evento');
-      VecAsistio=[];
-      $("#Asistencia").addClass("hidden");
-    }
+
   });
+  request.done(function (respuesta){
+    alert('Se ha asignado la asistencia al evento');
+    VecAsistio=[];
+    $("#Asistencia").addClass("hidden");
+  }
+
 }
 
 function ingresoFecha(){
@@ -75,31 +79,32 @@ function ingresoFecha(){
     var dia={};
     dia["timeMax"] = document.getElementById("FechaForm").value +'T23:59:59-03:00';
     dia["timeMin"] = document.getElementById("FechaForm").value +'T00:00:00-03:00';
-    $.ajax({
-      type: "POST",
+    var request = $.ajax({
       url: "<?php echo URL; ?>actividad/traerEventos",
+      type: "post",
       data: "data=" + JSON.stringify(dia),
-      success: function (respuesta)
-      {
-        if (respuesta == '"no papu"') {
-          alert('No hay eventos para ese día')
-        }else {
-          var eventos = JSON.parse(respuesta);
-          var i = 0;
-          var texto = "";
-          for (act in eventos) {
-            texto += "<tr onclick='traerEvento($(this))' id='" + i + "'>";
-            texto += "<td class='hidden'>" + eventos[act].idEvento + " </td>";
-            texto += "<td>" + eventos[act].Nombre + " </td>";
-            texto += "</tr>";
-            i++;
-          }
-          texto += "</tr>"
-          $("#ListaEventos").removeClass('hidden');
-          $("#TablaActividades").html(texto);
-        }
-      }
+
     });
+    request.done(function (respuesta){
+      if (respuesta == '"no papu"') {
+        alert('No hay eventos para ese día')
+      }else {
+        var eventos = JSON.parse(respuesta);
+        var i = 0;
+        var texto = "";
+        for (act in eventos) {
+          texto += "<tr onclick='traerEvento($(this))' id='" + i + "'>";
+          texto += "<td class='hidden'>" + eventos[act].idEvento + " </td>";
+          texto += "<td>" + eventos[act].Nombre + " </td>";
+          texto += "</tr>";
+          i++;
+        }
+        texto += "</tr>"
+        $("#ListaEventos").removeClass('hidden');
+        $("#TablaActividades").html(texto);
+      }
+    }
+
   }
 }
 function elegir(boton, id){
@@ -127,39 +132,40 @@ function traerEvento(boton){
   var VecNombre = [];
   VecNombre.push(ActNombre.substr(0,posEsp).trim());
   VecNombre.push(ActNombre.substr(posEsp).trim());
-  $.ajax({
-    type: "POST",
+  var request = $.ajax({
     url: "<?php echo URL; ?>actividad/traerAnotados",
+    type: "post",
     data: "data=" + JSON.stringify(VecNombre),
-    success: function (respuesta)
-    {
-      $("#Asistencia").removeClass("hidden")
-      respuesta = JSON.parse(respuesta);
-      var texto = "";
-      for (usuario in respuesta) {
-        texto+= "<button type='button' class='list-group-item' onclick='elegir($(this),"+respuesta[usuario].idClientes+")' >" + respuesta[usuario].name + "</button>"
-      }
-      $("#ListaClientes").html(texto);
-      $('#NombreForm').typeahead('destroy')
-      $("#NombreForm").typeahead({
-        source: respuesta,
-        afterSelect: function(item){
-          var botones =  document.getElementById("ListaClientes").getElementsByTagName("button");
-          for (row in botones) {
-            if (botones[row].innerHTML == item.name) {
-              if (VecAsistio.indexOf(item.idClientes) == -1) {
-                VecAsistio.push(item.idClientes);
-                botones[row].className = "list-group-item list-group-item-info";
-              } else {
-                VecAsistio.splice(VecAsistio.indexOf(item.idClientes), 1);
-                botones[row].className = "list-group-item";
-              }
+
+  });
+  request.done(function (respuesta){
+    $("#Asistencia").removeClass("hidden")
+    respuesta = JSON.parse(respuesta);
+    var texto = "";
+    for (usuario in respuesta) {
+      texto+= "<button type='button' class='list-group-item' onclick='elegir($(this),"+respuesta[usuario].idClientes+")' >" + respuesta[usuario].name + "</button>"
+    }
+    $("#ListaClientes").html(texto);
+    $('#NombreForm').typeahead('destroy')
+    $("#NombreForm").typeahead({
+      source: respuesta,
+      afterSelect: function(item){
+        var botones =  document.getElementById("ListaClientes").getElementsByTagName("button");
+        for (row in botones) {
+          if (botones[row].innerHTML == item.name) {
+            if (VecAsistio.indexOf(item.idClientes) == -1) {
+              VecAsistio.push(item.idClientes);
+              botones[row].className = "list-group-item list-group-item-info";
+            } else {
+              VecAsistio.splice(VecAsistio.indexOf(item.idClientes), 1);
+              botones[row].className = "list-group-item";
             }
           }
-          $("#NombreForm").val("");
         }
-      });
-    }
-  });
+        $("#NombreForm").val("");
+      }
+    });
+  }
+
 }
 </script>

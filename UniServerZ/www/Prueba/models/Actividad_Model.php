@@ -64,9 +64,9 @@ class actividad_Model extends Model {
     }
     $UsersCond = "";
     if ($sql != "") {
-      $UsersCond = $this->db->parse(" WHERE `idClientes` IN (SELECT `idClientes` FROM `clientesactividades` WHERE ?p)", $sql);
+      $UsersCond = $this->db->parse(" AND WHERE `idClientes` IN (SELECT `idClientes` FROM `clientesactividades` WHERE ?p)", $sql);
     }
-    $UsersFinal = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientes` ?p", $UsersCond);
+    $UsersFinal = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientes` WHERE `Activo` = 1 ?p", $UsersCond);
     return json_encode($UsersFinal) ;
   }
 
