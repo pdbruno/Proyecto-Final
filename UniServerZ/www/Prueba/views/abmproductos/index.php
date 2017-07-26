@@ -4,7 +4,7 @@
       <div class="panel-heading">Listado de Productos
       </div>
       <div class="table-responsive col-sm-12">
-        <table  id="TablaProductos" class="table table-hover" cellspacing="0" width="100%"  >
+        <table  id="Tabla" class="table table-hover" cellspacing="0" width="100%"  >
           <thead>
             <tr>
               <th>Descripción</th>
@@ -23,7 +23,7 @@
               <label class="col-sm-2 control-label">Id:</label>
               <div class="col-sm-10">
                 <p id="idProductos" class="form-control-static"></p>
-                <input type="text" style="display: none;" class="form-control" id="idProductosForm" placeholder="Se mira y no se toca" disabled>
+                <input type="text" class="form-control hidden" id="idProductosForm" placeholder="Se mira y no se toca" disabled>
 
               </div>
             </div>
@@ -31,10 +31,10 @@
           <li class="list-group-item">
             <div class="form-group">
 
-              <label class="col-sm-2 control-label">Descripci�n:</label>
+              <label class="col-sm-2 control-label">Descripción:</label>
               <div class="col-sm-10">
                 <p id="Descripcion" class="form-control-static"></p>
-                <input type="text" style="display: none;" class="form-control" id="DescripcionForm" placeholder="Descripci�n">
+                <input type="text" class="form-control hidden" id="DescripcionForm" placeholder="Descripción">
               </div>
 
             </div>
@@ -45,7 +45,7 @@
               <label class="col-sm-2 control-label">Distribuidor:</label>
               <div class="col-sm-10">
                 <p id="disNombre" class="form-control-static"></p>
-                <select id="idDistribuidoresSelect" class="form-control"style="display: none;">
+                <select id="idDistribuidoresSelect" class="form-control hidden">
                 </select>
                 <input type="text" style="display: none; visibility: hidden;" class="form-control" id="disNombreForm">
 
@@ -57,7 +57,7 @@
               <label class="col-sm-2 control-label">Precio: $</label>
               <div class="col-sm-10">
                 <p id="Precio" class="form-control-static"></p>
-                <input type="number" min="0" style="display: none;" class="form-control" id="PrecioForm" placeholder="Precio">
+                <input type="number" min="0" class="form-control hidden" id="PrecioForm" placeholder="Precio">
               </div>
             </div>
           </li>
@@ -67,7 +67,7 @@
               <label class="col-sm-2 control-label">Stock:</label>
               <div class="col-sm-10">
                 <p id="Stock" class="form-control-static"></p>
-                <input type="number" min="0" style="display: none;" class="form-control" id="StockForm" placeholder="Stock">
+                <input type="number" min="0" class="form-control hidden" id="StockForm" placeholder="Stock">
               </div>
 
             </div>
@@ -78,7 +78,7 @@
               <label class="col-sm-2 control-label">Avisar cuando el stock llegue a esta cantidad:</label>
               <div class="col-sm-10">
                 <p id="Avisar" class="form-control-static"></p>
-                <input type="number" min="0" style="display: none;" class="form-control" id="AvisarForm" placeholder="Avisar cuando el stock llegue a esta cantidad">
+                <input type="number" min="0" class="form-control hidden" id="AvisarForm" placeholder="Avisar cuando el stock llegue a esta cantidad">
               </div>
 
             </div>
@@ -86,23 +86,19 @@
         </form>
       </ul>
     </div>
-    <button type="button" id="BtnAgregar" onclick="AgregarProducto()" class="btn btn-default">Agregar Producto</button>
-    <button type="button" id="BtnModificar"onclick="ModificarProducto()" class="btn btn-primary">Modificar Producto</button>
-    <button type="button" id="BtnAceptar" onclick="EnviarProducto()" class="btn btn-success">Aceptar</button>
-    <button type="button" id="BtnEliminar"id="BtnAgregar"onclick="EliminarProducto()" class="btn btn-danger">Eliminar Producto</button>
+    <button type="button" id="BtnAgregar" onclick="modoFormulario('Agregar')" class="btn btn-default">Agregar Producto</button>
+    <button type="button" id="BtnModificar"onclick="modoFormulario('Modificar')" class="btn btn-primary hidden">Modificar Producto</button>
+    <button type="button" id="BtnAceptar" onclick="EnviarProducto()" class="btn btn-success hidden">Aceptar</button>
+    <button type="button" id="BtnEliminar" onclick="EliminarProducto()" class="btn btn-danger hidden">Eliminar Producto</button>
   </div>
 </div>
+<script src="<?php echo URL; ?>views/recursos/logicaABM.js"></script>
 <script>
-$( document ).ajaxError(function(e, xhr, opt){
-  alert("Error requesting " + opt.url + ": " + xhr.status + " " + xhr.statusText);
-});
-document.getElementById("BtnModificar").style.display = 'none';
-document.getElementById("BtnEliminar").style.display = 'none';
-document.getElementById("BtnAceptar").style.display = 'none';
+var VecProductos = [];
 var VecElementos = [];
 var request = $.ajax({
   url: "<?php echo URL; ?>producto/listadoDropdowns",
-  type: "post",
+  type: "post"
 });
 request.done(function (respuesta){
   var myObj = JSON.parse(respuesta);
@@ -111,15 +107,13 @@ request.done(function (respuesta){
     txt += "<option value='" + myObj[element].id + "'>" + myObj[element].Nombre + "</option>";
   }
   document.getElementById("idDistribuidoresSelect").innerHTML = txt;
-}
-
-var VecProductos = [];
+});
 $(document).ready(function () {
   listadoProductos();
 });
 var listadoProductos = function ()
 {
-  var table = $("#TablaProductos").DataTable(
+  var table = $("#Tabla").DataTable(
     {
       "ajax":
       {
@@ -158,55 +152,21 @@ var listadoProductos = function ()
           data: "data=" + VecProductos[indexes].idProductos,
         });
         request.done(function (respuesta){
-          var obj = JSON.parse(respuesta)[0];
-          for (x in obj) {
-            document.getElementById(x).innerHTML = obj[x];
-            document.getElementById(x).style.display = 'block';
-            var input = document.getElementById(x + "Form");
-            input.style.display = 'none';
-            input.value = obj[x];
+          clickFila(JSON.parse(respuesta)[0]);
+          var select = document.getElementById("idDistribuidoresSelect");
+          $("#" + select.id).addClass("hidden");
+          var options = select.options;
+          for (var i = 0; i < select.length; i++) {
+            if (options[i].text == document.getElementById("disNombreForm").value) {
+              select.selectedIndex = i;
+            }
           }
-          document.getElementById("BtnModificar").style.display = 'inline-block';
-          document.getElementById("BtnEliminar").style.display = 'inline-block';
-          document.getElementById("BtnAceptar").style.display = 'none';
-        }
+        });
 
       }
     });
   }
 
-
-  function AgregarProducto()
-  {
-    var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
-    var y = document.getElementById("Formu").getElementsByClassName("form-control");
-    for (var i = 0; i < x.length; i++) {
-      x[i].style.display = 'none';
-    }
-    for (var i = 0; i < y.length; i++) {
-      y[i].style.display = 'block';
-      y[i].value = null;
-    }
-    document.getElementById("BtnAceptar").style.display = 'inline-block';
-    document.getElementById("BtnAgregar").style.display = 'none';
-    document.getElementById("BtnModificar").style.display = 'none';
-    document.getElementById("BtnEliminar").style.display = 'none';
-  }
-  function ModificarProducto()
-  {
-    var x = document.getElementsByClassName("form-control-static");
-    var y = document.getElementsByClassName("form-control");
-    for (var i = 0; i < x.length; i++) {
-      x[i].style.display = 'none';
-    }
-    for (var i = 0; i < y.length; i++) {
-      y[i].style.display = 'block';
-    }
-    document.getElementById("BtnAceptar").style.display = 'inline-block';
-    document.getElementById("BtnAgregar").style.display = 'none';
-    document.getElementById("BtnModificar").style.display = 'none';
-    document.getElementById("BtnEliminar").style.display = 'none';
-  }
   var vec = [];
   function EnviarProducto()
   {
@@ -217,44 +177,22 @@ var listadoProductos = function ()
       alert("Por favor llene la descripción de producto y el stock muchas gracias jeje");
     } else {
       vec = [];
-      var x = document.getElementById("Formu").getElementsByTagName("input");
       document.getElementById("disNombreForm").value = document.getElementById("idDistribuidoresSelect").value;
-      for (var i = 0; i < x.length; i++) {
-        if (x[i].value === "") {
-          x[i].value = null;
-        }
-        vec.push(x[i].value);
-      }
+      vec = beforeEnviar();
       request = $.ajax({
         url: "<?php echo URL; ?>producto/agregarModificarProducto",
         type: "post",
         data: "data=" + JSON.stringify(vec),
       });
       request.done(function (respuesta){
-        OcultarMostrar();
-      }
+        afterEnviar();
+      });
 
-    }
-    function OcultarMostrar(){
-      var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
-      var y = document.getElementById("Formu").getElementsByClassName("form-control");
-      for (var i = 0; i < x.length; i++) {
-        x[i].style.display = 'block';
-        x[i].innerHTML = "";
-      }
-      for (var i = 0; i < y.length; i++) {
-        y[i].style.display = 'none';
-      }
-      document.getElementById("BtnAgregar").style.display = 'inline-block';
-      document.getElementById("BtnModificar").style.display = 'none';
-      document.getElementById("BtnEliminar").style.display = 'none';
-      document.getElementById("BtnAceptar").style.display = 'none';
-      $('#TablaProductos').DataTable().clear().draw().ajax.reload();
     }
 
   }
   function EliminarProducto() {
-    var r = confirm("Estás muy recontra segurísima que querés borrar este producto?");
+    var r = confirm("Estás muy recontra segurísima/o que querés borrar este producto?");
     if (r == true) {
 
       request = $.ajax({
@@ -263,8 +201,8 @@ var listadoProductos = function ()
         data: "data=" + document.getElementById("idProductos").innerHTML,
       });
       request.done(function (respuesta){
-        OcultarMostrar();
-      }
+        eliminarError(respuesta);
+      });
 
     }
   }

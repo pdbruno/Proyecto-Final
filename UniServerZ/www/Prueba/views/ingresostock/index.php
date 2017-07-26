@@ -28,9 +28,6 @@
   </div>
 </div>
 <script>
-$( document ).ajaxError(function(e, xhr, opt){
-  alert("Error requesting " + opt.url + ": " + xhr.status + " " + xhr.statusText);
-});
 $('[data-toggle="tooltip"]').tooltip();
 $('#FechaForm').datepicker({
   format: "yyyy/mm/dd",
@@ -54,7 +51,7 @@ request.done(function (respuesta){
     txt += "<option value='" + myObj[element].idProductos + "'>" + myObj[element].Descripcion + "</option>";
   }
   document.getElementById("IdProductosForm").innerHTML += txt;
-}
+});
 
 function Agregar() {
   var Fecha = document.getElementById("FechaForm").value;
@@ -76,9 +73,8 @@ function Agregar() {
       for (var i = 0; i < x.length; i++) {
         x[i].value = '';
       }
-    }
-    var url = "<?php echo URL; ?>producto/registrarCompra";
 
+    });
   }
 }
 

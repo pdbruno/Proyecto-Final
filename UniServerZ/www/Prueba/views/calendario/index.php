@@ -14,9 +14,8 @@
         <table class="table table-hover" >
           <thead>
             <tr>
-              <th style="display:none;">idActividades</th>
+              <th class="hidden">idActividades</th>
               <th>Actividad</th>
-              <th>Nivel</th>
             </tr>
           </thead>
           <tbody id="TablaActividades">
@@ -98,10 +97,9 @@
         </form>
       </ul>
     </div>
-    <button type="button" id="BtnModificar"onclick="ModificarActividad()" class="btn btn-primary">Editar Actividad</button>
-    <button type="button" id="BtnAgregar"onclick="AgregarActividad()" class="btn btn-default">Agregar Actividad</button>
-    <button type="button" id="BtnAceptarAgr" onclick="addAct()" class="btn btn-success">Aceptar</button>
-    <button type="button" id="BtnAceptar" onclick="editAct()" class="btn btn-success">Aceptar</button>
+    <button type="button" id="BtnAceptar" onclick="Enviar()" class="btn btn-success hidden">Aceptar</button>
+    <button type="button" id="BtnAgregar" onclick="AgregarActividad()" class="btn btn-default">Agregar</button>
+    <button type="button" id="BtnModificar"onclick="ModificarActividad()" class="btn btn-primary hidden">Modificar</button>
   </div>
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" id="RepEdit">
@@ -262,33 +260,14 @@
 </div><!-- /.modal-content-->
 </div> <!--/.modal-dialog -->
 </div> <!--/.modal -->
+<script src="<?php echo URL; ?>views/recursos/logicaABM.js"></script>
 <script>
-$( document ).ajaxError(function(e, xhr, opt){
-  alert("Error requesting " + opt.url + ": " + xhr.status + " " + xhr.statusText);
-});
 function AgregarActividad()
 {
   var rule;
   $("#SeRepiteForm").removeAttr("disabled");
   $("#SeRepiteForm").removeClass("disabled");
-  $("#BtnAceptarAgr").removeClass('hidden');
-  $("#BtnModificar").addClass('hidden');
-  $("#BtnAgregar").addClass('hidden');
-  var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
-  var y = document.getElementById("Formu").getElementsByClassName("form-control");
-  for (var i = 0; i < x.length; i++) {
-    $("#" + x[i].id).addClass('hidden');
-  }
-  for (var i = 0; i < y.length; i++) {
-    $("#" + y[i].id).removeClass('hidden');
-    y[i].value = null;
-  }
-  var z = document.getElementsByClassName("checkbox");
-  for (var i = 0; i < z.length; i++) {
-    z[i].disabled = false;
-    $("#" + z[i].id).removeClass('hidden');
-  }
-
+  $("#SeRepiteForm").prop('checked', false);
 }
 $('#InicioForm').timepicker({ 'timeFormat': 'H:i:s' });
 $('#FinalizacionForm').timepicker({ 'timeFormat': 'H:i:s' });
@@ -348,7 +327,6 @@ function aceptarModal(){
         }
       }
     }
-    diasvec = diasvec.slice(0, diasvec.length/2);
     if (diasvec!=null) {
       texto.byweekday = diasvec;
     }
@@ -494,28 +472,14 @@ $("#BtnAceptarAgr").addClass("hidden");
 function ModificarActividad()
 {
   $("#SeRepiteForm").removeAttr("disabled");
-  $("#BtnAceptar").removeClass("hidden");
-  $("#BtnModificar").addClass("hidden");
-  var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
-  var y = document.getElementById("Formu").getElementsByClassName("form-control");
-  for (var i = 0; i < x.length; i++) {
-    $("#" + x[i].id).addClass('hidden');
-  }
-  for (var i = 0; i < y.length; i++) {
-    $("#" + y[i].id).removeClass('hidden');
-  }
-  var z = document.getElementsByClassName("checkbox");
-  for (var i = 0; i < z.length; i++) {
-    z[i].disabled = false;
-    $("#" + z[i].id).removeClass('hidden');
-  }
-
+  modoFormulario('Modificar')
 }
 var vec = [];
 var data = "";
+var datos = {};
 function format(){
+  datos = {};
   data = "";
-  var datos = {};
   datos['idActividades'] = document.getElementById("idActividadesForm").value;
   datos['Inicio'] = document.getElementById("FechaForm").value +'T'+document.getElementById("InicioForm").value+'-03:00';
   datos['Finalizacion'] = document.getElementById("FechaForm").value +'T'+document.getElementById("FinalizacionForm").value+'-03:00';
@@ -532,112 +496,72 @@ function format(){
     data = "data1=" + JSON.stringify(datos);
   }
 }
-function editAct(){
+var NotFound = false;
+function Enviar()
+{
   format();
   if (data != "") {
-    var request = $.ajax({
-      url: "<?php echo URL; ?>actividad/editarActividad",
-      type: "post",
-      data: data,
-
-    });
-    request.done(function (respuesta){
-      OcultarMOstrar();
+    var url;
+    if (datos['idActividades']=="" || NotFound) {
+      url = "addActividad";
+    }else{
+      url = "editarActividad";
     }
-  }
-}
-
-function addAct(){
-  format();
-  if (data != "") {
     var request = $.ajax({
-      url: "<?php echo URL; ?>actividad/addActividad",
+      url: "<?php echo URL; ?>actividad/" + url,
       type: "post",
       data: data,
     });
     request.done(function (respuesta){
-      OcultarMOstrar();
-    }
-
+      afterEnviar();
+      $("#resumen").text("");
+      $("#SeRepiteForm").addClass("hidden");
+      $("#RepeticionSelect").addClass("hidden")
+    });
   }
-}
-function OcultarMOstrar(){
-  $("#BtnAgregar").removeClass("hidden");
-  $("#BtnAceptarAgr").addClass("hidden");
-  $("#BtnAceptar").addClass("hidden");
-  $("#BtnModificar").addClass("hidden");
-  var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
-  var y = document.getElementById("Formu").getElementsByClassName("form-control");
-  for (var i = 0; i < x.length; i++) {
-    $("#" + x[i].id).removeClass('hidden');
-    x[i].innerHTML = "";
-  }
-  $("#resumen").text("");
-  for (var i = 0; i < y.length; i++) {
-    $("#" + y[i].id).addClass('hidden');
-    y[i].value = '';
-  }
-  $("#SeRepiteForm").addClass("hidden");
-  $("#RepeticionSelect").addClass("hidden")
 }
 function traerActividad(valor) {
-  $("#BtnModificar").removeClass('hidden');
-  $("#BtnAgregar").addClass('hidden');
   $("#SeRepiteForm").removeClass("hidden");
   document.getElementById("SeRepiteForm").setAttribute("disabled", true);
-  $("#BtnAceptar").addClass("hidden");
-  $("#BtnAceptarAgr").addClass("hidden");
-  var id = valor.substr(0, 1);
-  var Nombre = valor.substr(2).trim();
-  $("#NombreForm").val(Nombre);
-  $("#Nombre").text(Nombre);
-  $("#idActividadesForm").val(id);
-  $("#idActividades").text(id);
+  var id = valor.substr(0, 11);
+  var Nombre = valor.substr(11);
+
   var request = $.ajax({
     url: "<?php echo URL; ?>actividad/mostrar",
     type: "post",
-    data: "data=" + "0000"+id,
-
+    data: "data=" + id,
   });
   request.done(function (respuesta){
-    var obj = JSON.parse(respuesta);
-    $("#idActividades").removeClass("hidden");
-    $("#idActividades").text(obj["idActividades"]);
-    $("#idActividadesForm").val(obj["idActividades"]);
-    $("#idActividadesForm").addClass("hidden");
-
-    $("#Nombre").removeClass("hidden");
-    $("#Nombre").text(obj["Nombre"]);
-    $("#NombreForm").val(obj["Nombre"]);
-    $("#NombreForm").addClass("hidden");
-
-    $("#Inicio").removeClass("hidden");
-    $("#Inicio").text(obj["Inicio"].dateTime.substr(11,8));
-    $("#InicioForm").val(obj["Inicio"].dateTime.substr(11,8));
-    $("#InicioForm").addClass("hidden");
-
-    $("#Finalizacion").removeClass("hidden");
-    $("#Finalizacion").text(obj["Finalizacion"].dateTime.substr(11,8));
-    $("#FinalizacionForm").val(obj["Finalizacion"].dateTime.substr(11,8));
-    $("#FinalizacionForm").addClass("hidden");
-
-    $("#Fecha").removeClass("hidden");
-    $("#Fecha").text(obj["Finalizacion"].dateTime.substr(0,10));
-    $("#FechaForm").val(obj["Finalizacion"].dateTime.substr(0,10));
-    $("#FechaForm").addClass("hidden");
-    if (obj["Recurrencia"] != null) {
-      rule = rrulestr(obj["Recurrencia"][0]);
-      var cucu = rule.toText();
-      cucu = cucu.charAt(0).toUpperCase() + cucu.slice(1);
-      $("#resumen").text(cucu);
-      document.getElementById("SeRepiteForm").setAttribute("checked", true);
-      $("#RepeticionSelect").removeClass("hidden");
+    if (respuesta == "Not Found") {
+      alert('No hay un Evento en Google Calendar asignado a esta actividad. Por Favor llene los datos');
+      NotFound = true;
+      var rule;
+      $("#SeRepiteForm").removeAttr("disabled");
+      $("#SeRepiteForm").removeClass("disabled");
+      $("#SeRepiteForm").prop('checked', false);
+      modoFormulario('Agregar');
+      $("#NombreForm").val(Nombre);
+      $("#Nombre").text(Nombre);
+      $("#idActividadesForm").val(id);
+      $("#idActividades").text(id);
     } else {
-      document.getElementById("SeRepiteForm").setAttribute("checked", false);
-      $("#RepeticionSelect").addClass("hidden");
-      $("#resumen").text("");
+      NotFound = false;
+      var obj = JSON.parse(respuesta);
+      clickFila(obj);
+      if (obj["Recurrencia"] != null) {
+        rule = rrulestr(obj["Recurrencia"][0]);
+        var cucu = rule.toText();
+        cucu = cucu.charAt(0).toUpperCase() + cucu.slice(1);
+        $("#resumen").text(cucu);
+        document.getElementById("SeRepiteForm").setAttribute("checked", true);
+        $("#RepeticionSelect").removeClass("hidden");
+      } else {
+        document.getElementById("SeRepiteForm").setAttribute("checked", false);
+        $("#RepeticionSelect").addClass("hidden");
+        $("#resumen").text("");
+      }
     }
-  }
+  });
 
 }
 var texto = "";
@@ -650,20 +574,14 @@ request.done(function (respuesta){
   var i = 0;
   for (act in actividades) {
     texto += "<tr onclick='traerActividad($(this).text())'>";
-    texto += "<td style='display:none;'>" + i + " </td>";
-    for (prop in actividades[act]) {
-      if (actividades[act][prop] != null) {
-        texto += "<td>" + actividades[act][prop] + " </td>";
-      } else {
-        texto += "<td>-</td>";
-      }
-    }
+    texto += "<td class='hidden'>" + actividades[act].idActividades + "</td>";
+    texto += "<td>" + actividades[act].Nombre + "</td>";
     i++;
     texto += "</tr>";
     sub = [];
   }
-  texto += "</tr>"
+  texto += "</tr>";
   $("#TablaActividades").html(texto);
-}
+});
 
 </script>

@@ -17,6 +17,7 @@ class Help extends Controller {
   }
 
   public function traerFila($tipo) {
+    $id = $_POST['data'];
     $datos = $this->model->traerFila($tipo, $id);
     echo $datos;
   }

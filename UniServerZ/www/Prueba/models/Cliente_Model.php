@@ -73,6 +73,8 @@ class cliente_Model extends Model {
     $sql[2] = "SELECT idCategorias as id, Nombre FROM categorias;";
     $sql[3] = "SELECT idSedes as id, Nombre FROM sedes;";
     $res[] = $this->repetitivaQuery($sql);
+    $sql = "SELECT idActividades as id, Nombre FROM actividades;";
+    $res[] = $this->db->getAll($sql);
     echo json_encode($res);
   }
 
@@ -82,39 +84,27 @@ class cliente_Model extends Model {
   }
 
   public function asignarActividades($actividades, $idClientes) {
-    for ($i = 0; $i < 3; $i++) {
-      switch ($actividades[$i][0]) {
-        case "1":
-        $tkd = true;
-        $modtkd = $actividades[$i][1];
-        $nivtkd = $actividades[$i][2];
-        break;
-        case "2":
-        $fun = true;
-        $nivfun = $actividades[$i][1];
-        break;
-        case "3":
-        $per = true;
-      }
-    }
-
-    if (isset($tkd)) {
-      $parte[] = $this->db->parse("1 AND idModalidades = ?i AND idNiveles = ?i", $modtkd, $nivtkd);
-    }
-    if (isset($fun)) {
-      $parte[] = $this->db->parse("2 AND idNiveles = ?i", $nivfun);
-    }
-    if (isset($per)) {
-      $parte[] = $this->db->parse("3");
-    }
     $this->db->query("DELETE FROM clientesactividades WHERE idClientes = ?i", $idClientes);
-    for ($i = 0; $i < count($parte); $i++) {
-      $outp = $this->db->getOne("SELECT idActividadesModalidadesNiveles FROM actividadesmodalidadesniveles WHERE idActividades = ?p", $parte[$i]);
-      $this->db->query("INSERT INTO clientesactividades SET `idClientes`= ?i, `idActividadesModalidadesNiveles`= ?i", $idClientes, $outp);
+    $actividades = $this->unique_multidim_array($actividades, "idActividades");
+    for ($i = 0; $i < count($actividades); $i++) {
+      $this->db->query("INSERT INTO clientesactividades SET `idClientes`= ?i, `idActividades`= ?i, `PaseLibre` = ?i", $idClientes, $actividades[$i]["idActividades"], $actividades[$i]["PaseLibre"]);
     }
 
   }
+  public function unique_multidim_array($array, $key) {
+    $temp_array = array();
+    $i = 0;
+    $key_array = array();
 
+    foreach($array as $val) {
+      if (!in_array($val[$key], $key_array)) {
+        $key_array[$i] = $val[$key];
+        $temp_array[$i] = $val;
+      }
+      $i++;
+    }
+    return $temp_array;
+  }
   public function agregarModificarCliente($data) {
     $sql = "INSERT INTO clientes SET ?u ON DUPLICATE KEY UPDATE ?u";
     $this->db->query($sql, (array) $data, (array) $data);
@@ -131,18 +121,11 @@ class cliente_Model extends Model {
     LEFT JOIN sedes ON clientes.IdSedes = sedes.idSedes
     WHERE idClientes=?i";
     $outp[] = $this->db->getAll($sql, $idClientes);
-    $sql = "SELECT `idActividadesModalidadesNiveles` FROM `clientesactividades` WHERE `idClientes` = ?i";
-    $res = $this->db->getCol($sql, $idClientes);
-    for ($i=0; $i < count($res); $i++) {
-      $sql = "SELECT actividades.Nombre as actNombre, modalidades.Nombre as modNombre, niveles.Nombre as nivNombre
-      FROM actividadesmodalidadesniveles
-      LEFT JOIN actividades ON actividadesmodalidadesniveles.idActividades = actividades.idActividades
-      LEFT JOIN modalidades ON actividadesmodalidadesniveles.idModalidades = modalidades.idModalidades
-      LEFT JOIN niveles ON actividadesmodalidadesniveles.idNiveles = niveles.idNiveles
-      WHERE idActividadesModalidadesNiveles=?i";
-      $actividades[]=$this->db->getRow($sql, $res[$i]);
-    }
-    $outp[] = $actividades;
+    $sql = "SELECT actividades.Nombre, actividades.idActividades as id, actividades.XClase, actividades.XMes, actividades.XSemestre, clientesactividades.PaseLibre FROM `clientesactividades`
+    LEFT JOIN actividades ON clientesactividades.idActividades = actividades.idActividades
+    WHERE `idClientes` = ?i";
+    $res = $this->db->getAll($sql, $idClientes);
+    $outp[] = $res;
     echo json_encode($outp);
   }
 }

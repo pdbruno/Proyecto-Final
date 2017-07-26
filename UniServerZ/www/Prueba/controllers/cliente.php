@@ -25,6 +25,7 @@ class cliente extends Controller {
     $cliente = json_decode($_POST['data1'], TRUE);
     $actividades = json_decode($_POST['data2'], TRUE);
     $cliente = $this->model->nuevoObjeto($cliente);
+    var_dump($cliente);
     $this->model->agregarModificarCliente($cliente);
     $this->model->asignarActividades($actividades, $cliente["idClientes"]);
   }

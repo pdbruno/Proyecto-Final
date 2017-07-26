@@ -25,48 +25,10 @@ class actividad_Model extends Model {
     return json_encode($datos);
   }
 
-  public function traerAnotados($datos, $servicio)
+  public function traerAnotados($idActividades)
   {
-    switch ($datos[0]) {
-      case "Taekwon-Do":
-      switch ($datos[1]) {
-        case 'Inicial':
-        $sql = " `idActividadesModalidadesNiveles` = 1 OR `idActividadesModalidadesNiveles` = 5";
-        break;
-        case 'Infantiles A':
-        $sql = " `idActividadesModalidadesNiveles` = 2 OR `idActividadesModalidadesNiveles` = 6";
-        break;
-        case 'Infantiles B':
-        $sql = " `idActividadesModalidadesNiveles` = 3 OR `idActividadesModalidadesNiveles` = 7";
-        break;
-        case 'Juveniles y Adultos':
-        $sql = " `idActividadesModalidadesNiveles` = 4 OR `idActividadesModalidadesNiveles` = 8";
-        break;
-        default:
-        $sql= " `idActividadesModalidadesNiveles` BETWEEN 1 AND 8";
-      }
-      break;
-
-      case "Funcional":
-      switch ($datos[1]) {
-        case 'Mañana':
-        $sql = " `idActividadesModalidadesNiveles` = 9";
-        break;
-        case 'Tarde':
-        $sql = " `idActividadesModalidadesNiveles` = 13";
-        break;
-        case 'Noche':
-        $sql = " `idActividadesModalidadesNiveles` = 14";
-      }
-      break;
-      default:
-      $sql = "";
-    }
-    $UsersCond = "";
-    if ($sql != "") {
-      $UsersCond = $this->db->parse(" AND WHERE `idClientes` IN (SELECT `idClientes` FROM `clientesactividades` WHERE ?p)", $sql);
-    }
-    $UsersFinal = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientes` WHERE `Activo` = 1 ?p", $UsersCond);
+    $idActividades = substr($idActividades,0,11);
+    $UsersFinal = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientes` WHERE `Activo` = 1 AND `idClientes` IN (SELECT `idClientes` FROM `clientesactividades` WHERE `idActividades` = ?i)", $idActividades);
     return json_encode($UsersFinal) ;
   }
 
@@ -75,14 +37,16 @@ class actividad_Model extends Model {
     $event = $servicio->events->get('primary', $idActividades);
     $datos["Nombre"] = $event->getSummary();
     $datos["idActividades"] = $idActividades;
-    $datos["Finalizacion"] = $event->getEnd();
-    $datos["Inicio"] = $event->getStart();
+    $datos["Finalizacion"] = substr($event->getEnd()->dateTime,11,8);
+    $datos["Inicio"] = substr($event->getStart()->dateTime,11,8);
+    $datos["Fecha"] = substr($event->getStart()->dateTime,0,10);
     $datos["Recurrencia"] = $event->getRecurrence();
     return json_encode($datos);
   }
   public function format($data)
   {
     $evento = array(
+      'id' => $data["idActividades"],
       'summary' => $data["Nombre"],
       'start' => array(
         'dateTime' => $data["Inicio"],
@@ -105,17 +69,21 @@ class actividad_Model extends Model {
     $updatedEvent = $servicio->events->update('primary', $id, $event);
     return $updatedEvent->getUpdated();
   }
-  public function asignarAsistencia($data, $id, $servicio)
+  public function asignarAsistencia($data, $id)
   {
-    $evento = array(
-      'extendedProperties' => array(
-        'private' => array(
-          'asistencia' => json_encode($data)
-        )
-      )
-    );
-    $event = new Google_Service_Calendar_Event($evento);
-    return $servicio->events->patch('primary', $id, $event);
+    // $evento = array(
+    //   'extendedProperties' => array(
+    //     'private' => array(
+    //       'asistencia' => json_encode($data)
+    //     )
+    //   )
+    // );
+    // $event = new Google_Service_Calendar_Event($evento);
+    // return $servicio->events->patch('primary', $id, $event);
+    for ($i = 0; $i < count($data); $i++) {
+      $this->db->query("INSERT INTO `asistencias` SET `idClientes`= ?i, `idEvento`= ?s", $data[$i], $id);
+    }
+
   }
   public function agregarEvento($data, $servicio)
   {
@@ -123,9 +91,30 @@ class actividad_Model extends Model {
     $event = $servicio->events->insert('primary', $event);
   }
   public function traerActividades() {
-    $sql = "SELECT actividades.Nombre as actNombre, niveles.Nombre as nivNombre FROM actividadesmodalidadesniveles LEFT JOIN actividades ON actividadesmodalidadesniveles.idActividades = actividades.idActividades LEFT JOIN niveles ON actividadesmodalidadesniveles.idNiveles = niveles.idNiveles WHERE actividades.idActividades != 3 GROUP BY `nivNombre` ";
+    $sql = "SELECT idActividades, Nombre FROM actividades";
     $outp = $this->db->getAll($sql);
     echo json_encode($outp);
   }
+  public function traerActividad($idActividades) {
+    $sql = "SELECT * FROM actividades WHERE `idActividades` = ?i";
+    $outp = $this->db->getAll($sql, $idActividades);
+    echo json_encode($outp);
+  }
 
+  public function nuevoObjeto($data) {
+    $obj['idActividades'] = $data[0];
+    $obj['Nombre'] = $data[1];
+    $obj['XClase'] = $data[2];
+    $obj['XMes'] = $data[3];
+    $obj['XSemestre'] = $data[4];
+    return $obj;
+  }
+  public function agregarModificarActividad($data) {
+    $sql = "INSERT INTO actividades SET ?u ON DUPLICATE KEY UPDATE ?u";
+    $this->db->query($sql, (array) $data, (array) $data);
+  }
+  public function eliminarActividad($idActividades) {
+    $sql = "DELETE FROM actividades WHERE idActividades = ?i";
+    $this->db->query($sql, $idActividades);
+  }
 }

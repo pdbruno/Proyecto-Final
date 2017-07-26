@@ -28,9 +28,6 @@
   </div>
 </div>
 <script>
-$( document ).ajaxError(function(e, xhr, opt){
-  alert("Error requesting " + opt.url + ": " + xhr.status + " " + xhr.statusText);
-});
 var caca;
 $('[data-toggle="tooltip"]').tooltip();
 $('#FechaForm').datepicker({
@@ -55,7 +52,7 @@ request.done(function (respuesta){
     txt += "<option value='" + myObj[element].idProductos + "'>" + myObj[element].Descripcion + "</option>";
   }
   document.getElementById("IdProductosForm").innerHTML += txt;
-}
+});
 function Precio()
 {
   document.getElementById("MontoForm").value = caca[document.getElementById("IdProductosForm").selectedIndex-1].Precio;
@@ -85,8 +82,7 @@ function Agregar()
       for (var i = 0; i < x.length; i++) {
         x[i].value = '';
       }
-    }
-
+    });
   }
 }
 

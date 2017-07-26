@@ -19,7 +19,6 @@
         <table class="table table-hover" >
           <thead>
             <tr>
-              <th class='hidden'>idEvento</th>
               <th>Actividad</th>
             </tr>
           </thead>
@@ -67,7 +66,7 @@ function enviar(){
     alert('Se ha asignado la asistencia al evento');
     VecAsistio=[];
     $("#Asistencia").addClass("hidden");
-  }
+  });
 
 }
 
@@ -79,11 +78,11 @@ function ingresoFecha(){
     var dia={};
     dia["timeMax"] = document.getElementById("FechaForm").value +'T23:59:59-03:00';
     dia["timeMin"] = document.getElementById("FechaForm").value +'T00:00:00-03:00';
+
     var request = $.ajax({
       url: "<?php echo URL; ?>actividad/traerEventos",
       type: "post",
       data: "data=" + JSON.stringify(dia),
-
     });
     request.done(function (respuesta){
       if (respuesta == '"no papu"') {
@@ -93,8 +92,7 @@ function ingresoFecha(){
         var i = 0;
         var texto = "";
         for (act in eventos) {
-          texto += "<tr onclick='traerEvento($(this))' id='" + i + "'>";
-          texto += "<td class='hidden'>" + eventos[act].idEvento + " </td>";
+          texto += "<tr onclick='traerEvento(this)' id='" + eventos[act].idEvento + "'>";
           texto += "<td>" + eventos[act].Nombre + " </td>";
           texto += "</tr>";
           i++;
@@ -103,7 +101,7 @@ function ingresoFecha(){
         $("#ListaEventos").removeClass('hidden');
         $("#TablaActividades").html(texto);
       }
-    }
+    });
 
   }
 }
@@ -119,23 +117,18 @@ function traerEvento(boton){
   VecAsistio = [];
   filas = document.getElementById("TablaActividades").rows;
   for (row in filas) {
-    if (filas[row].id == boton.attr('id')) {
+    if (filas[row].id == boton.id) {
       $("#" + filas[row].id).addClass("success");
       idEvento = filas[row].cells[0].innerHTML;
     } else {
       $("#" + filas[row].id).removeClass("success");
     }
   }
-  var x = document.getElementById(boton.attr('id')).cells;
-  var ActNombre = x[1].innerHTML;
-  var posEsp = ActNombre.indexOf(" ");
-  var VecNombre = [];
-  VecNombre.push(ActNombre.substr(0,posEsp).trim());
-  VecNombre.push(ActNombre.substr(posEsp).trim());
+
   var request = $.ajax({
     url: "<?php echo URL; ?>actividad/traerAnotados",
     type: "post",
-    data: "data=" + JSON.stringify(VecNombre),
+    data: "data=" + boton.id,
 
   });
   request.done(function (respuesta){
@@ -165,7 +158,7 @@ function traerEvento(boton){
         $("#NombreForm").val("");
       }
     });
-  }
 
+  });
 }
 </script>
