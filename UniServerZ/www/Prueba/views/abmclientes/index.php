@@ -445,7 +445,7 @@
                           <thead>
                             <tr>
                               <th>Actividad</th>
-                              <th>Pase Libre</th>
+                              <th>Modalidad</th>
                             </tr>
                           </thead>
                           <tbody id="TablaActividades">
@@ -514,19 +514,22 @@ function deshacerModal(){
   <h5>Actividad</h5>\
   </div>\
   <div class='col-lg-5'>\
-  <h5>PaseLibre</h5>\
+  <h5>Modalidad</h5>\
   </div><div class='row'>\
   <div class='col-lg-7'>\
-  <select id='IdActividadesSelect1' class='form-control'>\
+  <select id='IdActividadesSelect1' class='form-control activ'>\
   <option disabled selected value>Elija una actividad</option>\
   </select>\
   </div>\
   <div class='col-lg-5'>\
-  <input type='checkbox' class='checkbox' id='PaseLibre1' checked>\
+  <select id='IdModalidadesSelect1' class='form-control mod'>\
+  <option selected value=''>Ninguna</option>\
+  </select>\
   </div>\
   </div>\
   <button type='button' id='AddAct1' class='btn btn-link' onclick='AddAct(this)' >+AgregarActividad</button>");
-  document.getElementById("IdActividadesSelect1").innerHTML += optionCrear(VecActividades)
+  document.getElementById("IdActividadesSelect1").innerHTML += optionCrear(VecActividades);
+  document.getElementById("IdModalidadesSelect1").innerHTML += VecModalidades;
 }
 
 function AddAct(bot) {
@@ -538,11 +541,13 @@ function AddAct(bot) {
     j = Number(i) + 1;
     $("#Selec").append("<div class='row' style='margin-top: 50px;'>\
     <div class='col-lg-7'>\
-    <select id='IdActividadesSelect" + j + "' class='form-control'>\
+    <select id='IdActividadesSelect" + j + "' class='form-control activ'>\
     </select>\
     </div>\
     <div class='col-lg-5'>\
-    <input type='checkbox' class='checkbox' id='PaseLibre" + j + "' checked>\
+    <select id='IdModalidadesSelect" + j + "' class='form-control mod'>\
+    <option selected value=''>Ninguna</option>\
+    </select>\
     </div>\
     </div>\
     <button type='button' id='AddAct" + j + "' class='btn btn-link' onclick='AddAct(this)' >+AgregarActividad</button>");
@@ -551,6 +556,8 @@ function AddAct(bot) {
     actual.remove(anterior.selectedIndex);
     $("#AddAct" + i).addClass('hidden')
     anterior.disabled = true;
+    document.getElementById("IdModalidadesSelect" + j).innerHTML += VecModalidades;
+
   }
 
 }
@@ -564,21 +571,17 @@ $('#FechaNacimientoForm').datepicker({
 
 var Cosavacia = {id: 0, Nombre: ""};
 var VecActividades= [];
+var VecModalidades= [];
 var bien = true;
 var final = [];
 function aceptarModal() {
   $('#ModalSel').modal('hide');
   final = [];
-  var selects = document.getElementById("Selec").getElementsByTagName("select");
-  var checks = document.getElementById("Selec").getElementsByTagName("input");
-  for (var i = 0; i < selects.length; i++) {
-    final[i] = {idActividades : selects[i].value};
-    if (checks[i].checked) {
-      final[i].PaseLibre = 1;
-    }else {
-      final[i].PaseLibre = 0;
-    }
-    if (selects[i] == "") {
+  var activs = document.getElementById("Selec").getElementsByClassName("activ");
+  var mods = document.getElementById("Selec").getElementsByClassName("mod");
+  for (var i = 0; i < activs.length; i++) {
+    final[i] = {idActividades : activs[i].value, idModalidades : mods[i].value};
+    if (activs[i] == "") {
       bien = false;
     }
   }
@@ -600,8 +603,9 @@ var request = $.ajax({
 });
 request.done(function (respuesta){
   var myObj = JSON.parse(respuesta);
-  VecActividades = myObj[1];
-  VecActividadesTemp = myObj[1];
+  VecActividades = myObj[1][0];
+  VecModalidades = optionCrear(myObj[1][1]);
+  VecActividadesTemp = myObj[1][0];
   for (vector in myObj[0]) {
     var txt = optionCrear(myObj[0][vector]);
     VecElementos.push(txt);
@@ -669,10 +673,14 @@ var listadoclientes = function ()
           var texto = "";
           for (var i = 0; i < actividades.length; i++) {
             texto += "<tr>";
-            texto+="<td>" + actividades[i].Nombre + "</td>";
-            texto+="<td>" + actividades[i].PaseLibre + "</td>";
+            texto+="<td>" + actividades[i].NombreAct + "</td>";
+            if (actividades[i].NombreMod == null) {
+              texto+="<td>Ninguna</td>";
+            }else {
+              texto+="<td>" + actividades[i].NombreMod + "</td>";
+            }
             texto+="</tr>";
-            final.push(actividades[i].id);
+            final.push({idActividades: actividades[i].idActividades, idModalidades: actividades[i].idModalidades});
           }
           $("#TablaActividades").html(texto);
           $("#IdLocalidadesSelect").addClass("hidden");

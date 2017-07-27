@@ -24,7 +24,13 @@ class actividad_Model extends Model {
     }
     return json_encode($datos);
   }
-
+  public function asignarModalidades($modalidades, $idActividades) {
+    $this->db->query("DELETE FROM actividadesaranceles WHERE idActividades = ?i", $idActividades);
+    $modalidades = array_unique($modalidades);
+    for ($i = 0; $i < count($modalidades); $i++) {
+      $this->db->query("INSERT INTO actividadesaranceles SET `idActividades`= ?i, `idModalidades`= ?i", $idActividades, $modalidades[$i]);
+    }
+  }
   public function traerAnotados($idActividades)
   {
     $idActividades = substr($idActividades,0,11);

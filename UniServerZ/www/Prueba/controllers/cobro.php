@@ -7,16 +7,24 @@ class cobro extends calendar {
     echo $datos;
   }
 
-  public function traerArancel() {
-    $idAranceles = $_POST['data'];
-    echo $this->model->traerArancel($idAranceles);
+  public function addCobro()
+  {
+    $cobro = json_decode($_POST['data'], TRUE);
+    date_default_timezone_set("America/Buenos_Aires");
+    $cobro['Fecha'] =  date("Y-m-d");
+    echo $this->model->addCobro($cobro);
   }
 
-  public function agregarModificarArancel() {
+  public function modArancel() {
     $Arancel = json_decode($_POST['data'], TRUE);
-    $Arancel = $this->model->nuevoObjeto($Arancel);
-    $this->model->agregarModificarArancel($Arancel);
+    $this->model->modArancel($Arancel);
   }
+
+  public function traerArancel() {
+    $datos = json_decode($_POST['data'], TRUE);
+    echo $this->model->traerArancel($datos);
+  }
+
   public function eliminarArancel() {
     $idAranceles = $_POST['data'];
     $this->model->eliminarArancel($idAranceles);

@@ -73,8 +73,9 @@ class cliente_Model extends Model {
     $sql[2] = "SELECT idCategorias as id, Nombre FROM categorias;";
     $sql[3] = "SELECT idSedes as id, Nombre FROM sedes;";
     $res[] = $this->repetitivaQuery($sql);
-    $sql = "SELECT idActividades as id, Nombre FROM actividades;";
-    $res[] = $this->db->getAll($sql);
+    $kk[0] = "SELECT idActividades as id, Nombre FROM actividades;";
+    $kk[1] = "SELECT idModalidades as id, Nombre FROM modalidades;";
+    $res[] = $this->repetitivaQuery($kk);
     echo json_encode($res);
   }
 
@@ -87,9 +88,8 @@ class cliente_Model extends Model {
     $this->db->query("DELETE FROM clientesactividades WHERE idClientes = ?i", $idClientes);
     $actividades = $this->unique_multidim_array($actividades, "idActividades");
     for ($i = 0; $i < count($actividades); $i++) {
-      $this->db->query("INSERT INTO clientesactividades SET `idClientes`= ?i, `idActividades`= ?i, `PaseLibre` = ?i", $idClientes, $actividades[$i]["idActividades"], $actividades[$i]["PaseLibre"]);
+      $this->db->query("INSERT INTO clientesactividades SET `idClientes`= ?i, `idActividades`= ?i, `idModalidades` = ?s", $idClientes, $actividades[$i]["idActividades"], $actividades[$i]["idModalidades"]);
     }
-
   }
   public function unique_multidim_array($array, $key) {
     $temp_array = array();
@@ -121,8 +121,9 @@ class cliente_Model extends Model {
     LEFT JOIN sedes ON clientes.IdSedes = sedes.idSedes
     WHERE idClientes=?i";
     $outp[] = $this->db->getAll($sql, $idClientes);
-    $sql = "SELECT actividades.Nombre, actividades.idActividades as id, actividades.XClase, actividades.XMes, actividades.XSemestre, clientesactividades.PaseLibre FROM `clientesactividades`
+    $sql = "SELECT actividades.Nombre as NombreAct, actividades.idActividades as idActividades, actividades.XClase, actividades.XMes, actividades.XSemestre, modalidades.Nombre as NombreMod, modalidades.idModalidades as idModalidades FROM `clientesactividades`
     LEFT JOIN actividades ON clientesactividades.idActividades = actividades.idActividades
+    LEFT JOIN modalidades ON clientesactividades.idModalidades = modalidades.idModalidades
     WHERE `idClientes` = ?i";
     $res = $this->db->getAll($sql, $idClientes);
     $outp[] = $res;

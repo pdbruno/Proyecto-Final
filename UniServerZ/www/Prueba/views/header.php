@@ -38,6 +38,7 @@
   $( document ).ajaxError(function(e, xhr, opt){
     alert("Error accediendo a " + opt.url + ": " + xhr.responseText + " " + xhr.statusText);
   });
+  
   </script>
   <title>Hola</title>
 
