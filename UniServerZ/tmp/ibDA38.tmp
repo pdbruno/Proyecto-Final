@@ -1,0 +1,25 @@
+2017-07-27 14:17:09 2614 Transaction:
+TRANSACTION 113265, ACTIVE 0 sec updating or deleting
+mysql tables in use 1, locked 1
+4 lock struct(s), heap size 312, 2 row lock(s), undo log entries 1
+MySQL thread id 68, OS thread handle 0x2614, query id 201 localhost 127.0.0.1 root updating
+DELETE FROM `productos` WHERE `idProductos` = 3
+Foreign key constraint fails for table `dbproyectofinal`.`registrocompras`:
+,
+  CONSTRAINT `registrocompras_ibfk_1` FOREIGN KEY (`idProductos`) REFERENCES `productos` (`idProductos`)
+Trying to delete or update in parent table, in index `PRIMARY` tuple:
+DATA TUPLE: 8 fields;
+ 0: len 4; hex 00000003; asc     ;;
+ 1: len 6; hex 00000001ba71; asc      q;;
+ 2: len 7; hex 2f000001770596; asc /   w  ;;
+ 3: len 14; hex 4761746f72616465203230306d6c; asc Gatorade 200ml;;
+ 4: len 4; hex 00000002; asc     ;;
+ 5: len 5; hex 8000000301; asc      ;;
+ 6: len 4; hex 80000099; asc     ;;
+ 7: len 4; hex 8000000f; asc     ;;
+
+But in child table `dbproyectofinal`.`registrocompras`, in index `idProductos`, there is a record:
+PHYSICAL RECORD: n_fields 2; compact format; info bits 0
+ 0: len 4; hex 00000003; asc     ;;
+ 1: len 4; hex 00000036; asc    6;;
+

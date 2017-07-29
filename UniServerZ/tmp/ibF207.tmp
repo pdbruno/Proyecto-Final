@@ -1,0 +1,2 @@
+,
+  CONSTRAINT `cobros_ibfk_1` FOREIGN KEY (`idClientes`) REFERENCES `clientes` (`idClientes`)

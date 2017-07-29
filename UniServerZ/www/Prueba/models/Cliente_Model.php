@@ -51,8 +51,7 @@ class cliente_Model extends Model {
     parent::__construct();
   }
 
-  public function listadoClientes() {
-
+  public function listado($tipo) {
     $sql = "SELECT idClientes, Nombres, Apellidos FROM clientes";
     $outp = $this->db->getAll($sql);
     echo json_encode($outp);
@@ -67,7 +66,6 @@ class cliente_Model extends Model {
   }
 
   public function listadodropdowns() {
-    $sql = array();
     $sql[0] = "SELECT idLocalidades as id, Nombre FROM localidades;";
     $sql[1] = "SELECT idGrupoFactorSanguineo as id, Nombre FROM grupofactorsanguineo;";
     $sql[2] = "SELECT idCategorias as id, Nombre FROM categorias;";
@@ -79,9 +77,9 @@ class cliente_Model extends Model {
     echo json_encode($res);
   }
 
-  public function eliminarCliente($idClientes) {
-    $sql = "DELETE FROM clientes WHERE idClientes = ?i";
-    $this->db->query($sql, $idClientes);
+  public function eliminarElemento($tipo, $idClientes) {
+    $this->model->db->query("DELETE FROM clientesactividades WHERE idClientes = ?i", $idClientes);
+    $datos = $this->model->eliminar('Clientes',$idClientes);
   }
 
   public function asignarActividades($actividades, $idClientes) {
@@ -105,13 +103,16 @@ class cliente_Model extends Model {
     }
     return $temp_array;
   }
-  public function agregarModificarCliente($data) {
-    $sql = "INSERT INTO clientes SET ?u ON DUPLICATE KEY UPDATE ?u";
-    $this->db->query($sql, (array) $data, (array) $data);
+  public function actCliente($idClientes) {
+    $sql = "SELECT actividades.Nombre as NombreAct, actividades.idActividades as idActividades, actividades.XClase, actividades.XMes, actividades.XSemestre, modalidades.Nombre as NombreMod, modalidades.idModalidades as idModalidades FROM `clientesactividades`
+    LEFT JOIN actividades ON clientesactividades.idActividades = actividades.idActividades
+    LEFT JOIN modalidades ON clientesactividades.idModalidades = modalidades.idModalidades
+    WHERE `idClientes` = ?i";
+    $res = $this->db->getAll($sql, $idClientes);
+    $outp[] = $res;
+    echo json_encode($outp);
   }
-
-  public function traerCliente($idClientes) {
-    $actividades=[];
+  public function traerElemento($tipo, $idClientes) {
     $sql = "SELECT clientes.idClientes,clientes.Nombres,clientes.Apellidos,clientes.FechaNacimiento,clientes.DNI,clientes.Domicilio, localidades.Nombre as locNombre,clientes.CPostal,clientes.TelCel,clientes.Ocupacion,clientes.Email,clientes.Facebook,clientes.AutorizaWeb,clientes.AptoMedico,clientes.CoberturaMedica,clientes.NumSocioMed,clientes.TelEmergencias, grupofactorsanguineo.Nombre as sangNombre,clientes.Alergia,clientes.Patologia,clientes.IntQuirurgica,clientes.Lesion,clientes.Medicacion,clientes.Observaciones,clientes.PadMadTut,clientes.TelPadMadTut,clientes.CelPadMadTut,clientes.EmailPadMadTut,clientes.SeVaSolo,clientes.Retirar1NomAp,clientes.Retirar1DNI,clientes.Retirar2NomAp,clientes.Retirar2DNI,clientes.Retirar3NomAp,clientes.Retirar3DNI,clientes.Activo,clientes.EsInstructor,
     categorias.Nombre as catNombre, sedes.Nombre as sedNombre
     FROM clientes

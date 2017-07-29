@@ -1,16 +1,19 @@
 <script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.css">
+<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table-es-AR.min.js"></script>
 <div class="col-lg-6">
   <div class="panel panel-default">
     <div class="panel-heading">Listado de Clientes
     </div>
     <div class="table-responsive col-lg-12">
-      <table  id="Tabla" class="table table-hover" cellspacing="0" width="100%"  >
+      <table  id="Tabla" class="table table-hover" data-toggle="table" data-url="<?php echo URL; ?>cliente/listarElementos/Clientes" data-search='true' cellspacing="0" width="100%"  >
         <thead>
           <tr>
-            <th>Nombres</th>
-            <th>Apellidos</th>
+            <th data-field="Nombres" data-sortable='true'>Nombres</th>
+            <th data-field="Apellidos" data-sortable='true'>Apellidos</th>
           </tr>
         </thead>
       </table>
@@ -146,8 +149,9 @@ function enviar(){
     }
   }
   if (bien) {
+    Enviar.Fecha = new Date().toISOString().slice(0,10);
     var request = $.ajax({
-      url: "<?php echo URL; ?>cobro/addCobro",
+      url: "<?php echo URL; ?>cobro/agregarModificarElemento/Cobros",
       type: "post",
       data: "data=" + JSON.stringify(Enviar),
     });
@@ -222,7 +226,7 @@ function traerEvento(boton){
 }
 function traerPrecio(campo){
   request = $.ajax({
-    url: "<?php echo URL; ?>cobro/traerArancel",
+    url: "<?php echo URL; ?>cobro/traerElemento/Arancel",
     type: "post",
     data: "data=" + JSON.stringify({idActividades:Globales.actividadElegida.idActividades, idModalidades:Globales.actividadElegida.idModalidades, Campo: campo})
   });
@@ -242,147 +246,105 @@ function elegirSemestre(){
   $("#SemestrePicker").removeClass("hidden");
   traerPrecio('PrecioXMes');
 }
-var VecClientes = [];
-$(document).ready(function () {
-  listadoclientes();
-});
-var listadoclientes = function ()
-{
-  var table = $("#Tabla").DataTable(
-    {
-      "ajax":
-      {
-        "method": "POST",
-        "url": "<?php echo URL; ?>cliente/listadoClientes",
-        "dataSrc": function (txt)
-        {
-          VecClientes = [];
-          for (i in txt)
-          {
-            var Cliente =
-            {
-              idClientes: txt[i].idClientes,
-              Nombres: txt[i].Nombres,
-              Apellidos: txt[i].Apellidos,
-            };
-            VecClientes.push(Cliente);
-          }
-          return VecClientes;
-        }
-      },
-      "columns": [
-        {data: "Nombres"},
-        {data: "Apellidos"}
-      ],
-      select: {
-        style: 'single'
+$('#Tabla').on('click-row.bs.table', function (row, $element, field) {
+  $('.success').removeClass('success');
+  $(field).addClass('success');
+  var request = $.ajax({
+    url: "<?php echo URL; ?>cliente/actCliente",
+    type: "post",
+    data: "data=" + $element.idClientes,
+  });
+  Enviar.idClientes = $element.idClientes;
+  request.done(function (respuesta){
+    Globales.ListaActividades = [];
+    var actividades = JSON.parse(respuesta)[0];
+    var texto = "";
+    var i = 0;
+    for (actividad in actividades) {
+      Globales.ListaActividades.push(actividades[actividad]);
+      var NombreAct = actividades[actividad].NombreAct;
+      var NombreMod = actividades[actividad].NombreMod;
+      if (NombreMod == null) {
+        texto+= "<button type='button' class='list-group-item btn btn-default' id='" + i + "' onclick='elegirActividad(this)'>" + NombreAct + "</button>";
+      }else {
+        texto+= "<button type='button' class='list-group-item btn btn-default' id='" + i + "' onclick='elegirActividad(this)'>" + NombreAct + " " + NombreMod + "</button>";
       }
-      //                        "language": {
-      //                        "url": "dataTables.spanish.lang"
-      //                          Hacer algo con el idioma de la tabla y de la extension select
-    });
-    table.on('select', function (e, dt, type, indexes) {
-      if (type === 'row') {
-        request = $.ajax({
-          url: "<?php echo URL; ?>cliente/traerCliente",
-          type: "post",
-          data: "data=" + VecClientes[indexes].idClientes,
-        });
-        Enviar.idClientes = VecClientes[indexes].idClientes;
-        request.done(function (respuesta)
-        {
-          Globales.ListaActividades = [];
-          var actividades = JSON.parse(respuesta)[1];
-          var texto = "";
-          var i = 0;
-          for (actividad in actividades) {
-            Globales.ListaActividades.push(actividades[actividad]);
-            var NombreAct = actividades[actividad].NombreAct;
-            var NombreMod = actividades[actividad].NombreMod;
-            if (NombreMod == null) {
-              texto+= "<button type='button' class='list-group-item btn btn-default' id='" + i + "' onclick='elegirActividad(this)'>" + NombreAct + "</button>";
-            }else {
-              texto+= "<button type='button' class='list-group-item btn btn-default' id='" + i + "' onclick='elegirActividad(this)'>" + NombreAct + " " + NombreMod + "</button>";
-            }
-            i++;
-          }
-          $("#ListaActividades").html(texto);
-          $(".escondible").addClass("hidden");
-          $("#PanelActividades").removeClass("hidden");
-        });
-
-      }
-    });
-  }
-  function elegirFecha(){
-    $(".escondible2").addClass("hidden");
-    $("#IngresoFecha").removeClass("hidden");
-
-    $('#FechaForm').datepicker('destroy');
-    $('#FechaForm').datepicker({
-      format: "yyyy-mm-dd",
-      startDate: "01/01/2017",
-      maxViewMode: 0,
-      todayBtn: "linked",
-      language: "es",
-      autoclose: true,
-      todayHighlight: true
-    });
-
-    traerPrecio('PrecioXClase');
-    $("#MontoRow").removeClass("hidden");
-
-  }
-
-  function elegirMes(){
-    $(".escondible2").addClass("hidden");
-    $("#IngresoMes").removeClass("hidden");
-    $("#MontoRow").removeClass("hidden");
-
-    $('#MesForm').datepicker({
-      format: "yyyy-mm-dd",
-      startDate: "01/01/2017",
-      maxViewMode: 1,
-      minViewMode: 1,
-      todayBtn: "linked",
-      language: "es",
-      autoclose: true,
-      todayHighlight: true
-    });
-    var Act
-    traerPrecio('PrecioXMes');
-    if (Globales.actividadElegida.NombreAct.substr(0, Globales.actividadElegida.NombreAct.indexOf(' ')) == "Funcional") {
-      if (!$("#Matricula").hasClass("hidden")) {
-        alert("Precio de funcional (TAMBIEN HACE TKD) Por Mes");
-      }
+      i++;
     }
-  }
-
-  function elegirActividad(boton){
-    Globales.actividadElegida = Globales.ListaActividades[boton.id];
-    filas = document.getElementById("ListaActividades").getElementsByTagName("button");
-    for (var i = 0; i < filas.length; i++) {
-      if (filas[i].id == boton.id) {
-        $("#" + filas[i].id).addClass("list-group-item-info");
-      } else {
-        $("#" + filas[i].id).removeClass("list-group-item-info");
-      }
-    }
-
+    $("#ListaActividades").html(texto);
     $(".escondible").addClass("hidden");
     $("#PanelActividades").removeClass("hidden");
+  });
+});
+function elegirFecha(){
+  $(".escondible2").addClass("hidden");
+  $("#IngresoFecha").removeClass("hidden");
 
-    if (Globales.ListaActividades[boton.id].XClase == 1) {
-      $("#Clase").removeClass("hidden");
-    }
-    if (Globales.ListaActividades[boton.id].XMes == 1) {
-      $("#Mes").removeClass("hidden");
-    }
-    if (Globales.ListaActividades[boton.id].XSemestre == 1) {
-      $("#Semestre").removeClass("hidden");
-    }
-    if (Globales.ListaActividades[boton.id].NombreAct.substr(0, Globales.ListaActividades[boton.id].NombreAct.indexOf(' ')) == "Taekwon-Do") {
-      $("#Matricula").removeClass("hidden");
+  $('#FechaForm').datepicker('destroy');
+  $('#FechaForm').datepicker({
+    format: "yyyy-mm-dd",
+    startDate: "01/01/2017",
+    maxViewMode: 0,
+    todayBtn: "linked",
+    language: "es",
+    autoclose: true,
+    todayHighlight: true
+  });
+
+  traerPrecio('PrecioXClase');
+  $("#MontoRow").removeClass("hidden");
+
+}
+
+function elegirMes(){
+  $(".escondible2").addClass("hidden");
+  $("#IngresoMes").removeClass("hidden");
+  $("#MontoRow").removeClass("hidden");
+
+  $('#MesForm').datepicker({
+    format: "yyyy-mm-dd",
+    startDate: "01/01/2017",
+    maxViewMode: 1,
+    minViewMode: 1,
+    todayBtn: "linked",
+    language: "es",
+    autoclose: true,
+    todayHighlight: true
+  });
+  var Act
+  traerPrecio('PrecioXMes');
+  if (Globales.actividadElegida.NombreAct.substr(0, Globales.actividadElegida.NombreAct.indexOf(' ')) == "Funcional") {
+    if (!$("#Matricula").hasClass("hidden")) {
+      alert("Precio de funcional (TAMBIEN HACE TKD) Por Mes");
     }
   }
-  </script>
+}
+
+function elegirActividad(boton){
+  Globales.actividadElegida = Globales.ListaActividades[boton.id];
+  filas = document.getElementById("ListaActividades").getElementsByTagName("button");
+  for (var i = 0; i < filas.length; i++) {
+    if (filas[i].id == boton.id) {
+      $("#" + filas[i].id).addClass("list-group-item-info");
+    } else {
+      $("#" + filas[i].id).removeClass("list-group-item-info");
+    }
+  }
+
+  $(".escondible").addClass("hidden");
+  $("#PanelActividades").removeClass("hidden");
+
+  if (Globales.ListaActividades[boton.id].XClase == 1) {
+    $("#Clase").removeClass("hidden");
+  }
+  if (Globales.ListaActividades[boton.id].XMes == 1) {
+    $("#Mes").removeClass("hidden");
+  }
+  if (Globales.ListaActividades[boton.id].XSemestre == 1) {
+    $("#Semestre").removeClass("hidden");
+  }
+  if (Globales.ListaActividades[boton.id].NombreAct.substr(0, Globales.ListaActividades[boton.id].NombreAct.indexOf(' ')) == "Taekwon-Do") {
+    $("#Matricula").removeClass("hidden");
+  }
+}
+</script>

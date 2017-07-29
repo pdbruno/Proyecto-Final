@@ -40,24 +40,13 @@ class actividad extends calendar {
     $data = $_POST['data'];
     echo $this->model->traerAnotados($data);
   }
-  public function traerActividad() {
-    $data = $_POST['data'];
-    echo $this->model->traerActividad($data);
-  }
+  
   public function agregarModificarActividad() {
     $caca = json_decode($_POST['data1'], TRUE);
     $modalidades = json_decode($_POST['data2'], TRUE);
     $caca = $this->model->nuevoObjeto($caca);
-    $this->model->agregarModificarActividad($caca);
+    $this->model->agregarModificar('Actividades',$caca);
     $this->model->asignarModalidades($modalidades, $caca['idActividades']);
-  }
-
-  public function eliminarActividad() {
-    $caca = $_POST['data'];
-    $this->model->eliminarActividad($caca);
-  }
-  public function traerActividades() {
-    echo $this->model->traerActividades();
   }
 
   public function mostrar()

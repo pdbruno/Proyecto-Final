@@ -5,6 +5,9 @@
 <link rel="stylesheet" type="text/css" href="<?php echo URL; ?>views/recursos/jquery.timepicker.css" />
 <script src="<?php echo URL; ?>views/recursos/rrule/rrule.js"></script>
 <script src="<?php echo URL; ?>views/recursos/rrule/nlp.js"></script>
+<link rel="stylesheet" href="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.css">
+<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table-es-AR.min.js"></script>
 <div class="row" style="height:100%;">
   <div class="col-lg-6">
     <div class="panel panel-default">

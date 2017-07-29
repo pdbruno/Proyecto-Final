@@ -2,39 +2,6 @@
 
 class producto extends Controller {
 
-  public function listadoProductos() {
-    $datos = $this->model->listadoProductos();
-    echo $datos;
-  }
-
-  public function listadoDropdowns() {
-    $datos = $this->model->listadodropdowns();
-    echo $datos;
-  }
-
-  public function traerProducto() {
-    $idProductos = $_POST['data'];
-    $datos = $this->model->traerProducto($idProductos);
-    echo $datos;
-  }
-
-  public function agregarModificarProducto() {
-    $caca = json_decode($_POST['data'], TRUE);
-    $producto = $this->model->nuevoObjeto($caca);
-    //        VALIDAR
-    //        $producto['Precio']
-    //        $producto['Stock']
-    //        $producto['Avisar']
-
-
-    $this->model->agregarModificarProducto($producto);
-  }
-
-  public function eliminarProducto() {
-    $idProductos = $_POST['data'];
-    $this->model->eliminarProducto($idProductos);
-  }
-
   function index() {
     $this->view->render('abmproductos/index');
   }
@@ -45,11 +12,6 @@ class producto extends Controller {
 
   function egresostock() {
     $this->view->render('egresostock/index');
-  }
-
-  function dropdown() {
-    $datos = $this->model->dropdown();
-    echo $datos;
   }
 
   function registrarCompra() {

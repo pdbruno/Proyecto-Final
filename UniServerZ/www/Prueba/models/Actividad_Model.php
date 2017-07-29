@@ -4,6 +4,11 @@ class actividad_Model extends Model {
   public function __construct() {
     parent::__construct();
   }
+
+  public function eliminarElemento($tipo, $idActividades) {
+    $this->db->query("DELETE FROM actividadesaranceles WHERE idActividades = ?i", $idActividades);
+    $this->eliminar("Actividades", $idActividades);
+  }
   public function traerEventos($data, $servicio) {
     $optParams = array(
       'orderBy' => 'startTime',
@@ -24,6 +29,7 @@ class actividad_Model extends Model {
     }
     return json_encode($datos);
   }
+
   public function asignarModalidades($modalidades, $idActividades) {
     $this->db->query("DELETE FROM actividadesaranceles WHERE idActividades = ?i", $idActividades);
     $modalidades = array_unique($modalidades);
@@ -31,6 +37,7 @@ class actividad_Model extends Model {
       $this->db->query("INSERT INTO actividadesaranceles SET `idActividades`= ?i, `idModalidades`= ?i", $idActividades, $modalidades[$i]);
     }
   }
+
   public function traerAnotados($idActividades)
   {
     $idActividades = substr($idActividades,0,11);
@@ -49,6 +56,7 @@ class actividad_Model extends Model {
     $datos["Recurrencia"] = $event->getRecurrence();
     return json_encode($datos);
   }
+
   public function format($data)
   {
     $evento = array(
@@ -68,6 +76,7 @@ class actividad_Model extends Model {
     }
     return $evento;
   }
+
   public function editarEvento($data, $id, $servicio)
   {
     var_dump($data);
@@ -75,6 +84,7 @@ class actividad_Model extends Model {
     $updatedEvent = $servicio->events->update('primary', $id, $event);
     return $updatedEvent->getUpdated();
   }
+
   public function asignarAsistencia($data, $id)
   {
     // $evento = array(
@@ -89,22 +99,12 @@ class actividad_Model extends Model {
     for ($i = 0; $i < count($data); $i++) {
       $this->db->query("INSERT INTO `asistencias` SET `idClientes`= ?i, `idEvento`= ?s", $data[$i], $id);
     }
-
   }
+
   public function agregarEvento($data, $servicio)
   {
     $event = new Google_Service_Calendar_Event($data);
     $event = $servicio->events->insert('primary', $event);
-  }
-  public function traerActividades() {
-    $sql = "SELECT idActividades, Nombre FROM actividades";
-    $outp = $this->db->getAll($sql);
-    echo json_encode($outp);
-  }
-  public function traerActividad($idActividades) {
-    $sql = "SELECT * FROM actividades WHERE `idActividades` = ?i";
-    $outp = $this->db->getAll($sql, $idActividades);
-    echo json_encode($outp);
   }
 
   public function nuevoObjeto($data) {
@@ -115,12 +115,5 @@ class actividad_Model extends Model {
     $obj['XSemestre'] = $data[4];
     return $obj;
   }
-  public function agregarModificarActividad($data) {
-    $sql = "INSERT INTO actividades SET ?u ON DUPLICATE KEY UPDATE ?u";
-    $this->db->query($sql, (array) $data, (array) $data);
-  }
-  public function eliminarActividad($idActividades) {
-    $sql = "DELETE FROM actividades WHERE idActividades = ?i";
-    $this->db->query($sql, $idActividades);
-  }
+
 }

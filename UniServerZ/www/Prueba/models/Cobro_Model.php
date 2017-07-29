@@ -6,11 +6,7 @@ class Cobro_Model extends Model {
     parent::__construct();
   }
 
-  public function addCobro($cobro){
-    $sql = "INSERT INTO cobros SET ?u";
-    $this->db->query($sql, (array) $cobro);
-  }
-  public function listadoAranceles() {
+  public function listado($tipo) {
     $sql = "SELECT actividadesaranceles.idActividadesAranceles, actividades.Nombre as actNombre, modalidades.Nombre as modNombre, actividadesaranceles.PrecioXClase , actividadesaranceles.PrecioXMes
             FROM actividadesaranceles
             LEFT JOIN actividades ON actividades.idActividades = actividadesaranceles.idActividades
@@ -24,8 +20,9 @@ class Cobro_Model extends Model {
     $this->db->query($sql, $data['PrecioXClase'], $data['PrecioXMes'], $data['idActividadesAranceles']);
   }
 
-  public function traerArancel($data) {
+  public function traerElemento($tipo,$data) {
+    $data = json_decode($data);
     $sql = "SELECT ?n FROM `actividadesaranceles` WHERE idActividades = ?i AND idModalidades = ?s";
-    return $this->db->getOne($sql, $data['Campo'], $data['idActividades'], $data['idModalidades']);
+    return $this->db->getOne($sql, $data->Campo, $data->idActividades, $data->idModalidades);
   }
 }

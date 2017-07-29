@@ -1,13 +1,16 @@
+<link rel="stylesheet" href="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.css">
+<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table-es-AR.min.js"></script>
 <div class="row">
   <div class="col-lg-6">
     <div class="panel panel-default">
       <div class="panel-heading">Listado de Actividades
       </div>
-      <div class="table-responsive col-sm-12">
-        <table  id="Tabla" class="table table-hover" cellspacing="0" width="100%"  >
+      <div class="table-responsive col-lg-12">
+        <table  id="Tabla" class="table table-hover" data-toggle="table" data-url="<?php echo URL; ?>actividad/listarElementos/Actividades" data-search='true' cellspacing="0" width="100%"  >
           <thead>
             <tr>
-              <th>Descripción</th>
+              <th data-field="Nombre" data-sortable='true'>Nombre</th>
             </tr>
           </thead>
         </table>
@@ -24,7 +27,6 @@
               <div class="col-sm-10">
                 <p id="idActividades" class="form-control-static"></p>
                 <input type="text" class="form-control hidden" id="idActividadesForm" placeholder="Se mira y no se toca" disabled>
-
               </div>
             </div>
           </li>
@@ -128,7 +130,6 @@
     </div>
     <script src="<?php echo URL; ?>views/recursos/logicaABM.js"></script>
     <script>
-    var VecActividades = [];
     function Agregar(){
       $("#IdModalidadesSelect").removeClass("hidden");
       $("#IdModalidadesVer").addClass("hidden");
@@ -148,7 +149,7 @@
       <div class='row'>\
       <div class='col-lg-7'>\
       <select id='IdModalidadesSelect1' class='form-control activ'>\
-      <option selected value=''>Ninguna</option>\
+      <option disabled selected value>Elija una modalidad</option>\
       </select>\
       <button type='button' id='AddAct1' class='btn btn-link' onclick='AddAct(this)' >+AgregarModalidad</button>\
       </div>");
@@ -206,95 +207,58 @@
     request.done(function (respuesta){
       VecModalidades = JSON.parse(respuesta)[1][1];
     });
-    $(document).ready(function () {
-      listadoActividades();
-    });
-    var listadoActividades = function ()
-    {
-      var table = $("#Tabla").DataTable(
-        {
-          "ajax":
-          {
-            "method": "POST",
-            "url": "<?php echo URL; ?>actividad/traerActividades",
-            "dataSrc": function (txt)
-            {
-              VecActividades = [];
-              for (i in txt)
-              {
-                var Actividad =
-                {
-                  idActividades: txt[i].idActividades,
-                  Nombre: txt[i].Nombre
-                };
-                VecActividades.push(Actividad);
-              }
-              return VecActividades;
-            }
-          },
-          "columns": [
-            {data: "Nombre"}
-          ],
-          select: {
-            style: 'single'
-          }
-          //                        "language": {
-          //                        "url": "dataTables.spanish.lang"
-          //                          Hacer algo con el idioma de la tabla y de la extension select
-        });
-        table.on('select', function (e, dt, type, indexes) {
-          if (type === 'row') {
-            var request = $.ajax({
-              url: "<?php echo URL; ?>actividad/traerActividad",
-              type: "post",
-              data: "data=" + VecActividades[indexes].idActividades,
-            });
-            request.done(function (respuesta){
-              clickFila(JSON.parse(respuesta)[0]);
-              $("#IdModalidadesSelect").addClass("hidden");
-              $("#IdModalidadesVer").removeClass("hidden");
-            });
-
-          }
-        });
-      }
-
-      var vec = [];
-      function EnviarActividad()
+    $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
+      $('.success').removeClass('success');
+      $(field).addClass('success');
+      request = $.ajax({
+        url: "<?php echo URL; ?>actividad/traerElemento/Actividades",
+        type: "post",
+        data: "data=" + $element.idActividades,
+      });
+      request.done(function (respuesta)
       {
-        var nombre = document.getElementById("NombreForm").value;
-        if (nombre === "")
-        {
-          alert("Por favor llene el nombre thank you very much");
-        } else {
-          vec = [];
-          vec = beforeEnviar();
-          request = $.ajax({
-            url: "<?php echo URL; ?>actividad/agregarModificarActividad",
-            type: "post",
-            data:  "data1=" + JSON.stringify(vec) + "&data2=" + JSON.stringify(final)
-          });
-          request.done(function (respuesta){
-            afterEnviar();
-          });
+        clickFila(JSON.parse(respuesta)[0]);
+        $("#IdModalidadesSelect").addClass("hidden");
+        $("#IdModalidadesVer").removeClass("hidden");
+      });
+    });
 
-        }
+    var vec = [];
+    function EnviarActividad()
+    {
+      var nombre = document.getElementById("NombreForm").value;
+      if (nombre === "")
+      {
+        alert("Por favor llene el nombre thank you very much");
+      } else {
+        vec = [];
+        vec = beforeEnviar();
+        request = $.ajax({
+          url: "<?php echo URL; ?>actividad/agregarModificarActividad",
+          type: "post",
+          data:  "data1=" + JSON.stringify(vec) + "&data2=" + JSON.stringify(final)
+        });
+        request.done(function (respuesta){
+          afterEnviar();
+        });
 
       }
-      function EliminarActividad() {
-        var r = confirm("Estás muy recontra segurísima/o que querés borrar esta actividad?");
-        if (r == true) {
 
-          request = $.ajax({
-            url: "<?php echo URL; ?>actividad/eliminarActividad",
-            type: "post",
-            data: "data=" + document.getElementById("idActividades").innerHTML,
-          });
-          request.done(function (respuesta){
-            eliminarError(respuesta);
-          });
+    }
+    function EliminarActividad() {
+      var r = confirm("Estás muy recontra segurísima/o que querés borrar esta actividad?");
+      if (r == true) {
 
-        }
+        request = $.ajax({
+          url: "<?php echo URL; ?>actividad/eliminarElemento/Actividades",
+          type: "post",
+          data: "data=" + document.getElementById("idActividades").innerHTML,
+        });
+        request.done(function (respuesta){
+          eliminarError(respuesta);
+        });
+
       }
+    }
 
-      </script>
+    </script>

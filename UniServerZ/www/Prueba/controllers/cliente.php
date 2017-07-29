@@ -6,32 +6,16 @@
 
 class cliente extends Controller {
 
-  public function listadoClientes() {
-    $datos = $this->model->listadoClientes();
-    echo $datos;
-  }
-
-  public function listadoDropdowns() {
-    $datos = $this->model->listadodropdowns();
-    echo $datos;
-  }
-
-  public function traerCliente() {
+  public function actCliente() {
     $idClientes = $_POST['data'];
-    echo $this->model->traerCliente($idClientes);
+    echo $this->model->actCliente($idClientes);
   }
-
   public function agregarModificarCliente() {
     $cliente = json_decode($_POST['data1'], TRUE);
     $actividades = json_decode($_POST['data2'], TRUE);
     $cliente = $this->model->nuevoObjeto($cliente);
-    $this->model->agregarModificarCliente($cliente);
+    $this->model->agregarModificar('Clientes', $cliente);
     $this->model->asignarActividades($actividades, $cliente["idClientes"]);
-  }
-
-  public function eliminarCliente() {
-    $idClientes = $_POST['data'];
-    $datos = $this->model->eliminarCliente($idClientes);
   }
 
   function index() {

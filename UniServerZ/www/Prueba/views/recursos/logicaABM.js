@@ -57,7 +57,7 @@ function afterEnviar(){
   $("#BtnAgregar").removeClass("hidden");
   $("#BtnModificar").addClass("hidden");
   $("#BtnEliminar").addClass("hidden");
-  $('#Tabla').DataTable().clear().draw().ajax.reload();
+  $('#Tabla').bootstrapTable('refresh');
 }
 function beforeEnviar(){
   vec = [];

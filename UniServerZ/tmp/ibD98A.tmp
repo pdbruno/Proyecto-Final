@@ -1,0 +1,1 @@
+`dbproyectofinal`.`registrocompras`, CONSTRAINT `registrocompras_ibfk_1` FOREIGN KEY (`idProductos`) REFERENCES `productos` (`idProductos`)

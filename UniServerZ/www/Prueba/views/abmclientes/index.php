@@ -1,17 +1,20 @@
 <script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.css">
+<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table-es-AR.min.js"></script>
 <div class="row" style="height:100%;">
   <div class="col-lg-6">
     <div class="panel panel-default">
       <div class="panel-heading">Listado de Clientes
       </div>
       <div class="table-responsive col-lg-12">
-        <table  id="Tabla" class="table table-hover" cellspacing="0" width="100%"  >
+        <table  id="Tabla" class="table table-hover" data-toggle="table" data-url="<?php echo URL; ?>cliente/listarElementos/Clientes" data-search='true' cellspacing="0" width="100%"  >
           <thead>
             <tr>
-              <th>Nombres</th>
-              <th>Apellidos</th>
+              <th data-field="Nombres" data-sortable='true'>Nombres</th>
+              <th data-field="Apellidos" data-sortable='true'>Apellidos</th>
             </tr>
           </thead>
         </table>
@@ -523,7 +526,7 @@ function deshacerModal(){
   </div>\
   <div class='col-lg-5'>\
   <select id='IdModalidadesSelect1' class='form-control mod'>\
-  <option selected value=''>Ninguna</option>\
+  <option disabled selected value>Elija una modalidad</option>\
   </select>\
   </div>\
   </div>\
@@ -535,8 +538,9 @@ function deshacerModal(){
 function AddAct(bot) {
   i = bot.id.replace("AddAct", "");
   var anterior = document.getElementById("IdActividadesSelect" + i);
-  if (anterior.selectedIndex == "0") {
-    alert("Seleccione una actividad");
+  var anteriormod = document.getElementById("IdModalidadesSelect" + i);
+  if (anterior.selectedIndex == "0" || anteriormod.selectedIndex == "0") {
+    alert("Seleccione una actividad y una modalidad");
   } else {
     j = Number(i) + 1;
     $("#Selec").append("<div class='row' style='margin-top: 50px;'>\
@@ -546,7 +550,7 @@ function AddAct(bot) {
     </div>\
     <div class='col-lg-5'>\
     <select id='IdModalidadesSelect" + j + "' class='form-control mod'>\
-    <option selected value=''>Ninguna</option>\
+    <option disabled selected value>Elija una modalidad</option>\
     </select>\
     </div>\
     </div>\
@@ -557,7 +561,6 @@ function AddAct(bot) {
     $("#AddAct" + i).addClass('hidden')
     anterior.disabled = true;
     document.getElementById("IdModalidadesSelect" + j).innerHTML += VecModalidades;
-
   }
 
 }
@@ -568,21 +571,21 @@ $('#FechaNacimientoForm').datepicker({
   language: "es",
   autoclose: true,
 });
-
-var Cosavacia = {id: 0, Nombre: ""};
 var VecActividades= [];
 var VecModalidades= [];
 var bien = true;
 var final = [];
 function aceptarModal() {
+  bien = true;
   $('#ModalSel').modal('hide');
   final = [];
   var activs = document.getElementById("Selec").getElementsByClassName("activ");
   var mods = document.getElementById("Selec").getElementsByClassName("mod");
   for (var i = 0; i < activs.length; i++) {
-    final[i] = {idActividades : activs[i].value, idModalidades : mods[i].value};
-    if (activs[i] == "") {
+    if (activs[i].value == "" || mods[i].value == "") {
       bien = false;
+    }else{
+      final[i] = {idActividades : activs[i].value, idModalidades : mods[i].value};
     }
   }
 }
@@ -618,153 +621,109 @@ request.done(function (respuesta){
   }
 });
 
-
-var VecClientes = [];
-$(document).ready(function () {
-  listadoclientes();
+$('#Tabla').on('click-row.bs.table', function (row, $element, field) {
+  $('.success').removeClass('success');
+  $(field).addClass('success');
+  request = $.ajax({
+    url: "<?php echo URL; ?>cliente/traerElemento/Clientes",
+    type: "post",
+    data: "data=" + $element.idClientes,
+  });
+  request.done(function (respuesta)
+  {
+    clickFila(JSON.parse(respuesta)[0][0]);
+    var actividades = JSON.parse(respuesta)[1];
+    var texto = "";
+    for (var i = 0; i < actividades.length; i++) {
+      texto += "<tr>";
+      texto+="<td>" + actividades[i].NombreAct + "</td>";
+      if (actividades[i].NombreMod == null) {
+        texto+="<td>Ninguna</td>";
+      }else {
+        texto+="<td>" + actividades[i].NombreMod + "</td>";
+      }
+      texto+="</tr>";
+      final.push({idActividades: actividades[i].idActividades, idModalidades: actividades[i].idModalidades});
+    }
+    $("#TablaActividades").html(texto);
+    $("#IdLocalidadesSelect").addClass("hidden");
+    $("#IdGrupoFactorSanguineoSelect").addClass("hidden");
+    $("#IdCategoriasSelect").addClass("hidden");
+    $("#IdSedesSelect").addClass("hidden");
+    $("#IdActividadesSelect").addClass("hidden");
+    $("#IdActividadesVer").removeClass("hidden");
+  });
 });
-var listadoclientes = function ()
+function AgregarUsuario()
 {
-  var table = $("#Tabla").DataTable(
-    {
-      "ajax":
-      {
-        "method": "POST",
-        "url": "<?php echo URL; ?>cliente/listadoClientes",
-        "dataSrc": function (txt)
-        {
-          VecClientes = [];
-          for (i in txt)
-          {
-            var Cliente =
-            {
-              idClientes: txt[i].idClientes,
-              Nombres: txt[i].Nombres,
-              Apellidos: txt[i].Apellidos,
-            };
-            VecClientes.push(Cliente);
-          }
-          return VecClientes;
-        }
-      },
-      "columns": [
-        {data: "Nombres"},
-        {data: "Apellidos"}
-      ],
-      select: {
-        style: 'single'
+  $("#IdActividadesSelect").removeClass("hidden");
+  $("#IdActividadesVer").addClass("hidden");
+  modoFormulario("Agregar");
+  deshacerModal();
+  document.getElementById("ActivoForm").checked = true;
+}
+
+function ModificarUsuario()
+{
+  $("#IdActividadesSelect").removeClass("hidden");
+  $("#IdActividadesVer").addClass("hidden");
+  modoFormulario("Modificar");
+  deshacerModal();
+  var selects = document.getElementById("Formu").getElementsByTagName("select");
+  for (var i = 0; i < selects.length; i++) {
+    var opciones = selects[i].options;
+    for (var j = 0; j < selects[i].length; j++) {
+      if (opciones[j].text == document.getElementById("locNombreForm").value || opciones[j].text == document.getElementById("sangNombreForm").value || opciones[j].text == document.getElementById("catNombreForm").value || opciones[j].text == document.getElementById("sedNombreForm").value ) {
+        selects[i].selectedIndex = j;
       }
-      //                        "language": {
-      //                        "url": "dataTables.spanish.lang"
-      //                          Hacer algo con el idioma de la tabla y de la extension select
+    }
+  }
+
+}
+var vec = [];
+function EnviarUsuario()
+{
+  var nombre = document.getElementById("NombresForm").value;
+  var apellido = document.getElementById("ApellidosForm").value;
+  var sede = document.getElementById("IdSedesSelect").value;
+  var categoria = document.getElementById("IdCategoriasSelect").value;
+
+  if (nombre === "" || apellido == "" || sede == "" || categoria == "" || bien == false)
+  {
+    alert("Los siguientes campos son absolutamente obligatorios: Nombre, Apelliido, Sede, Actividades (llenar correctamente en case de no haberlo) y Categoría\n\
+    (Se recomienda llenar todos)");
+  } else {
+    document.getElementById("locNombreForm").value = document.getElementById("IdLocalidadesSelect").value;
+    document.getElementById("sangNombreForm").value = document.getElementById("IdGrupoFactorSanguineoSelect").value;
+    document.getElementById("catNombreForm").value = document.getElementById("IdCategoriasSelect").value;
+    document.getElementById("sedNombreForm").value = document.getElementById("IdSedesSelect").value;
+    vec = beforeEnviar();
+    request = $.ajax({
+      url: "<?php echo URL; ?>cliente/agregarModificarCliente",
+      type: "post",
+      data:  "data1=" + JSON.stringify(vec) + "&data2=" + JSON.stringify(final)
     });
-    table.on('select', function (e, dt, type, indexes) {
-      if (type === 'row') {
-        request = $.ajax({
-          url: "<?php echo URL; ?>cliente/traerCliente",
-          type: "post",
-          data: "data=" + VecClientes[indexes].idClientes,
-        });
-        // Callback handler that will be called on success
-        request.done(function (respuesta)
-        {
-          clickFila(JSON.parse(respuesta)[0][0]);
-          var actividades = JSON.parse(respuesta)[1];
-          var texto = "";
-          for (var i = 0; i < actividades.length; i++) {
-            texto += "<tr>";
-            texto+="<td>" + actividades[i].NombreAct + "</td>";
-            if (actividades[i].NombreMod == null) {
-              texto+="<td>Ninguna</td>";
-            }else {
-              texto+="<td>" + actividades[i].NombreMod + "</td>";
-            }
-            texto+="</tr>";
-            final.push({idActividades: actividades[i].idActividades, idModalidades: actividades[i].idModalidades});
-          }
-          $("#TablaActividades").html(texto);
-          $("#IdLocalidadesSelect").addClass("hidden");
-          $("#IdGrupoFactorSanguineoSelect").addClass("hidden");
-          $("#IdCategoriasSelect").addClass("hidden");
-          $("#IdSedesSelect").addClass("hidden");
-
-          $("#IdActividadesSelect").addClass("hidden");
-          $("#IdActividadesVer").removeClass("hidden");
-        });
-
-      }
+    request.done(function (respuesta){
+      $("#IdActividadesSelect").addClass("hidden");
+      afterEnviar();
     });
-  }
-  function AgregarUsuario()
-  {
-    $("#IdActividadesSelect").removeClass("hidden");
-    $("#IdActividadesVer").addClass("hidden");
-    modoFormulario("Agregar");
-    deshacerModal();
-    document.getElementById("ActivoForm").checked = true;
-  }
-
-  function ModificarUsuario()
-  {
-    $("#IdActividadesSelect").removeClass("hidden");
-    $("#IdActividadesVer").addClass("hidden");
-    modoFormulario("Modificar");
-    deshacerModal();
-    var selects = document.getElementById("Formu").getElementsByTagName("select");
-    for (var i = 0; i < selects.length; i++) {
-      var opciones = selects[i].options;
-      for (var j = 0; j < selects[i].length; j++) {
-        if (opciones[j].text == document.getElementById("locNombreForm").value || opciones[j].text == document.getElementById("sangNombreForm").value || opciones[j].text == document.getElementById("catNombreForm").value || opciones[j].text == document.getElementById("sedNombreForm").value ) {
-          selects[i].selectedIndex = j;
-        }
-      }
-    }
 
   }
-  var vec = [];
-  function EnviarUsuario()
-  {
-    var nombre = document.getElementById("NombresForm").value;
-    var apellido = document.getElementById("ApellidosForm").value;
-    var sede = document.getElementById("IdSedesSelect").value;
-    var categoria = document.getElementById("IdCategoriasSelect").value;
+}
 
-    if (nombre === "" || apellido == "" || sede == "" || categoria == "" || bien == false)
-    {
-      alert("Los siguientes campos son absolutamente obligatorios: Nombre, Apelliido, Sede, Actividades (llenar correctamente en case de no haberlo) y Categoría\n\
-      (Se recomienda llenar todos)");
-    } else {
-      document.getElementById("locNombreForm").value = document.getElementById("IdLocalidadesSelect").value;
-      document.getElementById("sangNombreForm").value = document.getElementById("IdGrupoFactorSanguineoSelect").value;
-      document.getElementById("catNombreForm").value = document.getElementById("IdCategoriasSelect").value;
-      document.getElementById("sedNombreForm").value = document.getElementById("IdSedesSelect").value;
-      vec = beforeEnviar();
-      request = $.ajax({
-        url: "<?php echo URL; ?>cliente/agregarModificarCliente",
-        type: "post",
-        data:  "data1=" + JSON.stringify(vec) + "&data2=" + JSON.stringify(final)
-      });
-      request.done(function (respuesta){
-        $("#IdActividadesSelect").addClass("hidden");
-        afterEnviar();
-      });
+function EliminarUsuario() {
+  var r = confirm("Estás muy recontra segurísima/o que querés borrar a este cliente?\n\
+  Esta funcionalidad se ha creado solo para casos extremos.");
+  if (r == true) {
+    request = $.ajax({
+      url: "<?php echo URL; ?>cliente/eliminarElemento/Clientes",
+      type: "post",
+      data: "data=" + document.getElementById("idClientes").innerHTML,
+    });
+    request.done(function (respuesta){
+      eliminarError(respuesta);
+    });
 
-    }
   }
-
-  function EliminarUsuario() {
-    var r = confirm("Estás muy recontra segurísima/o que querés borrar a este cliente?\n\
-    Esta funcionalidad se ha creado solo para casos extremos.");
-    if (r == true) {
-      request = $.ajax({
-        url: "<?php echo URL; ?>cliente/eliminarCliente",
-        type: "post",
-        data: "data=" + document.getElementById("idClientes").innerHTML,
-      });
-      request.done(function (respuesta){
-        eliminarError(respuesta);
-      });
-
-    }
-  }
-  </script>
+}
+</script>
