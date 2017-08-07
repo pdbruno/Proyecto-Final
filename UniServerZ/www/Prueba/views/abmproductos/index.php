@@ -47,10 +47,10 @@
 
               <label class="col-sm-2 control-label">Distribuidor:</label>
               <div class="col-sm-10">
-                <p id="disNombre" class="form-control-static"></p>
+                <p id="idDistribuidores" class="form-control-static"></p>
                 <select id="idDistribuidoresSelect" class="form-control hidden">
                 </select>
-                <input type="text" style="display: none; visibility: hidden;" class="form-control" id="disNombreForm">
+                <input type="text" style="display: none; visibility: hidden;" class="form-control" id="idDistribuidoresForm">
 
               </div>
             </div>
@@ -96,81 +96,4 @@
   </div>
 </div>
 <script src="<?php echo URL; ?>views/recursos/logicaABM.js"></script>
-<script>
-var VecProductos = [];
-var VecElementos = [];
-var request = $.ajax({
-  url: "<?php echo URL; ?>producto/listadoDropdowns",
-  type: "post"
-});
-request.done(function (respuesta){
-  var myObj = JSON.parse(respuesta);
-  var txt = "";
-  for (element in myObj) {
-    txt += "<option value='" + myObj[element].id + "'>" + myObj[element].Nombre + "</option>";
-  }
-  document.getElementById("idDistribuidoresSelect").innerHTML = txt;
-});
-
-$('#Tabla').on('click-row.bs.table', function (row, $element, field) {
-  $('.success').removeClass('success');
-  $(field).addClass('success');
-  var request = $.ajax({
-    url: "<?php echo URL; ?>producto/traerElemento/Productos",
-    type: "post",
-    data: "data=" + $element.idProductos,
-  });
-  request.done(function (respuesta){
-    clickFila(JSON.parse(respuesta)[0]);
-    var select = document.getElementById("idDistribuidoresSelect");
-    $("#" + select.id).addClass("hidden");
-    var options = select.options;
-    for (var i = 0; i < select.length; i++) {
-      if (options[i].text == document.getElementById("disNombreForm").value) {
-        select.selectedIndex = i;
-      }
-    }
-  });
-});
-
-var vec = [];
-function EnviarProducto()
-{
-  var descripcion = document.getElementById("DescripcionForm").value;
-  var stock = document.getElementById("StockForm").value;
-  if (descripcion === "" || stock === "")
-  {
-    alert("Por favor llene la descripción de producto y el stock muchas gracias jeje");
-  } else {
-    vec = [];
-    document.getElementById("disNombreForm").value = document.getElementById("idDistribuidoresSelect").value;
-    vec = beforeEnviar();
-    request = $.ajax({
-      url: "<?php echo URL; ?>producto/agregarModificarElemento/Productos",
-      type: "post",
-      data: "data=" + JSON.stringify(vec),
-    });
-    request.done(function (respuesta){
-      afterEnviar();
-    });
-
-  }
-
-}
-function EliminarProducto() {
-  var r = confirm("Estás muy recontra segurísima/o que querés borrar este producto?");
-  if (r == true) {
-
-    request = $.ajax({
-      url: "<?php echo URL; ?>producto/eliminarElemento/Productos",
-      type: "post",
-      data: "data=" + document.getElementById("idProductos").innerHTML,
-    });
-    request.done(function (respuesta){
-      eliminarError(respuesta);
-    });
-
-  }
-}
-
-</script>
+<?php require 'abmproductos.php' ?>

@@ -37,7 +37,16 @@ class actividad_Model extends Model {
       $this->db->query("INSERT INTO actividadesaranceles SET `idActividades`= ?i, `idModalidades`= ?i", $idActividades, $modalidades[$i]);
     }
   }
-
+  public function traerElemento($tipo, $idActividades) {
+    $sql = "SELECT * FROM actividades WHERE idActividades=?i";
+    $outp[] = $this->db->getAll($sql, $idActividades);
+    $sql = "SELECT modalidades.Nombre as NombreMod, actividadesaranceles.idModalidades as idModalidades FROM `actividadesaranceles`
+    LEFT JOIN modalidades ON actividadesaranceles.idModalidades = modalidades.idModalidades
+    WHERE `idActividades` = ?i";
+    $res = $this->db->getAll($sql, $idActividades);
+    $outp[] = $res;
+    echo json_encode($outp);
+  }
   public function traerAnotados($idActividades)
   {
     $idActividades = substr($idActividades,0,11);
@@ -79,10 +88,9 @@ class actividad_Model extends Model {
 
   public function editarEvento($data, $id, $servicio)
   {
-    var_dump($data);
     $event = new Google_Service_Calendar_Event($data);
-    $updatedEvent = $servicio->events->update('primary', $id, $event);
-    return $updatedEvent->getUpdated();
+    echo $updatedEvent = $servicio->events->update('primary', $id, $event);
+    echo $updatedEvent->getUpdated();
   }
 
   public function asignarAsistencia($data, $id)
@@ -105,15 +113,6 @@ class actividad_Model extends Model {
   {
     $event = new Google_Service_Calendar_Event($data);
     $event = $servicio->events->insert('primary', $event);
-  }
-
-  public function nuevoObjeto($data) {
-    $obj['idActividades'] = $data[0];
-    $obj['Nombre'] = $data[1];
-    $obj['XClase'] = $data[2];
-    $obj['XMes'] = $data[3];
-    $obj['XSemestre'] = $data[4];
-    return $obj;
   }
 
 }

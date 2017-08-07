@@ -10,7 +10,7 @@
       </div>
       <div class="form-group">
         <label class="sr-only" for="IdProductosForm">Producto</label>
-        <select id="IdProductosForm" name="IdProductosForm" oninput="Precio()" class="form-control">
+        <select id="IdProductosForm" name="IdProductosForm" class="form-control">
           <option disabled hidden selected value> -- Seleccione un producto -- </option>
         </select>
       </div>
@@ -21,69 +21,11 @@
       </div>
       <div class="form-group">
         <label class="sr-only" for="CantidadForm">Cantidad</label>
-        <input type="number" min="1" value="1" class="form-control" oninput="Multiplicar()" id="CantidadForm"name="CantidadForm" placeholder="Cantidad">
+        <input type="number" min="1" value="1" class="form-control" id="CantidadForm"name="CantidadForm" placeholder="Cantidad">
       </div>
-      <button type="button" id="BtnAgregar" onclick="Agregar()" class="btn btn-default">Registrar Venta</button>
+      <button type="button" id="BtnAgregar" class="btn btn-default">Registrar Venta</button>
     </form>
   </div>
 </div>
-<script>
-var caca;
-$('[data-toggle="tooltip"]').tooltip();
-$('#FechaForm').datepicker({
-  format: "yyyy/mm/dd",
-  startDate: "01/01/2017",
-  endDate: "today",
-  maxViewMode: 0,
-  todayBtn: "linked",
-  language: "es",
-  autoclose: true,
-  todayHighlight: true,
-  forceParse: false
-});
-var request = $.ajax({
-  url: "<?php echo URL; ?>producto/listadoProductos",
-  type: "post",
-});
-request.done(function (respuesta){
-  var myObj = JSON.parse(respuesta);
-  var txt = "";
-  for (element in myObj) {
-    txt += "<option value='" + myObj[element].idProductos + "'>" + myObj[element].Descripcion + "</option>";
-  }
-  document.getElementById("IdProductosForm").innerHTML += txt;
-});
-function Precio()
-{
-  document.getElementById("MontoForm").value = caca[document.getElementById("IdProductosForm").selectedIndex-1].Precio;
-}
-function Multiplicar()
-{
-  document.getElementById("MontoForm").value = caca[document.getElementById("IdProductosForm").selectedIndex-1].Precio * document.getElementById("CantidadForm").value;
-}
-function Agregar()
-{
-  var Fecha = document.getElementById("FechaForm").value;
-  var Producto = document.getElementById("IdProductosForm").value;
-  var Monto = document.getElementById("MontoForm").value;
-  var Cantidad = document.getElementById("CantidadForm").value;
-  if (Fecha === "" || Producto === "" || Monto === "" || Cantidad === "" || Monto < 1 || Cantidad < 1)
-  {
-    alert("Llenar todos los campos correctamente");
-  } else {
-    var request = $.ajax({
-      url: "<?php echo URL; ?>producto/registrarVenta",
-      type: "post",
-      data: "data=" + JSON.stringify($("#Formu").serializeArray()),
-    });
-    request.done(function (respuesta){
-      alert(JSON.parse(respuesta));
-      var x = document.getElementById("Formu").getElementsByClassName("form-control");
-      for (var i = 0; i < x.length; i++) {
-        x[i].value = '';
-      }
-    });
-  }
-}
 
-</script>
+<?php require 'egresostock.php' ?>

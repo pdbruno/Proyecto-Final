@@ -23,59 +23,8 @@
         <label class="sr-only" for="CantidadForm">Cantidad</label>
         <input type="number" min="1" class="form-control" id="CantidadForm"name="CantidadForm" placeholder="Cantidad">
       </div>
-      <button type="button" id="BtnAgregar" onclick="Agregar()" class="btn btn-default">Registrar Ingreso de Stock</button>
+      <button type="button" id="BtnAgregar"  class="btn btn-default">Registrar Ingreso de Stock</button>
     </form>
   </div>
 </div>
-<script>
-$('[data-toggle="tooltip"]').tooltip();
-$('#FechaForm').datepicker({
-  format: "yyyy/mm/dd",
-  startDate: "01/01/2017",
-  endDate: "today",
-  maxViewMode: 0,
-  todayBtn: "linked",
-  language: "es",
-  autoclose: true,
-  todayHighlight: true,
-  forceParse: false
-});
-var request = $.ajax({
-  url: "<?php echo URL; ?>producto/listadoProductos",
-  type: "post",
-});
-request.done(function (respuesta){
-  var myObj = JSON.parse(respuesta);
-  var txt = "";
-  for (element in myObj) {
-    txt += "<option value='" + myObj[element].idProductos + "'>" + myObj[element].Descripcion + "</option>";
-  }
-  document.getElementById("IdProductosForm").innerHTML += txt;
-});
-
-function Agregar() {
-  var Fecha = document.getElementById("FechaForm").value;
-  var Producto = document.getElementById("IdProductosForm").value;
-  var MontoInd = document.getElementById("MontoIndForm").value;
-  var Cantidad = document.getElementById("CantidadForm").value;
-  if (Fecha === "" || Producto == "" || MontoInd == "" || Cantidad == "" || MontoInd < 1 || Cantidad < 1)
-  {
-    alert("Llenar todos los campos correctamente");
-  } else {
-    var request = $.ajax({
-      url: "<?php echo URL; ?>producto/registrarCompra",
-      type: "post",
-      data: "data=" + JSON.stringify($("#Formu").serializeArray()),
-
-    });
-    request.done(function (respuesta){
-      var x = document.getElementById("Formu").getElementsByClassName("form-control");
-      for (var i = 0; i < x.length; i++) {
-        x[i].value = '';
-      }
-
-    });
-  }
-}
-
-</script>
+<?php require 'ingresostock.php' ?>

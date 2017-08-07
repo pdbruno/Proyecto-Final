@@ -24,12 +24,12 @@ class Controller {
     }
   }
 
+  public function tabla($tipo) {
+    $this->model->tabla($tipo);
+  }
+
   public function agregarModificarElemento($tipo) {
     $caca = json_decode($_POST['data'], TRUE);
-    if( method_exists($this->model, 'nuevoObjeto'))
-    {
-      $caca = $this->model->nuevoObjeto($caca, $tipo);
-    }
     $this->model->agregarModificar($tipo, $caca);
   }
 

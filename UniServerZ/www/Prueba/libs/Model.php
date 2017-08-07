@@ -33,4 +33,12 @@ class Model {
     $outp = $this->db->query($sql, strtolower($tipo), 'id' . $tipo, $id);
   }
 
+  public function tabla($tabla) {
+    $sql = "SELECT COLUMN_NAME, DATA_TYPE, COLUMN_COMMENT, COLUMN_KEY FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'dbproyectofinal' AND TABLE_NAME = ?s";
+    $outp = $this->db->getAll($sql, $tabla);
+    echo json_encode($outp);
+
+  }
+
+
 }

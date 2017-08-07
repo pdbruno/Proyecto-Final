@@ -13,7 +13,6 @@ class cliente extends Controller {
   public function agregarModificarCliente() {
     $cliente = json_decode($_POST['data1'], TRUE);
     $actividades = json_decode($_POST['data2'], TRUE);
-    $cliente = $this->model->nuevoObjeto($cliente);
     $this->model->agregarModificar('Clientes', $cliente);
     $this->model->asignarActividades($actividades, $cliente["idClientes"]);
   }
@@ -21,7 +20,9 @@ class cliente extends Controller {
   function index() {
     $this->view->render('abmclientes/index');
   }
-
+  function prueba() {
+    $this->view->render('prueba/index');
+  }
   public function __construct() {
     parent::__construct();
   }

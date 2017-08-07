@@ -1,116 +1,148 @@
-function clickFila(obj){
-  var input;
+var ElemForm = {
+  checkboxes: document.getElementById("Formu").getElementsByClassName("checkbox"),
+  intros: document.getElementById("Formu").getElementsByClassName("intro"),
+  $BtnAceptar: $("#BtnAceptar"),
+  $BtnAgregar: $("#BtnAgregar"),
+  $BtnModificar: $("#BtnModificar"),
+  $BtnEliminar: $("#BtnEliminar"),
+  $Tabla: $('#Tabla'),
+  json: []
+}
+
+function optionCrear(vec) {
+  let txt="";
+  let l = vec.length;
+  for (let i = 0; i < l; i++) {
+    txt += "<option value='" + vec[i].id + "'>" + vec[i].Nombre + "</option>";
+  }
+  return txt;
+}
+function setCampos(obj){
   for (x in obj) {
-    $("#" + x).removeClass("hidden").text(obj[x]);
-    input = $("#" + x + "Form");
-    if(input != null){
-      input.addClass("hidden");
-      if (input.attr("type") == 'checkbox') {
+    ElemForm.json.push(obj[x].COLUMN_NAME);
+    ElemForm[obj[x].COLUMN_NAME + "Select"] = $("#" + obj[x].COLUMN_NAME + "Select");
+    ElemForm[obj[x].COLUMN_NAME] = $("#" + obj[x].COLUMN_NAME);
+    ElemForm[obj[x].COLUMN_NAME + "Form"] = $("#" + obj[x].COLUMN_NAME + "Form");
+  }
+}
+function llenarDropdowns(youknow){
+  let VecElementos = [];
+  for (vector in youknow) {
+    let txt = optionCrear(youknow[vector]);
+    VecElementos.push(txt);
+  }
+  let selects = document.getElementById("Formu").getElementsByTagName("select");
+  let l = selects.length;
+  for (var i = 0; i < l; i++) {
+    selects[i].innerHTML = VecElementos[i];
+  }
+}
+
+function clickFila(obj){
+  for (x in obj) {
+    ElemForm[x + "Select"].addClass("hidden");
+    ElemForm[x].removeClass("hidden").text(obj[x]);
+    if(ElemForm[x + "Form"] != null){
+      ElemForm[x + "Form"].addClass("hidden");
+      if (ElemForm[x + "Form"].attr("type") == 'checkbox') {
         if (obj[x] == 1) {
-          input.attr("checked", true);
+          ElemForm[x + "Form"].attr("checked", true);
         } else {
-          input.attr("checked", false);
+          ElemForm[x + "Form"].attr("checked", false);
         }
       } else {
-        input.val(obj[x]);
+        ElemForm[x + "Form"].val(obj[x]);
       }
     }
   }
-  var y = document.getElementById("Formu").getElementsByClassName("checkbox");
-  var z = document.getElementById("Formu").getElementsByClassName("intro");
-  if (z.length>0) {
-    for (i = 0; i < y.length; i++) {
-      $("#" + y[i].id).removeClass("hidden");
-      y[i].disabled = true;
-      if (z[i].innerHTML == 1) {
-        y[i].checked = true;
+  let l = ElemForm.intros.length;
+  if (l>0) {
+    for (let i = 0; i < l; i++) {
+      $("#" + ElemForm.checkboxes[i].id).removeClass("hidden");
+      ElemForm.checkboxes[i].disabled = true;
+      if (ElemForm.intros[i].innerHTML == 1) {
+        ElemForm.checkboxes[i].checked = true;
       } else {
-        y[i].checked = false;
+        ElemForm.checkboxes[i].checked = false;
       }
-      $("#" + z[i].id).addClass("hidden");
-
+      $("#" + ElemForm.intros[i].id).addClass("hidden");
     }
   }
-  $("#BtnAceptar").addClass("hidden");
-  $("#BtnAgregar").removeClass("hidden");
-  $("#BtnModificar").removeClass("hidden");
-  $("#BtnEliminar").removeClass("hidden");
+  ElemForm.$BtnAceptar.addClass("hidden");
+  ElemForm.$BtnAgregar.removeClass("hidden");
+  ElemForm.$BtnModificar.removeClass("hidden");
+  ElemForm.$BtnEliminar.removeClass("hidden");
 }
 function afterEnviar(){
-  var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
-  var y = document.getElementById("Formu").getElementsByClassName("form-control");
-  for (var i = 0; i < x.length; i++) {
-    $("#" + x[i].id).removeClass("hidden");
-    x[i].innerHTML = "";
+  for (x in ElemForm.json) {
+    ElemForm[ElemForm.json[x] + "Select"].addClass("hidden");
+    ElemForm[ElemForm.json[x]].removeClass("hidden").html("");
+    ElemForm[ElemForm.json[x] + "Form"].addClass("hidden");
   }
-  for (var i = 0; i < y.length; i++) {
-    $("#" + y[i].id).addClass("hidden");
-  }
-  var z = document.getElementById("Formu").getElementsByClassName("checkbox");
-  if (z.length>0) {
-    for (var i = 0; i < z.length; i++) {
-      z[i].disabled = true;
-      $("#" + z[i].id).addClass("hidden");
+  let l = ElemForm.checkboxes.length;
+  if (l>0) {
+    for (var i = 0; i < l; i++) {
+      ElemForm.checkboxes[i].disabled = true;
     }
   }
-  $("#BtnAceptar").addClass("hidden");
-  $("#BtnAgregar").removeClass("hidden");
-  $("#BtnModificar").addClass("hidden");
-  $("#BtnEliminar").addClass("hidden");
-  $('#Tabla').bootstrapTable('refresh');
+  ElemForm.$BtnAceptar.addClass("hidden");
+  ElemForm.$BtnAgregar.removeClass("hidden");
+  ElemForm.$BtnModificar.addClass("hidden");
+  ElemForm.$BtnEliminar.addClass("hidden");
+  ElemForm.$Tabla.bootstrapTable('refresh');
 }
 function beforeEnviar(){
-  vec = [];
-  var x = document.getElementById("Formu").getElementsByTagName("input");
-  var z = document.getElementById("Formu").getElementsByClassName("checkbox");
-  if (z.length>0) {
-    for (var i = 0; i < z.length; i++) {
-      if (z[i].checked == true) {
-        z[i].value = 1;
-      } else {
-        z[i].value = 0;
-      }
+  let vec = {};
+  let l = ElemForm.checkboxes.length;
+  if (l>0) {
+    for (var i = 0; i < l; i++) {
+      ElemForm.checkboxes[i].value = (ElemForm.checkboxes[i].checked) ? 1 : 0;
     }
   }
-  for (var i = 0; i < x.length; i++) {
-    if (x[i].value === "") {
-      x[i].value = null;
+  for (x in ElemForm.json) {
+    let sel = document.getElementById(x + "Select");
+    if ( sel != null) {
+      ElemForm[ElemForm.json[x] + "Form"].val(sel.value);
     }
-    vec.push(x[i].value);
+    if (ElemForm[ElemForm.json[x] + "Form"].val() === "") {
+      ElemForm[ElemForm.json[x] + "Form"].val(null);
+    }
+    vec[ElemForm.json[x]] = ElemForm[ElemForm.json[x] + "Form"].val();
   }
   return vec;
 }
+
 function eliminarError(respuesta){
   afterEnviar();
   if (respuesta != "") {
     alert("Como existen registros que hacen referencia a este elemento, éste no se puede eliminar.\n\ Calma: esto no es un error ni una falla.");
   }
 }
+
 function modoFormulario(modo){
-  $("#BtnAceptar").removeClass("hidden");
-  $("#BtnAgregar").addClass("hidden");
-  $("#BtnModificar").addClass("hidden");
-  $("#BtnEliminar").addClass("hidden");
-  var x = document.getElementById("Formu").getElementsByClassName("form-control-static");
-  var y = document.getElementById("Formu").getElementsByClassName("form-control");
-  for (var i = 0; i < x.length; i++) {
-    $("#" + x[i].id).addClass("hidden");
-  }
-  if (modo == "Modificar") {
-    for (var i = 0; i < y.length; i++) {
-      $("#" + y[i].id).removeClass("hidden");
-    }
-  }else{
-    for (var i = 0; i < y.length; i++) {
-      $("#" + y[i].id).removeClass("hidden");
-      y[i].value = null;
-    }
-  }
-  var z = document.getElementById("Formu").getElementsByClassName("checkbox");
-  if (z.length>0) {
-    for (var i = 0; i < z.length; i++) {
-      z[i].disabled = false;
-      $("#" + z[i].id).removeClass("hidden");
+  ElemForm.$BtnAceptar.removeClass("hidden");
+  // ElemForm.$BtnAgregar.addClass("hidden");
+  ElemForm.$BtnModificar.addClass("hidden");
+  ElemForm.$BtnEliminar.addClass("hidden");
+  for (x in ElemForm.json) {
+    ElemForm[ElemForm.json[x] + "Select"].removeClass("hidden");
+    ElemForm[ElemForm.json[x]].addClass("hidden");
+    ElemForm[ElemForm.json[x] + "Form"].removeClass("hidden").attr('disabled', false);
+    if (modo == "Agregar") {
+      ElemForm[ElemForm.json[x] + "Form"].val(null);
+    }else {
+      let select = document.getElementById(ElemForm.json[x] + "Select");
+      if (select != null) {
+        let opciones = select.options;
+        let l = select.length;
+        for (let j = 0; j < l; j++) {
+          if (opciones[j].text == ElemForm[ElemForm.json[x] + "Form"].val()) {
+            select.selectedIndex = j;
+            break;
+          }
+        }
+      }
     }
   }
+  $("form .form-control:first").attr('disabled', true);
 }

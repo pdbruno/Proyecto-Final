@@ -44,57 +44,11 @@
         </form>
       </ul>
     </div>
-    <button type="button" id="BtnAgregar" onclick="modoFormulario('Agregar')" class="btn btn-default">Agregar</button>
-    <button type="button" id="BtnModificar"onclick="modoFormulario('Modificar')" class="btn btn-primary hidden">Modificar</button>
+    <button type="button" id="BtnAgregar" class="btn btn-default">Agregar</button>
+    <button type="button" id="BtnModificar" onclick="modoFormulario('Modificar')" class="btn btn-primary hidden">Modificar</button>
     <button type="button" id="BtnAceptar" onclick="Enviar()" class="btn btn-success hidden">Aceptar</button>
     <button type="button" id="BtnEliminar" onclick="Eliminar()" class="btn btn-danger hidden">Eliminar</button>
   </div>
-
 </div>
 <script src="<?php echo URL; ?>views/recursos/logicaABM.js"></script>
-<script>
-$('#Tabla').on('click-row.bs.table', function (row, $element, field) {
-  $('.success').removeClass('success');
-  $(field).addClass('success');
-  var request = $.ajax({
-    url: "<?php echo URL; ?>help/traerElemento/<?php echo $this->sujeto; ?>",
-    type: "post",
-    data: "data=" + $element.id<?php echo $this->sujeto; ?>,
-  });
-  request.done(function (respuesta){
-    clickFila(JSON.parse(respuesta)[0]);
-  });
-});
-var vec = [];
-function Enviar()
-{
-  if (document.getElementById("NombreForm").value === "")
-  {
-    alert("No me dejes en blanco el único campo te lo pido por favor media pila");
-  } else {
-    vec = beforeEnviar();
-    var request = $.ajax({
-      url: "<?php echo URL; ?>help/agregarModificarElemento/<?php echo $this->sujeto; ?>",
-      type: "post",
-      data: "data=" + JSON.stringify(vec),
-    });
-    request.done(function (respuesta){
-      afterEnviar();
-    });
-
-  }
-}
-function Eliminar() {
-  var r = confirm("Estás muy recontra segurísima/o que querés borrar este elemento?");
-  if (r == true) {
-    var request = $.ajax({
-      url: "<?php echo URL; ?>help/eliminarElemento/<?php echo $this->sujeto; ?>",
-      type: "post",
-      data: "data=" + document.getElementById("id").innerHTML,
-    });
-    request.done(function (respuesta){
-      eliminarError(respuesta);
-    });
-  }
-}
-</script>
+<?php require 'abmsecundario.php' ?>

@@ -6,30 +6,20 @@ class producto_Model extends Model {
     parent::__construct();
   }
 
-  public function nuevoObjeto($data) {
-    $obj['idProductos'] = $data[0];
-    $obj['Descripcion'] = $data[1];
-    $obj['idDistribuidores'] = $data[2];
-    $obj['Precio'] = $data[3];
-    $obj['Stock'] = $data[4];
-    $obj['Avisar'] = $data[5];
-    return $obj;
-  }
-
   public function listado($tipo) {
-    $sql = "SELECT idProductos, Descripcion FROM productos";
+    $sql = "SELECT idProductos, Descripcion, Precio FROM productos";
     $outp = $this->db->getAll($sql);
     echo json_encode($outp);
   }
 
   public function listadodropdowns() {
     $sql = "SELECT idDistribuidores as id, Nombre FROM distribuidores";
-    $outp = $this->db->getAll($sql);
+    $outp[] = $this->db->getAll($sql);
     echo json_encode($outp);
   }
 
   public function traerElemento($tipo,$idProductos) {
-    $sql = "SELECT productos.idProductos, productos.Descripcion, productos.Precio, distribuidores.Nombre as disNombre, productos.Stock,productos.Avisar
+    $sql = "SELECT productos.idProductos, productos.Descripcion, productos.Precio, distribuidores.Nombre as idDistribuidores, productos.Stock,productos.Avisar
     FROM productos
     LEFT JOIN distribuidores ON productos.idDistribuidores = distribuidores.idDistribuidores
     WHERE idProductos=?i";

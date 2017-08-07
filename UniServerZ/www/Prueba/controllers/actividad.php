@@ -7,7 +7,7 @@ class actividad extends calendar {
   }
 
   function calendario() {
-    $this->manejar("actividad","actividades");
+    $this->manejar("actividad","calendario");
     $this->view->render('calendario/index');
   }
   function index() {
@@ -40,11 +40,10 @@ class actividad extends calendar {
     $data = $_POST['data'];
     echo $this->model->traerAnotados($data);
   }
-  
+
   public function agregarModificarActividad() {
     $caca = json_decode($_POST['data1'], TRUE);
     $modalidades = json_decode($_POST['data2'], TRUE);
-    $caca = $this->model->nuevoObjeto($caca);
     $this->model->agregarModificar('Actividades',$caca);
     $this->model->asignarModalidades($modalidades, $caca['idActividades']);
   }
