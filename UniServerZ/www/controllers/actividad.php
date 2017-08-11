@@ -6,13 +6,15 @@ class actividad extends calendar {
     parent::__construct();
   }
 
-  function calendario() {
+  public function calendario() {
     $this->manejar("actividad","calendario");
     $this->view->render('calendario/index');
   }
-  function index() {
+
+  public function index() {
     $this->view->render('abmactividades/index');
   }
+
   public function tomarlista() {
     $this->manejar("actividad","tomarlista");
     $this->view->render('tomarlista/index');
@@ -27,14 +29,15 @@ class actividad extends calendar {
     } catch (Exception $e) {
       $this->miCatch($e);
     }
-
   }
+
   public function asignarAsistencia()
   {
-    $data = json_decode($_POST['data'], TRUE);
+    $alumnos = json_decode($_POST['data'], TRUE);
     $id = trim($_POST['data2']);
-    // $service = $this->getService();
-    echo $this->model->asignarAsistencia($data,$id);
+    $profes = json_decode($_POST['data3'], TRUE);
+    echo $this->model->asignarAsistencia($alumnos, $id, "asistencias");
+    echo $this->model->asignarAsistencia($profes, $id, "eventosinstructores");
   }
   public function traerAnotados() {
     $data = $_POST['data'];
@@ -79,7 +82,5 @@ class actividad extends calendar {
       $this->miCatch($e);
     }
   }
-
-
 
 }

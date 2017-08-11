@@ -11,22 +11,22 @@ var ElemForm = {
   alertdiv: "",
   modal: $("#ModalPropiedades")
 };
-ElemForm.alertdiv = document.createElement("div");
-ElemForm.alertdiv.className = "col-lg-6 col-lg-offset-3 alert alert-danger alert-dismissible fade in";
-let but = document.createElement("button");
-but.type = "button";
-but.className = "close";
-but.setAttribute("data-dismiss", "alert");
-let span = document.createElement("span");
-span.innerHTML = "&times;";
-let strong = document.createElement("strong");
-strong.innerHTML = "Alto ahi vaquero!";
-let node = document.createTextNode("  Hay campos obligatorios sin llenar.");
-but.appendChild(span);
-ElemForm.alertdiv.appendChild(but);
-ElemForm.alertdiv.appendChild(strong);
-ElemForm.alertdiv.appendChild(node);
-
+// ElemForm.alertdiv = document.createElement("div");
+// ElemForm.alertdiv.className = "col-lg-6 col-lg-offset-3 alert alert-danger alert-dismissible fade in";
+// let but = document.createElement("button");
+// but.type = "button";
+// but.className = "close";
+// but.setAttribute("data-dismiss", "alert");
+// let span = document.createElement("span");
+// span.innerHTML = "&times;";
+// let strong = document.createElement("strong");
+// strong.innerHTML = "Alto ahi vaquero!";
+// let node = document.createTextNode("  Hay campos obligatorios sin llenar.");
+// but.appendChild(span);
+// ElemForm.alertdiv.appendChild(but);
+// ElemForm.alertdiv.appendChild(strong);
+// ElemForm.alertdiv.appendChild(node);
+//
 
 $(document).on('show.bs.modal', '.modal', function (event) {
   var zIndex = 1040 + (10 * $('.modal:visible').length);
@@ -214,7 +214,7 @@ function afterEnviar(){
       ElemForm.checkboxes[i].disabled = true;
     }
   }
-  $('#ModalPropiedades').modal('hide');
+  ElemForm.modal.modal('hide');
   ElemForm.$BtnAceptar.addClass("hidden");
   ElemForm.$BtnAgregar.removeClass("hidden");
   ElemForm.$BtnModificar.addClass("hidden");
@@ -232,6 +232,8 @@ function beforeEnviar(){
   }
   l = ElemForm.json.length;
   for (var i = 0; i < l; i++) {
+    ElemForm[ElemForm.json[i].COLUMN_NAME + "Group"].removeClass("has-error");
+    ElemForm[ElemForm.json[i].COLUMN_NAME + "Error"].addClass("hidden");
     let sel = document.getElementById(ElemForm.json[i].COLUMN_NAME + "Select");
     if ( sel != null) {
       ElemForm[ElemForm.json[i].COLUMN_NAME + "Form"].val(sel.value);
@@ -248,8 +250,12 @@ function beforeEnviar(){
     vec[ElemForm.json[i].COLUMN_NAME] = ElemForm[ElemForm.json[i].COLUMN_NAME + "Form"].val();
   }
   if (mal) {
-    let lala = ElemForm.alertdiv;
-    ElemForm.modal.append(lala);
+    if(document.getElementById("noti") == null){
+      ElemForm.modal.append('<div id="noti" class="alert col-lg-6 col-lg-offset-3 col alert-danger alert-dismissible fade in" role="alert">\
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+    <strong>Alto ahi vaquero/a!</strong> Hay campos obligatorios sin llenar.\
+  </div>');
+    }
     return 'no';
 
   }else {

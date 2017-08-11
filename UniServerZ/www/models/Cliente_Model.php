@@ -4,49 +4,6 @@
 
 class cliente_Model extends Model {
 
-  public function nuevoObjeto($data) {
-    $obj['idClientes'] = $data[0];
-    $obj['Nombres'] = $data[1];
-    $obj['Apellidos'] = $data[2];
-    $obj['FechaNacimiento'] = $data[3];
-    $obj['DNI'] = $data[4];
-    $obj['Domicilio'] = $data[5];
-    $obj['IdLocalidades'] = $data[6];
-    $obj['CPostal'] = $data[7];
-    $obj['TelCel'] = $data[8];
-    $obj['Ocupacion'] = $data[9];
-    $obj['Email'] = $data[10];
-    $obj['Facebook'] = $data[11];
-    $obj['AutorizaWeb'] = $data[12];
-    $obj['AptoMedico'] = $data[13];
-    $obj['CoberturaMedica'] = $data[14];
-    $obj['NumSocioMed'] = $data[15];
-    $obj['TelEmergencias'] = $data[16];
-    $obj['IdGrupoFactorSanguineo'] = $data[17];
-    $obj['Alergia'] = $data[18];
-    $obj['Patologia'] = $data[19];
-    $obj['IntQuirurgica'] = $data[20];
-    $obj['Lesion'] = $data[21];
-    $obj['Medicacion'] = $data[22];
-    $obj['Observaciones'] = $data[23];
-    $obj['PadMadTut'] = $data[24];
-    $obj['TelPadMadTut'] = $data[25];
-    $obj['CelPadMadTut'] = $data[26];
-    $obj['EmailPadMadTut'] = $data[27];
-    $obj['SeVaSolo'] = $data[28];
-    $obj['Retirar1NomAp'] = $data[29];
-    $obj['Retirar1DNI'] = $data[30];
-    $obj['Retirar2NomAp'] = $data[31];
-    $obj['Retirar2DNI'] = $data[32];
-    $obj['Retirar3NomAp'] = $data[33];
-    $obj['Retirar3DNI'] = $data[34];
-    $obj['Activo'] = $data[35];
-    $obj['EsInstructor'] = $data[36];
-    $obj['IdCategorias'] = $data[37];
-    $obj['IdSedes'] = $data[38];
-    return $obj;
-  }
-
   public function __construct() {
     parent::__construct();
   }

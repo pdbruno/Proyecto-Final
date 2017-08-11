@@ -1,13 +1,17 @@
 <script type="text/javascript">
 var Elementos = {
   $Asistencia : $("#Asistencia"),
+  $Profesorado : $("#Profesorado"),
   $FechaForm : $('#FechaForm'),
   $ListaEventos : $('#ListaEventos'),
   TablaActividades : document.getElementById("TablaActividades"),
   ListaClientes: document.getElementById("ListaClientes"),
-  $NombreForm: $("#NombreForm")
+  ListaInstructores: document.getElementById("ListaInstructores"),
+  $NombreForm: $("#NombreForm"),
+  $ProfeForm: $("#ProfeForm")
 };
 var VecAsistio = [];
+var VecProfes = [];
 var idEvento = "";
 var d = new Date().toISOString().substr(0,10);
 Elementos.$FechaForm.val(d);
@@ -26,12 +30,13 @@ document.getElementById("BTNenviar").addEventListener("click", function() {
   let request = $.ajax({
     url: "<?php echo URL; ?>actividad/asignarAsistencia",
     type: "post",
-    data: "data=" + JSON.stringify(VecAsistio) + "&data2="+idEvento,
+    data: "data=" + JSON.stringify(VecAsistio) + "&data2="+idEvento + "&data3="+JSON.stringify(VecProfes),
   });
   request.done(function (respuesta){
     alert('Se ha asignado la asistencia al evento');
     VecAsistio=[];
     Elementos.$Asistencia.addClass("hidden");
+    Elementos.$Profesorado.addClass("hidden");
   });
 });
 document.getElementById("BTNfecha").addEventListener("click", function() {
@@ -73,14 +78,22 @@ function elegir($boton, id){
     VecAsistio.splice(VecAsistio.indexOf(id), 1);
   }
 }
-
+function elegir2($boton, id){
+  $boton.toggleClass("list-group-item-info");
+  if (VecProfes.indexOf(id) == -1) {
+    VecProfes.push(id);
+  } else {
+    VecProfes.splice(VecProfes.indexOf(id), 1);
+  }
+}
 function traerEvento(boton){
   VecAsistio = [];
+  VecProfes = [];
   filas = Elementos.TablaActividades.rows;
   for (row in filas) {
     if (filas[row].id == boton.id) {
       $("#" + filas[row].id).addClass("success");
-      idEvento = filas[row].cells[0].innerHTML;
+      idEvento = filas[row].id;
     } else {
       $("#" + filas[row].id).removeClass("success");
     }
@@ -91,14 +104,21 @@ function traerEvento(boton){
     data: "data=" + boton.id,
   });
   request.done(function (respuesta){
-    Elementos.$Asistencia.removeClass("hidden")
-    respuesta = JSON.parse(respuesta);
+    Elementos.$Asistencia.removeClass("hidden");
+    Elementos.$Profesorado.removeClass("hidden");
+    alumnos = JSON.parse(respuesta)[0];
+    profes = JSON.parse(respuesta)[1];
     let texto = "";
-    for (usuario in respuesta) {
-      texto+= "<button type='button' class='list-group-item' onclick='elegir($(this),"+respuesta[usuario].idClientes+")' >" + respuesta[usuario].name + "</button>"
+    let texto2 = "";
+    for (usuario in alumnos) {
+      texto+= "<button type='button' class='list-group-item' onclick='elegir($(this),"+alumnos[usuario].idClientes+")' >" + alumnos[usuario].name + "</button>"
+    }
+    for (usuario in profes) {
+      texto2+= "<button type='button' class='list-group-item' onclick='elegir2($(this),"+profes[usuario].idClientes+")' >" + profes[usuario].name + "</button>"
     }
     Elementos.ListaClientes.innerHTML = texto;
-    Elementos.$NombreForm.typeahead('destroy')
+    Elementos.ListaInstructores.innerHTML = texto2;
+    Elementos.$NombreForm.typeahead('destroy');
     Elementos.$NombreForm.typeahead({
       source: respuesta,
       afterSelect: function(item){
@@ -115,6 +135,25 @@ function traerEvento(boton){
           }
         }
         Elementos.$NombreForm.val("");
+      }
+    });
+    Elementos.$ProfeForm.typeahead('destroy');
+    Elementos.$ProfeForm.typeahead({
+      source: respuesta,
+      afterSelect: function(item){
+        var botones =  Elementos.ListaInstructores.getElementsByTagName("button");
+        for (row in botones) {
+          if (botones[row].innerHTML == item.name) {
+            if (VecProfes.indexOf(item.idClientes) == -1) {
+              VecProfes.push(item.idClientes);
+              botones[row].className = "list-group-item list-group-item-info";
+            } else {
+              VecProfes.splice(VecProfes.indexOf(item.idClientes), 1);
+              botones[row].className = "list-group-item";
+            }
+          }
+        }
+        Elementos.$ProfeForm.val("");
       }
     });
   });

@@ -25,6 +25,11 @@
       </div>
     </div>
   </div>
+  <div class="row hidden" id="Profesorado">
+    <input type="text" class="form-control" id="ProfeForm" name="ProfeForm" data-provide="typeahead" placeholder="Nombe o Apellido del instructor">
+    <div class="list-group" id="ListaInstructores">
+    </div>
+  </div>
 </div>
 <div class="col-lg-9 hidden" id="Asistencia">
   <input type="text" class="form-control" id="NombreForm" name="NombreForm" data-provide="typeahead" placeholder="Nombe o Apellido del alumno">

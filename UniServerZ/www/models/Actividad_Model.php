@@ -50,8 +50,12 @@ class actividad_Model extends Model {
   public function traerAnotados($idActividades)
   {
     $idActividades = substr($idActividades,0,11);
-    $UsersFinal = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientes` WHERE `Activo` = 1 AND `idClientes` IN (SELECT `idClientes` FROM `clientesactividades` WHERE `idActividades` = ?i)", $idActividades);
-    return json_encode($UsersFinal) ;
+    $UsersFinal[] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientes` WHERE `Activo` = 1 AND `idClientes` IN (SELECT `idClientes` FROM `clientesactividades` WHERE `idActividades` = ?i)", $idActividades);
+    if (count($UsersFinal)) {
+      $UsersFinal[0] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientes` WHERE `Activo` = 1 ");
+    }
+    $UsersFinal[] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientes` WHERE `Activo` = 1 AND `EsInstructor` = 1");
+    return json_encode($UsersFinal);
   }
 
   public function mostrar($idActividades, $servicio)
@@ -93,19 +97,10 @@ class actividad_Model extends Model {
     echo $updatedEvent->getUpdated();
   }
 
-  public function asignarAsistencia($data, $id)
+  public function asignarAsistencia($data, $id, $tipo)
   {
-    // $evento = array(
-    //   'extendedProperties' => array(
-    //     'private' => array(
-    //       'asistencia' => json_encode($data)
-    //     )
-    //   )
-    // );
-    // $event = new Google_Service_Calendar_Event($evento);
-    // return $servicio->events->patch('primary', $id, $event);
     for ($i = 0; $i < count($data); $i++) {
-      $this->db->query("INSERT INTO `asistencias` SET `idClientes`= ?i, `idEvento`= ?s", $data[$i], $id);
+      $this->db->query("INSERT INTO ?n SET `idClientes`= ?i, `idEvento`= ?s", $tipo, $data[$i], $id);
     }
   }
 
