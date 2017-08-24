@@ -1,6 +1,4 @@
 <link rel="stylesheet" href="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.css">
-<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table-es-AR.min.js"></script>
 <div class="row">
   <div class="col-lg-10 col-lg-offset-1">
     <div class="table-responsive col-lg-12">
@@ -36,5 +34,5 @@
     </div><!-- /.modal-content-->
   </div> <!--/.modal-dialog -->
 </div>
-<script src="<?php echo URL; ?>views/recursos/logicaABM.js"></script>
-<?php require 'abmproductos.php' ?>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table-es-AR.min.js"></script>

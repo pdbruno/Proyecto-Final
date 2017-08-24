@@ -43,5 +43,5 @@ document.getElementById("BtnAgregar").addEventListener("click", function() {
     });
   }
 });
-
 </script>
+<script src="<?php echo URL; ?>views/recursos/stock.js"></script>

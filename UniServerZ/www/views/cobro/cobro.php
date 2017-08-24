@@ -13,7 +13,8 @@ var Elementos = {
   $MontoRow: $('#MontoRow'),
   Monto : document.getElementById("Monto"),
   $SemestrePicker: $("#SemestrePicker"),
-  ListaActividades : document.getElementById("ListaActividades")
+  ListaActividades : document.getElementById("ListaActividades"),
+  $Enviar: $('#Enviar')
 };
 
 var Enviar = {Actividad:"", idClientes:"", Monto : ""};
@@ -118,6 +119,7 @@ function traerEvento(boton){
     }
   }
   Enviar.Actividad = boton.id;
+  Elementos.$Enviar.removeClass('hidden');
 }
 
 function traerPrecio(campo){
@@ -141,6 +143,7 @@ document.getElementById("Semestre").addEventListener("click", function() {
   Elementos.$escondible2.addClass("hidden");
   Elementos.$SemestrePicker.removeClass("hidden");
   traerPrecio('PrecioXMes');
+  Elementos.$Enviar.removeClass('hidden');
 });
 
 $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
@@ -154,7 +157,7 @@ $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
   Enviar.idClientes = $element.idClientes;
   request.done(function (respuesta){
     Globales.ListaActividades = [];
-    let actividades = JSON.parse(respuesta)[0];
+    let actividades = JSON.parse(respuesta);
     let texto = "";
     let i = 0;
     for (actividad in actividades) {
@@ -204,6 +207,7 @@ document.getElementById("Mes").addEventListener("click", function() {
     todayHighlight: true
   });
   traerPrecio('PrecioXMes');
+  Elementos.$Enviar.removeClass('hidden');
 });
 
 

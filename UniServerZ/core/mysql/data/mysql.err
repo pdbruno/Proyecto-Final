@@ -9256,3 +9256,248 @@ Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
 2017-08-10 22:52:20 8488 [Note] Shutting down plugin 'binlog'
 2017-08-10 22:52:20 8488 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
 
+2017-08-11 07:59:12 7796 [Note] Plugin 'FEDERATED' is disabled.
+2017-08-11 07:59:12 7796 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-08-11 07:59:12 7796 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-08-11 07:59:12 7796 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-08-11 07:59:12 7796 [Note] InnoDB: Memory barrier is not used
+2017-08-11 07:59:12 7796 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-08-11 07:59:12 7796 [Note] InnoDB: Not using CPU crc32 instructions
+2017-08-11 07:59:12 7796 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-08-11 07:59:12 7796 [Note] InnoDB: Completed initialization of buffer pool
+2017-08-11 07:59:12 7796 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-08-11 07:59:12 7796 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-08-11 07:59:12 7796 [Note] InnoDB: Waiting for purge to start
+2017-08-11 07:59:12 7796 [Note] InnoDB: 5.6.35 started; log sequence number 12351431
+2017-08-11 07:59:12 7796 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-08-11 07:59:12 7796 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-08-11 07:59:12 7796 [Note] Server socket created on IP: '127.0.0.1'.
+2017-08-11 07:59:13 7796 [Note] Event Scheduler: Loaded 0 events
+2017-08-11 07:59:13 7796 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-08-11 08:05:55 7604 [Note] Plugin 'FEDERATED' is disabled.
+2017-08-11 08:05:55 7604 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-08-11 08:05:55 7604 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-08-11 08:05:55 7604 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-08-11 08:05:55 7604 [Note] InnoDB: Memory barrier is not used
+2017-08-11 08:05:55 7604 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-08-11 08:05:55 7604 [Note] InnoDB: Not using CPU crc32 instructions
+2017-08-11 08:05:55 7604 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-08-11 08:05:55 7604 [Note] InnoDB: Completed initialization of buffer pool
+2017-08-11 08:05:56 7604 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-08-11 08:05:56 7604 [Note] InnoDB: The log sequence numbers 12351431 and 12351431 in ibdata files do not match the log sequence number 12351441 in the ib_logfiles!
+2017-08-11 08:05:56 7604 [Note] InnoDB: Database was not shutdown normally!
+2017-08-11 08:05:56 7604 [Note] InnoDB: Starting crash recovery.
+2017-08-11 08:05:56 7604 [Note] InnoDB: Reading tablespace information from the .ibd files...
+2017-08-11 08:05:57 7604 [Note] InnoDB: Restoring possible half-written data pages 
+2017-08-11 08:05:57 7604 [Note] InnoDB: from the doublewrite buffer...
+2017-08-11 08:05:58 7604 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-08-11 08:05:58 7604 [Note] InnoDB: Waiting for purge to start
+2017-08-11 08:05:58 7604 [Note] InnoDB: 5.6.35 started; log sequence number 12351441
+2017-08-11 08:05:58 7604 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-08-11 08:05:58 7604 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-08-11 08:05:58 7604 [Note] Server socket created on IP: '127.0.0.1'.
+2017-08-11 08:05:59 7604 [Note] Event Scheduler: Loaded 0 events
+2017-08-11 08:05:59 7604 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-08-11 09:26:03 7604 [Note] Event Scheduler: scheduler thread started with id 310
+2017-08-11 11:02:54 7604 [Note] Event Scheduler: Killing the scheduler thread, thread id 310
+2017-08-11 11:02:54 7604 [Note] Event Scheduler: Waiting for the scheduler thread to reply
+2017-08-11 11:02:54 7604 [Note] Event Scheduler: Stopped
+2017-08-11 12:08:07 7604 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-08-11 12:08:07 7604 [Note] Giving 0 client threads a chance to die gracefully
+2017-08-11 12:08:07 7604 [Note] Event Scheduler: Purging the queue. 0 events
+2017-08-11 12:08:07 7604 [Note] Shutting down slave threads
+2017-08-11 12:08:08 7604 [Note] Forcefully disconnecting 0 remaining clients
+2017-08-11 12:08:08 7604 [Note] Binlog end
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'partition'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_CMP'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'INNODB_TRX'
+2017-08-11 12:08:08 7604 [Note] Shutting down plugin 'InnoDB'
+2017-08-11 12:08:08 7604 [Note] InnoDB: FTS optimize thread exiting.
+2017-08-11 12:08:08 7604 [Note] InnoDB: Starting shutdown...
+2017-08-11 12:08:09 7604 [Note] InnoDB: Shutdown completed; log sequence number 12526172
+2017-08-11 12:08:09 7604 [Note] Shutting down plugin 'BLACKHOLE'
+2017-08-11 12:08:09 7604 [Note] Shutting down plugin 'ARCHIVE'
+2017-08-11 12:08:09 7604 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-08-11 12:08:09 7604 [Note] Shutting down plugin 'MyISAM'
+2017-08-11 12:08:09 7604 [Note] Shutting down plugin 'MEMORY'
+2017-08-11 12:08:09 7604 [Note] Shutting down plugin 'CSV'
+2017-08-11 12:08:09 7604 [Note] Shutting down plugin 'sha256_password'
+2017-08-11 12:08:09 7604 [Note] Shutting down plugin 'mysql_old_password'
+2017-08-11 12:08:09 7604 [Note] Shutting down plugin 'mysql_native_password'
+2017-08-11 12:08:09 7604 [Note] Shutting down plugin 'binlog'
+2017-08-11 12:08:09 7604 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-08-11 13:16:12 2820 [Note] Plugin 'FEDERATED' is disabled.
+2017-08-11 13:16:12 2820 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-08-11 13:16:12 2820 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-08-11 13:16:12 2820 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-08-11 13:16:12 2820 [Note] InnoDB: Memory barrier is not used
+2017-08-11 13:16:12 2820 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-08-11 13:16:12 2820 [Note] InnoDB: Not using CPU crc32 instructions
+2017-08-11 13:16:13 2820 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-08-11 13:16:13 2820 [Note] InnoDB: Completed initialization of buffer pool
+2017-08-11 13:16:13 2820 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-08-11 13:16:14 2820 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-08-11 13:16:14 2820 [Note] InnoDB: Waiting for purge to start
+2017-08-11 13:16:14 2820 [Note] InnoDB: 5.6.35 started; log sequence number 12526172
+2017-08-11 13:16:14 2820 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-08-11 13:16:14 2820 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-08-11 13:16:14 2820 [Note] Server socket created on IP: '127.0.0.1'.
+2017-08-11 13:16:17 2820 [Note] Event Scheduler: Loaded 0 events
+2017-08-11 13:16:17 2820 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-08-11 14:27:30 2820 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-08-11 14:27:30 2820 [Note] Giving 0 client threads a chance to die gracefully
+2017-08-11 14:27:30 2820 [Note] Event Scheduler: Purging the queue. 0 events
+2017-08-11 14:27:30 2820 [Note] Shutting down slave threads
+2017-08-11 14:27:30 2820 [Note] Forcefully disconnecting 0 remaining clients
+2017-08-11 14:27:30 2820 [Note] Binlog end
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'partition'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_CMP'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'INNODB_TRX'
+2017-08-11 14:27:30 2820 [Note] Shutting down plugin 'InnoDB'
+2017-08-11 14:27:30 2820 [Note] InnoDB: FTS optimize thread exiting.
+2017-08-11 14:27:30 2820 [Note] InnoDB: Starting shutdown...
+2017-08-11 14:27:31 2820 [Note] InnoDB: Shutdown completed; log sequence number 12526182
+2017-08-11 14:27:31 2820 [Note] Shutting down plugin 'BLACKHOLE'
+2017-08-11 14:27:31 2820 [Note] Shutting down plugin 'ARCHIVE'
+2017-08-11 14:27:31 2820 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-08-11 14:27:31 2820 [Note] Shutting down plugin 'MyISAM'
+2017-08-11 14:27:31 2820 [Note] Shutting down plugin 'MEMORY'
+2017-08-11 14:27:31 2820 [Note] Shutting down plugin 'CSV'
+2017-08-11 14:27:31 2820 [Note] Shutting down plugin 'sha256_password'
+2017-08-11 14:27:31 2820 [Note] Shutting down plugin 'mysql_old_password'
+2017-08-11 14:27:31 2820 [Note] Shutting down plugin 'mysql_native_password'
+2017-08-11 14:27:31 2820 [Note] Shutting down plugin 'binlog'
+2017-08-11 14:27:31 2820 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-08-23 15:27:06 5476 [Note] Plugin 'FEDERATED' is disabled.
+2017-08-23 15:27:06 5476 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-08-23 15:27:06 5476 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-08-23 15:27:06 5476 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-08-23 15:27:06 5476 [Note] InnoDB: Memory barrier is not used
+2017-08-23 15:27:06 5476 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-08-23 15:27:06 5476 [Note] InnoDB: Not using CPU crc32 instructions
+2017-08-23 15:27:06 5476 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-08-23 15:27:06 5476 [Note] InnoDB: Completed initialization of buffer pool
+2017-08-23 15:27:06 5476 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-08-23 15:27:08 5476 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-08-23 15:27:08 5476 [Note] InnoDB: Waiting for purge to start
+2017-08-23 15:27:08 5476 [Note] InnoDB: 5.6.35 started; log sequence number 12526182
+2017-08-23 15:27:08 5476 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-08-23 15:27:08 5476 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-08-23 15:27:08 5476 [Note] Server socket created on IP: '127.0.0.1'.
+2017-08-23 15:27:12 5476 [Note] Event Scheduler: Loaded 0 events
+2017-08-23 15:27:12 5476 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-08-23 23:43:52 5476 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-08-23 23:43:53 5476 [Note] Giving 0 client threads a chance to die gracefully
+2017-08-23 23:43:53 5476 [Note] Event Scheduler: Purging the queue. 0 events
+2017-08-23 23:43:53 5476 [Note] Shutting down slave threads
+2017-08-23 23:43:53 5476 [Note] Forcefully disconnecting 0 remaining clients
+2017-08-23 23:43:53 5476 [Note] Binlog end
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'partition'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_CMP'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'INNODB_TRX'
+2017-08-23 23:43:53 5476 [Note] Shutting down plugin 'InnoDB'
+2017-08-23 23:43:53 5476 [Note] InnoDB: FTS optimize thread exiting.
+2017-08-23 23:43:53 5476 [Note] InnoDB: Starting shutdown...
+2017-08-23 23:43:55 5476 [Note] InnoDB: Shutdown completed; log sequence number 12773309
+2017-08-23 23:43:55 5476 [Note] Shutting down plugin 'BLACKHOLE'
+2017-08-23 23:43:55 5476 [Note] Shutting down plugin 'ARCHIVE'
+2017-08-23 23:43:55 5476 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-08-23 23:43:55 5476 [Note] Shutting down plugin 'MyISAM'
+2017-08-23 23:43:55 5476 [Note] Shutting down plugin 'MEMORY'
+2017-08-23 23:43:55 5476 [Note] Shutting down plugin 'CSV'
+2017-08-23 23:43:55 5476 [Note] Shutting down plugin 'sha256_password'
+2017-08-23 23:43:55 5476 [Note] Shutting down plugin 'mysql_old_password'
+2017-08-23 23:43:55 5476 [Note] Shutting down plugin 'mysql_native_password'
+2017-08-23 23:43:55 5476 [Note] Shutting down plugin 'binlog'
+2017-08-23 23:43:55 5476 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+

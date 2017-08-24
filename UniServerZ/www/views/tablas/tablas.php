@@ -1,6 +1,9 @@
 <script>
 var accion;
 var NombrePrevio;
+var Elementos = {
+  SelectTabla : document.getElementById("SelectTabla"),
+};
 crearCampos([
   {
     IS_NULLABLE: "NO",
@@ -77,13 +80,13 @@ document.getElementById("BtnAceptar").addEventListener("click", function() {
     vec.IS_NULLABLE = (vec.IS_NULLABLE === "0") ? "NOT NULL " : "";
     let url;
     if (accion == 'Agregar') {
-      url = "addColumna";
+      url = "addColumna/";
     }else if (accion == 'Modificar') {
-      url = "editarColumna";
+      url = "editarColumna/";
       vec.NombrePrevio = NombrePrevio;
     }
     var request = $.ajax({
-      url: "<?php echo URL; ?>help/" + url + "/<?php echo $this->sujeto; ?>",
+      url: "<?php echo URL; ?>help/" + url + Elementos.SelectTabla.value,
       type: "post",
       data: "data=" + JSON.stringify(vec),
     });
@@ -93,12 +96,25 @@ document.getElementById("BtnAceptar").addEventListener("click", function() {
   }
 
 });
-
+var request = $.ajax({
+  url: "<?php echo URL; ?>help/listarTablas",
+  type: "post",
+});
+request.done(function (respuesta){
+  Elementos.SelectTabla.innerHTML += optionCrear(JSON.parse(respuesta));
+});
+Elementos.SelectTabla.addEventListener("input", function() {
+  $('#TodoLoDemas').removeClass('hidden');
+  $('#Tabla').bootstrapTable({
+    url: "<?php echo URL; ?>help/listarColumnas/" + Elementos.SelectTabla.value,
+    search: true
+});
+});
 $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
   $('.success').removeClass('success');
   $(field).addClass('success');
-  var request = $.ajax({
-    url: "<?php echo URL; ?>help/traerColumna/<?php echo $this->sujeto; ?>",
+  let request = $.ajax({
+    url: "<?php echo URL; ?>help/traerColumna/" + Elementos.SelectTabla.value,
     type: "post",
     data: "data=" + $element.COLUMN_NAME,
   });

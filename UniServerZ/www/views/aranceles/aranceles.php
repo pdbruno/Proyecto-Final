@@ -13,14 +13,30 @@ request.done(function (respuesta){
     texto += "<td>" + MyObj[i].actNombre + " </td>";
     texto += "<td>" + MyObj[i].modNombre + " </td>";
     if (MyObj[i].PrecioXClase == null) {
-      texto += "<td> <input type='text' id='Clase" + i + "'></td>";
+      texto += "<td> <div class='input-group'>\
+        <span class='input-group-addon'>$</span>\
+        <input type='text' id='Clase" + i + "' class='form-control'>\
+        <span class='input-group-addon'>.00</span>\
+      </div> </td>";
     }else {
-      texto += "<td> <input type='text' id='Clase" + i + "' value='" + MyObj[i].PrecioXClase + "'></td>";
+      texto += "<td> <div class='input-group'>\
+        <span class='input-group-addon'>$</span>\
+        <input type='text' value='" + MyObj[i].PrecioXClase + "' id='Clase" + i + "' class='form-control'>\
+        <span class='input-group-addon'>.00</span>\
+      </div> </td>";
     }
     if (MyObj[i].PrecioXMes == null) {
-      texto += "<td> <input type='text' id='Mes" + i + "'></td>";
+      texto += "<td> <div class='input-group'>\
+        <span class='input-group-addon'>$</span>\
+        <input type='text' id='Mes" + i + "' class='form-control'>\
+        <span class='input-group-addon'>.00</span>\
+      </div> </td>";
     }else {
-      texto += "<td> <input type='text' id='Mes" + i + "'value='" + MyObj[i].PrecioXMes + "'></td>";
+      texto += "<td> <div class='input-group'>\
+        <span class='input-group-addon'>$</span>\
+        <input type='text' value='" + MyObj[i].PrecioXMes + "' id='Mes" + i + "' class='form-control'>\
+        <span class='input-group-addon'>.00</span>\
+      </div> </td>";
     }
     texto += "<td><button class='btn btn-default' onclick='Enviar(" + i + ")' type='button'>Aceptar</button></td>";
     texto += "</tr>";

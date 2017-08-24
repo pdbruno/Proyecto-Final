@@ -9,6 +9,17 @@ class Help_Model extends Model {
       $outp = $this->db->getAll($sql, $tabla);
       echo json_encode($outp);
     }
+
+    public function listarTablas() {
+      $sql = "SHOW TABLES";
+      $outp = $this->db->getAll($sql);
+      for ($i = 0; $i < count($outp); $i++) {
+        $outp[$i]['id'] = $outp[$i]["Tables_in_dbproyectofinal"];
+        $outp[$i]['Nombre'] = $outp[$i]["Tables_in_dbproyectofinal"];
+      }
+      echo json_encode($outp);
+    }
+
     public function traerColumna($tipo, $col) {
       $sql = "SELECT COLUMN_NAME, DATA_TYPE, COLUMN_COMMENT, IS_NULLABLE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'dbproyectofinal' AND TABLE_NAME = ?s AND COLUMN_NAME = ?s";
       $outp = $this->db->getAll($sql, $tipo, $col);

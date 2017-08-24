@@ -38,7 +38,8 @@ class actividad_Model extends Model {
     }
   }
   public function traerElemento($tipo, $idActividades) {
-    $sql = "SELECT * FROM actividades WHERE idActividades=?i";
+    $sql = "SELECT actividades.*, fondos.Nombre as idFondos FROM actividades
+    LEFT JOIN fondos ON fondos.idFondos = actividades.idFondos WHERE idActividades=?i";
     $outp[] = $this->db->getAll($sql, $idActividades);
     $sql = "SELECT modalidades.Nombre as NombreMod, actividadesaranceles.idModalidades as idModalidades FROM `actividadesaranceles`
     LEFT JOIN modalidades ON actividadesaranceles.idModalidades = modalidades.idModalidades

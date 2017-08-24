@@ -33,7 +33,7 @@ document.getElementById("BtnEliminar").addEventListener("click", function() {
     var request = $.ajax({
       url: "<?php echo URL; ?>help/eliminarElemento/<?php echo $this->sujeto; ?>",
       type: "post",
-      data: "data=" + document.getElementById("id").innerHTML,
+      data: "data=" + document.getElementById("id<?php echo $this->sujeto; ?>").innerHTML,
     });
     request.done(function (respuesta){
       eliminarError(respuesta);

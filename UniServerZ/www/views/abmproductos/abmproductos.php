@@ -6,13 +6,6 @@ var request = $.ajax({
 request.done(function (respuesta){
   let myObj = JSON.parse(respuesta);
   crearCampos(myObj);
-  request = $.ajax({
-    url: "<?php echo URL; ?>producto/listadoDropdowns",
-    type: "post"
-  });
-  request.done(function (respuesta){
-    llenarDropdowns(JSON.parse(respuesta));
-  });
 });
 document.getElementById("BtnAgregar").addEventListener("click", function() {
   modoFormulario('Agregar');
@@ -31,7 +24,6 @@ document.getElementById("BtnAceptar").addEventListener("click", function() {
     request.done(function (respuesta){
       afterEnviar();
     });
-
   }
 });
 document.getElementById("BtnEliminar").addEventListener("click", function() {

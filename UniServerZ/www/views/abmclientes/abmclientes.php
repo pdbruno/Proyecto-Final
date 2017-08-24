@@ -29,7 +29,7 @@ function deshacerModal(){
 
   Elementos.idActividadesSelect1= document.getElementById("idActividadesSelect1");
   Elementos.idModalidadesSelect1= document.getElementById("idModalidadesSelect1");
-  Elementos.idActividadesSelect1.innerHTML += optionCrear(VecActividades);
+  Elementos.idActividadesSelect1.innerHTML += VecActividades;
   Elementos.idModalidadesSelect1.innerHTML += VecModalidades;
 }
 
@@ -69,11 +69,12 @@ $('#FechaNacimientoForm').datepicker({
   language: "es",
   autoclose: true,
 });
-var VecActividades= [];
-var VecModalidades= [];
-var bien = true;
+var VecActividades = "";
+var VecModalidades = "";
+var bien = false;
 var final = [];
 document.getElementById("aceptarModal").addEventListener("click", function() {
+  final = [];
   bien = true;
   $('#ModalSel').modal('hide');
   let l = document.getElementById("Selec").getElementsByClassName("mod").length;
@@ -99,10 +100,8 @@ request.done(function (respuesta){
   });
   request.done(function (respuesta){
     let myObj = JSON.parse(respuesta);
-    VecActividades = myObj[1][0];
-    VecModalidades = optionCrear(myObj[1][1]);
-    VecActividadesTemp = myObj[1][0];
-    llenarDropdowns(myObj[0]);
+    VecActividades = optionCrear(myObj[0]);
+    VecModalidades = optionCrear(myObj[1]);
   });
 });
 document.getElementById("BtnAgregar").addEventListener("click", function() {
@@ -119,8 +118,9 @@ document.getElementById("BtnModificar").addEventListener("click", function() {
   deshacerModal();
 });
 document.getElementById("BtnAceptar").addEventListener("click", function() {
+  document.getElementById("IdActividadesSelect").innerHTML = 'Seleccionar actividad/es';
   if (bien == false){
-    alert('Complete las actividades')
+    document.getElementById("IdActividadesSelect").innerHTML+= '<span class="label label-danger">!</span>';
   }else {
     let vec = beforeEnviar();
     if (vec != 'no')
@@ -175,6 +175,7 @@ $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
       }
       texto+="</tr>";
       final.push({idActividades: actividades[i].idActividades, idModalidades: actividades[i].idModalidades});
+      bien = true;
     }
     $("#TablaActividades").html(texto);
     $("#IdActividadesSelect").addClass("hidden");

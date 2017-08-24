@@ -1,4 +1,4 @@
-
+<link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
 <div class="col-lg-3">
   <div class="row">
     <div class="input-group">
@@ -38,7 +38,5 @@
   <button class="btn btn-default" id="BTNenviar" type="button">Enviar lista de asistencia</button>
 </div>
 <script src="<?php echo URL; ?>views/recursos/bootstrap3-typeahead.min.js"></script>
-<link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
 <script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
-<?php require 'tomarlista.php' ?>

@@ -8,7 +8,7 @@ class cliente extends Controller {
 
   public function actCliente() {
     $idClientes = $_POST['data'];
-    echo $this->model->actCliente($idClientes);
+    echo json_encode($this->model->actCliente($idClientes));
   }
   public function agregarModificarCliente() {
     $cliente = json_decode($_POST['data1'], TRUE);
@@ -16,12 +16,8 @@ class cliente extends Controller {
     $this->model->agregarModificar('Clientes', $cliente);
     $this->model->asignarActividades($actividades, $cliente["idClientes"]);
   }
-
   function index() {
-    $this->view->render('abmclientes/index');
-  }
-  function prueba() {
-    $this->view->render('prueba/index');
+    $this->view->render('abmclientes');
   }
   public function __construct() {
     parent::__construct();

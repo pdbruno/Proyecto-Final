@@ -1,11 +1,6 @@
-<script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.css">
-<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table-es-AR.min.js"></script>
 <div class="row" style="height:100%;">
-  
   <div class="col-lg-12">
     <div class="col-lg-10 col-lg-offset-1">
       <table  id="Tabla" class="table table-hover" data-toggle="table" data-url="<?php echo URL; ?>cliente/listarElementos/Clientes" data-search='true' cellspacing="0" width="100%"  >
@@ -90,5 +85,7 @@
       </div>
     </div><!-- /.modal-content-->
   </div> <!--/.modal-dialog -->
-  <script src="<?php echo URL; ?>views/recursos/logicaABM.js"></script>
-  <?php require 'abmclientes.php' ?>
+  <script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+  <script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+  <script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.js"></script>
+  <script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table-es-AR.min.js"></script>

@@ -8,12 +8,21 @@ class Help extends Controller {
 
   function index($sujeto) {
     $this->view->sujeto = $sujeto;
-    $this->view->render('abmsecundario/index');
+    $this->view->render('abmsecundario');
   }
-  function tablas($sujeto) {
-    $this->view->sujeto = $sujeto;
-    $this->view->render('tablas/index');
+
+  function Dropdown($tipo) {
+    $this->model->Dropdown($tipo);
   }
+
+  function tablas() {
+    $this->view->render('tablas');
+  }
+
+  function listarTablas(){
+    $this->model->listarTablas();
+  }
+
   function traerTabla($tabla){
     $this->model->traerTabla($tipo);
   }

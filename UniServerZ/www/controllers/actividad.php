@@ -8,16 +8,16 @@ class actividad extends calendar {
 
   public function calendario() {
     $this->manejar("actividad","calendario");
-    $this->view->render('calendario/index');
+    $this->view->render('calendario');
   }
 
   public function index() {
-    $this->view->render('abmactividades/index');
+    $this->view->render('abmactividades');
   }
 
   public function tomarlista() {
     $this->manejar("actividad","tomarlista");
-    $this->view->render('tomarlista/index');
+    $this->view->render('tomarlista');
   }
 
   public function traerEventos() {

@@ -52,15 +52,16 @@ function AddAct(bot) {
   }
 }
 var VecModalidades= [];
-var bien = true;
+var bien = false;
 var final = [];
 document.getElementById("aceptarModal").addEventListener("click", function() {
+  bien = true;
   $('#ModalSel').modal('hide');
   final = [];
   var l = document.getElementById("Selec").getElementsByClassName("mod").length;
   for (let i = 1; i <= l; i++) {
     final.push(Elementos["idModalidadesSelect" + i].value);
-    if (Elementos["idModalidadesSelect" + i] == "") {
+    if (Elementos["idModalidadesSelect" + i].value == "") {
       bien = false;
     }
   }
@@ -80,8 +81,9 @@ document.getElementById("BtnModificar").addEventListener("click", function() {
   deshacerModal();
 });
 document.getElementById("BtnAceptar").addEventListener("click", function() {
+  document.getElementById("idModalidadesSelect").innerHTML = 'Seleccionar modalidad/es';
   if (bien == false){
-    alert('Complete las actividades')
+    document.getElementById("idModalidadesSelect").innerHTML+= '<span class="label label-danger">!</span>';
   }else {
     let vec = beforeEnviar();
     if (vec != 'no')
@@ -130,6 +132,7 @@ $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
       texto+="<td>" + modalidades[i].NombreMod + "</td>";
       texto+="</tr>";
       final.push(modalidades[i].idModalidades);
+      bien = true;
     }
     $("#TablaModalidades").html(texto);
     $("#idModalidadesSelect").addClass("hidden");

@@ -55,3 +55,4 @@ Elementos.Producto.addEventListener("input", function() {
 });
 
 </script>
+<script src="<?php echo URL; ?>views/recursos/stock.js"></script>

@@ -58,7 +58,7 @@ document.getElementById("CancelarModal").addEventListener("change", function() {
 });
 
 document.getElementById("AceptarModal").addEventListener("click", function() {
-  let texto = {dtstart: new Date(Elementos.$FechaForm.val())};
+  let texto = {dtstart: new Date(Elementos.FechaForm.value)};
   Elementos.$RepEdit.modal('hide');
   switch (Elementos.RepSelect.value) {
     case "0":
@@ -216,16 +216,6 @@ function err(Nom){
   bien = false;
 }
 
-function isValidDate(dateString) {
-  var regEx = /^\d{4}-\d{2}-\d{2}$/;
-  if(!dateString.match(regEx))
-  return false;  // Invalid format
-  var d;
-  if(!((d = new Date(dateString))|0))
-  return false; // Invalid date (or this could be epoch)
-  return true;
-}
-
 function format(){
 
   for (var i = 1; i < 5; i++) {
@@ -245,7 +235,7 @@ function format(){
   if (Elementos.InicioForm.value.length != 8 && Elementos.InicioForm.value.length != 0) {
     err("Inicio");
   }
-  if (isValidDate(Elementos.FechaForm.value) && Elementos.FechaForm.value.length != 0) {
+  if (Elementos.FechaForm.value.length != 10 && Elementos.FechaForm.value.length != 0) {
     err("Fecha");
   }
   if (bien) {
@@ -254,7 +244,7 @@ function format(){
     datos['Inicio'] = Elementos.FechaForm.value +'T'+ Elementos.InicioForm.value +'-03:00';
     datos['Finalizacion'] = Elementos.FechaForm.value +'T'+ Elementos.FinalizacionForm.value +'-03:00';
     datos['Nombre'] = Elementos.NombreForm.value;
-    datos['Recurrencia'] = (Elementos.SeRepiteForm.value == "SI") ? 'RRULE:' + rule.toString().substr(25) : 'no';
+    datos['Recurrencia'] = (Elementos.$SeRepiteForm.val() == "SI") ? 'RRULE:' + rule.toString().substr(25) : 'no';
     return "data1=" + JSON.stringify(datos);
   }else {
     return 'no'

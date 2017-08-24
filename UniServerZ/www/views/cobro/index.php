@@ -1,9 +1,5 @@
-<script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.css">
-<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table-es-AR.min.js"></script>
 <div class="col-lg-6">
   <div class="panel panel-default">
     <div class="panel-heading">Listado de Clientes
@@ -104,8 +100,11 @@
         <input type="text" id="Monto" class="form-control">
         <span class="input-group-addon">.00</span>
       </div>
-      <button class="btn btn-default" id="Enviar" type="button">Aceptar</button>
+      <button class="btn btn-default hidden escondible escondible2" id="Enviar" type="button">Aceptar</button>
     </div>
   </div>
 </div>
-<?php require 'cobro.php' ?>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table-es-AR.min.js"></script>

@@ -21,6 +21,4 @@
       </div>
     </div>
   </div>
-
 </div>
-<?php require 'aranceles.php' ?>

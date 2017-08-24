@@ -60,6 +60,9 @@
                 <li>
                   <a href="<?php echo URL; ?>cobro/aranceles"><i class="fa fa-usd fa-fw"></i> Aranceles</a>
                 </li>
+                <li>
+                  <a href="<?php echo URL; ?>cobro/sueldos"><i class="fa fa-bank fa-fw"></i> Sueldos</a>
+                </li>
               </ul>
               <!-- /.nav-second-level -->
             </li>
@@ -91,31 +94,10 @@
               <a href="<?php echo URL; ?>cobro/"><i class="fa fa-money fa-fw"></i> Cobro</a>
             </li>
             <li>
-              <a href="#"><i class="fa fa-magic fa-fw"></i> Backoffice<span class="fa arrow"></span></a>
-              <ul class="nav nav-second-level">
-                <li>
-                  <a href="<?php echo URL; ?>help/tablas/sedes"><i class="fa fa-building-o fa-fw"></i> Sedes</a>
-                </li>
-                <li>
-                  <a href="<?php echo URL; ?>help/tablas/localidades"><i class="fa fa-map fa-fw"></i> Localidades</a>
-                </li>
-                <li>
-                  <a href="<?php echo URL; ?>help/tablas/distribuidores"><i class="fa fa-truck fa-fw"></i> Distribuidores</a>
-                </li>
-                <li>
-                  <a href="<?php echo URL; ?>help/tablas/modalidades"><i class="fa fa-clock-o fa-fw"></i> Modalidades</a>
-                </li>
-                <li>
-                  <a href="<?php echo URL; ?>help/tablas/actividades"><i class="fa fa-futbol-o fa-fw"></i> Actividades</a>
-                </li>
-                <li>
-                  <a href="<?php echo URL; ?>help/tablas/productos"><i class="fa fa-dropbox fa-fw"></i> Productos</a>
-                </li>
-                <li>
-                  <a href="<?php echo URL; ?>help/tablas/clientes"><i class="fa fa-users fa-fw"></i> Clientes</a>
-                </li>
-              </ul>
-              <!-- /.nav-second-level -->
+              <a href="<?php echo URL; ?>help/index/Fondos"><i class="fa fa-line-chart fa-fw"></i> Fondos</a>
+            </li>
+            <li>
+              <a href="<?php echo URL; ?>help/tablas/"><i class="fa fa-magic fa-fw"></i> Backoffice</a>
             </li>
           </ul>
         </div>

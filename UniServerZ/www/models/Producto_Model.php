@@ -12,14 +12,8 @@ class producto_Model extends Model {
     echo json_encode($outp);
   }
 
-  public function listadodropdowns() {
-    $sql = "SELECT idDistribuidores as id, Nombre FROM distribuidores";
-    $outp[] = $this->db->getAll($sql);
-    echo json_encode($outp);
-  }
-
   public function traerElemento($tipo,$idProductos) {
-    $sql = "SELECT productos.idProductos, productos.Descripcion, productos.Precio, distribuidores.Nombre as idDistribuidores, productos.Stock,productos.Avisar
+    $sql = "SELECT productos.*, distribuidores.Nombre as idDistribuidores
     FROM productos
     LEFT JOIN distribuidores ON productos.idDistribuidores = distribuidores.idDistribuidores
     WHERE idProductos=?i";

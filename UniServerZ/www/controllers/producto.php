@@ -3,15 +3,15 @@
 class producto extends Controller {
 
   function index() {
-    $this->view->render('abmproductos/index');
+    $this->view->render('abmproductos');
   }
 
   function ingresostock() {
-    $this->view->render('ingresostock/index');
+    $this->view->render('ingresostock');
   }
 
   function egresostock() {
-    $this->view->render('egresostock/index');
+    $this->view->render('egresostock');
   }
 
   function registrarCompra() {

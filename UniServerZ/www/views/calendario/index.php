@@ -1,13 +1,6 @@
-<script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
-<script type="text/javascript" src="<?php echo URL; ?>views/recursos/jquery.timepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo URL; ?>views/recursos/jquery.timepicker.css" />
-<script src="<?php echo URL; ?>views/recursos/rrule/rrule.js"></script>
-<script src="<?php echo URL; ?>views/recursos/rrule/nlp.js"></script>
 <link rel="stylesheet" href="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.css">
-<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table-es-AR.min.js"></script>
 <div class="row" style="height:100%;">
   <div class="col-lg-10 col-lg-offset-1">
     <div class="table-responsive col-lg-12">
@@ -276,5 +269,10 @@
 </div><!-- /.modal-content-->
 </div> <!--/.modal-dialog -->
 </div> <!--/.modal -->
-<script src="<?php echo URL; ?>views/recursos/logicaABM.js"></script>
-<?php require 'calendario.php' ?>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="<?php echo URL; ?>views/recursos/jquery.timepicker.min.js"></script>
+<script src="<?php echo URL; ?>views/recursos/rrule/rrule.js"></script>
+<script src="<?php echo URL; ?>views/recursos/rrule/nlp.js"></script>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table-es-AR.min.js"></script>

@@ -17,6 +17,12 @@ class Model {
     echo json_encode($outp);
   }
 
+  public function Dropdown($tipo) {
+    $sql = "SELECT ?n as id, Nombre FROM ?n";
+    $outp = $this->db->getAll($sql, $tipo, strtolower(substr($tipo, 2)));
+    echo json_encode($outp);
+  }
+
   public function traerElemento($tipo, $id) {
     $sql = "SELECT * FROM ?n WHERE ?n = ?i";
     $outp = $this->db->getAll($sql, strtolower($tipo), 'id' . $tipo, $id);
