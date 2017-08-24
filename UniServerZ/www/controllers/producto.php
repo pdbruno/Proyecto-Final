@@ -14,15 +14,15 @@ class producto extends Controller {
     $this->view->render('egresostock');
   }
 
-  function registrarCompra() {
-    $caca = json_decode($_POST['data'], TRUE);
-    //        VALIDAR
-    //        $caca['Fecha']
-    //        $caca['idProductos']
-    //        $caca['MontoInd']
-    //        $caca['Cantidad']
 
-    $datos = $this->model->registrarCompra($caca);
+  public function listadoPrecio() {
+    $this->model->listadoPrecio($caca);
+  }
+
+  function agregarRegistro($tipo) {
+    $caca = json_decode($_POST['data'], TRUE);
+    $this->model->agregarModificar($tipo, $caca);
+    $this->model->actualizarStock($caca);
   }
 
   function registrarVenta() {

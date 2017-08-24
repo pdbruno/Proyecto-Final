@@ -27,6 +27,11 @@ class cobro extends calendar {
   public function sueldos() {
     $this->view->render('sueldos');
   }
+
+  public function egresos() {
+    $this->view->render('egresos');
+  }
+
   public function __construct() {
     parent::__construct();
   }

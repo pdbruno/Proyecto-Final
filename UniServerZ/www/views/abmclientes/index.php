@@ -43,7 +43,7 @@
                   </tbody>
                 </table>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" id="CerrarVer" >Close</button>
+                  <button type="button" class="btn btn-default" id="CerrarVer" >Cerrar</button>
                 </div>
               </div><!-- /.modal-content-->
             </div> <!--/.modal-dialog -->

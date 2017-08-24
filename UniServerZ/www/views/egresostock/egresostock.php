@@ -1,57 +1,54 @@
 <script>
 var caca = [];
-var Elementos = {
-  Producto : document.getElementById("IdProductosForm"),
-  Monto : document.getElementById("MontoForm"),
-  Cantidad : document.getElementById("CantidadForm"),
-  $Formu: $("#Formu"),
-  inputs: ["IdProductos", "Cantidad", "Fecha", "Monto"],
-  $tooltips: $('[data-toggle="tooltip"]'),
-  $FechaForm: $('#FechaForm'),
-};
+var Elementos = {};
 var request = $.ajax({
-  url: "<?php echo URL; ?>producto/listarElementos/Productos",
+  url: "<?php echo URL; ?>producto/listadoPrecio/",
   type: "post",
 });
 request.done(function (respuesta){
   var myObj = JSON.parse(respuesta);
-  var txt = "";
   for (element in myObj) {
     caca.push(myObj[element].Precio);
-    txt += "<option value='" + myObj[element].idProductos + "'>" + myObj[element].Descripcion + "</option>";
   }
-  Elementos.Producto.innerHTML += txt;
+});
+var request = $.ajax({
+  url: "<?php echo URL; ?>producto/tabla/registroventas",
+  type: "post",
+});
+request.done(function (respuesta){
+  let myObj = JSON.parse(respuesta);
+  crearCampos(myObj);
+  Elementos.Producto = document.getElementById("idProductosSelect");
+  Elementos.Monto = document.getElementById("MontoForm");
+  Elementos.Cantidad = document.getElementById("CantidadForm");
+  Elementos.Cantidad.addEventListener("input", function() {
+    if (Elementos.Cantidad.value == 0) {
+      Elementos.Monto.value = caca[Elementos.Producto.selectedIndex-1]
+    }else {
+      Elementos.Monto.value = caca[Elementos.Producto.selectedIndex-1] * Elementos.Cantidad.value;
+    }
+  });
+  Elementos.Producto.addEventListener("input", function() {
+    Elementos.Monto.value = caca[Elementos.Producto.selectedIndex-1];
+  });
+  modoFormulario("Agregar");
 });
 document.getElementById("BtnAgregar").addEventListener("click", function() {
-  lala();
-  if (Elementos.Monto.value < 1 && Elementos.Monto.value.length != 0) {
-    err("Monto");
-  }
-  if (Elementos.Cantidad.value < 1 && Elementos.Cantidad.value.length != 0) {
-    err("Cantidad");
-  }
-
-  if (bien){
+  let vec = beforeEnviar();
+  vec['Cantidad'] -= 2 * vec['Cantidad'];
+  if (vec != 'no') {
     let request = $.ajax({
-      url: "<?php echo URL; ?>producto/registrarVenta",
+      url: "<?php echo URL; ?>producto/agregarRegistro/RegistroVentas",
       type: "post",
-      data: "data=" + JSON.stringify(Elementos.$Formu.serializeArray()),
+      data: "data=" + JSON.stringify(vec),
     });
     request.done(function (respuesta){
-      let l = Elementos.inputs.length;
-      for (var i = 0; i < l; i++) {
-        Elementos[Elementos.inputs[i] + "Form"].value = '';
+      if (respuesta != "") {
+        alert(respuesta);
       }
+      modoFormulario("Agregar");
     });
   }
-});
-
-Elementos.Cantidad.addEventListener("input", function() {
-  Elementos.Monto.value = caca[Elementos.Producto.selectedIndex-1] * Elementos.Cantidad.value;
-});
-
-Elementos.Producto.addEventListener("input", function() {
-  Elementos.Monto.value = caca[Elementos.Producto.selectedIndex-1];
 });
 
 </script>

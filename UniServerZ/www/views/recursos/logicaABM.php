@@ -125,7 +125,7 @@ function hacemeUnDropdown(nombre, select){
     type: "post"
   });
   request.done(function (respuesta){
-    select.innerHTML = optionCrear(JSON.parse(respuesta));
+    select.innerHTML += optionCrear(JSON.parse(respuesta));
   });
 }
 function setProp(myObj){
@@ -138,7 +138,7 @@ function setProp(myObj){
 }
 
 function optionCrear(vec) {
-  let txt="";
+  let txt="<option disabled selected value>Seleccione una opción</option>";
   let l = vec.length;
   for (let i = 0; i < l; i++) {
     txt += "<option value='" + vec[i].id + "'>" + vec[i].Nombre + "</option>";
@@ -146,18 +146,6 @@ function optionCrear(vec) {
   return txt;
 }
 
-function llenarDropdowns(youknow){
-  let VecElementos = [];
-  for (vector in youknow) {
-    let txt = optionCrear(youknow[vector]);
-    VecElementos.push(txt);
-  }
-  let selects = document.getElementById("Formu").getElementsByTagName("select");
-  let l = selects.length;
-  for (var i = 0; i < l; i++) {
-    selects[i].innerHTML = VecElementos[i];
-  }
-}
 
 function clickFila(obj){
   $("#noti").remove();

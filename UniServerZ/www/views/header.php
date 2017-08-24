@@ -16,11 +16,7 @@
   <script src="<?php echo URL; ?>views/recursos/vendor/jquery/jquery.min.js"></script>
   <!-- Bootstrap Core JavaScript -->
   <script src="<?php echo URL; ?>views/recursos/vendor/bootstrap/js/bootstrap.min.js"></script>
-  <script>
-  $( document ).ajaxError(function(e, xhr, opt){
-    alert("Error accediendo a " + opt.url + ": " + xhr.responseText + " " + xhr.statusText);
-  });
-  </script>
+
   <title>Hola</title>
 </head>
 <body>
@@ -54,8 +50,12 @@
                 </li>
                 <li>
                   <a href="<?php echo URL; ?>help/index/Distribuidores"><i class="fa fa-truck fa-fw"></i> Distribuidores</a>
-                </li><li>
+                </li>
+                <li>
                   <a href="<?php echo URL; ?>help/index/Modalidades"><i class="fa fa-clock-o fa-fw"></i> Modalidades</a>
+                </li>
+                <li>
+                  <a href="<?php echo URL; ?>help/index/FuentesDeEgresos"><i class="fa fa-sign-out fa-fw"></i> Fuentes De Egresos</a>
                 </li>
                 <li>
                   <a href="<?php echo URL; ?>cobro/aranceles"><i class="fa fa-usd fa-fw"></i> Aranceles</a>
@@ -99,6 +99,9 @@
             <li>
               <a href="<?php echo URL; ?>help/tablas/"><i class="fa fa-magic fa-fw"></i> Backoffice</a>
             </li>
+            <li>
+              <a href="<?php echo URL; ?>cobro/egresos/"><i class="fa fa-sign-out fa-fw"></i> Egresos</a>
+            </li>
           </ul>
         </div>
         <!-- /.sidebar-collapse -->
@@ -106,3 +109,8 @@
       <!-- /.navbar-static-side -->
     </nav>
     <div id="page-wrapper" style="height: 92vh">
+      <script>
+      $( document ).ajaxError(function(e, xhr, opt){
+        alert("Error accediendo a " + opt.url + ": " + xhr.responseText + " " + xhr.statusText);
+      });
+      </script>

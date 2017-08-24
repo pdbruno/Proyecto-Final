@@ -5,7 +5,7 @@
       <table  id="Tabla" class="table table-hover" data-toggle="table" data-url="<?php echo URL; ?>producto/listarElementos/Productos" data-search='true' cellspacing="0" width="100%"  >
         <thead>
           <tr>
-            <th data-field="Descripcion" data-sortable='true'>Descripción</th>
+            <th data-field="Nombre" data-sortable='true'>Descripción</th>
           </tr>
         </thead>
       </table>
