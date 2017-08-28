@@ -1,0 +1,1 @@
+`dbproyectofinal`.`#sql-6bf0_472`, CONSTRAINT `#sql-6bf0_472_ibfk_2` FOREIGN KEY (`idActividades`) REFERENCES `actividades` (`idActividades`)

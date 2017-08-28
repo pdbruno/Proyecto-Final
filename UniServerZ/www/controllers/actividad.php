@@ -35,9 +35,10 @@ class actividad extends calendar {
   {
     $alumnos = json_decode($_POST['data'], TRUE);
     $id = trim($_POST['data2']);
+    $fecha = trim($_POST['data4']);
     $profes = json_decode($_POST['data3'], TRUE);
-    echo $this->model->asignarAsistencia($alumnos, $id, "asistencias");
-    echo $this->model->asignarAsistencia($profes, $id, "eventosinstructores");
+    echo $this->model->asignarAsistencia($alumnos, $id, $fecha);
+    echo $this->model->asignarProfes($profes, $id, $fecha);
   }
   public function traerAnotados() {
     $data = $_POST['data'];

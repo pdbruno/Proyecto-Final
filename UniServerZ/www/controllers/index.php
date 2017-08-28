@@ -13,4 +13,9 @@ class index extends Controller {
   {
     $this->model->morososMatricula();
   }
+
+  function morososActividad()
+  {
+    $this->model->morososActividad();
+  }
 }

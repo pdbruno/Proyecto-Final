@@ -12,7 +12,9 @@ var Elementos = {
 };
 var VecAsistio = [];
 var VecProfes = [];
-var idEvento = "";
+var idActividades = "";
+var Fecha = "";
+var eventos = {};
 var d = new Date().toISOString().substr(0,10);
 Elementos.$FechaForm.val(d);
 Elementos.$FechaForm.datepicker({
@@ -30,7 +32,7 @@ document.getElementById("BTNenviar").addEventListener("click", function() {
   let request = $.ajax({
     url: "<?php echo URL; ?>actividad/asignarAsistencia",
     type: "post",
-    data: "data=" + JSON.stringify(VecAsistio) + "&data2="+idEvento + "&data3="+JSON.stringify(VecProfes),
+    data: "data=" + JSON.stringify(VecAsistio) + "&data2="+idActividades + "&data3="+JSON.stringify(VecProfes) + "&data4=" + Fecha,
   });
   request.done(function (respuesta){
     alert('Se ha asignado la asistencia al evento');
@@ -44,6 +46,7 @@ document.getElementById("BTNfecha").addEventListener("click", function() {
     alert("Ingrese una fecha");
   }else {
     let dia={};
+    Elementos.fecha = Elementos.$FechaForm.val();
     dia["timeMax"] = Elementos.$FechaForm.val() +'T23:59:59-03:00';
     dia["timeMin"] = Elementos.$FechaForm.val() +'T00:00:00-03:00';
     let request = $.ajax({
@@ -55,11 +58,12 @@ document.getElementById("BTNfecha").addEventListener("click", function() {
       if (respuesta == '"no papu"') {
         alert('No hay eventos para ese día')
       }else {
-        let eventos = JSON.parse(respuesta);
+        eventos = JSON.parse(respuesta);
         let texto = "";
-        for (act in eventos) {
-          texto += "<tr onclick='traerEvento(this)' id='" + eventos[act].idEvento + "'>";
-          texto += "<td>" + eventos[act].Nombre + " </td>";
+        let l = eventos.length;
+        for (var i = 0; i < l; i++) {
+          texto += "<tr onclick='traerEvento(this)' id='" + i + "'>";
+          texto += "<td>" + eventos[i].Nombre + " </td>";
           texto += "</tr>";
         }
         texto += "</tr>"
@@ -86,14 +90,17 @@ function elegir2($boton, id){
     VecProfes.splice(VecProfes.indexOf(id), 1);
   }
 }
+var alumnos = {};
+var profes = {};
 function traerEvento(boton){
   VecAsistio = [];
   VecProfes = [];
-  filas = Elementos.TablaActividades.rows;
+  let filas = Elementos.TablaActividades.rows;
   for (row in filas) {
     if (filas[row].id == boton.id) {
       $("#" + filas[row].id).addClass("success");
-      idEvento = filas[row].id;
+      idActividades = eventos[boton.id].idActividades;
+      Fecha = eventos[boton.id].Fecha;
     } else {
       $("#" + filas[row].id).removeClass("success");
     }
@@ -101,7 +108,7 @@ function traerEvento(boton){
   let request = $.ajax({
     url: "<?php echo URL; ?>actividad/traerAnotados",
     type: "post",
-    data: "data=" + boton.id,
+    data: "data=" + idActividades,
   });
   request.done(function (respuesta){
     Elementos.$Asistencia.removeClass("hidden");
@@ -118,44 +125,46 @@ function traerEvento(boton){
     }
     Elementos.ListaClientes.innerHTML = texto;
     Elementos.ListaInstructores.innerHTML = texto2;
-    Elementos.$NombreForm.typeahead('destroy');
-    Elementos.$NombreForm.typeahead({
-      source: respuesta,
-      afterSelect: function(item){
-        var botones =  Elementos.ListaClientes.getElementsByTagName("button");
-        for (row in botones) {
-          if (botones[row].innerHTML == item.name) {
-            if (VecAsistio.indexOf(item.idClientes) == -1) {
-              VecAsistio.push(item.idClientes);
-              botones[row].className = "list-group-item list-group-item-info";
-            } else {
-              VecAsistio.splice(VecAsistio.indexOf(item.idClientes), 1);
-              botones[row].className = "list-group-item";
-            }
-          }
-        }
-        Elementos.$NombreForm.val("");
-      }
-    });
-    Elementos.$ProfeForm.typeahead('destroy');
-    Elementos.$ProfeForm.typeahead({
-      source: respuesta,
-      afterSelect: function(item){
-        var botones =  Elementos.ListaInstructores.getElementsByTagName("button");
-        for (row in botones) {
-          if (botones[row].innerHTML == item.name) {
-            if (VecProfes.indexOf(item.idClientes) == -1) {
-              VecProfes.push(item.idClientes);
-              botones[row].className = "list-group-item list-group-item-info";
-            } else {
-              VecProfes.splice(VecProfes.indexOf(item.idClientes), 1);
-              botones[row].className = "list-group-item";
-            }
-          }
-        }
-        Elementos.$ProfeForm.val("");
-      }
-    });
   });
 }
+
+Elementos.$NombreForm.typeahead('destroy');
+Elementos.$NombreForm.typeahead({
+  source: alumnos,
+  afterSelect: function(item){
+    var botones =  Elementos.ListaClientes.getElementsByTagName("button");
+    for (row in botones) {
+      if (botones[row].innerHTML == item.name) {
+        if (VecAsistio.indexOf(item.idClientes) == -1) {
+          VecAsistio.push(item.idClientes);
+          botones[row].className = "list-group-item list-group-item-info";
+        } else {
+          VecAsistio.splice(VecAsistio.indexOf(item.idClientes), 1);
+          botones[row].className = "list-group-item";
+        }
+      }
+    }
+    Elementos.$NombreForm.val("");
+  }
+});
+
+Elementos.$ProfeForm.typeahead('destroy');
+Elementos.$ProfeForm.typeahead({
+  source: profes,
+  afterSelect: function(item){
+    var botones =  Elementos.ListaInstructores.getElementsByTagName("button");
+    for (row in botones) {
+      if (botones[row].innerHTML == item.name) {
+        if (VecProfes.indexOf(item.idClientes) == -1) {
+          VecProfes.push(item.idClientes);
+          botones[row].className = "list-group-item list-group-item-info";
+        } else {
+          VecProfes.splice(VecProfes.indexOf(item.idClientes), 1);
+          botones[row].className = "list-group-item";
+        }
+      }
+    }
+    Elementos.$ProfeForm.val("");
+  }
+});
 </script>

@@ -21,8 +21,9 @@ class actividad_Model extends Model {
       $datos = "no papu";
     } else {
       foreach ($results->getItems() as $event) {
-        $evento['idEvento'] =  $event->getId();
+        $evento['idActividades'] = substr($event['id'], 0, 11);
         $evento['Nombre'] = $event->getSummary();
+        $evento["Fecha"] = substr($event->getStart()->dateTime,0,10);
         $datos[] = $evento;
       }
       $evento = [];
@@ -51,11 +52,11 @@ class actividad_Model extends Model {
   public function traerAnotados($idActividades)
   {
     $idActividades = substr($idActividades,0,11);
-    $UsersFinal[] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientes` WHERE `Activo` = 1 AND `idClientes` IN (SELECT `idClientes` FROM `clientesactividades` WHERE `idActividades` = ?i)", $idActividades);
-    if (count($UsersFinal)) {
-      $UsersFinal[0] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientes` WHERE `Activo` = 1 ");
+    $UsersFinal[] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos` WHERE `idClientes` IN (SELECT `idClientes` FROM `clientesactividades` WHERE `idActividades` = ?i)", $idActividades);
+    if (count($UsersFinal) == 0) {
+      $UsersFinal[0] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos`");
     }
-    $UsersFinal[] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientes` WHERE `Activo` = 1 AND `EsInstructor` = 1");
+    $UsersFinal[] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos` WHERE `EsInstructor` = 1");
     return json_encode($UsersFinal);
   }
 
@@ -98,10 +99,17 @@ class actividad_Model extends Model {
     echo $updatedEvent->getUpdated();
   }
 
-  public function asignarAsistencia($data, $id, $tipo)
+  public function asignarProfes($data, $idActividades, $fecha)
   {
     for ($i = 0; $i < count($data); $i++) {
-      $this->db->query("INSERT INTO ?n SET `idClientes`= ?i, `idEvento`= ?s", $tipo, $data[$i], $id);
+      $this->db->query("INSERT INTO `eventosinstructores` SET `idClientes`= ?i, `idActividades`= ?s, `Fecha`= ?s", $data[$i], $idActividades, $fecha);
+    }
+  }
+
+  public function asignarAsistencia($data, $idActividades, $fecha)
+  {
+    for ($i = 0; $i < count($data); $i++) {
+      echo $this->db->query("INSERT INTO `asistencias` SET `idClientes`= ?i, `idActividades`= ?s, `Fecha`= ?s", $data[$i], $idActividades, $fecha);
     }
   }
 

@@ -4,6 +4,7 @@ var Elementos = {
   ListaMatr: "",
   ListaDeud: "",
 };
+
 var request = $.ajax({
   url: "<?php echo URL; ?>index/morososMatricula",
   type: "post",
@@ -18,7 +19,26 @@ request.done(function (respuesta){
     texto+="<td>" + Matr[i].Nombres + "</td>";
     texto+="</tr>";
   }
-  TablaMor.innerHTML = texto;
+  Elementos.ListaMatr = texto;
+});
+
+var request = $.ajax({
+  url: "<?php echo URL; ?>index/morososActividad",
+  type: "post",
+});
+request.done(function (respuesta){
+  var Matr = JSON.parse(respuesta)
+  let l = Matr.length;
+  let texto = "";
+  document.getElementById("CantDeud").innerHTML = l;
+  for (var i = 0; i < l; i++) {
+    texto += "<tr>";
+    texto+="<td>" + Matr[i].Nombres + "</td>";
+    texto+="<td>" + Matr[i].NombreAct + "</td>";
+    texto+="<td>" + Matr[i].Fecha + "</td>";
+    texto+="</tr>";
+  }
+  Elementos.ListaDeud = texto;
 });
 
 $('#ModalMor').on('show.bs.modal', function (event) {
@@ -30,5 +50,13 @@ $('#ModalMor').on('show.bs.modal', function (event) {
   let modal = $(this);
   modal.find('.modal-title').text(titulo);
   modal.find('.modal-body thead tr').html(head);
-})
+});
+
+document.getElementById("VerMat").addEventListener("click", function() {
+  Elementos.TablaMor.innerHTML = Elementos.ListaMatr;
+});
+
+document.getElementById("VerDeud").addEventListener("click", function() {
+  Elementos.TablaMor.innerHTML = Elementos.ListaDeud;
+});
 </script>

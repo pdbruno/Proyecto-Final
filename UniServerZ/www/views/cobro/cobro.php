@@ -17,28 +17,33 @@ var Elementos = {
   $Enviar: $('#Enviar')
 };
 
-var Enviar = {Actividad:"", idClientes:"", Monto : ""};
+var Enviar = {idActividades:"", idClientes:"", Monto : "", FechaCobro: "", Fecha1:"", Fecha2:""};
 var Globales = {actividadElegida:"", ListaActividades:[]};
 
 document.getElementById("Enviar").addEventListener("click", function() {
   if (Elementos.$Mes.hasClass("active")){
     let mes = Elementos.$MesForm.val();
     if (mes!="") {
-      let vecmes = mes.split('-');
-      vecmes[1] = Number(vecmes[1]) + 1;
-      vecmes = vecmes.join('-');
-      Enviar.Actividad = Globales.actividadElegida.idActividades + '/' + mes + '/' + vecmes;
+      let messig = mes.split('-');
+      messig[1] = Number(messig[1]) + 1;
+      messig = messig.join('-');
+      Enviar.Fecha1 = mes;
+      Enviar.Fecha2 = messig;
     }
   }else if (Elementos.$Semestre.hasClass("active")) {
     let d = new Date().getFullYear();
     if (Elementos.$semestre1.hasClass("active")) {
-      Enviar.Actividad = Globales.actividadElegida.idActividades + '/' + d + '-01-01/' +  d + '-06-30';
+      Enviar.Fecha1 = d + '-01-01';
+      Enviar.Fecha2 = d + '-06-30';
     }else {
-      Enviar.Actividad = Globales.actividadElegida.idActividades + '/' + d + '-07-01/' +  d + '-12-31';
+      Enviar.Fecha1 = d + '-07-01';
+      Enviar.Fecha2 = d + '-12-31';
     }
   }
   let bien = true;
   Enviar.Monto=Elementos.$Monto.val();
+  Enviar.idActividades = Globales.actividadElegida.idActividades;
+  Enviar.FechaCobro = new Date().toISOString().slice(0,10);
   for (x in Enviar) {
     if (Enviar[x]==""||Enviar[x]==null) {
       bien = false;
@@ -56,9 +61,8 @@ document.getElementById("Enviar").addEventListener("click", function() {
     }
   }
   if (bien) {
-    Enviar.Fecha = new Date().toISOString().slice(0,10);
     let request = $.ajax({
-      url: "<?php echo URL; ?>cobro/agregarModificarElemento/Cobros",
+      url: "<?php echo URL; ?>cobro/addCobro/",
       type: "post",
       data: "data=" + JSON.stringify(Enviar),
     });
@@ -70,7 +74,7 @@ document.getElementById("Enviar").addEventListener("click", function() {
     });
   }
 });
-
+var eventos = {};
 document.getElementById("FechaAceptar").addEventListener("click", function(){
   if (Elementos.$FechaForm.val()=="") {
     alert("Ingrese una fecha");
@@ -87,15 +91,18 @@ document.getElementById("FechaAceptar").addEventListener("click", function(){
       if (respuesta == '"no papu"') {
         alert('No hay eventos para ese día');
       }else {
-        let eventos = JSON.parse(respuesta);
+        eventos = JSON.parse(respuesta);
         let texto = "";
-        for (act in eventos) {
-          if (eventos[act].Nombre == Globales.actividadElegida.NombreAct) {
-            texto += "<tr onclick='traerEvento(this)' id='" + eventos[act].idEvento + "'>";
-            texto += "<td>" + eventos[act].Nombre + " </td>";
+        let l = eventos.length;
+        for (var i = 0; i < l; i++) {
+          if (eventos[i].Nombre == Globales.actividadElegida.NombreAct) {
+            texto += "<tr onclick='traerEvento(this)' id='" + i + "'>";
+            texto += "<td>" + eventos[i].Nombre + " </td>";
             texto += "</tr>";
           }
+
         }
+
         if (texto == "") {
           alert("No hay ninguna actividad de " + Globales.actividadElegida.NombreAct.substr(0, Globales.actividadElegida.NombreAct.indexOf(' ')) + " para el día seleccionado")
         }else {
@@ -113,14 +120,15 @@ function traerEvento(boton){
   for (row in filas) {
     if (filas[row].id == boton.id) {
       $("#" + filas[row].id).addClass("success");
-      idEvento = filas[row].cells[0].innerHTML;
+      Enviar.Fecha1 = eventos[boton.id].Fecha;
+      Enviar.Fecha2 = eventos[boton.id].Fecha;
     } else {
       $("#" + filas[row].id).removeClass("success");
     }
   }
-  Enviar.Actividad = boton.id;
   Elementos.$Enviar.removeClass('hidden');
 }
+
 
 function traerPrecio(campo){
   let request = $.ajax({
@@ -156,12 +164,11 @@ $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
   });
   Enviar.idClientes = $element.idClientes;
   request.done(function (respuesta){
-    Globales.ListaActividades = [];
     let actividades = JSON.parse(respuesta);
+    Globales.ListaActividades = actividades;
     let texto = "";
     let i = 0;
     for (actividad in actividades) {
-      Globales.ListaActividades.push(actividades[actividad]);
       if (actividades[actividad].NombreMod == null) {
         texto+= "<button type='button' class='list-group-item btn btn-default' id='" + i + "' onclick='elegirActividad(this)'>" + actividades[actividad].NombreAct + "</button>";
       }else {
@@ -189,7 +196,7 @@ document.getElementById("Clase").addEventListener("click", function() {
     todayHighlight: true
   });
   traerPrecio('PrecioXClase');
-  Elementos.$MontoRow.removeClass('hidden');
+  Elementos.$MontoRow.addClass('hidden');
 });
 
 document.getElementById("Mes").addEventListener("click", function() {

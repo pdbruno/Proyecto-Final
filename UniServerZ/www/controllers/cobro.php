@@ -7,6 +7,13 @@ class cobro extends calendar {
     $this->model->modArancel($Arancel);
   }
 
+  public function addCobro() {
+    $data = json_decode($_POST['data'], TRUE);
+    $this->model->agregarModificar('Cobros', $data);
+    $this->model->updateFondo($data);
+    $this->model->updateAsistencias($data);
+  }
+
   public function modSueldo() {
     $Sueldo = json_decode($_POST['data'], TRUE);
     $this->model->modSueldo($Sueldo);
