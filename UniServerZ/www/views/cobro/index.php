@@ -17,6 +17,34 @@
   </div>
 </div>
 <div class="col-lg-6">
+  <div class="row hidden escondible" id="PanelDeudas">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" href="#collapseOne">
+          Deudas del cliente
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel">
+      <div class="panel-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Actividad</th>
+              <th>Fecha</th>
+              <th>Monto</th>
+            </tr>
+          </thead>
+          <tbody id="TablaMor">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
   <div class="row hidden escondible" id="PanelActividades">
     <div class="col-lg-12">
       <div class="panel panel-default">
@@ -30,13 +58,13 @@
   <div class="row" id="Tiempo">
     <div class="col-lg-12">
       <div class="btn-group btn-group-lg btn-group-justified" data-toggle="buttons">
-        <label class="btn btn-primary hidden escondible" id="Mes">
+        <label class="btn btn-primary hidden escondible disab" id="Mes">
           <input type="radio" name="options" autocomplete="off"> Mes
         </label>
-        <label class="btn btn-primary hidden escondible" id="Clase">
+        <label class="btn btn-primary hidden escondible disab" id="Clase">
           <input type="radio" name="options" autocomplete="off"> Clase
         </label>
-        <label class="btn btn-primary hidden escondible" id="Semestre">
+        <label class="btn btn-primary hidden escondible disab" id="Semestre">
           <input type="radio" name="options" autocomplete="off"> Semestre
         </label>
       </div>
@@ -46,9 +74,9 @@
   <div class="row hidden escondible escondible2" id="IngresoFecha">
     <div class="col-lg-12">
       <div class="input-group">
-        <input type="text" class="form-control" id="FechaForm" name="FechaForm" placeholder="Fecha de la clase">
+        <input type="text" class="form-control disab" id="FechaForm" name="FechaForm" placeholder="Fecha de la clase">
         <span class="input-group-btn">
-          <button class="btn btn-default" id="FechaAceptar" type="button">Aceptar</button>
+          <button class="btn btn-default disab" id="FechaAceptar" type="button">Aceptar</button>
         </span>
       </div>
     </div>
@@ -56,27 +84,7 @@
   <div class="row hidden escondible escondible2" id="IngresoMes">
     <div class="col-lg-12">
       <div class="input-group">
-        <input type="text" class="form-control" id="MesForm" name="MesForm" placeholder="Mes a pagar">
-      </div>
-    </div>
-  </div>
-  <div class="row hidden escondible escondible2" id="ListaEventos">
-    <div class="col-lg-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">Listado de Eventos Recientes
-        </div>
-        <div class="table-responsive col-sm-12">
-          <table class="table table-hover" >
-            <thead>
-              <tr>
-                <th class='hidden'>idEvento</th>
-                <th>Actividad</th>
-              </tr>
-            </thead>
-            <tbody id="TablaActividades">
-            </tbody>
-          </table>
-        </div>
+        <input type="text" class="form-control disab" id="MesForm" name="MesForm" placeholder="Mes a pagar">
       </div>
     </div>
   </div>
@@ -84,10 +92,10 @@
     <div class="col-lg-12">
       <div class="btn-group center-block" data-toggle="buttons">
         <label class="btn btn-default active" id="semestre1">
-          <input type="radio" name="1erSemestre" autocomplete="off"> 1er semestre
+          <input type="radio" class="disab" name="1erSemestre" autocomplete="off"> 1er semestre
         </label>
         <label class="btn btn-default" id="semestre2">
-          <input type="radio" name="2doSemestre" autocomplete="off"> 2do Semestre
+          <input type="radio" class="disab" name="2doSemestre" autocomplete="off"> 2do Semestre
         </label>
       </div>
     </div>
@@ -97,7 +105,7 @@
       <label for="Monto">A cobrar</label>
       <div class="input-group">
         <span class="input-group-addon">$</span>
-        <input type="text" id="Monto" class="form-control">
+        <input type="text" id="Monto" class="form-control disab">
         <span class="input-group-addon">.00</span>
       </div>
       <button class="btn btn-default hidden escondible escondible2" id="Enviar" type="button">Aceptar</button>

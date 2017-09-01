@@ -1,20 +1,25 @@
 <script>
 var Elementos = {
   $Mes : $("#Mes"),
+  $Clase : $("#Clase"),
   $MesForm :  $("#MesForm"),
   $Semestre : $("#Semestre"),
   $semestre1: $("#semestre1"),
   $Monto: $("#Monto"),
   $escondible: $(".escondible"),
   $escondible2: $(".escondible2"),
+  $disab: $(".disab"),
   $FechaForm: $('#FechaForm'),
   $ListaEventos: $('#ListaEventos'),
+  $PanelActividades: $('#PanelActividades'),
+  $PanelDeudas: $('#PanelDeudas'),
   TablaActividades : document.getElementById("TablaActividades"),
   $MontoRow: $('#MontoRow'),
   Monto : document.getElementById("Monto"),
   $SemestrePicker: $("#SemestrePicker"),
   ListaActividades : document.getElementById("ListaActividades"),
-  $Enviar: $('#Enviar')
+  $Enviar: $('#Enviar'),
+  TablaMor : document.getElementById("TablaMor")
 };
 
 var Enviar = {idActividades:"", idClientes:"", Monto : "", FechaCobro: "", Fecha1:"", Fecha2:""};
@@ -47,17 +52,7 @@ document.getElementById("Enviar").addEventListener("click", function() {
   for (x in Enviar) {
     if (Enviar[x]==""||Enviar[x]==null) {
       bien = false;
-      switch (x) {
-        case "Actividad":
-        alert("Ingrese qué está pagando");
-        break;
-        case "idClientes":
-        alert("Si ves este mensaje soy un pelotudo");
-        break;
-        case "Monto":
-        alert("Ingrese el monto");
-        break;
-      }
+      alert("Ingrese el " + x);
     }
   }
   if (bien) {
@@ -89,22 +84,21 @@ document.getElementById("FechaAceptar").addEventListener("click", function(){
     });
     request.done(function (respuesta){
       if (respuesta == '"no papu"') {
-        alert('No hay eventos para ese día');
+        alert('No hay eventos en ese día');
       }else {
         eventos = JSON.parse(respuesta);
-        let texto = "";
+        let hay = false;
         let l = eventos.length;
         for (var i = 0; i < l; i++) {
           if (eventos[i].Nombre == Globales.actividadElegida.NombreAct) {
-            texto += "<tr onclick='traerEvento(this)' id='" + i + "'>";
-            texto += "<td>" + eventos[i].Nombre + " </td>";
-            texto += "</tr>";
+            hay = true;
+            Enviar.Fecha1 = eventos[i].Fecha;
+            Enviar.Fecha2 = eventos[i].Fecha;
+            Elementos.$Enviar.removeClass('hidden');
           }
-
         }
-
-        if (texto == "") {
-          alert("No hay ninguna actividad de " + Globales.actividadElegida.NombreAct.substr(0, Globales.actividadElegida.NombreAct.indexOf(' ')) + " para el día seleccionado")
+        if (!hay) {
+          alert("No hay " + Globales.actividadElegida.NombreAct + " en el día seleccionado")
         }else {
           Elementos.$ListaEventos.removeClass('hidden');
         }
@@ -114,21 +108,6 @@ document.getElementById("FechaAceptar").addEventListener("click", function(){
 
   }
 });
-
-function traerEvento(boton){
-  let filas = Elementos.TablaActividades.rows;
-  for (row in filas) {
-    if (filas[row].id == boton.id) {
-      $("#" + filas[row].id).addClass("success");
-      Enviar.Fecha1 = eventos[boton.id].Fecha;
-      Enviar.Fecha2 = eventos[boton.id].Fecha;
-    } else {
-      $("#" + filas[row].id).removeClass("success");
-    }
-  }
-  Elementos.$Enviar.removeClass('hidden');
-}
-
 
 function traerPrecio(campo){
   let request = $.ajax({
@@ -148,11 +127,16 @@ function traerPrecio(campo){
 }
 
 document.getElementById("Semestre").addEventListener("click", function() {
-  Elementos.$escondible2.addClass("hidden");
+  DAFUNC3();
   Elementos.$SemestrePicker.removeClass("hidden");
   traerPrecio('PrecioXMes');
   Elementos.$Enviar.removeClass('hidden');
 });
+
+function DAFUNC3(){
+  Elementos.$escondible2.addClass("hidden");
+  Elementos.$disab.prop("disabled", false);
+}
 
 $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
   $('.success').removeClass('success');
@@ -164,26 +148,78 @@ $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
   });
   Enviar.idClientes = $element.idClientes;
   request.done(function (respuesta){
-    let actividades = JSON.parse(respuesta);
+    respuesta = JSON.parse(respuesta);
+    let actividades = respuesta[0];
+    let deudas = respuesta[1];
+
     Globales.ListaActividades = actividades;
     let texto = "";
     let i = 0;
     for (actividad in actividades) {
       if (actividades[actividad].NombreMod == null) {
-        texto+= "<button type='button' class='list-group-item btn btn-default' id='" + i + "' onclick='elegirActividad(this)'>" + actividades[actividad].NombreAct + "</button>";
+        texto+= "<button type='button' class='list-group-item btn btn-default' id='" + i + "Actividad' onclick='elegirActividad(" + i + ")'>" + actividades[actividad].NombreAct + "</button>";
       }else {
-        texto+= "<button type='button' class='list-group-item btn btn-default' id='" + i + "' onclick='elegirActividad(this)'>" + actividades[actividad].NombreAct + " " + actividades[actividad].NombreMod + "</button>";
+        texto+= "<button type='button' class='list-group-item btn btn-default' id='" + i + "Actividad' onclick='elegirActividad(" + i + ")'>" + actividades[actividad].NombreAct + " " + actividades[actividad].NombreMod + "</button>";
       }
       i++;
     }
     Elementos.ListaActividades.innerHTML = texto
     Elementos.$escondible.addClass("hidden");
-    $("#PanelActividades").removeClass("hidden");
+    Elementos.$PanelActividades.removeClass("hidden");
+    if (deudas.length != 0) {
+      Elementos.TablaMor.innerHTML = "";
+      for (x in deudas) {
+        let ll = deudas[x].length;
+        for (let i = 0; i < ll; i++) {
+          let trsecundariobody = verDeudas(deudas[x][i]);
+          Elementos.TablaMor.appendChild(trsecundariobody);
+          trsecundariobody.addEventListener("click", function() {
+            Elementos.$disab.prop("disabled", true);
+            Elementos.$escondible2.addClass("hidden");
+            Globales.actividadElegida = deudas[x][i];
+            if (deudas[x][i].Fecha.length == 10) {
+              Elementos.$FechaForm.val(deudas[x][i].Fecha);
+              Enviar.Fecha1 = deudas[x][i].Fecha;
+              Enviar.Fecha2 = deudas[x][i].Fecha;
+              $("#IngresoFecha").removeClass("hidden");
+              $("#IngresoMes").addClass("hidden");
+            }else {
+              let Meses = {
+                Enero: 1,
+                Febrero: 2,
+                Marzo: 3,
+                Abril: 4,
+                Mayo: 5,
+                Junio: 6,
+                Julio: 7,
+                Agosto: 8,
+                Septiembre: 9,
+                Octubre: 10,
+                Noviembre: 11,
+                Diciembre: 12
+              };
+              let d = new Date().getFullYear();
+              d = d + "-" + Meses[deudas[x][i].Fecha] + "-01";
+              Enviar.Fecha1 = d;
+              Enviar.Fecha2 = d;
+              Elementos.$MesForm.val(d);
+              Elementos.$Mes.addClass("active")
+              $("#IngresoMes").removeClass("hidden");
+              $("#IngresoFecha").addClass("hidden");
+            }
+            Elementos.$Monto.val(deudas[x][i].Monto);
+            Elementos.$MontoRow.removeClass("hidden");
+            Elementos.$Enviar.removeClass("hidden");
+          });
+        }
+      }
+      Elementos.$PanelDeudas.removeClass("hidden");
+    }
   });
 });
 
 document.getElementById("Clase").addEventListener("click", function() {
-  Elementos.$escondible2.addClass("hidden");
+  DAFUNC3();
   $("#IngresoFecha").removeClass("hidden");
   Elementos.$FechaForm.datepicker('destroy');
   Elementos.$FechaForm.datepicker({
@@ -200,7 +236,7 @@ document.getElementById("Clase").addEventListener("click", function() {
 });
 
 document.getElementById("Mes").addEventListener("click", function() {
-  Elementos.$escondible2.addClass("hidden");
+  DAFUNC3();
   $("#IngresoMes").removeClass("hidden");
   Elementos.$MontoRow.removeClass('hidden');
   Elementos.$MesForm.datepicker({
@@ -218,11 +254,11 @@ document.getElementById("Mes").addEventListener("click", function() {
 });
 
 
-function elegirActividad(boton){
-  Globales.actividadElegida = Globales.ListaActividades[boton.id];
+function elegirActividad(ii){
+  Globales.actividadElegida = Globales.ListaActividades[ii];
   filas = Elementos.ListaActividades.getElementsByTagName("button");
   for (var i = 0; i < filas.length; i++) {
-    if (filas[i].id == boton.id) {
+    if (filas[i].id == ii + "Actividad") {
       $("#" + filas[i].id).addClass("list-group-item-info");
     } else {
       $("#" + filas[i].id).removeClass("list-group-item-info");
@@ -230,15 +266,17 @@ function elegirActividad(boton){
   }
 
   Elementos.$escondible.addClass("hidden");
-  $("#PanelActividades").removeClass("hidden");
+  DAFUNC3();
+  Elementos.$PanelActividades.removeClass("hidden");
+  Elementos.$PanelDeudas.removeClass("hidden");
 
-  if (Globales.ListaActividades[boton.id].XClase == 1) {
-    $("#Clase").removeClass("hidden");
+  if (Globales.ListaActividades[ii].XClase == 1) {
+    Elementos.$Clase.removeClass("hidden");
   }
-  if (Globales.ListaActividades[boton.id].XMes == 1) {
+  if (Globales.ListaActividades[ii].XMes == 1) {
     Elementos.$Mes.removeClass("hidden");
   }
-  if (Globales.ListaActividades[boton.id].XSemestre == 1) {
+  if (Globales.ListaActividades[ii].XSemestre == 1) {
     Elementos.$Semestre.removeClass("hidden");
   }
 

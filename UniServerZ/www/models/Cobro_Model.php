@@ -15,11 +15,11 @@ class Cobro_Model extends Model {
 
   public function updateAsistencias($data) {
     $sql = "UPDATE `asistencias` SET `Abonado`= 1 WHERE `idClientes` = ?i AND `idActividades` = ?i AND (`Fecha` BETWEEN ?s AND ?s)";
-    echo $this->db->query($sql, $data['idClientes'], $data['idActividades'], $data['Fecha1'], $data['Fecha2']);
+     $this->db->query($sql, $data['idClientes'], $data['idActividades'], $data['Fecha1'], $data['Fecha2']);
   }
 
   public function listado($tipo) {
-    $sql = "SELECT actividadesaranceles.idActividadesAranceles, actividades.Nombre as actNombre, modalidades.Nombre as modNombre, actividadesaranceles.PrecioXClase , actividadesaranceles.PrecioXMes
+    $sql = "SELECT actividadesaranceles.*, actividades.Nombre as actNombre, modalidades.Nombre as modNombre
     FROM actividadesaranceles
     LEFT JOIN actividades ON actividades.idActividades = actividadesaranceles.idActividades
     LEFT JOIN modalidades ON modalidades.idModalidades = actividadesaranceles.idModalidades";
@@ -34,9 +34,9 @@ class Cobro_Model extends Model {
     $outp = $this->db->getAll($sql);
     return json_encode($outp);
   }
-  public function modArancel($data) {
-    $sql = "UPDATE `actividadesaranceles` SET `PrecioXClase`= ?s,`PrecioXMes`=?s WHERE idActividadesAranceles = ?i";
-    $this->db->query($sql, $data['PrecioXClase'], $data['PrecioXMes'], $data['idActividadesAranceles']);
+  public function addArancel($data) {
+    $sql = "INSERT INTO `actividadesaranceles` SET ?u";
+    $this->db->query($sql, $data);
   }
   public function modSueldo($data) {
     $sql = "UPDATE `categoriassueldos` SET `MontoXBloque`= ?s WHERE idCategoriasSueldos = ?i";
@@ -45,7 +45,7 @@ class Cobro_Model extends Model {
 
   public function traerElemento($tipo,$data) {
     $data = json_decode($data);
-    $sql = "SELECT ?n FROM `actividadesaranceles` WHERE idActividades = ?i AND idModalidades = ?s";
+    $sql = "SELECT ?n FROM `actividadesaranceles` WHERE idActividades = ?i AND idModalidades = ?s ORDER BY FechaInicio DESC LIMIT 1";
     return $this->db->getOne($sql, $data->Campo, $data->idActividades, $data->idModalidades);
   }
 }

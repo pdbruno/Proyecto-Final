@@ -12,7 +12,7 @@
           </div>
         </div>
       </div>
-      <a href="#" id="VerMat" data-toggle="modal" data-target="#ModalMor" data-titulo="Personas que no han pagado la matrícula" data-head="<th>Nombre</th>">
+      <a href="#" id="VerMat" data-toggle="modal" data-target="#ModalMor" data-titulo="Personas que no han pagado la matrícula">
         <div class="panel-footer">
           <span class="pull-left">Ver Detalles</span>
           <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -36,7 +36,7 @@
           </div>
         </div>
       </div>
-      <a href="#" id="VerDeud" data-toggle="modal" data-target="#ModalMor" data-titulo="Personas que deben pagar algo" data-head="<th>Nombre</th><th>Debe</th><th>Fecha</th>">
+      <a href="#" id="VerDeud" data-toggle="modal" data-target="#ModalMor" data-titulo="Personas que deben pagar algo">
         <div class="panel-footer">
           <span class="pull-left">Ver Detalles</span>
           <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -57,9 +57,10 @@
         <h4 class="modal-title"></h4>
       </div>
       <div class="modal-body">
-        <table class="table table-hover" >
+        <table class="table table-bordered" >
           <thead>
             <tr>
+              <th>Nombre</th>
             </tr>
           </thead>
           <tbody id="TablaMor">

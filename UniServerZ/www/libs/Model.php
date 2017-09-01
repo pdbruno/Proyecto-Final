@@ -39,6 +39,19 @@ class Model {
     $outp = $this->db->query($sql, strtolower($tipo), 'id' . $tipo, $id);
   }
 
+  public function formatDeuda($outp) {
+    $Meses = ["", "Enero", "Febrero", "Marzo","Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    $vec2 = [];
+    $l = count($outp);
+    for ($i=0; $i < $l; $i++) {
+      if (strlen($outp[$i]['Fecha']) <= 2) {
+        $outp[$i]['Fecha'] = $Meses[$outp[$i]['Fecha']];
+      }
+      $vec2[$outp[$i]['Nombres']][] = $outp[$i];
+    }
+    return $vec2;
+  }
+
   public function tabla($tabla) {
     $sql = "SELECT COLUMN_NAME, DATA_TYPE, COLUMN_COMMENT, COLUMN_KEY, IS_NULLABLE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'dbproyectofinal' AND TABLE_NAME = ?s";
     $outp = $this->db->getAll($sql, $tabla);

@@ -60,7 +60,8 @@ class cliente_Model extends Model {
     LEFT JOIN actividades ON clientesactividades.idActividades = actividades.idActividades
     LEFT JOIN modalidades ON clientesactividades.idModalidades = modalidades.idModalidades
     WHERE `idClientes` = ?i";
-    $res = $this->db->getAll($sql, $idClientes);
+    $res[] = $this->db->getAll($sql, $idClientes);
+    $res[] = $this->formatDeuda($this->db->getAll("SELECT * FROM `deudas` WHERE idClientes = ?i", $idClientes));
     return $res;
   }
   public function traerElemento($tipo, $idClientes) {

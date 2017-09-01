@@ -46,9 +46,9 @@ request.done(function (respuesta){
 function Enviar(i)
 {
   var request = $.ajax({
-    url: "<?php echo URL; ?>cobro/modArancel",
+    url: "<?php echo URL; ?>cobro/addArancel",
     type: "post",
-    data: "data=" + JSON.stringify({PrecioXClase: $("#Clase" + i).val(), PrecioXMes: $("#Mes" + i).val(), idActividadesAranceles: MyObj[i].idActividadesAranceles})
+    data: "data=" + JSON.stringify({PrecioXClase: $("#Clase" + i).val(), PrecioXMes: $("#Mes" + i).val(), idActividades: MyObj[i].idActividades, idModalidades: MyObj[i].idModalidades, FechaInicio: new Date().toISOString().slice(0,10)})
   });
 
 }

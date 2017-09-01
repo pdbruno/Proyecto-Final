@@ -2,9 +2,9 @@
 require_once 'controllers/calendar.php';
 class cobro extends calendar {
 
-  public function modArancel() {
+  public function addArancel() {
     $Arancel = json_decode($_POST['data'], TRUE);
-    $this->model->modArancel($Arancel);
+    $this->model->addArancel($Arancel);
   }
 
   public function addCobro() {

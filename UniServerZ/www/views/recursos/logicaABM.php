@@ -20,6 +20,35 @@ $(document).on('show.bs.modal', '.modal', function (event) {
     $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
   }, 0);
 });
+
+function llenarDropdowns(youknow){
+  let VecElementos = [];
+  for (vector in youknow) {
+    let txt = optionCrear(youknow[vector]);
+    VecElementos.push(txt);
+  }
+  let selects = document.getElementById("Formu").getElementsByTagName("select");
+  let l = selects.length;
+  for (var i = 0; i < l; i++) {
+    selects[i].innerHTML = VecElementos[i];
+  }
+}
+
+function verDeudas(Obj){
+  let ll = Obj.length;
+  let trsecundariobody = document.createElement("tr");
+  let tdAct = document.createElement("td");
+  tdAct.innerHTML = Obj.Actividad;
+  trsecundariobody.appendChild(tdAct);
+  let tdFec = document.createElement("td");
+  tdFec.innerHTML = Obj.Fecha;
+  trsecundariobody.appendChild(tdFec);
+  let tdMon = document.createElement("td");
+  tdMon.innerHTML = Obj.Monto;
+  trsecundariobody.appendChild(tdMon);
+  return trsecundariobody;
+}
+
 function crearCampos(myObj){
   let l = myObj.length;
   for (var i = 0; i < l; i++) {
