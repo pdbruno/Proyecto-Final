@@ -154,8 +154,31 @@ function hacemeUnDropdown(nombre, select){
     type: "post"
   });
   request.done(function (respuesta){
-    select.innerHTML += optionCrear(JSON.parse(respuesta));
+    respuesta = JSON.parse(respuesta);
+    select.innerHTML = optionCrear(respuesta[0]);
+    if (respuesta[1] == 2) {
+      select.innerHTML += "<option onclick=\"addOpt('" + nombre + "')\">+Agregar</option>";
+      let isChrome = !!window.chrome && !!window.chrome.webstore;
+      if (isChrome) {
+        select.addEventListener("change", function() {
+          this.options[this.selectedIndex].onclick();
+        });
+      }
+    }
   });
+}
+function addOpt(nombre){
+  let nuevaopcion = prompt("Ingrese la nueva opción");
+  if (nuevaopcion != null) {
+    var request = $.ajax({
+      url: "<?php echo URL; ?>help/agregarModificarElemento/" + nombre.substr(2).toLowerCase(),
+      type: "post",
+      data: "data=" + JSON.stringify({Nombre : nuevaopcion}),
+    });
+    request.done(function (respuesta){
+      hacemeUnDropdown(nombre, document.getElementById(nombre + "Select"));
+    });
+  }
 }
 function setProp(myObj){
   ElemForm.json.push(myObj);

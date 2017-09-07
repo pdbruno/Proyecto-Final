@@ -19,7 +19,9 @@ class Model {
 
   public function Dropdown($tipo) {
     $sql = "SELECT ?n as id, Nombre FROM ?n";
-    $outp = $this->db->getAll($sql, $tipo, strtolower(substr($tipo, 2)));
+    $outp[] = $this->db->getAll($sql, $tipo, strtolower(substr($tipo, 2)));
+    $sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'dbproyectofinal' AND TABLE_NAME = ?s";
+    $outp[] = $this->db->getAll($sql, strtolower(substr($tipo, 2)))[0]['COUNT(*)'];
     echo json_encode($outp);
   }
 

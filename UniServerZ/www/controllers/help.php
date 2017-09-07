@@ -7,8 +7,14 @@ class Help extends Controller {
   }
 
   function index($sujeto) {
-    $this->view->sujeto = $sujeto;
-    $this->view->render('abmsecundario');
+    $this->view->lista = URL . "help/listarElementos/" . $sujeto;
+    $this->view->tabla = URL . "help/tabla/" . $sujeto;
+    $this->view->agregarModificar = URL . "help/agregarModificarElemento/" . $sujeto;
+    $this->view->eliminar = URL . "help/eliminarElemento/" . $sujeto;
+    $this->view->traer = URL . "help/traerElemento/" . $sujeto;
+    $this->view->titmodal = ucfirst(substr($sujeto, 0, -1));
+    $this->view->th = "<th data-field='Nombre' data-sortable='true'>Nombre</th>";
+    $this->view->renderTabla(null, true);
   }
 
   function Dropdown($tipo) {
@@ -16,7 +22,10 @@ class Help extends Controller {
   }
 
   function tablas() {
-    $this->view->render('tablas');
+    $this->view->lista = URL . "help/listarTablas/";
+    $this->view->titmodal ="Columna";
+    $this->view->th = "<th data-field='Tables_in_dbproyectofinal' data-sortable='true'>Nombre</th>";
+    $this->view->render2modales('tablas');
   }
 
   function listarTablas(){

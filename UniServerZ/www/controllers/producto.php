@@ -3,7 +3,14 @@
 class producto extends Controller {
 
   function index() {
-    $this->view->render('abmproductos');
+    $this->view->lista = URL . "producto/listarElementos/Productos";
+    $this->view->tabla = URL . "producto/tabla/productos";
+    $this->view->agregarModificar = URL . "producto/agregarModificarElemento/Productos";
+    $this->view->eliminar = URL . "producto/eliminarElemento/Productos";
+    $this->view->traer = URL . "producto/traerElemento/Productos";
+    $this->view->titmodal ="Producto";
+    $this->view->th = "<th data-field='Nombre' data-sortable='true'>Nombre</th>";
+    $this->view->renderTabla(null, true);
   }
 
   function ingresostock() {

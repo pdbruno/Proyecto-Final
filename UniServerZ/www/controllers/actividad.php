@@ -12,7 +12,52 @@ class actividad extends calendar {
   }
 
   public function index() {
-    $this->view->render('abmactividades');
+    $this->view->lista = URL . "actividad/listarElementos/Actividades";
+    $this->view->titmodal ="Actividad";
+    $this->view->th = "<th data-field='Nombre' data-sortable='true'>Nombre</th>";
+    $this->view->modal2 = '<button type="button" id="idModalidadesVer" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalVer">Ver modalidad/es</button>
+    <div class="modal fade" tabindex="-1" role="dialog" id="ModalVer">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Modalidades</h4>
+          </div>
+          <div class="modal-body">
+            <table class="table table-hover" >
+              <thead>
+                <tr>
+                  <th>Modalidad</th>
+                </tr>
+              </thead>
+              <tbody id="TablaModalidades">
+              </tbody>
+            </table>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" id="CerrarVer" >Close</button>
+            </div>
+          </div><!-- /.modal-content-->
+        </div> <!--/.modal-dialog -->
+      </div> <!--/.modal -->
+    </div>
+    <button type="button" id="idModalidadesSelect" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalSel">Seleccionar modalidad/es</button>
+    <div class="modal fade" tabindex="-1" role="dialog" id="ModalSel">
+      <div class="modal-dialog" role="document" >
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Seleccionar modalidad/es</h4>
+          </div>
+          <div class="modal-body" id="Selec">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" id="deshacerModal" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" id="aceptarModal">Aceptar</button>
+          </div>
+        </div>
+      </div><!-- /.modal-content-->
+    </div> <!--/.modal-dialog -->';
+    $this->view->render2modales('abmactividades');
   }
 
   public function tomarlista() {

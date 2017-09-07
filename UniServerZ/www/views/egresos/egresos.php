@@ -15,21 +15,7 @@ request.done(function (respuesta){
   select.innerHTML += "<option onclick='addOpt()'>+Agregar</option>";
   modoFormulario("Agregar");
 });
-function addOpt(){
-  let nuevaopcion = prompt("Ingrese la nueva opción");
-  if (nuevaopcion != null) {
-    var request = $.ajax({
-      url: "<?php echo URL; ?>help/agregarModificarElemento/FuentesDeEgresos",
-      type: "post",
-      data: "data=" + JSON.stringify({Nombre : nuevaopcion}),
-    });
-    request.done(function (respuesta){
-      select.innerHTML = "";
-      hacemeUnDropdown("idFuentesDeEgresos", select);
-      select.innerHTML += "<option onclick='addOpt()'>+Agregar</option>";
-    });
-  }
-}
+
 document.getElementById("BtnAgregar").addEventListener("click", function() {
   let vec = beforeEnviar();
   if (vec != 'no') {

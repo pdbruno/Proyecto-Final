@@ -1,6 +1,33 @@
 <script>
 var accion;
 var NombrePrevio;
+var funcAllamar = function($element){
+  let columna = $element.Tables_in_dbproyectofinal;
+
+  $('#Tabla').bootstrapTable('destroy').bootstrapTable({
+    url: "<?php echo URL; ?>help/listarColumnas/" + columna,
+    columns: [{
+        field: 'COLUMN_NAME',
+        title: 'Nombre del campo'
+    }, {
+        field: 'COLUMN_COMMENT',
+        title: 'Nombre posssta'
+    }]
+  });
+
+  funcAllamar = function($element, field){
+    $('.success').removeClass('success');
+    $(field).addClass('success');
+    let request = $.ajax({
+      url: "<?php echo URL; ?>help/traerColumna/" + columna,
+      type: "post",
+      data: "data=" + $element.COLUMN_NAME,
+    });
+    request.done(function (respuesta){
+      clickFila(JSON.parse(respuesta)[0]);
+    });
+  };
+};
 var Elementos = {
   SelectTabla : document.getElementById("SelectTabla"),
 };
@@ -96,30 +123,8 @@ document.getElementById("BtnAceptar").addEventListener("click", function() {
   }
 
 });
-var request = $.ajax({
-  url: "<?php echo URL; ?>help/listarTablas",
-  type: "post",
-});
-request.done(function (respuesta){
-  Elementos.SelectTabla.innerHTML += optionCrear(JSON.parse(respuesta));
-});
-Elementos.SelectTabla.addEventListener("input", function() {
-  $('#TodoLoDemas').removeClass('hidden');
-  $('#Tabla').bootstrapTable({
-    url: "<?php echo URL; ?>help/listarColumnas/" + Elementos.SelectTabla.value,
-    search: true
-});
-});
+
 $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
-  $('.success').removeClass('success');
-  $(field).addClass('success');
-  let request = $.ajax({
-    url: "<?php echo URL; ?>help/traerColumna/" + Elementos.SelectTabla.value,
-    type: "post",
-    data: "data=" + $element.COLUMN_NAME,
-  });
-  request.done(function (respuesta){
-    clickFila(JSON.parse(respuesta)[0]);
-  });
+  funcAllamar($element, field);
 });
 </script>

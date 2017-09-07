@@ -22,13 +22,6 @@ class cliente_Model extends Model {
     return $todo;
   }
 
-  public function listadodropdowns() {
-    $kk[] = "SELECT idActividades as id, Nombre FROM actividades;";
-    $kk[] = "SELECT idModalidades as id, Nombre FROM modalidades;";
-    $res = $this->repetitivaQuery($kk);
-    echo json_encode($res);
-  }
-
   public function eliminarElemento($tipo, $idClientes) {
     $this->model->db->query("DELETE FROM clientesactividades WHERE idClientes = ?i", $idClientes);
     $datos = $this->model->eliminar('Clientes',$idClientes);

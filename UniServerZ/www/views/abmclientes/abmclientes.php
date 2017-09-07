@@ -1,5 +1,7 @@
 <script>
-var Elementos = {};
+var Elementos = {
+  Selec: document.getElementById("Selec")
+};
 document.getElementById("CerrarVer").addEventListener("click", function() {
   $('#ModalVer').modal('hide');
 });
@@ -8,58 +10,86 @@ document.getElementById("deshacerModal").addEventListener("click", function() {
   deshacerModal();
 });
 function deshacerModal(){
-  $("#Selec").html("<div class='col-lg-7'>\
-  <h5>Actividad</h5>\
-  </div>\
-  <div class='col-lg-5'>\
-  <h5>Modalidad</h5>\
-  </div><div class='row'>\
-  <div class='col-lg-7'>\
-  <select id='idActividadesSelect1' class='form-control activ'>\
-  <option disabled selected value>Elija una actividad</option>\
-  </select>\
-  </div>\
-  <div class='col-lg-5'>\
-  <select id='idModalidadesSelect1' class='form-control mod'>\
-  <option disabled selected value>Elija una modalidad</option>\
-  </select>\
-  </div>\
-  </div>\
-  <button type='button' id='AddAct1' class='btn btn-link' onclick='AddAct(this)' >+AgregarActividad</button>");
-
-  Elementos.idActividadesSelect1= document.getElementById("idActividadesSelect1");
-  Elementos.idModalidadesSelect1= document.getElementById("idModalidadesSelect1");
-  Elementos.idActividadesSelect1.innerHTML += VecActividades;
-  Elementos.idModalidadesSelect1.innerHTML += VecModalidades;
+  let row = document.createElement("div");
+  row.className = "row";
+  row.style.margin = "50 0 0 0";
+  let col7 = document.createElement("div");
+  col7.className = "col-lg-7";
+  let tit1 = document.createElement("h5");
+  tit1.innerHTML = "Actividad";
+  let select1 = document.createElement("select");
+  select1.className = "form-control activ";
+  select1.id = 'idActividadesSelect1';
+  let col5 = document.createElement("div");
+  col5.className = "col-lg-5";
+  let tit2 = document.createElement("h5");
+  tit2.innerHTML = "Modalidad";
+  let select2 = document.createElement("select");
+  select2.className = "form-control mod";
+  select2.id = 'idModalidadesSelect1';
+  let button = document.createElement("button");
+  button.type = "button"
+  button.id = 'AddAct1';
+  button.className = "btn btn-link";
+  button.innerHTML = "+AgregarActividad";
+  button.addEventListener("click", function() {
+    AddAct(this);
+  });
+  row.appendChild(col7);
+  row.appendChild(col5);
+  row.appendChild(button);
+  col7.appendChild(tit1);
+  col7.appendChild(select1);
+  col5.appendChild(tit2);
+  col5.appendChild(select2);
+  Elementos.Selec.innerHTML = "";
+  Elementos.Selec.appendChild(row);
+  Elementos.idActividadesSelect1 = select1;
+  Elementos.idModalidadesSelect1 = select2;
+  select1.innerHTML += VecActividades;
+  select2.innerHTML += VecModalidades;
 }
 
 function AddAct(bot) {
   let i = bot.id.replace("AddAct", "");
-  Elementos["idActividadesSelect" + i];
-  Elementos["idModalidadesSelect" + i];
   if (Elementos["idActividadesSelect" + i].selectedIndex == "0" || Elementos["idModalidadesSelect" + i].selectedIndex == "0") {
     alert("Seleccione una actividad y una modalidad");
   } else {
     let j = Number(i) + 1;
-    $("#Selec").append("<div class='row' style='margin-top: 50px;'>\
-    <div class='col-lg-7'>\
-    <select id='idActividadesSelect" + j + "' class='form-control activ'>\
-    </select>\
-    </div>\
-    <div class='col-lg-5'>\
-    <select id='idModalidadesSelect" + j + "' class='form-control mod'>\
-    <option disabled selected value>Elija una modalidad</option>\
-    </select>\
-    </div>\
-    </div>\
-    <button type='button' id='AddAct" + j + "' class='btn btn-link' onclick='AddAct(this)' >+AgregarActividad</button>");
-    Elementos["idActividadesSelect" + j] = document.getElementById("idActividadesSelect" + j);
-    Elementos["idModalidadesSelect" + j] = document.getElementById("idModalidadesSelect" + j);
-    Elementos["idActividadesSelect" + j].innerHTML += Elementos["idActividadesSelect" + i].innerHTML;
-    Elementos["idActividadesSelect" + j].remove(Elementos["idActividadesSelect" + i].selectedIndex);
+    let row = document.createElement("div");
+    row.className = "row";
+    row.style = "margin-top : 50px";
+    let col7 = document.createElement("div");
+    col7.className = "col-lg-7";
+    let select1 = document.createElement("select");
+    select1.className = "form-control activ";
+    select1.id = 'idActividadesSelect' + j ;
+    let col5 = document.createElement("div");
+    col5.className = "col-lg-5";
+    let select2 = document.createElement("select");
+    select2.className = "form-control mod";
+    select2.id = 'idModalidadesSelect' + j ;
+    let button = document.createElement("button");
+    button.type = "button"
+    button.id = 'AddAct' + j ;
+    button.className = "btn btn-link";
+    button.innerHTML = "+AgregarActividad";
+    button.addEventListener("click", function() {
+      AddAct(this);
+    });
+    row.appendChild(col7);
+    row.appendChild(col5);
+    row.appendChild(button);
+    col7.appendChild(select1);
+    col5.appendChild(select2);
+    Elementos.Selec.appendChild(row);
+    Elementos["idActividadesSelect" + j] = select1;
+    Elementos["idModalidadesSelect" + j] = select2;
+    select1.innerHTML += Elementos["idActividadesSelect" + i].innerHTML;
+    select1.remove(Elementos["idActividadesSelect" + i].selectedIndex);
     $("#AddAct" + i).addClass('hidden')
     Elementos["idActividadesSelect" + i].disabled = true;
-    Elementos["idModalidadesSelect" + j].innerHTML += VecModalidades;
+    select2.innerHTML += VecModalidades;
   }
 
 }
@@ -95,15 +125,21 @@ request.done(function (respuesta){
   let myObj = JSON.parse(respuesta);
   crearCampos(myObj);
   request = $.ajax({
-    url: "<?php echo URL; ?>cliente/listadoDropdowns",
-    type: "post",
+    url: "<?php echo URL; ?>help/Dropdown/idModalidades",
+    type: "post"
   });
   request.done(function (respuesta){
-    let myObj = JSON.parse(respuesta);
-    VecActividades = optionCrear(myObj[0]);
-    VecModalidades = optionCrear(myObj[1]);
+    VecModalidades = optionCrear(JSON.parse(respuesta));
+  });
+  request = $.ajax({
+    url: "<?php echo URL; ?>help/Dropdown/idActividades",
+    type: "post"
+  });
+  request.done(function (respuesta){
+    VecActividades = optionCrear(JSON.parse(respuesta));
   });
 });
+
 document.getElementById("BtnAgregar").addEventListener("click", function() {
   $("#IdActividadesSelect").removeClass("hidden");
   $("#IdActividadesVer").addClass("hidden");
@@ -163,7 +199,7 @@ $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
   request.done(function (respuesta)
   {
     clickFila(JSON.parse(respuesta)[0][0]);
-    var actividades = JSON.parse(respuesta)[1];
+    var actividades = JSON.parse(respuesta)[1][0];
     var texto = "";
     for (var i = 0; i < actividades.length; i++) {
       texto += "<tr>";

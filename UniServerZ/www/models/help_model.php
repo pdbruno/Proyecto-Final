@@ -13,10 +13,6 @@ class help_Model extends Model {
     public function listarTablas() {
       $sql = "SHOW TABLES";
       $outp = $this->db->getAll($sql);
-      for ($i = 0; $i < count($outp); $i++) {
-        $outp[$i]['id'] = $outp[$i]["Tables_in_dbproyectofinal"];
-        $outp[$i]['Nombre'] = $outp[$i]["Tables_in_dbproyectofinal"];
-      }
       echo json_encode($outp);
     }
 

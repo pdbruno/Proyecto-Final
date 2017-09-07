@@ -38,8 +38,4 @@ class Controller {
     echo $datos = $this->model->traerElemento($tipo, $id);
   }
 
-  public function listadoDropdowns() {
-    $datos = $this->model->listadodropdowns();
-    echo $datos;
-  }
 }

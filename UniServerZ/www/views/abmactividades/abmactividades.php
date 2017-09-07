@@ -1,5 +1,7 @@
 <script>
-var Elementos = {};
+var Elementos = {
+  Selec: document.getElementById("Selec")
+};
 document.getElementById("CerrarVer").addEventListener("click", function() {
   $('#ModalVer').modal('hide');
 });
@@ -14,43 +16,88 @@ var request = $.ajax({
 request.done(function (respuesta){
   let myObj = JSON.parse(respuesta);
   crearCampos(myObj);
+  var request = $.ajax({
+    url: "<?php echo URL; ?>help/Dropdown/idModalidades",
+    type: "post"
+  });
+  request.done(function (respuesta){
+    VecModalidades = JSON.parse(respuesta);
+  });
 });
 function deshacerModal(){
-  $("#Selec").html("<div class='col-lg-7'>\
-  <h5>Modalidad</h5>\
-  </div>\
-  <div class='row'>\
-  <div class='col-lg-7'>\
-  <select id='idModalidadesSelect1' class='form-control mod'>\
-  <option disabled selected value>Elija una modalidad</option>\
-  </select>\
-  <button type='button' id='AddAct1' class='btn btn-link' onclick='AddAct(this)' >+AgregarModalidad</button>\
-  </div>");
+  let row = document.createElement("div");
+  row.className = "row";
+  row.style.margin = "50 0 0 0";
 
-  Elementos.idModalidadesSelect1 = document.getElementById("idModalidadesSelect1");
-  Elementos.idModalidadesSelect1.innerHTML += optionCrear(VecModalidades);
+  let col5 = document.createElement("div");
+  col5.className = "col-lg-12";
+
+  let tit2 = document.createElement("h5");
+  tit2.innerHTML = "Modalidad";
+
+  let select2 = document.createElement("select");
+  select2.className = "form-control mod";
+  select2.id = 'idModalidadesSelect1';
+
+  let button = document.createElement("button");
+  button.type = "button"
+  button.id = 'AddAct1';
+  button.className = "btn btn-link";
+  button.innerHTML = "+AgregarActividad";
+  button.addEventListener("click", function() {
+    AddAct(this);
+  });
+  row.appendChild(col5);
+  row.appendChild(button);
+  col5.appendChild(tit2);
+  col5.appendChild(select2);
+  Elementos.Selec.innerHTML = "";
+  Elementos.Selec.appendChild(row);
+
+  Elementos.idModalidadesSelect1 = select2;
+  select2.innerHTML += optionCrear(VecModalidades[0]);
 }
 
 function AddAct(bot) {
   let i = bot.id.replace("AddAct", "");
   if (Elementos["idModalidadesSelect" + i].selectedIndex == "0") {
-    alert("Seleccione una actividad y una modalidad");
+    alert("Seleccione una modalidad");
   } else {
     let j = Number(i) + 1;
-    $("#Selec").append("<div class='row' style='margin-top: 50px;'>\
-    <div class='col-lg-7'>\
-    <select id='idModalidadesSelect" + j + "' class='form-control mod'>\
-    </select>\
-    </div>\
-    </div>\
-    <button type='button' id='AddAct" + j + "' class='btn btn-link' onclick='AddAct(this)' >+AgregarModalidad</button>");
-    Elementos["idModalidadesSelect" + j] = document.getElementById("idModalidadesSelect" + j);
-    Elementos["idModalidadesSelect" + j].innerHTML += Elementos["idModalidadesSelect" + i].innerHTML;
-    Elementos["idModalidadesSelect" + j].remove(Elementos["idModalidadesSelect" + i].selectedIndex);
+
+    let row = document.createElement("div");
+    row.className = "row";
+    row.style = "margin-top : 50px";
+
+    let col5 = document.createElement("div");
+    col5.className = "col-lg-12";
+
+    let select2 = document.createElement("select");
+    select2.className = "form-control mod";
+    select2.id = 'idModalidadesSelect' + j ;
+
+    let button = document.createElement("button");
+    button.type = "button"
+    button.id = 'AddAct' + j ;
+    button.className = "btn btn-link";
+    button.innerHTML = "+AgregarActividad";
+    button.addEventListener("click", function() {
+      AddAct(this);
+    });
+
+    row.appendChild(col5);
+    row.appendChild(button);
+    col5.appendChild(select2);
+    Elementos.Selec.appendChild(row);
+
+    Elementos["idModalidadesSelect" + j] = select2;
+    select2.innerHTML += Elementos["idModalidadesSelect" + i].innerHTML;
+    select2.remove(Elementos["idModalidadesSelect" + i].selectedIndex);
     $("#AddAct" + i).addClass('hidden')
     Elementos["idModalidadesSelect" + i].disabled = true;
   }
 }
+
 var VecModalidades= [];
 var bien = false;
 var final = [];
@@ -102,7 +149,6 @@ document.getElementById("BtnAceptar").addEventListener("click", function() {
 document.getElementById("BtnEliminar").addEventListener("click", function() {
   var r = confirm("Estás muy recontra segurísima/o que querés borrar esta actividad?");
   if (r == true) {
-
     request = $.ajax({
       url: "<?php echo URL; ?>actividad/eliminarElemento/Actividades",
       type: "post",
@@ -139,19 +185,5 @@ $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
     $("#idModalidadesVer").removeClass("hidden");
   });
 });
-var request = $.ajax({
-  url: "<?php echo URL; ?>cliente/listadoDropdowns",
-  type: "post"
-});
-request.done(function (respuesta){
-  VecModalidades = JSON.parse(respuesta)[1][1];
-});
-function optionCrear(vec) {
-  var txt="";
-  let l = vec.length;
-  for (let i = 0; i < l; i++) {
-    txt += "<option value='" + vec[i].id + "'>" + vec[i].Nombre + "</option>";
-  }
-  return txt;
-}
+
 </script>
