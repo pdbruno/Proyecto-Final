@@ -21,7 +21,9 @@ class cobro extends calendar {
 
   public function index() {
     $this->manejar("cobro","index");
-    $this->view->render('cobro');
+    $this->view->lista = URL . "cliente/listarElementos/Clientes";
+    $this->view->th = "<th data-field='Nombres' data-sortable='true'>Nombres</th><th data-field='Apellidos' data-sortable='true'>Apellidos</th>";
+    $this->view->renderTabla('cobro');
   }
 
   public function listarSueldos(){
@@ -29,14 +31,25 @@ class cobro extends calendar {
   }
 
   public function aranceles() {
-    $this->view->render('aranceles');
+    $this->view->tit = "Listado de Aranceles";
+    $this->view->th = "<th class='hidden'>idActividadesAranceles</th>
+              <th>Actividad</th>
+              <th>Modo de Pago</th>
+              <th>Modalidad</th>
+              <th>Precio</th>";
+    $this->view->renderTempSimple('aranceles', 'tablatonta');
   }
   public function sueldos() {
-    $this->view->render('sueldos');
+    $this->view->tit = "Listado de Sueldos";
+    $this->view->th = "<th class='hidden'>idCategoriasSueldos</th>
+              <th>Categoría</th>
+              <th>Monto por Bloque</th>";
+    $this->view->renderTempSimple('sueldos', 'tablatonta');
   }
 
   public function egresos() {
-    $this->view->render('egresos');
+    $this->view->tit = "Registrar Egreso";
+    $this->view->renderTempSimple('egresos', 'form');
   }
 
   public function __construct() {

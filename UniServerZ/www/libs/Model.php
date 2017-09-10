@@ -12,33 +12,29 @@ class Model {
     $this->db = new SafeMySQL($opts);
   }
   public function listado($tipo) {
-    $sql = "SELECT ?n , Nombre FROM ?n";
-    $outp = $this->db->getAll($sql, 'id' . $tipo, strtolower($tipo));
-    echo json_encode($outp);
+    echo json_encode($this->db->getAll("SELECT ?n , Nombre FROM ?n", 'id' . $tipo, strtolower($tipo)));
+  }
+
+  public function traerTodo($tipo) {
+    return $this->db->getAll("SELECT * FROM ?n", $tipo);
   }
 
   public function Dropdown($tipo) {
-    $sql = "SELECT ?n as id, Nombre FROM ?n";
-    $outp[] = $this->db->getAll($sql, $tipo, strtolower(substr($tipo, 2)));
-    $sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'dbproyectofinal' AND TABLE_NAME = ?s";
-    $outp[] = $this->db->getAll($sql, strtolower(substr($tipo, 2)))[0]['COUNT(*)'];
+    $outp[] = $this->db->getAll("SELECT ?n as id, Nombre FROM ?n", $tipo, strtolower(substr($tipo, 2)));
+    $outp[] = $this->db->getAll("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'dbproyectofinal' AND TABLE_NAME = ?s", strtolower(substr($tipo, 2)))[0]['COUNT(*)'];
     echo json_encode($outp);
   }
 
   public function traerElemento($tipo, $id) {
-    $sql = "SELECT * FROM ?n WHERE ?n = ?i";
-    $outp = $this->db->getAll($sql, strtolower($tipo), 'id' . $tipo, $id);
-    echo json_encode($outp);
+    echo json_encode($this->db->getAll("SELECT * FROM ?n WHERE ?n = ?i", strtolower($tipo), 'id' . $tipo, $id));
   }
 
   public function agregarModificar($tipo,$data) {
-    $sql = "INSERT INTO ?n SET ?u ON DUPLICATE KEY UPDATE ?u";
-    $this->db->query($sql, strtolower($tipo), $data, $data);
+    $this->db->query("INSERT INTO ?n SET ?u ON DUPLICATE KEY UPDATE ?u", strtolower($tipo), $data, $data);
   }
 
   public function eliminar($tipo, $id) {
-    $sql = "DELETE FROM ?n WHERE ?n = ?i";
-    $outp = $this->db->query($sql, strtolower($tipo), 'id' . $tipo, $id);
+    $this->db->query("DELETE FROM ?n WHERE ?n = ?i", strtolower($tipo), 'id' . $tipo, $id);
   }
 
   public function formatDeuda($outp) {
@@ -55,9 +51,7 @@ class Model {
   }
 
   public function tabla($tabla) {
-    $sql = "SELECT COLUMN_NAME, DATA_TYPE, COLUMN_COMMENT, COLUMN_KEY, IS_NULLABLE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'dbproyectofinal' AND TABLE_NAME = ?s";
-    $outp = $this->db->getAll($sql, $tabla);
-    echo json_encode($outp);
+    echo json_encode($this->db->getAll("SELECT COLUMN_NAME, DATA_TYPE, COLUMN_COMMENT, COLUMN_KEY, IS_NULLABLE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'dbproyectofinal' AND TABLE_NAME = ?s", $tabla));
   }
 
 

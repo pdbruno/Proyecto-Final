@@ -1,11 +1,12 @@
 <script>
 var accion;
 var NombrePrevio;
+var tabla;
 var funcAllamar = function($element){
-  let columna = $element.Tables_in_dbproyectofinal;
+  tabla = $element.Tables_in_dbproyectofinal;
 
-  $('#Tabla').bootstrapTable('destroy').bootstrapTable({
-    url: "<?php echo URL; ?>help/listarColumnas/" + columna,
+  ElemForm.$Tabla.bootstrapTable('destroy').bootstrapTable({
+    url: "<?php echo URL; ?>help/listarColumnas/" + tabla,
     columns: [{
         field: 'COLUMN_NAME',
         title: 'Nombre del campo'
@@ -19,7 +20,7 @@ var funcAllamar = function($element){
     $('.success').removeClass('success');
     $(field).addClass('success');
     let request = $.ajax({
-      url: "<?php echo URL; ?>help/traerColumna/" + columna,
+      url: "<?php echo URL; ?>help/traerColumna/" + tabla,
       type: "post",
       data: "data=" + $element.COLUMN_NAME,
     });
@@ -27,9 +28,6 @@ var funcAllamar = function($element){
       clickFila(JSON.parse(respuesta)[0]);
     });
   };
-};
-var Elementos = {
-  SelectTabla : document.getElementById("SelectTabla"),
 };
 crearCampos([
   {
@@ -113,7 +111,7 @@ document.getElementById("BtnAceptar").addEventListener("click", function() {
       vec.NombrePrevio = NombrePrevio;
     }
     var request = $.ajax({
-      url: "<?php echo URL; ?>help/" + url + Elementos.SelectTabla.value,
+      url: "<?php echo URL; ?>help/" + url + tabla,
       type: "post",
       data: "data=" + JSON.stringify(vec),
     });

@@ -45,6 +45,8 @@ document.getElementById("BTNfecha").addEventListener("click", function() {
   if (Elementos.$FechaForm.val() == "") {
     alert("Ingrese una fecha");
   }else {
+    Elementos.$Asistencia.addClass("hidden");
+    Elementos.$Profesorado.addClass("hidden");
     let dia={};
     Elementos.fecha = Elementos.$FechaForm.val();
     dia["timeMax"] = Elementos.$FechaForm.val() +'T23:59:59-03:00';
@@ -93,6 +95,8 @@ function elegir2($boton, id){
 var alumnos = {};
 var profes = {};
 function traerEvento(boton){
+  Elementos.$Asistencia.addClass("hidden");
+  Elementos.$Profesorado.addClass("hidden");
   VecAsistio = [];
   VecProfes = [];
   let filas = Elementos.TablaActividades.rows;

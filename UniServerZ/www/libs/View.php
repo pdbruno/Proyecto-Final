@@ -32,18 +32,28 @@ class View {
 		require 'views/footer.php';
 	}
 
+	public function renderTempSimple($name, $temp)
+	{
+		require 'views/header.php';
+		require 'views/' . $temp . '/index.php';
+		require 'views/recursos/logicaABM.php';
+		require 'views/' . $name . '/' . $name . '.php';
+		require 'views/footer.php';
+	}
+
 	public function renderTabla($name = "", $ConModal = false)
 	{
 		require 'views/header.php';
 		require 'views/bstable/index.php';
 		if ($ConModal == true) {
 			require 'views/modalprop/index.php';
+			require 'views/recursos/logicaABM.php';
 			require 'views/modalprop/modalprop.php';
 		}else {
 			require 'views/' . $name . '/index.php';
+			require 'views/recursos/logicaABM.php';
 			require 'views/' . $name . '/' . $name . '.php';
 		}
-		require 'views/recursos/logicaABM.php';
 		require 'views/footer.php';
 	}
 

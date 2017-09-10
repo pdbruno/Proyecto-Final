@@ -3,7 +3,7 @@
   <div class="col-lg-10 col-lg-offset-1">
     <form class="form-horizontal" id="Formu">
     </form>
-    <button type="button" id="BtnAgregar" class="btn btn-default">Registrar Venta</button>
+    <button type="button" id="BtnAgregar" class="btn btn-default"><?php echo $this->tit; ?></button>
   </div>
 </div>
 <script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>

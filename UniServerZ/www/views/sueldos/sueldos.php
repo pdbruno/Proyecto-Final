@@ -1,4 +1,3 @@
-
 <script>
 var MyObj;
 var request = $.ajax({
@@ -37,6 +36,5 @@ function Enviar(i)
     type: "post",
     data: "data=" + JSON.stringify({MontoXBloque: $("#Monto" + i).val(), idCategoriasSueldos: MyObj[i].idCategoriasSueldos})
   });
-
 }
 </script>

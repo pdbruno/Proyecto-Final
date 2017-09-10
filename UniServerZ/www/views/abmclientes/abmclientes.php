@@ -2,6 +2,7 @@
 var Elementos = {
   Selec: document.getElementById("Selec")
 };
+var select1, select2, select3;
 document.getElementById("CerrarVer").addEventListener("click", function() {
   $('#ModalVer').modal('hide');
 });
@@ -13,20 +14,41 @@ function deshacerModal(){
   let row = document.createElement("div");
   row.className = "row";
   row.style.margin = "50 0 0 0";
-  let col7 = document.createElement("div");
-  col7.className = "col-lg-7";
+
+  let col1 = document.createElement("div");
+  col1.className = "col-lg-4";
   let tit1 = document.createElement("h5");
   tit1.innerHTML = "Actividad";
-  let select1 = document.createElement("select");
+  select1 = document.createElement("select");
   select1.className = "form-control activ";
   select1.id = 'idActividadesSelect1';
-  let col5 = document.createElement("div");
-  col5.className = "col-lg-5";
+
+  let col2 = document.createElement("div");
+  col2.className = "col-lg-4";
   let tit2 = document.createElement("h5");
-  tit2.innerHTML = "Modalidad";
-  let select2 = document.createElement("select");
-  select2.className = "form-control mod";
-  select2.id = 'idModalidadesSelect1';
+  tit2.innerHTML = "Modo de Pago";
+  select2 = document.createElement("select");
+  select2.className = "form-control pag";
+  select2.id = 'idModosDePagoSelect1';
+
+
+  let col3 = document.createElement("div");
+  col3.className = "col-lg-4 hidden";
+  let tit3 = document.createElement("h5");
+  tit3.innerHTML = "Modalidad";
+  select3 = document.createElement("select");
+  select3.className = "form-control mod";
+  select3.id = 'idModalidadesSelect1';
+
+  select2.addEventListener("change", function() {
+    if (this.options[this.selectedIndex].value == 2) {
+      col3.className = "col-lg-4";
+    }else {
+      col3.className = "col-lg-4 hidden";
+      select3.selectedIndex = "0";
+    }
+  });
+
   let button = document.createElement("button");
   button.type = "button"
   button.id = 'AddAct1';
@@ -35,40 +57,63 @@ function deshacerModal(){
   button.addEventListener("click", function() {
     AddAct(this);
   });
-  row.appendChild(col7);
-  row.appendChild(col5);
+  row.appendChild(col1);
+  row.appendChild(col2);
+  row.appendChild(col3);
   row.appendChild(button);
-  col7.appendChild(tit1);
-  col7.appendChild(select1);
-  col5.appendChild(tit2);
-  col5.appendChild(select2);
+  col1.appendChild(tit1);
+  col1.appendChild(select1);
+  col2.appendChild(tit2);
+  col2.appendChild(select2);
+  col3.appendChild(tit3);
+  col3.appendChild(select3);
   Elementos.Selec.innerHTML = "";
   Elementos.Selec.appendChild(row);
   Elementos.idActividadesSelect1 = select1;
-  Elementos.idModalidadesSelect1 = select2;
-  select1.innerHTML += VecActividades;
-  select2.innerHTML += VecModalidades;
+  Elementos.idModosDePagoSelect1 = select2;
+  Elementos.idModalidadesSelect1 = select3;
+  select1.innerHTML = VecActividades;
+  select2.innerHTML = VecModosDePago;
+  select3.innerHTML = VecModalidades;
 }
 
 function AddAct(bot) {
   let i = bot.id.replace("AddAct", "");
-  if (Elementos["idActividadesSelect" + i].selectedIndex == "0" || Elementos["idModalidadesSelect" + i].selectedIndex == "0") {
-    alert("Seleccione una actividad y una modalidad");
+  if ((Elementos["idActividadesSelect" + i].selectedIndex == "0" || Elementos["idModosDePagoSelect" + i].selectedIndex == "0") || (Elementos["idModosDePagoSelect" + i].selectedIndex == "2" && Elementos["idModalidadesSelect" + i].selectedIndex == "0")) {
+    alert("Seleccione una actividad, un modo de pago y, si corresponde, una modalidad");
   } else {
     let j = Number(i) + 1;
     let row = document.createElement("div");
     row.className = "row";
     row.style = "margin-top : 50px";
-    let col7 = document.createElement("div");
-    col7.className = "col-lg-7";
+
+    let col1 = document.createElement("div");
+    col1.className = "col-lg-4";
     let select1 = document.createElement("select");
     select1.className = "form-control activ";
     select1.id = 'idActividadesSelect' + j ;
-    let col5 = document.createElement("div");
-    col5.className = "col-lg-5";
+
+    let col2 = document.createElement("div");
+    col2.className = "col-lg-4";
     let select2 = document.createElement("select");
-    select2.className = "form-control mod";
-    select2.id = 'idModalidadesSelect' + j ;
+    select2.className = "form-control pag";
+    select2.id = 'idModosDePagoSelect' + j ;
+
+    let col3 = document.createElement("div");
+    col3.className = "col-lg-4 hidden";
+    let select3 = document.createElement("select");
+    select3.className = "form-control mod";
+    select3.id = 'idModalidadesSelect' + j ;
+
+    select2.addEventListener("change", function() {
+      if (this.options[this.selectedIndex].value == 2) {
+        col3.className = "col-lg-4";
+      }else {
+        col3.className = "col-lg-4 hidden";
+        select3.selectedIndex = "0";
+      }
+    });
+
     let button = document.createElement("button");
     button.type = "button"
     button.id = 'AddAct' + j ;
@@ -77,19 +122,23 @@ function AddAct(bot) {
     button.addEventListener("click", function() {
       AddAct(this);
     });
-    row.appendChild(col7);
-    row.appendChild(col5);
+    row.appendChild(col1);
+    row.appendChild(col2);
+    row.appendChild(col3);
     row.appendChild(button);
-    col7.appendChild(select1);
-    col5.appendChild(select2);
+    col1.appendChild(select1);
+    col2.appendChild(select2);
+    col3.appendChild(select3);
     Elementos.Selec.appendChild(row);
     Elementos["idActividadesSelect" + j] = select1;
-    Elementos["idModalidadesSelect" + j] = select2;
-    select1.innerHTML += Elementos["idActividadesSelect" + i].innerHTML;
+    Elementos["idModosDePagoSelect" + j] = select2;
+    Elementos["idModalidadesSelect" + j] = select3;
+    select1.innerHTML = Elementos["idActividadesSelect" + i].innerHTML;
     select1.remove(Elementos["idActividadesSelect" + i].selectedIndex);
     $("#AddAct" + i).addClass('hidden')
     Elementos["idActividadesSelect" + i].disabled = true;
-    select2.innerHTML += VecModalidades;
+    select2.innerHTML = Elementos["idModosDePagoSelect" + i].innerHTML;
+    select3.innerHTML = Elementos["idModalidadesSelect" + i].innerHTML;
   }
 
 }
@@ -101,6 +150,8 @@ $('#FechaNacimientoForm').datepicker({
 });
 var VecActividades = "";
 var VecModalidades = "";
+var VecModosDePago = "";
+
 var bien = false;
 var final = [];
 document.getElementById("aceptarModal").addEventListener("click", function() {
@@ -109,10 +160,10 @@ document.getElementById("aceptarModal").addEventListener("click", function() {
   $('#ModalSel').modal('hide');
   let l = document.getElementById("Selec").getElementsByClassName("mod").length;
   for (var i = 1; i <= l; i++) {
-    if (Elementos["idActividadesSelect" + i].value == "" || Elementos["idModalidadesSelect" + i].value == "") {
+    if ((Elementos["idActividadesSelect" + i].selectedIndex == "0" || Elementos["idModosDePagoSelect" + i].selectedIndex == "0") || (Elementos["idModosDePagoSelect" + i].selectedIndex == "2" && Elementos["idModalidadesSelect" + i].selectedIndex == "0")) {
       bien = false;
     }else{
-      final[i-1] = {idActividades : Elementos["idActividadesSelect" + i].value, idModalidades : Elementos["idModalidadesSelect" + i].value};
+      final[i-1] = {idClientes: idClientes, idActividades : Elementos["idActividadesSelect" + i].value, idModosDePago : Elementos["idModosDePagoSelect" + i].value, idModalidades : Elementos["idModalidadesSelect" + i].value};
     }
   }
 });
@@ -124,20 +175,32 @@ var request = $.ajax({
 request.done(function (respuesta){
   let myObj = JSON.parse(respuesta);
   crearCampos(myObj);
+  deshacerModal();
   request = $.ajax({
     url: "<?php echo URL; ?>help/Dropdown/idModalidades",
     type: "post"
   });
   request.done(function (respuesta){
-    VecModalidades = optionCrear(JSON.parse(respuesta));
+    VecModalidades = optionCrear(JSON.parse(respuesta)[0]);
+    select3.innerHTML = VecModalidades;
   });
   request = $.ajax({
     url: "<?php echo URL; ?>help/Dropdown/idActividades",
     type: "post"
   });
   request.done(function (respuesta){
-    VecActividades = optionCrear(JSON.parse(respuesta));
+    VecActividades = optionCrear(JSON.parse(respuesta)[0]);
+    select1.innerHTML = VecActividades;
   });
+  request = $.ajax({
+    url: "<?php echo URL; ?>help/Dropdown/idModosDePago",
+    type: "post"
+  });
+  request.done(function (respuesta){
+    VecModosDePago = optionCrear(JSON.parse(respuesta)[0]);
+    select2.innerHTML = VecModosDePago;
+  });
+
 });
 
 document.getElementById("BtnAgregar").addEventListener("click", function() {
@@ -188,13 +251,15 @@ document.getElementById("BtnEliminar").addEventListener("click", function() {
     });
   }
 });
+var idClientes;
 $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
+  idClientes = $element.idClientes;
   $('.success').removeClass('success');
   $(field).addClass('success');
   request = $.ajax({
     url: "<?php echo URL; ?>cliente/traerElemento/Clientes",
     type: "post",
-    data: "data=" + $element.idClientes,
+    data: "data=" + idClientes,
   });
   request.done(function (respuesta)
   {
@@ -204,13 +269,14 @@ $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
     for (var i = 0; i < actividades.length; i++) {
       texto += "<tr>";
       texto+="<td>" + actividades[i].NombreAct + "</td>";
+      texto+="<td>" + actividades[i].NombrePag + "</td>";
       if (actividades[i].NombreMod == null) {
-        texto+="<td>Ninguna</td>";
+        texto+="<td>-</td>";
       }else {
         texto+="<td>" + actividades[i].NombreMod + "</td>";
       }
       texto+="</tr>";
-      final.push({idActividades: actividades[i].idActividades, idModalidades: actividades[i].idModalidades});
+      final.push({idClientes: idClientes, idActividades: actividades[i].idActividades, idModosDePago: actividades[i].idModosDePago, idModalidades: actividades[i].idModalidades});
       bien = true;
     }
     $("#TablaActividades").html(texto);

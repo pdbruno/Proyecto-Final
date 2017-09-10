@@ -8,7 +8,9 @@ class actividad extends calendar {
 
   public function calendario() {
     $this->manejar("actividad","calendario");
-    $this->view->render('calendario');
+    $this->view->lista = URL . "actividad/listarElementos/Actividades";
+    $this->view->th = "<th data-field='Nombre' data-sortable='true'>Nombre</th>";
+    $this->view->renderTabla('calendario');
   }
 
   public function index() {

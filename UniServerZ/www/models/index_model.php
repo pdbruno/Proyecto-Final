@@ -11,10 +11,16 @@ class index_Model extends Model {
     echo json_encode($outp);
   }
 
+  function morososExceso()
+  {
+    $outp = $this->traerTodo('excesoasistencia');
+    echo json_encode($this->formatDeuda($outp));
+  }
+
 
   function morososActividad()
   {
-    $outp = $this->db->getAll("SELECT * FROM `deudas`");
+    $outp = $this->traerTodo('deudas');
     echo json_encode($this->formatDeuda($outp));
   }
 }

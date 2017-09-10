@@ -1,15 +1,13 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="panel panel-default">
-      <div class="panel-heading">Listado de Sueldos
+      <div class="panel-heading"><?php echo $this->tit; ?>
       </div>
       <div class="table-responsive col-sm-12">
         <table class="table table-hover" >
           <thead>
             <tr>
-              <th class="hidden">idCategoriasSueldos</th>
-              <th>Categoría</th>
-              <th>Monto por Bloque</th>
+              <?php echo $this->th; ?>
               <th></th>
             </tr>
           </thead>

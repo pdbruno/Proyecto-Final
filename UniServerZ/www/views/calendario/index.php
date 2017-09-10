@@ -1,21 +1,3 @@
-<link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="<?php echo URL; ?>views/recursos/jquery.timepicker.css" />
-<link rel="stylesheet" href="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.css">
-<div class="row" style="height:100%;">
-  <div class="col-lg-10 col-lg-offset-1">
-    <div class="table-responsive col-lg-12">
-      <table  id="Tabla" class="table table-hover" data-toggle="table" data-url="<?php echo URL; ?>actividad/listarElementos/Actividades" data-search='true' cellspacing="0" width="100%"  >
-        <thead>
-          <tr>
-            <th data-field="Nombre" data-sortable='true'>Nombre</th>
-          </tr>
-        </thead>
-      </table>
-      <button type="button" id="BtnAgregar" class="btn btn-default">Agregar</button>
-    </div>
-  </div>
-</div>
-
   <div class="modal fade" tabindex="-1" role="dialog" id="ModalPropiedades">
     <div class="modal-dialog modal-lg" role="document" >
       <div class="modal-content">

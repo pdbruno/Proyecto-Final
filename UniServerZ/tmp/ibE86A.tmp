@@ -1,1 +1,0 @@
-`dbproyectofinal`.`clientesactividades`, CONSTRAINT `clientesactividades_ibfk_2` FOREIGN KEY (`idActividadesModalidadesNiveles`) REFERENCES `actividadesmodalidadesniveles` (`idActividadesModalidadesNiveles`)

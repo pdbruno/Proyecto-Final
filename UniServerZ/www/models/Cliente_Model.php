@@ -27,11 +27,15 @@ class cliente_Model extends Model {
     $datos = $this->model->eliminar('Clientes',$idClientes);
   }
 
-  public function asignarActividades($actividades, $idClientes) {
-    $this->db->query("DELETE FROM clientesactividades WHERE idClientes = ?i", $idClientes);
+  public function asignarActividades($actividades) {
+    $this->db->query("DELETE FROM clientesactividades WHERE idClientes = ?i", $actividades[0]['idClientes']);
     $actividades = $this->unique_multidim_array($actividades, "idActividades");
     for ($i = 0; $i < count($actividades); $i++) {
-      $this->db->query("INSERT INTO clientesactividades SET `idClientes`= ?i, `idActividades`= ?i, `idModalidades` = ?s", $idClientes, $actividades[$i]["idActividades"], $actividades[$i]["idModalidades"]);
+      $this->db->query("INSERT INTO clientesactividades SET ?u", $actividades[$i]);
+      $outp = $this->db->getAll("SELECT * FROM actividadesaranceles WHERE idActividades = ?i AND idModosDePago = ?i AND idModalidades = ?i", $actividades[$i]['idActividades'],$actividades[$i]['idModosDePago'],$actividades[$i]['idModalidades']);
+      if (count($outp) == 0) {
+        $this->db->query("INSERT INTO actividadesaranceles SET idActividades = ?i , idModosDePago = ?i , idModalidades = ?i", $actividades[$i]['idActividades'],$actividades[$i]['idModosDePago'],$actividades[$i]['idModalidades']);
+      }
     }
   }
   public function unique_multidim_array($array, $key) {
@@ -49,8 +53,9 @@ class cliente_Model extends Model {
     return $temp_array;
   }
   public function actCliente($idClientes) {
-    $sql = "SELECT actividades.Nombre as NombreAct, actividades.idActividades as idActividades, actividades.XClase, actividades.XMes, actividades.XSemestre, modalidades.Nombre as NombreMod, modalidades.idModalidades as idModalidades FROM `clientesactividades`
+    $sql = "SELECT actividades.Nombre as NombreAct, actividades.idActividades as idActividades, actividades.XSemestre, modalidades.Nombre as NombreMod, modalidades.idModalidades as idModalidades, modosdepago.Nombre as NombrePag, modosdepago.idModosDePago as idModosDePago FROM `clientesactividades`
     LEFT JOIN actividades ON clientesactividades.idActividades = actividades.idActividades
+    LEFT JOIN modosdepago ON clientesactividades.idModosDePago = modosdepago.idModosDePago
     LEFT JOIN modalidades ON clientesactividades.idModalidades = modalidades.idModalidades
     WHERE `idClientes` = ?i";
     $res[] = $this->db->getAll($sql, $idClientes);

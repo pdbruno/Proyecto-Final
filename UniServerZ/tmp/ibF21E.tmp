@@ -1,0 +1,3 @@
+,
+  CONSTRAINT `asistencias_ibfk_1` FOREIGN KEY (`idClientes`) REFERENCES `clientes` (`idClientes`),
+  CONSTRAINT `asistencias_ibfk_2` FOREIGN KEY (`idActividades`) REFERENCES `actividades` (`idActividades`)

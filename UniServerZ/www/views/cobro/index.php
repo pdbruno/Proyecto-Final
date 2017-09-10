@@ -1,31 +1,10 @@
 <link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.css">
 <div class="col-lg-6">
-  <div class="panel panel-default">
-    <div class="panel-heading">Listado de Clientes
-    </div>
-    <div class="table-responsive col-lg-12">
-      <table  id="Tabla" class="table table-hover" data-toggle="table" data-url="<?php echo URL; ?>cliente/listarElementos/Clientes" data-search='true' cellspacing="0" width="100%"  >
-        <thead>
-          <tr>
-            <th data-field="Nombres" data-sortable='true'>Nombres</th>
-            <th data-field="Apellidos" data-sortable='true'>Apellidos</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-  </div>
-</div>
-<div class="col-lg-6">
   <div class="row hidden escondible" id="PanelDeudas">
     <div class="col-lg-12">
       <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingOne">
-      <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" href="#collapseOne">
-          Deudas del cliente
-        </a>
-      </h4>
+    <div class="panel-heading" role="button" id="headingOne" data-toggle="collapse" href="#collapseOne" class="panel-title">
     </div>
     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel">
       <div class="panel-body">
@@ -55,22 +34,8 @@
       </div>
     </div>
   </div>
-  <div class="row" id="Tiempo">
-    <div class="col-lg-12">
-      <div class="btn-group btn-group-lg btn-group-justified" data-toggle="buttons">
-        <label class="btn btn-primary hidden escondible disab" id="Mes">
-          <input type="radio" name="options" autocomplete="off"> Mes
-        </label>
-        <label class="btn btn-primary hidden escondible disab" id="Clase">
-          <input type="radio" name="options" autocomplete="off"> Clase
-        </label>
-        <label class="btn btn-primary hidden escondible disab" id="Semestre">
-          <input type="radio" name="options" autocomplete="off"> Semestre
-        </label>
-      </div>
-    </div>
-  </div>
-  <br>
+</div>
+<div class="col-lg-6">
   <div class="row hidden escondible escondible2" id="IngresoFecha">
     <div class="col-lg-12">
       <div class="input-group">
@@ -82,10 +47,11 @@
     </div>
   </div>
   <div class="row hidden escondible escondible2" id="IngresoMes">
-    <div class="col-lg-12">
-      <div class="input-group">
-        <input type="text" class="form-control disab" id="MesForm" name="MesForm" placeholder="Mes a pagar">
-      </div>
+    <div class="col-lg-6">
+      <input type="text" class="form-control disab" id="MesForm" name="MesForm" placeholder="Mes a pagar">
+    </div>
+    <div class="col-lg-6">
+      <button type="button" id="Semestre" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Semestre</button>
     </div>
   </div>
   <div class="row hidden escondible escondible2" id="SemestrePicker">
@@ -105,10 +71,10 @@
       <label for="Monto">A cobrar</label>
       <div class="input-group">
         <span class="input-group-addon">$</span>
-        <input type="text" id="Monto" class="form-control disab">
+        <input type="text" id="Monto" class="form-control">
         <span class="input-group-addon">.00</span>
       </div>
-      <button class="btn btn-default hidden escondible escondible2" id="Enviar" type="button">Aceptar</button>
+      <button class="btn btn-default" id="Enviar" type="button">Aceptar</button>
     </div>
   </div>
 </div>

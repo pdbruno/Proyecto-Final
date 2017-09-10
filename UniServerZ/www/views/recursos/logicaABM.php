@@ -34,18 +34,63 @@ function llenarDropdowns(youknow){
   }
 }
 
-function verDeudas(Obj){
+function generarTablaCheta(columnas, respuesta, pers){
+  let trpricipal = document.createElement("tr");
+  let tdpricipal = document.createElement("td");
+  tdpricipal.style.padding = 0;
+  trpricipal.appendChild(tdpricipal);
+
+  let listgroup = document.createElement("div");
+  listgroup.className = "list-group";
+  listgroup.style.margin = 0;
+  tdpricipal.appendChild(listgroup);
+
+  let listgroupitem = document.createElement("a");
+  listgroupitem.className = "list-group-item";
+  listgroupitem.href = "#" + + respuesta[0].idClientes;
+  listgroupitem.innerHTML = pers;
+  listgroupitem.style.border = "none";
+  listgroupitem.setAttribute("data-toggle", "collapse");
+  listgroup.appendChild(listgroupitem);
+
+  let collapse = document.createElement("div");
+  collapse.className = "collapse";
+  collapse.id = respuesta[0].idClientes;
+  tdpricipal.appendChild(collapse);
+
+  let table = document.createElement("table");
+  table.className = "table table-hover";
+  collapse.appendChild(table);
+
+  let thead = document.createElement("thead");
+  table.appendChild(thead);
+
+  let trsecundario = document.createElement("tr");
+  thead.appendChild(trsecundario);
+
+  for (x in columnas) {
+    let th = document.createElement("th");
+    th.innerHTML = columnas[x];
+    trsecundario.appendChild(th);
+  }
+
+  let tbody = document.createElement("tbody");
+  table.appendChild(tbody);
+  let ll = respuesta.length;
+  for (let i = 0; i < ll; i++) {
+    tbody.appendChild(verDeudas(respuesta[i], columnas));
+  }
+  return trpricipal;
+}
+
+function verDeudas(Obj, columnas){
   let ll = Obj.length;
   let trsecundariobody = document.createElement("tr");
-  let tdAct = document.createElement("td");
-  tdAct.innerHTML = Obj.Actividad;
-  trsecundariobody.appendChild(tdAct);
-  let tdFec = document.createElement("td");
-  tdFec.innerHTML = Obj.Fecha;
-  trsecundariobody.appendChild(tdFec);
-  let tdMon = document.createElement("td");
-  tdMon.innerHTML = Obj.Monto;
-  trsecundariobody.appendChild(tdMon);
+  for (x in columnas) {
+    let td = document.createElement("td");
+    td.innerHTML = Obj[x];
+    trsecundariobody.appendChild(td);
+  }
   return trsecundariobody;
 }
 

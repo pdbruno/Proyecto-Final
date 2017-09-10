@@ -1,0 +1,1 @@
+`dbproyectofinal`.`clientesactividades`, CONSTRAINT `clientesactividades_ibfk_4` FOREIGN KEY (`idModosDePago`) REFERENCES `modosdepago` (`idModosDePago`)

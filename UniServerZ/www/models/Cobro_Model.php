@@ -19,10 +19,12 @@ class Cobro_Model extends Model {
   }
 
   public function listado($tipo) {
-    $sql = "SELECT actividadesaranceles.*, actividades.Nombre as actNombre, modalidades.Nombre as modNombre
-    FROM actividadesaranceles
+    $sql = "SELECT actividadesaranceles.*, actividades.Nombre as actNombre, modalidades.Nombre as modNombre, modosdepago.Nombre as pagNombre
+    FROM actividadesaranceles 
+    LEFT JOIN modosdepago ON modosdepago.idModosDePago = actividadesaranceles.idModosDePago
     LEFT JOIN actividades ON actividades.idActividades = actividadesaranceles.idActividades
-    LEFT JOIN modalidades ON modalidades.idModalidades = actividadesaranceles.idModalidades";
+    LEFT JOIN modalidades ON modalidades.idModalidades = actividadesaranceles.idModalidades
+    GROUP BY idActividades, idModosDePago, idModalidades";
     $outp = $this->db->getAll($sql);
     echo json_encode($outp);
   }
@@ -45,7 +47,7 @@ class Cobro_Model extends Model {
 
   public function traerElemento($tipo,$data) {
     $data = json_decode($data);
-    $sql = "SELECT ?n FROM `actividadesaranceles` WHERE idActividades = ?i AND idModalidades = ?s ORDER BY FechaInicio DESC LIMIT 1";
-    return $this->db->getOne($sql, $data->Campo, $data->idActividades, $data->idModalidades);
+    $sql = "SELECT `Precio` FROM `actividadesaranceles` WHERE idActividades = ?i AND idModosDePago = ?i AND idModalidades = ?s ORDER BY FechaInicio DESC LIMIT 1";
+    return $this->db->getOne($sql, $data->idActividades, $data->idModosDePago, $data->idModalidades);
   }
 }

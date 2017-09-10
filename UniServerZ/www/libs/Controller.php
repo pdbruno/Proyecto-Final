@@ -7,8 +7,7 @@ class Controller {
   }
 
   public function eliminarElemento($Tipo) {
-    $idElemento = $_POST['data'];
-    $this->model->eliminar($Tipo, $idElemento);
+    $this->model->eliminar($Tipo,  $_POST['data']);
   }
 
   public function listarElementos($tipo) {
@@ -29,13 +28,15 @@ class Controller {
   }
 
   public function agregarModificarElemento($tipo) {
-    $caca = json_decode($_POST['data'], TRUE);
-    $this->model->agregarModificar($tipo, $caca);
+    $this->model->agregarModificar($tipo, json_decode($_POST['data'], TRUE));
   }
 
   public function traerElemento($tipo) {
-    $id = $_POST['data'];
-    echo $datos = $this->model->traerElemento($tipo, $id);
+    echo $datos = $this->model->traerElemento($tipo, $_POST['data']);
+  }
+
+  public function traerTodo($tipo) {
+    echo $datos = $this->model->traerTodo($tipo);
   }
 
 }

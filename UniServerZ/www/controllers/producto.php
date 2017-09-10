@@ -14,11 +14,13 @@ class producto extends Controller {
   }
 
   function ingresostock() {
-    $this->view->render('ingresostock');
+    $this->view->tit = "Registrar Compra";
+    $this->view->renderForm('ingresostock');
   }
 
   function egresostock() {
-    $this->view->render('egresostock');
+    $this->view->tit = "Registrar Venta";
+    $this->view->renderForm('egresostock');
   }
 
 

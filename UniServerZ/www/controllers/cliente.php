@@ -14,7 +14,7 @@ class cliente extends Controller {
     $cliente = json_decode($_POST['data1'], TRUE);
     $actividades = json_decode($_POST['data2'], TRUE);
     $this->model->agregarModificar('Clientes', $cliente);
-    $this->model->asignarActividades($actividades, $cliente["idClientes"]);
+    $this->model->asignarActividades($actividades);
   }
   function index() {
       $this->view->lista = URL . "cliente/listarElementos/Clientes";
@@ -33,6 +33,7 @@ class cliente extends Controller {
                 <thead>
                   <tr>
                     <th>Actividad</th>
+                    <th>Modo de Pago</th>
                     <th>Modalidad</th>
                   </tr>
                 </thead>

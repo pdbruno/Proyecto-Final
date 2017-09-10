@@ -1,0 +1,4 @@
+,
+  CONSTRAINT `actividadesaranceles_ibfk_1` FOREIGN KEY (`idActividades`) REFERENCES `actividades` (`idActividades`),
+  CONSTRAINT `actividadesaranceles_ibfk_2` FOREIGN KEY (`idModalidades`) REFERENCES `modalidades` (`idModalidades`),
+  CONSTRAINT `actividadesaranceles_ibfk_3` FOREIGN KEY (`idModosDePago`) REFERENCES `modosdepago` (`idModosDePago`)NT `clientesactividades_ibfk_4` FOREIGN KEY (`idModosDePago`) REFERENCES `modosdepago` (`idModosDePago`)
