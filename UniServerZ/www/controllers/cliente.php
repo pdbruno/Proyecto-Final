@@ -57,8 +57,18 @@ class cliente extends Controller {
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title">Seleccionar actividad/es</h4>
             </div>
-            <div class="modal-body" id="Selec">
-
+            <div class="modal-body">
+              <div class="col-lg-4">
+                <h5>Actividad</h5>
+              </div>
+              <div class="col-lg-4">
+                <h5>Modo de Pago</h5>
+              </div>
+              <div class="col-lg-4">
+                <h5>Modalidad</h5>
+              </div>
+              <div id="Selec">
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" id="deshacerModal" data-dismiss="modal">Cancelar</button>

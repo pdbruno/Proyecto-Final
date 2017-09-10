@@ -2,7 +2,6 @@
 var Elementos = {
   Selec: document.getElementById("Selec")
 };
-var select1, select2, select3;
 document.getElementById("CerrarVer").addEventListener("click", function() {
   $('#ModalVer').modal('hide');
 });
@@ -11,74 +10,46 @@ document.getElementById("deshacerModal").addEventListener("click", function() {
   deshacerModal();
 });
 function deshacerModal(){
-  let row = document.createElement("div");
-  row.className = "row";
-  row.style.margin = "50 0 0 0";
-
-  let col1 = document.createElement("div");
-  col1.className = "col-lg-4";
-  let tit1 = document.createElement("h5");
-  tit1.innerHTML = "Actividad";
-  select1 = document.createElement("select");
-  select1.className = "form-control activ";
-  select1.id = 'idActividadesSelect1';
-
-  let col2 = document.createElement("div");
-  col2.className = "col-lg-4";
-  let tit2 = document.createElement("h5");
-  tit2.innerHTML = "Modo de Pago";
-  select2 = document.createElement("select");
-  select2.className = "form-control pag";
-  select2.id = 'idModosDePagoSelect1';
-
-
-  let col3 = document.createElement("div");
-  col3.className = "col-lg-4 hidden";
-  let tit3 = document.createElement("h5");
-  tit3.innerHTML = "Modalidad";
-  select3 = document.createElement("select");
-  select3.className = "form-control mod";
-  select3.id = 'idModalidadesSelect1';
-
-  select2.addEventListener("change", function() {
-    if (this.options[this.selectedIndex].value == 2) {
-      col3.className = "col-lg-4";
-    }else {
-      col3.className = "col-lg-4 hidden";
-      select3.selectedIndex = "0";
-    }
-  });
-
-  let button = document.createElement("button");
-  button.type = "button"
-  button.id = 'AddAct1';
-  button.className = "btn btn-link";
-  button.innerHTML = "+AgregarActividad";
-  button.addEventListener("click", function() {
-    AddAct(this);
-  });
-  row.appendChild(col1);
-  row.appendChild(col2);
-  row.appendChild(col3);
-  row.appendChild(button);
-  col1.appendChild(tit1);
-  col1.appendChild(select1);
-  col2.appendChild(tit2);
-  col2.appendChild(select2);
-  col3.appendChild(tit3);
-  col3.appendChild(select3);
+  Elementos.idActividadesSelect0 = document.createElement("select");
+  Elementos.idModosDePagoSelect0 = document.createElement("select");
+  Elementos.idModalidadesSelect0 = document.createElement("select");
+  Elementos.idActividadesSelect0.innerHTML = VecModalidades;
+  Elementos.idActividadesSelect0.innerHTML = VecActividades;
+  Elementos.idModosDePagoSelect0.innerHTML = VecModosDePago;
+  Elementos.idActividadesSelect0.selectedIndex = -1;
+  Elementos.idModosDePagoSelect0.selectedIndex = -1;
+  Elementos.idModalidadesSelect0.selectedIndex = -1;
   Elementos.Selec.innerHTML = "";
-  Elementos.Selec.appendChild(row);
-  Elementos.idActividadesSelect1 = select1;
-  Elementos.idModosDePagoSelect1 = select2;
-  Elementos.idModalidadesSelect1 = select3;
-  select1.innerHTML = VecActividades;
-  select2.innerHTML = VecModosDePago;
-  select3.innerHTML = VecModalidades;
+  AddAct(0);
 }
+var request = $.ajax({
+  url: "<?php echo URL; ?>cliente/tabla/clientes",
+  type: "post"
+});
+request.done(function (respuesta){
+  let myObj = JSON.parse(respuesta);
+  crearCampos(myObj);
+});
+var idModalidades = $.ajax({
+  url: "<?php echo URL; ?>help/Dropdown/idModalidades",
+  type: "post"
+});
+var idActividades = $.ajax({
+  url: "<?php echo URL; ?>help/Dropdown/idActividades",
+  type: "post"
+});
+var idModosDePago = $.ajax({
+  url: "<?php echo URL; ?>help/Dropdown/idModosDePago",
+  type: "post"
+});
+$.when(idModalidades, idActividades, idModosDePago).done(function(a1, a2, a3){
+  VecModalidades = optionCrear(JSON.parse(a1[0])[0]);
+  VecActividades = optionCrear(JSON.parse(a2[0])[0]);
+  VecModosDePago = optionCrear(JSON.parse(a3[0])[0]);
+  deshacerModal();
+});
 
-function AddAct(bot) {
-  let i = bot.id.replace("AddAct", "");
+function AddAct(i) {
   if ((Elementos["idActividadesSelect" + i].selectedIndex == "0" || Elementos["idModosDePagoSelect" + i].selectedIndex == "0") || (Elementos["idModosDePagoSelect" + i].selectedIndex == "2" && Elementos["idModalidadesSelect" + i].selectedIndex == "0")) {
     alert("Seleccione una actividad, un modo de pago y, si corresponde, una modalidad");
   } else {
@@ -86,25 +57,21 @@ function AddAct(bot) {
     let row = document.createElement("div");
     row.className = "row";
     row.style = "margin-top : 50px";
-
     let col1 = document.createElement("div");
     col1.className = "col-lg-4";
     let select1 = document.createElement("select");
     select1.className = "form-control activ";
     select1.id = 'idActividadesSelect' + j ;
-
     let col2 = document.createElement("div");
     col2.className = "col-lg-4";
     let select2 = document.createElement("select");
     select2.className = "form-control pag";
     select2.id = 'idModosDePagoSelect' + j ;
-
     let col3 = document.createElement("div");
     col3.className = "col-lg-4 hidden";
     let select3 = document.createElement("select");
     select3.className = "form-control mod";
     select3.id = 'idModalidadesSelect' + j ;
-
     select2.addEventListener("change", function() {
       if (this.options[this.selectedIndex].value == 2) {
         col3.className = "col-lg-4";
@@ -113,14 +80,13 @@ function AddAct(bot) {
         select3.selectedIndex = "0";
       }
     });
-
     let button = document.createElement("button");
     button.type = "button"
     button.id = 'AddAct' + j ;
     button.className = "btn btn-link";
     button.innerHTML = "+AgregarActividad";
     button.addEventListener("click", function() {
-      AddAct(this);
+      AddAct(j);
     });
     row.appendChild(col1);
     row.appendChild(col2);
@@ -166,41 +132,6 @@ document.getElementById("aceptarModal").addEventListener("click", function() {
       final[i-1] = {idClientes: idClientes, idActividades : Elementos["idActividadesSelect" + i].value, idModosDePago : Elementos["idModosDePagoSelect" + i].value, idModalidades : Elementos["idModalidadesSelect" + i].value};
     }
   }
-});
-
-var request = $.ajax({
-  url: "<?php echo URL; ?>cliente/tabla/clientes",
-  type: "post",
-});
-request.done(function (respuesta){
-  let myObj = JSON.parse(respuesta);
-  crearCampos(myObj);
-  deshacerModal();
-  request = $.ajax({
-    url: "<?php echo URL; ?>help/Dropdown/idModalidades",
-    type: "post"
-  });
-  request.done(function (respuesta){
-    VecModalidades = optionCrear(JSON.parse(respuesta)[0]);
-    select3.innerHTML = VecModalidades;
-  });
-  request = $.ajax({
-    url: "<?php echo URL; ?>help/Dropdown/idActividades",
-    type: "post"
-  });
-  request.done(function (respuesta){
-    VecActividades = optionCrear(JSON.parse(respuesta)[0]);
-    select1.innerHTML = VecActividades;
-  });
-  request = $.ajax({
-    url: "<?php echo URL; ?>help/Dropdown/idModosDePago",
-    type: "post"
-  });
-  request.done(function (respuesta){
-    VecModosDePago = optionCrear(JSON.parse(respuesta)[0]);
-    select2.innerHTML = VecModosDePago;
-  });
-
 });
 
 document.getElementById("BtnAgregar").addEventListener("click", function() {

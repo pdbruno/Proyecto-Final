@@ -11,6 +11,23 @@ class index_Model extends Model {
     echo json_encode($outp);
   }
 
+  function corteProd($data)
+  {
+    return $this->db->parse(" WHERE `Fecha` BETWEEN ?s AND ?s", $data['Fecha1'], $data['Fecha2']);
+  }
+
+  function productosVentas($corte = "")
+  {
+    $outp = $this->db->getAll("SELECT productos.Nombre, COUNT(0) AS Cantidad FROM `registroventas` LEFT JOIN productos on productos.idProductos = registroventas.idProductos ?p GROUP BY registroventas.idProductos ORDER BY Cantidad DESC", $corte);
+    echo json_encode($outp);
+  }
+
+  function productosGanancias($corte = "")
+  {
+    $outp = $this->db->getAll("SELECT productos.Nombre, SUM(Monto) AS Monto FROM `registroventas` LEFT JOIN productos on productos.idProductos = registroventas.idProductos ?p GROUP BY registroventas.idProductos ORDER BY SUM(Monto) DESC", $corte);
+    echo json_encode($outp);
+  }
+
   function morososExceso()
   {
     $outp = $this->traerTodo('excesoasistencia');

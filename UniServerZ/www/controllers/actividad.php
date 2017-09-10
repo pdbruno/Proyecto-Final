@@ -50,7 +50,12 @@ class actividad extends calendar {
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Seleccionar modalidad/es</h4>
           </div>
-          <div class="modal-body" id="Selec">
+          <div class="modal-body">
+            <div class="col-lg-12">
+              <h5>Modalidad</h5>
+            </div>
+            <div id="Selec">
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" id="deshacerModal" data-dismiss="modal">Cancelar</button>
@@ -88,8 +93,9 @@ class actividad extends calendar {
     echo $this->model->asignarProfes($profes, $id, $fecha);
   }
   public function traerAnotados() {
-    $data = $_POST['data'];
-    echo $this->model->traerAnotados($data);
+    $idActividades = $_POST['data'];
+    $Fecha = $_POST['data2'];
+    echo $this->model->traerAnotados($idActividades, $Fecha);
   }
 
   public function agregarModificarActividad() {

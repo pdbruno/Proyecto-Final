@@ -49,14 +49,20 @@ class actividad_Model extends Model {
     $outp[] = $res;
     echo json_encode($outp);
   }
-  public function traerAnotados($idActividades)
+  public function traerAnotados($idActividades, $Fecha)
   {
     $idActividades = substr($idActividades,0,11);
-    $UsersFinal[] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos` WHERE `idClientes` IN (SELECT `idClientes` FROM `clientesactividades` WHERE `idActividades` = ?i)", $idActividades);
-    if (count($UsersFinal) == 0) {
-      $UsersFinal[0] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos`");
+    $outp = $this->db->getAll("SELECT CONCAT(clientes.`Nombres`,' ',clientes.`Apellidos`) AS name FROM `asistencias` LEFT JOIN clientes ON clientes.idClientes = asistencias.idClientes WHERE `idActividades` = ?i AND `Fecha` = ?s", $idActividades, $Fecha);
+    if (count($outp) == 0) {
+      $UsersFinal[] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos` WHERE `idClientes` IN (SELECT `idClientes` FROM `clientesactividades` WHERE `idActividades` = ?i)", $idActividades);
+      if (count($UsersFinal) == 0) {
+        $UsersFinal[0] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos`");
+      }
+      $UsersFinal[] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos` WHERE `EsInstructor` = 1");
+    }else {
+      $UsersFinal[] = $outp;
+      $UsersFinal[] = "nana";
     }
-    $UsersFinal[] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos` WHERE `EsInstructor` = 1");
     return json_encode($UsersFinal);
   }
 

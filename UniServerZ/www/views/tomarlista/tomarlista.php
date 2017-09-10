@@ -7,6 +7,7 @@ var Elementos = {
   TablaActividades : document.getElementById("TablaActividades"),
   ListaClientes: document.getElementById("ListaClientes"),
   ListaInstructores: document.getElementById("ListaInstructores"),
+  BTNenviar: document.getElementById("BTNenviar"),
   $NombreForm: $("#NombreForm"),
   $ProfeForm: $("#ProfeForm")
 };
@@ -28,7 +29,7 @@ Elementos.$FechaForm.datepicker({
   todayHighlight: true
 });
 
-document.getElementById("BTNenviar").addEventListener("click", function() {
+Elementos.BTNenviar.addEventListener("click", function() {
   let request = $.ajax({
     url: "<?php echo URL; ?>actividad/asignarAsistencia",
     type: "post",
@@ -112,23 +113,32 @@ function traerEvento(boton){
   let request = $.ajax({
     url: "<?php echo URL; ?>actividad/traerAnotados",
     type: "post",
-    data: "data=" + idActividades,
+    data: "data=" + idActividades + "&data2=" + Elementos.$FechaForm.val(),
   });
   request.done(function (respuesta){
-    Elementos.$Asistencia.removeClass("hidden");
-    Elementos.$Profesorado.removeClass("hidden");
-    alumnos = JSON.parse(respuesta)[0];
-    profes = JSON.parse(respuesta)[1];
+    respuesta = JSON.parse(respuesta);
+    let profes = respuesta[1];
+    let alumnos = respuesta[0];
     let texto = "";
-    let texto2 = "";
-    for (usuario in alumnos) {
-      texto+= "<button type='button' class='list-group-item' onclick='elegir($(this),"+alumnos[usuario].idClientes+")' >" + alumnos[usuario].name + "</button>"
-    }
-    for (usuario in profes) {
-      texto2+= "<button type='button' class='list-group-item' onclick='elegir2($(this),"+profes[usuario].idClientes+")' >" + profes[usuario].name + "</button>"
+    Elementos.$Asistencia.removeClass("hidden");
+    if (profes == 'nana') {
+      Elementos.BTNenviar.disabled = true;
+      for (usuario in alumnos) {
+        texto+= "<button type='button' class='list-group-item' disabled>" + alumnos[usuario].name + "</button>"
+      }
+    }else {
+      Elementos.BTNenviar.disabled = false;
+      Elementos.$Profesorado.removeClass("hidden");
+      let texto2 = "";
+      for (usuario in alumnos) {
+        texto+= "<button type='button' class='list-group-item' onclick='elegir($(this),"+alumnos[usuario].idClientes+")' >" + alumnos[usuario].name + "</button>"
+      }
+      for (usuario in profes) {
+        texto2+= "<button type='button' class='list-group-item' onclick='elegir2($(this),"+profes[usuario].idClientes+")' >" + profes[usuario].name + "</button>"
+      }
+      Elementos.ListaInstructores.innerHTML = texto2;
     }
     Elementos.ListaClientes.innerHTML = texto;
-    Elementos.ListaInstructores.innerHTML = texto2;
   });
 }
 

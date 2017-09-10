@@ -17,6 +17,7 @@
   <!-- Bootstrap Core JavaScript -->
   <script src="<?php echo URL; ?>views/recursos/vendor/bootstrap/js/bootstrap.min.js"></script>
 
+
   <title>Hola</title>
 </head>
 <body>

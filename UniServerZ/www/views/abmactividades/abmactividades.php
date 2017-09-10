@@ -25,76 +25,43 @@ request.done(function (respuesta){
   });
 });
 function deshacerModal(){
-  let row = document.createElement("div");
-  row.className = "row";
-  row.style.margin = "50 0 0 0";
-
-  let col5 = document.createElement("div");
-  col5.className = "col-lg-12";
-
-  let tit2 = document.createElement("h5");
-  tit2.innerHTML = "Modalidad";
-
-  let select2 = document.createElement("select");
-  select2.className = "form-control mod";
-  select2.id = 'idModalidadesSelect1';
-
-  let button = document.createElement("button");
-  button.type = "button"
-  button.id = 'AddAct1';
-  button.className = "btn btn-link";
-  button.innerHTML = "+AgregarActividad";
-  button.addEventListener("click", function() {
-    AddAct(this);
-  });
-  row.appendChild(col5);
-  row.appendChild(button);
-  col5.appendChild(tit2);
-  col5.appendChild(select2);
+  Elementos["idModalidadesSelect0"] = document.createElement("select");
+  Elementos["idModalidadesSelect0"].innerHTML = optionCrear(VecModalidades[0]);
+  Elementos["idModalidadesSelect0"].selectedIndex = -1;
   Elementos.Selec.innerHTML = "";
-  Elementos.Selec.appendChild(row);
-
-  Elementos.idModalidadesSelect1 = select2;
-  select2.innerHTML += optionCrear(VecModalidades[0]);
+  AddAct(0);
 }
 
-function AddAct(bot) {
-  let i = bot.id.replace("AddAct", "");
-  if (Elementos["idModalidadesSelect" + i].selectedIndex == "0") {
+function AddAct(i) {
+  if (Elementos["idModalidadesSelect" + i].selectedIndex === 0) {
     alert("Seleccione una modalidad");
   } else {
     let j = Number(i) + 1;
-
     let row = document.createElement("div");
     row.className = "row";
     row.style = "margin-top : 50px";
-
-    let col5 = document.createElement("div");
-    col5.className = "col-lg-12";
-
-    let select2 = document.createElement("select");
-    select2.className = "form-control mod";
-    select2.id = 'idModalidadesSelect' + j ;
-
+    let col12 = document.createElement("div");
+    col12.className = "col-lg-12";
+    let select = document.createElement("select");
+    select.className = "form-control mod";
+    select.id = 'idModalidadesSelect' + j ;
     let button = document.createElement("button");
     button.type = "button"
     button.id = 'AddAct' + j ;
     button.className = "btn btn-link";
-    button.innerHTML = "+AgregarActividad";
+    button.innerHTML = "+AgregarModalidad";
     button.addEventListener("click", function() {
-      AddAct(this);
+      AddAct(j);
     });
-
-    row.appendChild(col5);
+    row.appendChild(col12);
     row.appendChild(button);
-    col5.appendChild(select2);
+    col12.appendChild(select);
     Elementos.Selec.appendChild(row);
-
-    Elementos["idModalidadesSelect" + j] = select2;
-    select2.innerHTML += Elementos["idModalidadesSelect" + i].innerHTML;
-    select2.remove(Elementos["idModalidadesSelect" + i].selectedIndex);
-    $("#AddAct" + i).addClass('hidden')
+    Elementos["idModalidadesSelect" + j] = select;
+    select.innerHTML = Elementos["idModalidadesSelect" + i].innerHTML;
+    select.remove(Elementos["idModalidadesSelect" + i].selectedIndex);
     Elementos["idModalidadesSelect" + i].disabled = true;
+    $("#AddAct" + i).addClass('hidden')
   }
 }
 
