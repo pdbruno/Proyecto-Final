@@ -34,7 +34,7 @@ function llenarDropdowns(youknow){
   }
 }
 
-function generarTablaCheta(columnas, respuesta, pers){
+function generarTablaCheta(columnas, respuesta, pers, id){
   let trpricipal = document.createElement("tr");
   let tdpricipal = document.createElement("td");
   tdpricipal.style.padding = 0;
@@ -47,7 +47,7 @@ function generarTablaCheta(columnas, respuesta, pers){
 
   let listgroupitem = document.createElement("a");
   listgroupitem.className = "list-group-item";
-  listgroupitem.href = "#" + + respuesta[0].idClientes;
+  listgroupitem.href = "#" + respuesta[0][id];
   listgroupitem.innerHTML = pers;
   listgroupitem.style.border = "none";
   listgroupitem.setAttribute("data-toggle", "collapse");
@@ -55,7 +55,7 @@ function generarTablaCheta(columnas, respuesta, pers){
 
   let collapse = document.createElement("div");
   collapse.className = "collapse";
-  collapse.id = respuesta[0].idClientes;
+  collapse.id = respuesta[0][id];
   tdpricipal.appendChild(collapse);
 
   let table = document.createElement("table");
@@ -133,8 +133,8 @@ function crearCampos(myObj){
       formcontrol.disabled = true;
       break;
       case "date":
-      formcontrol.className = "form-control hidden";
-      formcontrol.type = 'date';
+      formcontrol.className = "form-control date hidden";
+      formcontrol.type = 'text';
       formcontrol.disabled = true;
       break;
       case "int":
@@ -183,7 +183,7 @@ function crearCampos(myObj){
     ElemForm.Formu.appendChild(listgroupitem);
     setProp(myObj[i]);
   }
-  let dates  = $("[type='date']");
+  let dates  = $(".date");
   if (dates.length != 0) {
     dates.datepicker({
       format: "yyyy/mm/dd",

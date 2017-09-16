@@ -16,6 +16,43 @@ class index extends Controller {
     $this->model->productosGanancias($sql);
   }
 
+  function corteFinan()
+  {
+    $sql = $this->model->corteProd(json_decode($_POST['data'], TRUE));
+    $this->model->finanzasEgresos($sql);
+    echo "_";
+    $this->model->finanzasIngresos($sql);
+    echo "_";
+    $this->model->finanzasEgresosTotal($sql);
+    echo "_";
+    $this->model->finanzasIngresosTotal($sql);
+  }
+
+  function porcentajeAsistencias()
+  {
+    $this->model->porcentajeAsistencias();
+  }
+
+  function finanzasEgresos()
+  {
+    $this->model->finanzasEgresos();
+  }
+
+  function finanzasEgresosTotal()
+  {
+    $this->model->finanzasEgresosTotal();
+  }
+
+  function finanzasIngresos()
+  {
+    $this->model->finanzasIngresos();
+  }
+
+  function finanzasIngresosTotal()
+  {
+    $this->model->finanzasIngresosTotal();
+  }
+
   function morososMatricula()
   {
     $this->model->morososMatricula();

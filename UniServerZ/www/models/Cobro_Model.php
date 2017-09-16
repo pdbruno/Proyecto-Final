@@ -20,10 +20,10 @@ class Cobro_Model extends Model {
 
   public function listado($tipo) {
     $sql = "SELECT actividadesaranceles.*, actividades.Nombre as actNombre, modalidades.Nombre as modNombre, modosdepago.Nombre as pagNombre
-    FROM actividadesaranceles 
-    LEFT JOIN modosdepago ON modosdepago.idModosDePago = actividadesaranceles.idModosDePago
-    LEFT JOIN actividades ON actividades.idActividades = actividadesaranceles.idActividades
-    LEFT JOIN modalidades ON modalidades.idModalidades = actividadesaranceles.idModalidades
+    FROM actividadesaranceles
+    LEFT JOIN modosdepago ON actividadesaranceles.idModosDePago = modosdepago.idModosDePago
+    LEFT JOIN actividades ON actividadesaranceles.idActividades = actividades.idActividades
+    LEFT JOIN modalidades ON actividadesaranceles.idModalidades = modalidades.idModalidades
     GROUP BY idActividades, idModosDePago, idModalidades";
     $outp = $this->db->getAll($sql);
     echo json_encode($outp);
@@ -32,7 +32,7 @@ class Cobro_Model extends Model {
   public function listarSueldos(){
     $sql = "SELECT categoriassueldos.idCategoriasSueldos, categorias.Nombre as catNombre, categoriassueldos.MontoXBloque
     FROM categoriassueldos
-    LEFT JOIN categorias ON categorias.idCategorias = categoriassueldos.idCategorias";
+    LEFT JOIN categorias ON categoriassueldos.idCategorias = categorias.idCategorias";
     $outp = $this->db->getAll($sql);
     return json_encode($outp);
   }

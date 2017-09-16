@@ -35,8 +35,4 @@ class Controller {
     echo $datos = $this->model->traerElemento($tipo, $_POST['data']);
   }
 
-  public function traerTodo($tipo) {
-    echo $datos = $this->model->traerTodo($tipo);
-  }
-
 }

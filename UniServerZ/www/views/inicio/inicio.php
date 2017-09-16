@@ -7,13 +7,41 @@ var Elementos = {
   TablaMat: document.getElementById("TablaMat"),
   TablaDeud: document.getElementById("TablaDeud"),
   TablaExc: document.getElementById("TablaExc"),
+  TablaPorcentaje: document.getElementById("TablaPorcentaje"),
   FechaProd: document.getElementById("FechaProd"),
   FechaProd1: document.getElementById("FechaProd1"),
   FechaProd2: document.getElementById("FechaProd2"),
-  $productosVentas: $("#productosVentas"),
-  $productosGanancias: $("#productosGanancias"),
-  ListaMatr: "",
+  FechaFinan: document.getElementById("FechaFinan"),
+  FechaFinan1: document.getElementById("FechaFinan1"),
+  FechaFinan2: document.getElementById("FechaFinan2"),
+
+  TotEgr: document.getElementById("TotEgr"),
+  TotCom: document.getElementById("TotCom"),
+  TotTotEgr: document.getElementById("TotTotEgr"),
+  TotCob: document.getElementById("TotCob"),
+  TotVen: document.getElementById("TotVen"),
+  TotTotIng: document.getElementById("TotTotIng"),
+  TotBal: document.getElementById("TotBal"),
+
+  $TablaVentas: $("#TablaVentas"),
+  $TablaGanancias: $("#TablaGanancias"),
+  $TablaEgresos: $("#TablaEgresos"),
+  $TablaIngresos: $("#TablaIngresos"),
+  $TablaBalance: $("#TablaBalance"),
 };
+
+Elementos.$TablaEgresos.on('load-success.bs.table', function (e, data) {
+  sortAppend(data);
+});
+Elementos.$TablaIngresos.on('load-success.bs.table', function (e, data) {
+  sortAppend(data);
+});
+function sortAppend(data){
+  Elementos.$TablaBalance.bootstrapTable('append', data);
+  let caca = Elementos.$TablaBalance.bootstrapTable('getData');
+  caca.sort(function(a,b){return new Date(b.Fecha) - new Date(a.Fecha);});
+  Elementos.$TablaBalance.bootstrapTable('load', caca);
+}
 $('.collapse').collapse();
 $('.input-daterange').datepicker({
   format: "yyyy/mm/dd",
@@ -26,6 +54,16 @@ $('.input-daterange').datepicker({
   forceParse: false
 });
 
+function rowStyle(row, index){
+  if(row.Tipo == "Egreso"){
+    return {classes: "danger"};
+  }else{
+    if(row.Tipo == "Ingreso"){
+      return {classes: "success"};
+    }
+  }
+}
+
 Elementos.FechaProd.addEventListener('click', function(){
   var request = $.ajax({
     url: "<?php echo URL; ?>index/corteProd",
@@ -33,11 +71,68 @@ Elementos.FechaProd.addEventListener('click', function(){
     data: "data=" + JSON.stringify({Fecha1: Elementos.FechaProd1.value, Fecha2: Elementos.FechaProd2.value})
   });
   request.done(function (respuesta){
-    let Ventas = JSON.parse(respuesta.substring(0, respuesta.indexOf("]") + 1));
-    let Ganancias = JSON.parse(respuesta.substring(respuesta.indexOf("]") + 1));
-    Elementos.$productosVentas.bootstrapTable('load', Ventas);
-    Elementos.$productosGanancias.bootstrapTable('load', Ganancias);
+    respuesta = respuesta.split("_");
+    respuesta[0] = JSON.parse(respuesta[0]);
+    respuesta[1] = JSON.parse(respuesta[1]);
+    Elementos.$TablaVentas.bootstrapTable('load', respuesta[0]);
+    Elementos.$TablaGanancias.bootstrapTable('load', respuesta[1]);
   });
+});
+
+Elementos.FechaFinan.addEventListener('click', function(){
+  var request = $.ajax({
+    url: "<?php echo URL; ?>index/corteFinan",
+    type: "post",
+    data: "data=" + JSON.stringify({Fecha1: Elementos.FechaFinan1.value, Fecha2: Elementos.FechaFinan2.value})
+  });
+  request.done(function (respuesta){
+    respuesta = respuesta.split("_");
+    let l = respuesta.length;
+    for (var i = 0; i < l; i++) {
+      respuesta[i] = JSON.parse(respuesta[i]);
+    }
+    Elementos.$TablaEgresos.bootstrapTable('load', respuesta[0]);
+    Elementos.$TablaIngresos.bootstrapTable('load', respuesta[1]);
+    Elementos.$TablaBalance.bootstrapTable('removeAll');
+    sortAppend(respuesta[0]);
+    sortAppend(respuesta[1]);
+    Elementos.TotEgr.innerHTML = respuesta[2][0]["SUM(Monto)"];
+    Elementos.TotCom.innerHTML = respuesta[2][1]["SUM(Monto)"];
+    Elementos.TotTotEgr.innerHTML = Number(respuesta[2][0]["SUM(Monto)"]) + Number(respuesta[2][1]["SUM(Monto)"]);
+    Elementos.TotCob.innerHTML = respuesta[2][0]["SUM(Monto)"];
+    Elementos.TotVen.innerHTML = respuesta[2][1]["SUM(Monto)"];
+    Elementos.TotTotIng.innerHTML = Number(respuesta[2][0]["SUM(Monto)"]) + Number(respuesta[2][1]["SUM(Monto)"]);
+    Elementos.TotBal.innerHTML = Number(respuesta[2][0]["SUM(Monto)"]) + Number(respuesta[2][1]["SUM(Monto)"]) - Number(respuesta[2][0]["SUM(Monto)"]) - Number(respuesta[2][1]["SUM(Monto)"]);
+
+  });
+});
+
+var EgresosTotal = $.ajax({
+  url: "<?php echo URL; ?>index/finanzasEgresosTotal",
+  type: "post",
+});
+EgresosTotal.done(function (respuesta){
+  respuesta = JSON.parse(respuesta);
+  Elementos.TotEgr.innerHTML = respuesta[0]["SUM(Monto)"];
+  Elementos.TotCom.innerHTML = respuesta[1]["SUM(Monto)"];
+  Elementos.TotTotEgr.innerHTML = Number(respuesta[0]["SUM(Monto)"]) + Number(respuesta[1]["SUM(Monto)"]);
+});
+
+var IngresosTotal = $.ajax({
+  url: "<?php echo URL; ?>index/finanzasIngresosTotal",
+  type: "post",
+});
+IngresosTotal.done(function (respuesta){
+  respuesta = JSON.parse(respuesta);
+  Elementos.TotCob.innerHTML = respuesta[0]["SUM(Monto)"];
+  Elementos.TotVen.innerHTML = respuesta[1]["SUM(Monto)"];
+  Elementos.TotTotIng.innerHTML = Number(respuesta[0]["SUM(Monto)"]) + Number(respuesta[1]["SUM(Monto)"]);
+});
+
+$.when(IngresosTotal, EgresosTotal).done(function(a1, a2){
+  a1 = JSON.parse(a1[0]);
+  a2 = JSON.parse(a2[0]);
+  Elementos.TotBal.innerHTML = Number(a1[0]["SUM(Monto)"]) + Number(a1[1]["SUM(Monto)"]) - Number(a2[0]["SUM(Monto)"]) - Number(a2[1]["SUM(Monto)"]);
 });
 
 var request = $.ajax({
@@ -48,7 +143,7 @@ request.done(function (respuesta){
   respuesta = JSON.parse(respuesta);
   let columnas = {Actividad: 'Actividad', Fecha: 'Fecha/Mes', Monto: 'Monto debido'};
   for (pers in respuesta) {
-    Elementos.TablaDeud.appendChild(generarTablaCheta(columnas, respuesta[pers], pers));
+    Elementos.TablaDeud.appendChild(generarTablaCheta(columnas, respuesta[pers], pers, 'idClientes'));
   }
 });
 
@@ -60,7 +155,19 @@ request.done(function (respuesta){
   respuesta = JSON.parse(respuesta);
   let columnas = {Actividad: 'Actividad', Fecha: 'La semana del', Asistencias: 'Cantidad de asistencias', MaxXSemana: 'Máximo permitido'};
   for (pers in respuesta) {
-    Elementos.TablaExc.appendChild(generarTablaCheta(columnas, respuesta[pers], pers));
+    Elementos.TablaExc.appendChild(generarTablaCheta(columnas, respuesta[pers], pers, 'idClientes'));
+  }
+});
+
+var request = $.ajax({
+  url: "<?php echo URL; ?>index/porcentajeAsistencias",
+  type: "post",
+});
+request.done(function (respuesta){
+  respuesta = JSON.parse(respuesta);
+  let columnas = {Nombres: 'Nombre', Porcentaje: 'Porcentaje de asistencias este mes (%)'};
+  for (act in respuesta) {
+    Elementos.TablaPorcentaje.appendChild(generarTablaCheta(columnas, respuesta[act], act, 'idActividades'));
   }
 });
 
@@ -79,6 +186,7 @@ request.done(function (respuesta){
   }
   Elementos.TablaMat.innerHTML = texto;
 });
+
 
 $('#myTabs a').click(function (e) {
   e.preventDefault()

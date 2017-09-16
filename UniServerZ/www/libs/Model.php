@@ -15,10 +15,6 @@ class Model {
     echo json_encode($this->db->getAll("SELECT ?n , Nombre FROM ?n", 'id' . $tipo, strtolower($tipo)));
   }
 
-  public function traerTodo($tipo) {
-    return $this->db->getAll("SELECT * FROM ?n", $tipo);
-  }
-
   public function Dropdown($tipo) {
     $outp[] = $this->db->getAll("SELECT ?n as id, Nombre FROM ?n", $tipo, strtolower(substr($tipo, 2)));
     $outp[] = $this->db->getAll("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'dbproyectofinal' AND TABLE_NAME = ?s", strtolower(substr($tipo, 2)))[0]['COUNT(*)'];
