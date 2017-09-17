@@ -8,14 +8,14 @@ class calendar extends Controller {
   protected function miCatch($e)
   {
     $error = json_decode($e->getMessage())->error->code;
-    if ($error == 401) {
+    if ($error != 404) {
       $url = isset($_GET['url']) ? $_GET['url'] : null;
       $url = rtrim($url, '/');
       $url = filter_var($url, FILTER_SANITIZE_URL);
       $url = explode('/', $url);
       $redirect_uri = URL . 'calendar/manejar/' . $url[0] . '/' . $url[1];
       header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
-    }elseif ($error == 404) {
+    }else{
       echo "Not Found";
     }
   }

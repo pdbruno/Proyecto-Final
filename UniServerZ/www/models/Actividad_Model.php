@@ -6,7 +6,6 @@ class actividad_Model extends Model {
   }
 
   public function eliminarElemento($tipo, $idActividades) {
-    $this->db->query("DELETE FROM actividadesaranceles WHERE idActividades = ?i", $idActividades);
     $this->eliminar("Actividades", $idActividades);
   }
   public function traerEventos($data, $servicio) {
@@ -17,16 +16,18 @@ class actividad_Model extends Model {
       'timeMin' => $data['timeMin']
     );
     $results = $servicio->events->listEvents('primary', $optParams);
-    if (count($results->getItems()) == 0) {
-      $datos = "no papu";
-    } else {
-      foreach ($results->getItems() as $event) {
-        $evento['idActividades'] = substr($event['id'], 0, 11);
-        $evento['Nombre'] = $event->getSummary();
-        $evento["Fecha"] = substr($event->getStart()->dateTime,0,10);
-        $datos[] = $evento;
-      }
-      $evento = [];
+    foreach ($results->getItems() as $event) {
+      $evento['idActividades'] = substr($event['id'], 0, 11);
+      $evento['Nombre'] = $event->getSummary();
+      $evento["Fecha"] = substr($event->getStart()->dateTime,0,10);
+      $datos[] = $evento;
+    }
+    $results = $servicio->events->listEvents('1q94qi39cv04kvsfpb0lpq295g@group.calendar.google.com', $optParams);
+    foreach ($results->getItems() as $event) {
+      $evento['idActividades'] = $this->db->getOne("SELECT idActividades FROM actividades WHERE Nombre = Funcional");
+      $evento['Nombre'] = $event->getSummary();
+      $evento["Fecha"] = substr($event->getStart()->dateTime,0,10);
+      $datos[] = $evento;
     }
     return json_encode($datos);
   }
@@ -78,6 +79,25 @@ class actividad_Model extends Model {
     return json_encode($datos);
   }
 
+  public function mostrarFuncional($servicio)
+  {
+    $results = $servicio->events->listEvents('1q94qi39cv04kvsfpb0lpq295g@group.calendar.google.com');
+    if (count($results->getItems()) == 0) {
+      $datos = "no papu";
+    } else {
+      foreach ($results->getItems() as $event) {
+        $evento["Nombre"] = $event->getSummary();
+        $evento["idActividades"] = $event['id'];
+        $evento["Finalizacion"] = substr($event->getEnd()->dateTime,11,8);
+        $evento["Inicio"] = substr($event->getStart()->dateTime,11,8);
+        $evento["Fecha"] = substr($event->getStart()->dateTime,0,10);
+        $evento["Recurrencia"] = $event->getRecurrence();
+        $datos[] = $evento;
+      }
+    }
+    return json_encode($datos);
+  }
+
   public function format($data)
   {
     $evento = array(
@@ -98,10 +118,10 @@ class actividad_Model extends Model {
     return $evento;
   }
 
-  public function editarEvento($data, $id, $servicio)
+  public function editarEvento($data, $id, $servicio, $calendar = 'primary')
   {
     $event = new Google_Service_Calendar_Event($data);
-    echo $updatedEvent = $servicio->events->update('primary', $id, $event);
+    $updatedEvent = $servicio->events->update($calendar, $id, $event);
     echo $updatedEvent->getUpdated();
   }
 
@@ -119,10 +139,10 @@ class actividad_Model extends Model {
     }
   }
 
-  public function agregarEvento($data, $servicio)
+  public function agregarEvento($data, $servicio, $calendar = 'primary')
   {
     $event = new Google_Service_Calendar_Event($data);
-    $event = $servicio->events->insert('primary', $event);
+    $asd = $servicio->events->insert($calendar, $event);
   }
 
 }

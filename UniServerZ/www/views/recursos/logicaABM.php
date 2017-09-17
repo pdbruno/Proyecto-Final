@@ -7,7 +7,7 @@ var ElemForm = {
   $BtnModificar: $("#BtnModificar"),
   $BtnEliminar: $("#BtnEliminar"),
   $Tabla: $('#Tabla'),
-  json: [],
+  Columns: [],
   Formu: document.getElementById("Formu"),
   alertdiv: "",
   modal: $("#ModalPropiedades")
@@ -199,7 +199,7 @@ function hacemeUnDropdown(nombre, select){
     type: "post"
   });
   request.done(function (respuesta){
-    respuesta = JSON.parse(respuesta);
+    respuesta = Columns.parse(respuesta);
     select.innerHTML = optionCrear(respuesta[0]);
     if (respuesta[1] == 2) {
       select.innerHTML += "<option onclick=\"addOpt('" + nombre + "')\">+Agregar</option>";
@@ -218,7 +218,7 @@ function addOpt(nombre){
     var request = $.ajax({
       url: "<?php echo URL; ?>help/agregarModificarElemento/" + nombre.substr(2).toLowerCase(),
       type: "post",
-      data: "data=" + JSON.stringify({Nombre : nuevaopcion}),
+      data: "data=" + Columns.stringify({Nombre : nuevaopcion}),
     });
     request.done(function (respuesta){
       hacemeUnDropdown(nombre, document.getElementById(nombre + "Select"));
@@ -226,7 +226,7 @@ function addOpt(nombre){
   }
 }
 function setProp(myObj){
-  ElemForm.json.push(myObj);
+  ElemForm.Columns.push(myObj);
   ElemForm[myObj.COLUMN_NAME + "Select"] = $("#" + myObj.COLUMN_NAME + "Select");
   ElemForm[myObj.COLUMN_NAME] = $("#" + myObj.COLUMN_NAME);
   ElemForm[myObj.COLUMN_NAME + "Form"] = $("#" + myObj.COLUMN_NAME + "Form");
@@ -282,11 +282,11 @@ function clickFila(obj){
   ElemForm.$BtnEliminar.removeClass("hidden");
 }
 function afterEnviar(){
-  let l = ElemForm.json.length;
+  let l = ElemForm.Columns.length;
   for (var i = 0; i < l; i++) {
-    ElemForm[ElemForm.json[i].COLUMN_NAME + "Select"].addClass("hidden");
-    ElemForm[ElemForm.json[i].COLUMN_NAME].removeClass("hidden").html("");
-    ElemForm[ElemForm.json[i].COLUMN_NAME + "Form"].addClass("hidden");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"].addClass("hidden");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME].removeClass("hidden").html("");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].addClass("hidden");
   }
   l = ElemForm.checkboxes.length;
   if (l>0) {
@@ -310,25 +310,25 @@ function beforeEnviar(){
       ElemForm.checkboxes[i].value = (ElemForm.checkboxes[i].checked) ? 1 : 0;
     }
   }
-  l = ElemForm.json.length;
+  l = ElemForm.Columns.length;
   for (var i = 0; i < l; i++) {
-    ElemForm[ElemForm.json[i].COLUMN_NAME + "Group"].removeClass("has-error");
-    ElemForm[ElemForm.json[i].COLUMN_NAME + "Error"].addClass("hidden");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Group"].removeClass("has-error");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Error"].addClass("hidden");
 
-    let sel = document.getElementById(ElemForm.json[i].COLUMN_NAME + "Select");
+    let sel = document.getElementById(ElemForm.Columns[i].COLUMN_NAME + "Select");
     if ( sel != null) {
-      ElemForm[ElemForm.json[i].COLUMN_NAME + "Form"].val(sel.value);
+      ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].val(sel.value);
     }
-    if (ElemForm[ElemForm.json[i].COLUMN_NAME + "Form"].val() === "") {
-      if (ElemForm.json[i].IS_NULLABLE === 'NO' && ElemForm.json[i].DATA_TYPE != "tinyint" && ElemForm.json[i].COLUMN_KEY != "PRI") {
-        ElemForm[ElemForm.json[i].COLUMN_NAME + "Group"].addClass("has-error");
-        ElemForm[ElemForm.json[i].COLUMN_NAME + "Error"].removeClass("hidden");
+    if (ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].val() === "") {
+      if (ElemForm.Columns[i].IS_NULLABLE === 'NO' && ElemForm.Columns[i].DATA_TYPE != "tinyint" && ElemForm.Columns[i].COLUMN_KEY != "PRI") {
+        ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Group"].addClass("has-error");
+        ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Error"].removeClass("hidden");
         mal = true;
       }else {
-        ElemForm[ElemForm.json[i].COLUMN_NAME + "Form"].val(null);
+        ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].val(null);
       }
     }
-    vec[ElemForm.json[i].COLUMN_NAME] = ElemForm[ElemForm.json[i].COLUMN_NAME + "Form"].val();
+    vec[ElemForm.Columns[i].COLUMN_NAME] = ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].val();
   }
   if (mal) {
     if(document.getElementById("noti") == null){
@@ -358,22 +358,22 @@ function modoFormulario(modo){
   ElemForm.$BtnAceptar.removeClass("hidden");
   ElemForm.$BtnModificar.addClass("hidden");
   ElemForm.$BtnEliminar.addClass("hidden");
-  let l = ElemForm.json.length;
+  let l = ElemForm.Columns.length;
   for (var i = 0; i < l; i++) {
-    ElemForm[ElemForm.json[i].COLUMN_NAME + "Group"].removeClass("has-error");
-    ElemForm[ElemForm.json[i].COLUMN_NAME + "Error"].addClass("hidden");
-    ElemForm[ElemForm.json[i].COLUMN_NAME + "Select"].removeClass("hidden");
-    ElemForm[ElemForm.json[i].COLUMN_NAME].addClass("hidden");
-    ElemForm[ElemForm.json[i].COLUMN_NAME + "Form"].removeClass("hidden").attr('disabled', false);
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Group"].removeClass("has-error");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Error"].addClass("hidden");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"].removeClass("hidden");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME].addClass("hidden");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].removeClass("hidden").attr('disabled', false);
     if (modo == "Agregar") {
-      ElemForm[ElemForm.json[i].COLUMN_NAME + "Form"].val(null);
+      ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].val(null);
     }else {
-      let select = document.getElementById(ElemForm.json[i].COLUMN_NAME + "Select");
+      let select = document.getElementById(ElemForm.Columns[i].COLUMN_NAME + "Select");
       if (select != null) {
         let opciones = select.options;
         let l = select.length;
         for (let j = 0; j < l; j++) {
-          if (opciones[j].text == ElemForm[ElemForm.json[i].COLUMN_NAME + "Form"].val()) {
+          if (opciones[j].text == ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].val()) {
             select.selectedIndex = j;
             break;
           }

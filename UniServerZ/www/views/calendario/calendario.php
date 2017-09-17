@@ -1,26 +1,10 @@
 <script>
 
 var Elementos = {
-  $SeRepiteForm : $("#RecurrenciaForm"),
-  $RepeticionSelect : $("#RepeticionSelect"),
-
-  InicioForm :  document.getElementById("InicioForm"),
-  FinalizacionForm : document.getElementById("FinalizacionForm"),
-  FechaForm : document.getElementById("FechaForm"),
-  NombreForm : document.getElementById("NombreForm"),
-
-  $InicioGroup :  $("#InicioGroup"),
-  $FinalizacionGroup : $("#FinalizacionGroup"),
-  $FechaGroup : $("#FechaGroup"),
-  $NombreGroup : $("#NombreGroup"),
-
-  $InicioError :  $("#InicioError"),
-  $FinalizacionError : $("#FinalizacionError"),
-  $FechaError : $("#FechaError"),
-  $NombreError : $("#NombreError"),
+  $tabs : $("#tabs"),
+  $RepEdit : $('#RepEdit'),
 
   RepSelect : document.getElementById("RepSelect"),
-  $RepEdit : $('#RepEdit'),
   RepCada : document.getElementById("RepCada"),
   $intervalo : $("#intervalo"),
   $unidad : $("#unidad"),
@@ -30,22 +14,34 @@ var Elementos = {
   diadelasemana : document.getElementById("diadelasemana"),
   DiaFin : document.getElementById("DiaFin"),
   NumVeces : document.getElementById("NumVeces"),
-  idActividadesForm : document.getElementById("idActividadesForm"),
-  Resumen : document.getElementById("resumen")
+  Resumen1 : document.getElementById("resumen1"),
+  Resumen2 : document.getElementById("resumen2"),
+  Resumen3 : document.getElementById("resumen3")
 };
-var rule;
-$("#InicioForm").timepicker({ 'timeFormat': 'H:i:s' });
-$("#FinalizacionForm").timepicker({ 'timeFormat': 'H:i:s' });
-$("#FechaForm").datepicker({
-  language: "es",
-  startDate: "today",
-  autoclose: true,
-  format: 'yyyy-mm-dd'
-});
-var vecsito = [{COLUMN_NAME: "idActividades"},{COLUMN_NAME: "Nombre"},{COLUMN_NAME: "Fecha"},{COLUMN_NAME: "Inicio"},{COLUMN_NAME: "Finalizacion"},{COLUMN_NAME: "SeRepite"}];
-for (var i = 0; i < vecsito.length; i++) {
-  setProp(vecsito[i]);
+var rule = {};
+var turno = "1";
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+  turno = "" + e.target.id;
+})
+var form1 = [{COLUMN_NAME: "idActividades1"},{COLUMN_NAME: "Nombre1"},{COLUMN_NAME: "Fecha1"},{COLUMN_NAME: "Inicio1"},{COLUMN_NAME: "Finalizacion1"},{COLUMN_NAME: "Recurrencia1"}];
+var form2 = [{COLUMN_NAME: "idActividades2"},{COLUMN_NAME: "Nombre2"},{COLUMN_NAME: "Fecha2"},{COLUMN_NAME: "Inicio2"},{COLUMN_NAME: "Finalizacion2"},{COLUMN_NAME: "Recurrencia2"}];
+var form3 = [{COLUMN_NAME: "idActividades3"},{COLUMN_NAME: "Nombre3"},{COLUMN_NAME: "Fecha3"},{COLUMN_NAME: "Inicio3"},{COLUMN_NAME: "Finalizacion3"},{COLUMN_NAME: "Recurrencia3"}];
+for (var i = 0; i < form1.length; i++) {
+  setProp(form1[i]);
+  setProp(form2[i]);
+  setProp(form3[i]);
 }
+for (var i = 1; i < 4; i++) {
+  ElemForm["Inicio" + i + "Form"].timepicker({ 'timeFormat': 'H:i:s' });
+  ElemForm["Finalizacion" + i + "Form"].timepicker({ 'timeFormat': 'H:i:s' });
+  ElemForm["Fecha" + i + "Form"].datepicker({
+    language: "es",
+    startDate: "today",
+    autoclose: true,
+    format: 'yyyy-mm-dd'
+  });
+}
+
 document.getElementById("BtnAgregar").addEventListener("click", function() {
   armarFormulario();
 });
@@ -54,33 +50,33 @@ document.getElementById("RepSelect").addEventListener("click", function() {
 });
 
 document.getElementById("CancelarModal").addEventListener("change", function() {
-  Elementos.$SeRepiteForm.attr('checked', false);
+  ElemForm["Recurrencia" + turno + "Form"].attr('checked', false);
 });
 
 document.getElementById("AceptarModal").addEventListener("click", function() {
-  let texto = {dtstart: new Date(Elementos.FechaForm.value)};
+  let repeticion = {dtstart: new Date(ElemForm["Fecha" + turno + "Form"].val())};
   Elementos.$RepEdit.modal('hide');
   switch (Elementos.RepSelect.value) {
     case "0":
-    texto.freq = 3;
-    texto.interval = Elementos.RepCada.value;
+    repeticion.freq = 3;
+    repeticion.interval = Elementos.RepCada.value;
     break;
     case "1":
-    texto.freq = 3;
-    texto.byweekday = [0, 1, 2, 3, 4];
+    repeticion.freq = 3;
+    repeticion.byweekday = [0, 1, 2, 3, 4];
     break;
     case "2":
-    texto.freq = 3;
-    texto.byweekday = [0, 2, 4];
+    repeticion.freq = 3;
+    repeticion.byweekday = [0, 2, 4];
     break;
     case "3":
-    texto.freq = 3;
-    texto.byweekday = [1, 3];
+    repeticion.freq = 3;
+    repeticion.byweekday = [1, 3];
     break;
     case "4":
-    texto.freq = 2;
+    repeticion.freq = 2;
     if (Elementos.RepCada.value!=1) {
-      texto.interval = Elementos.RepCada.value;
+      repeticion.interval = Elementos.RepCada.value;
     }
     let dias = document.getElementById("diassemana").getElementsByTagName("input");
     let diasvec = [];
@@ -90,40 +86,39 @@ document.getElementById("AceptarModal").addEventListener("click", function() {
       }
     }
     if (diasvec!=null) {
-      texto.byweekday = diasvec;
+      repeticion.byweekday = diasvec;
     }
     break;
     case "5":
-    texto.freq = 1;
-    texto.interval = Elementos.RepCada.value;
+    repeticion.freq = 1;
+    repeticion.interval = Elementos.RepCada.value;
     if (diadelasemana.checked == true) {
       let dia = document.getElementById("SemSelect").value;
       var ord = document.getElementById("OrdinalSelect").value;
-      texto.byweekday= [dia.nth(ord)];
+      repeticion.byweekday= [dia.nth(ord)];
     }
     break;
     case "6":
-    texto.freq = 0;
+    repeticion.freq = 0;
     break;
   }
   let radios = document.getElementsByClassName("radiomitre");
   for (radio in radios) {
     if (radios[radio].checked == true) {
       if (radios[radio].id == "optionsRadios2") {
-        texto.count = Elementos.NumVeces.value;
+        repeticion.count = Elementos.NumVeces.value;
       }else if (radios[radio].id == "optionsRadios3") {
-        texto.until = new Date(Elementos.DiaFin.value);
+        repeticion.until = new Date(Elementos.DiaFin.value);
       }
     }
   }
-  rule  = new RRule(texto);
-  if (rule.toText() == "RRule error: Unable to fully convert this rrule to text") {
-    Elementos.Resumen.innerHTML = "";
-    Elementos.$SeRepiteForm.attr("checked", false);
+  rule[turno] = new RRule(repeticion);
+  if (rule[turno].toText() == "RRule error: Unable to fully convert this rrule to text") {
+    ElemForm["Recurrencia" + turno + "Form"].attr("checked", false);
   }else{
-    Elementos.Resumen.innerHTML = rule.toText();
-    Elementos.$SeRepiteForm.attr("checked", true);
+    ElemForm["Recurrencia" + turno + "Form"].attr("checked", true);
   }
+
 });
 
 function byebye(){
@@ -193,59 +188,66 @@ document.getElementById("optionsRadios3").addEventListener("click", function() {
   Elementos.DiaFin.disabled = false;
 });
 
-Elementos.$SeRepiteForm.click(function(){
-  Elementos.$RepeticionSelect.toggleClass("hidden");
+ElemForm["Recurrencia1Form"].click(function(){
+  ElemForm["Recurrencia1Select"].toggleClass('hidden');
+});
+ElemForm["Recurrencia2Form"].click(function(){
+  ElemForm["Recurrencia2Select"].toggleClass('hidden');
+});
+ElemForm["Recurrencia3Form"].click(function(){
+  ElemForm["Recurrencia3Select"].toggleClass('hidden');
 });
 
 document.getElementById("BtnModificar").addEventListener("click", function() {
-  Elementos.$SeRepiteForm.removeAttr("disabled");
   modoFormulario('Modificar');
-  Elementos.NombreForm.disabled = true;
-  if (Elementos.$SeRepiteForm.attr('checked')) {
-    Elementos.$RepeticionSelect.removeClass('hidden');
-  }else {
-    Elementos.$RepeticionSelect.addClass('hidden');
+  for (var i = 1; i < 4; i++) {
+    ElemForm["Nombre" + i + "Form"].prop("disabled", true);
+    if (ElemForm["Recurrencia" + i + "Form"].prop('checked')) {
+      ElemForm["Recurrencia" + i + "Select"].removeClass('hidden');
+    }else {
+      ElemForm["Recurrencia" + i + "Select"].addClass('hidden');
+    }
   }
 });
 
 var bien = true;
 
 function err(Nom){
-  Elementos["$" + Nom + "Group"].addClass("has-error");
-  Elementos["$" + Nom + "Error"].removeClass("hidden").text("Ingrese el campo correctamente");
+  ElemForm[Nom + "Group"].addClass("has-error");
+  ElemForm[Nom + "Error"].removeClass("hidden").text("Ingrese el campo correctamente");
   bien = false;
 }
 
-function format(){
+function format(form, j){
 
-  for (var i = 1; i < 5; i++) {
+  for (let i = 1; i < 5; i++) {
     bien = true;
-    Elementos["$" + vecsito[i].COLUMN_NAME + "Group"].removeClass("has-error");
-    Elementos["$" + vecsito[i].COLUMN_NAME + "Error"].addClass("hidden").text("Campo Obligatorio");
-    if (Elementos[vecsito[i].COLUMN_NAME + "Form"].value == "") {
-      Elementos["$" + vecsito[i].COLUMN_NAME + "Group"].addClass("has-error");
-      Elementos["$" + vecsito[i].COLUMN_NAME + "Error"].removeClass("hidden");
+    ElemForm[form[i].COLUMN_NAME + "Group"].removeClass("has-error");
+    ElemForm[form[i].COLUMN_NAME + "Error"].addClass("hidden").text("Campo Obligatorio");
+    if (ElemForm[form[i].COLUMN_NAME + "Form"].val() == "") {
+      ElemForm[form[i].COLUMN_NAME + "Group"].addClass("has-error");
+      ElemForm[form[i].COLUMN_NAME + "Error"].removeClass("hidden");
       bien = false;
     }
   }
 
-  if (Elementos.FinalizacionForm.value.length != 8 && Elementos.FinalizacionForm.value.length != 0) {
+  if (ElemForm[form[4].COLUMN_NAME + "Form"].val().length != 8 && ElemForm[form[4].COLUMN_NAME + "Form"].val().length != 0) {
     err("Finalizacion");
   }
-  if (Elementos.InicioForm.value.length != 8 && Elementos.InicioForm.value.length != 0) {
+  if (ElemForm[form[3].COLUMN_NAME + "Form"].val().length != 8 && ElemForm[form[3].COLUMN_NAME + "Form"].val().length != 0) {
     err("Inicio");
   }
-  if (Elementos.FechaForm.value.length != 10 && Elementos.FechaForm.value.length != 0) {
+  if (ElemForm[form[2].COLUMN_NAME + "Form"].val().length != 10 && ElemForm[form[2].COLUMN_NAME + "Form"].val().length != 0) {
     err("Fecha");
   }
   if (bien) {
     let datos = {};
-    datos['idActividades'] = Elementos.idActividadesForm.value;
-    datos['Inicio'] = Elementos.FechaForm.value +'T'+ Elementos.InicioForm.value +'-03:00';
-    datos['Finalizacion'] = Elementos.FechaForm.value +'T'+ Elementos.FinalizacionForm.value +'-03:00';
-    datos['Nombre'] = Elementos.NombreForm.value;
-    datos['Recurrencia'] = (Elementos.$SeRepiteForm.val() == "SI") ? 'RRULE:' + rule.toString().substr(25) : 'no';
-    return "data1=" + JSON.stringify(datos);
+    datos['idActividades'] = ElemForm[form[0].COLUMN_NAME + "Form"].val();
+    datos['Inicio'] = ElemForm[form[2].COLUMN_NAME + "Form"].val() +'T'+ ElemForm[form[3].COLUMN_NAME + "Form"].val() +'-03:00';
+    datos['Finalizacion'] = ElemForm[form[2].COLUMN_NAME + "Form"].val() +'T'+ ElemForm[form[4].COLUMN_NAME + "Form"].val() +'-03:00';
+    datos['Nombre'] = ElemForm[form[1].COLUMN_NAME + "Form"].val();
+    datos['Recurrencia'] = (ElemForm[form[5].COLUMN_NAME + "Form"].val() == "SI") ? 'RRULE:' + rule[j].toString().substr(25) : 'no';
+    return "data" + j + "=" + JSON.stringify(datos);
   }else {
     return 'no'
   }
@@ -254,86 +256,132 @@ function format(){
 var NotFound = false;
 
 document.getElementById("BtnAceptar").addEventListener("click", function() {
-  let datos = format();
-  if (datos != 'no') {
+  let zafa = true;
+  let datos = [];
+  datos.push(format(form1, 1));
+  if (!Elementos.$tabs.hasClass("hidden")) {
+    datos.push(format(form2, 2));
+    datos.push(format(form3, 3));
+  }
+  for (var i = 0; i < datos.length; i++) {
+    if (datos[i] == 'no') {
+      zafa = false;
+    }
+  }
+  if (zafa) {
     let url;
-    if (datos['idActividades']=="" || NotFound) {
+    if (datos[0]['idActividades']=="" || NotFound) {
       url = "addActividad";
     }else{
       url = "editarActividad";
     }
+    let textofinal = "";
+    for (var i = 0; i < datos.length; i++) {
+      textofinal += datos[i];
+      textofinal += "&";
+    }
+    textofinal = textofinal.slice(0, textofinal.length-1);
     var request = $.ajax({
       url: "<?php echo URL; ?>actividad/" + url,
       type: "post",
-      data: datos,
+      data: textofinal,
     });
     request.done(function (respuesta){
       afterEnviar();
-      Elementos.Resumen.innerHTML = "";
-      Elementos.$SeRepiteForm.addClass("hidden");
-      Elementos.$RepeticionSelect.addClass("hidden");
+      for (var i = 1; i < 4; i++) {
+        Elementos["Resumen" + i].innerHTML="";
+        ElemForm["Recurrencia" + i + "Form"].addClass("hidden");
+        ElemForm["Recurrencia" + i + "Select"].addClass("hidden");
+      }
     });
   }
 });
 
 function armarFormulario(){
+  Elementos.$tabs.addClass("hidden");
   rule = {};
   $('#ModalPropiedades').modal('show');
   $("form .form-control").removeClass('hidden').val("");
   $("form .form-control-static").addClass('hidden');
   ElemForm.$BtnAceptar.removeClass("hidden");
-  ElemForm.$BtnAgregar.addClass("hidden");
   ElemForm.$BtnModificar.addClass("hidden");
-  Elementos.idActividadesForm.disabled = true;
-  Elementos.$SeRepiteForm.removeAttr("disabled").removeClass("hidden").prop('checked', false);
+  for (var i = 1; i < 4; i++) {
+    ElemForm["Recurrencia" + i + "Form"].prop("disabled", false).removeClass("hidden");
+  }
 }
 
 $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
   $('.success').removeClass('success');
   $(field).addClass('success');
-  request = $.ajax({
+  $('#tabs a:first').tab('show');
+  for (var i = 1; i < 4; i++) {
+  }
+  let request = $.ajax({
     url: "<?php echo URL; ?>actividad/mostrar",
     type: "post",
-    data: "data=" + $element.idActividades,
+    data: "data=" + $element.idActividades + "&data2=" + $element.Nombre,
   });
   request.done(function (respuesta)
   {
-    if (respuesta == "Not Found") {
-      alert('No hay un evento en Google Calendar asignado a esta actividad. Por favor llene los datos');
-      NotFound = true;
-      armarFormulario();
-      Elementos.NombreForm.disabled = true;
-    } else {
-      NotFound = false;
-      var obj = JSON.parse(respuesta);
-      clickFilaa(obj);
-      if (obj["Recurrencia"] != null) {
-        rule = rrulestr(obj["Recurrencia"][0]);
-        let cucu = rule.toText();
-        cucu = cucu.charAt(0).toUpperCase() + cucu.slice(1);
-        Elementos.Resumen.innerHTML = cucu;
-        Elementos.$SeRepiteForm.prop("checked");
-      } else {
-        Elementos.$SeRepiteForm.prop("checked", false);
-        Elementos.Resumen.innerHTML = "";
+    if($element.Nombre == "Funcional"){
+      if (respuesta == "Not Found" || respuesta == '"no papu"') {
+        alert('No hay un evento en Google Calendar asignado a esta actividad. Por favor llene los datos');
+        NotFound = true;
+        armarFormulario();
+      }else {
+        NotFound = false;
+        var obj = JSON.parse(respuesta);
+        for (var i = 0; i < obj.length; i++) {
+          let j = i+1;
+          clickFilaa(obj[i], i + 1);
+          rule["" + j] = rrulestr(obj[i]["Recurrencia"][0]);
+          let cucu = rule["" + j].toText();
+          cucu = cucu.charAt(0).toUpperCase() + cucu.slice(1);
+          Elementos["Resumen" + j].innerHTML = cucu;
+          ElemForm["Recurrencia" + j + "Form"].prop("checked");
+        }
       }
+      ElemForm.Nombre1Form.prop('disabled', true).val("Funcional Mañana");
+      ElemForm.Nombre2Form.prop('disabled', true).val("Funcional Tarde");
+      ElemForm.Nombre3Form.prop('disabled', true).val("Funcional Noche");
+      Elementos.$tabs.removeClass("hidden");
+    }else {
+      Elementos.$tabs.addClass("hidden");
+      if (respuesta == "Not Found") {
+        alert('No hay un evento en Google Calendar asignado a esta actividad. Por favor llene los datos');
+        NotFound = true;
+        armarFormulario();
+      } else {
+        NotFound = false;
+        var obj = JSON.parse(respuesta);
+        clickFilaa(obj);
+      }
+      ElemForm.Nombre1Form.val($element.Nombre);
+      ElemForm.Nombre1.text($element.Nombre);
+      ElemForm.idActividades1Form.val($element.idActividades);
+      ElemForm.idActividades1.text($element.idActividades);
     }
-    Elementos.NombreForm.value = $element.Nombre;
-    $("#Nombre").text($element.Nombre);
-    Elementos.idActividadesForm.value = $element.idActividades;
-    $("#idActividades").text($element.idActividades);
   });
 });
-function clickFilaa(obj){
+function clickFilaa(obj, i = 1){
   $('#ModalPropiedades').modal('show');
   for (x in obj) {
     if (x != "Recurrencia") {
-      ElemForm[x].removeClass("hidden").text(obj[x]);
-      ElemForm[x + "Form"].addClass("hidden");
-      ElemForm[x + "Form"].val(obj[x]);
-    }else{
-      Elementos.$SeRepiteForm.removeClass('hidden').prop('disabled');
+      ElemForm[x + i].removeClass("hidden").text(obj[x]);
+      ElemForm[x + i +"Form"].addClass("hidden").val(obj[x]);
     }
+  }
+  ElemForm["Nombre" + i +"Form"].prop('disabled', true);
+  ElemForm["Recurrencia" + i +"Form"].removeClass('hidden').prop('disabled', true);
+  if (obj["Recurrencia"] != null) {
+    rule["" + 1] = rrulestr(obj["Recurrencia"][0]);
+    let cucu = rule["" + 1].toText();
+    cucu = cucu.charAt(0).toUpperCase() + cucu.slice(1);
+    Elementos["Resumen" + i].innerHTML = cucu;
+    ElemForm["Recurrencia" + i +"Form"].prop("checked", true);
+  } else {
+    ElemForm["Recurrencia" + i +"Form"].prop("checked", false);
+    Elementos["Resumen" + i].innerHTML = "";
   }
   ElemForm.$BtnAceptar.addClass("hidden");
   ElemForm.$BtnAgregar.removeClass("hidden");

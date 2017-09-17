@@ -58,7 +58,7 @@ document.getElementById("BTNfecha").addEventListener("click", function() {
       data: "data=" + JSON.stringify(dia),
     });
     request.done(function (respuesta){
-      if (respuesta == '"no papu"') {
+      if (respuesta == "null") {
         alert('No hay eventos para ese día')
       }else {
         eventos = JSON.parse(respuesta);
