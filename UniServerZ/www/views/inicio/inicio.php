@@ -2,6 +2,9 @@
 <script src="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table-es-AR.min.js"></script>
 <script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="<?php echo URL; ?>views/recursos/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+<!-- Morris Charts JavaScript -->
+<script src="<?php echo URL; ?>views/recursos/vendor/raphael/raphael.min.js"></script>
+<script src="<?php echo URL; ?>views/recursos/vendor/morrisjs/morris.min.js"></script>
 <script>
 var Elementos = {
   TablaMat: document.getElementById("TablaMat"),
@@ -14,6 +17,8 @@ var Elementos = {
   FechaFinan: document.getElementById("FechaFinan"),
   FechaFinan1: document.getElementById("FechaFinan1"),
   FechaFinan2: document.getElementById("FechaFinan2"),
+  GraficoLinea: document.getElementById("GraficoLinea"),
+  GraficoBarra: document.getElementById("GraficoBarra"),
 
   TotEgr: document.getElementById("TotEgr"),
   TotCom: document.getElementById("TotCom"),
@@ -22,13 +27,63 @@ var Elementos = {
   TotVen: document.getElementById("TotVen"),
   TotTotIng: document.getElementById("TotTotIng"),
   TotBal: document.getElementById("TotBal"),
-
+  IdActividadesSelect1: document.getElementById("IdActividadesSelect1"),
+  IdActividadesSelect2: document.getElementById("IdActividadesSelect2"),
   $TablaVentas: $("#TablaVentas"),
   $TablaGanancias: $("#TablaGanancias"),
   $TablaEgresos: $("#TablaEgresos"),
   $TablaIngresos: $("#TablaIngresos"),
   $TablaBalance: $("#TablaBalance"),
 };
+var request = $.ajax({
+  url: "<?php echo URL; ?>help/Dropdown/idActividades",
+  type: "post"
+});
+request.done(function (respuesta){
+  respuesta = JSON.parse(respuesta);
+  let op = optionCrear(respuesta[0]);
+  Elementos.IdActividadesSelect1.innerHTML = op;
+  Elementos.IdActividadesSelect2.innerHTML = op;
+});
+
+Elementos.IdActividadesSelect2.addEventListener('change', function(){
+  var request = $.ajax({
+    url: "<?php echo URL; ?>index/graficoSexoActividad",
+    type: "post",
+    data: "data=" + Elementos.IdActividadesSelect2.value
+  });
+  request.done(function (respuesta){
+    Elementos.GraficoBarra.innerHTML="";
+    Morris.Bar({
+      element: 'GraficoBarra',
+      data: JSON.parse(respuesta),
+      xkey: 'Actividad',
+      ykeys: ['CantHom', 'CantMuj'],
+      hideHover: true,
+      labels: ['Hombres', 'Mujeres']
+    });
+  });
+    });
+
+Elementos.IdActividadesSelect1.addEventListener('change', function(){
+  var request = $.ajax({
+    url: "<?php echo URL; ?>index/graficoEdadActividad",
+    type: "post",
+    data: "data=" + Elementos.IdActividadesSelect1.value
+  });
+  request.done(function (respuesta){
+    Elementos.GraficoLinea.innerHTML="";
+    Morris.Line({
+      element: 'GraficoLinea',
+      data: JSON.parse(respuesta),
+      xkey: 'Edad',
+      ykeys: ['CantidadMuj', 'CantidadHom'],
+      parseTime: false,
+      labels: ['Mujeres', 'Hombres']
+    });
+  });
+});
+
 
 Elementos.$TablaEgresos.on('load-success.bs.table', function (e, data) {
   sortAppend(data);
@@ -191,6 +246,6 @@ request.done(function (respuesta){
 $('#myTabs a').click(function (e) {
   e.preventDefault()
   $(this).tab('show')
-})
+});
 
 </script>

@@ -9,7 +9,7 @@
   <!-- MetisMenu CSS -->
   <link href="<?php echo URL; ?>views/recursos/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
   <!-- Custom CSS -->
-  <link href="<?php echo URL; ?>views/recursos/dist/css/sb-admin-2.css" rel="stylesheet">
+  <link href="<?php echo URL; ?>views/recursos/dist/css/sb-admin-2.min.css" rel="stylesheet">
   <!-- Custom Fonts -->
   <link href="<?php echo URL; ?>views/recursos/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- jQuery -->
@@ -110,8 +110,3 @@
       <!-- /.navbar-static-side -->
     </nav>
     <div id="page-wrapper" style="height: 92vh">
-      <script>
-      $( document ).ajaxError(function(e, xhr, opt){
-        alert("Error accediendo a " + opt.url + ": " + xhr.responseText + " " + xhr.statusText);
-      });
-      </script>

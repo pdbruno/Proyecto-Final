@@ -94,7 +94,7 @@ function verDeudas(Obj, columnas){
   return trsecundariobody;
 }
 
-function crearCampos(myObj){
+function crearCampos(myObj, Formulario = ElemForm.Formu){
   let l = myObj.length;
   for (var i = 0; i < l; i++) {
     let listgroupitem = document.createElement("li");
@@ -127,18 +127,17 @@ function crearCampos(myObj){
       formcontrol.className = "checkbox hidden";
       formcontrol.disabled = true;
       break;
-      case "text":
-      formcontrol.className = "form-control hidden";
-      formcontrol.type = 'text';
-      formcontrol.disabled = true;
-      break;
       case "date":
       formcontrol.className = "form-control date hidden";
       formcontrol.type = 'text';
       formcontrol.disabled = true;
       break;
+      case "text":
       case "int":
       case "decimal":
+      formcontrol.disabled = true;
+      formcontrol.className = "form-control hidden";
+      formcontrol.type = 'text';
       switch (myObj[i].COLUMN_KEY) {
         case "MUL":
         formcontrol.className = "form-control hidden";
@@ -154,14 +153,8 @@ function crearCampos(myObj){
         formcontrol.className = "form-control hidden";
         formcontrol.type = 'text';
         listgroupitem.className = 'list-group-item hidden';
-        break;
-        default:
-        formcontrol.className = "form-control hidden";
-        formcontrol.type = 'number';
-        formcontrol.disabled = true;
       }
     }
-
     if (myObj[i].COLUMN_KEY == 'MUL') {
       col10.appendChild(formcontrolstatic);
       col10.appendChild(select);
@@ -180,7 +173,7 @@ function crearCampos(myObj){
     formgroup.appendChild(controllabel);
     formgroup.appendChild(col10);
     listgroupitem.appendChild(formgroup);
-    ElemForm.Formu.appendChild(listgroupitem);
+    Formulario.appendChild(listgroupitem);
     setProp(myObj[i]);
   }
   let dates  = $(".date");
@@ -199,7 +192,7 @@ function hacemeUnDropdown(nombre, select){
     type: "post"
   });
   request.done(function (respuesta){
-    respuesta = Columns.parse(respuesta);
+    respuesta = JSON.parse(respuesta);
     select.innerHTML = optionCrear(respuesta[0]);
     if (respuesta[1] == 2) {
       select.innerHTML += "<option onclick=\"addOpt('" + nombre + "')\">+Agregar</option>";
@@ -218,7 +211,7 @@ function addOpt(nombre){
     var request = $.ajax({
       url: "<?php echo URL; ?>help/agregarModificarElemento/" + nombre.substr(2).toLowerCase(),
       type: "post",
-      data: "data=" + Columns.stringify({Nombre : nuevaopcion}),
+      data: "data=" + JSON.stringify({Nombre : nuevaopcion}),
     });
     request.done(function (respuesta){
       hacemeUnDropdown(nombre, document.getElementById(nombre + "Select"));

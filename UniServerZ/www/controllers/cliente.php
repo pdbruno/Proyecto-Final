@@ -14,7 +14,7 @@ class cliente extends Controller {
     $cliente = json_decode($_POST['data1'], TRUE);
     $actividades = json_decode($_POST['data2'], TRUE);
     $this->model->agregarModificar('Clientes', $cliente);
-    $this->model->asignarActividades($actividades);
+    $this->model->asignarActividades($actividades, $cliente['idClientes']);
   }
   function index() {
       $this->view->lista = URL . "cliente/listarElementos/Clientes";

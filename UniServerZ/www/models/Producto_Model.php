@@ -15,7 +15,7 @@ class producto_Model extends Model {
   public function traerElemento($tipo,$idProductos) {
     $sql = "SELECT productos.*, distribuidores.Nombre as idDistribuidores
     FROM productos
-    LEFT JOIN distribuidores ON productos.idDistribuidores = distribuidores.idDistribuidores
+    INNER JOIN distribuidores ON productos.idDistribuidores = distribuidores.idDistribuidores
     WHERE idProductos=?i";
     $outp = $this->db->getAll($sql, $idProductos);
     return json_encode($outp);

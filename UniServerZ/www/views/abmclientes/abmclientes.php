@@ -13,7 +13,7 @@ function deshacerModal(){
   Elementos.idActividadesSelect0 = document.createElement("select");
   Elementos.idModosDePagoSelect0 = document.createElement("select");
   Elementos.idModalidadesSelect0 = document.createElement("select");
-  Elementos.idActividadesSelect0.innerHTML = VecModalidades;
+  Elementos.idModalidadesSelect0.innerHTML = VecModalidades;
   Elementos.idActividadesSelect0.innerHTML = VecActividades;
   Elementos.idModosDePagoSelect0.innerHTML = VecModosDePago;
   Elementos.idActividadesSelect0.selectedIndex = -1;
@@ -124,12 +124,12 @@ document.getElementById("aceptarModal").addEventListener("click", function() {
   final = [];
   bien = true;
   $('#ModalSel').modal('hide');
-  let l = document.getElementById("Selec").getElementsByClassName("mod").length;
+  let l = document.getElementById("Selec").getElementsByClassName("activ").length;
   for (var i = 1; i <= l; i++) {
     if ((Elementos["idActividadesSelect" + i].selectedIndex == "0" || Elementos["idModosDePagoSelect" + i].selectedIndex == "0") || (Elementos["idModosDePagoSelect" + i].selectedIndex == "2" && Elementos["idModalidadesSelect" + i].selectedIndex == "0")) {
       bien = false;
     }else{
-      final[i-1] = {idClientes: idClientes, idActividades : Elementos["idActividadesSelect" + i].value, idModosDePago : Elementos["idModosDePagoSelect" + i].value, idModalidades : Elementos["idModalidadesSelect" + i].value};
+      final.push({idClientes: idClientes, idActividades : Elementos["idActividadesSelect" + i].value, idModosDePago : Elementos["idModosDePagoSelect" + i].value, idModalidades : Elementos["idModalidadesSelect" + i].value});
     }
   }
 });

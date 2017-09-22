@@ -17,22 +17,22 @@ class actividad extends calendar {
     $this->view->lista = URL . "actividad/listarElementos/Actividades";
     $this->view->titmodal ="Actividad";
     $this->view->th = "<th data-field='Nombre' data-sortable='true'>Nombre</th>";
-    $this->view->modal2 = '<button type="button" id="idModalidadesVer" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalVer">Ver modalidad/es</button>
+    $this->view->modal2 = '<button type="button" id="idSubactividadesVer" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalVer">Ver subactividades</button>
     <div class="modal fade" tabindex="-1" role="dialog" id="ModalVer">
     <div class="modal-dialog" role="document">
     <div class="modal-content">
     <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title">Modalidades</h4>
+    <h4 class="modal-title">Subactividades</h4>
     </div>
     <div class="modal-body">
     <table class="table table-hover" >
     <thead>
     <tr>
-    <th>Modalidad</th>
+    <th>Subactividad</th>
     </tr>
     </thead>
-    <tbody id="TablaModalidades">
+    <tbody id="TablaSubactividades">
     </tbody>
     </table>
     <div class="modal-footer">
@@ -42,17 +42,17 @@ class actividad extends calendar {
     </div> <!--/.modal-dialog -->
     </div> <!--/.modal -->
     </div>
-    <button type="button" id="idModalidadesSelect" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalSel">Seleccionar modalidad/es</button>
+    <button type="button" id="idSubactividadesSelect" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalSel">Seleccionar subactividades</button>
     <div class="modal fade" tabindex="-1" role="dialog" id="ModalSel">
     <div class="modal-dialog" role="document" >
     <div class="modal-content">
     <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title">Seleccionar modalidad/es</h4>
+    <h4 class="modal-title">Seleccionar subactividades</h4>
     </div>
     <div class="modal-body">
     <div class="col-lg-12">
-    <h5>Modalidad</h5>
+    <h5>Subactividad</h5>
     </div>
     <div id="Selec">
     </div>
@@ -75,9 +75,10 @@ class actividad extends calendar {
   public function traerEventos() {
     $data = $_POST['data'];
     $data = json_decode($data, TRUE);
-    $service = $this->getService();
     try {
-      echo $this->model->traerEventos($data, $service);
+      $pri = $this->model->traerEventos($data, $this->getService());
+      $seg = $this->model->traerEventos($data, $this->getService(), '1q94qi39cv04kvsfpb0lpq295g@group.calendar.google.com');
+      echo json_encode(array_merge($pri,$seg));
     } catch (Exception $e) {
       $this->miCatch($e);
     }
@@ -100,60 +101,64 @@ class actividad extends calendar {
 
   public function agregarModificarActividad() {
     $caca = json_decode($_POST['data1'], TRUE);
-    $modalidades = json_decode($_POST['data2'], TRUE);
+    $subactividades = json_decode($_POST['data2'], TRUE);
     $this->model->agregarModificar('Actividades',$caca);
-    $this->model->asignarModalidades($modalidades, $caca['idActividades']);
+    if (count($subactividades) > 0) {
+      $this->model->asignarSubactividades($subactividades, $caca['idActividades']);
+    }
   }
 
-  public function mostrar()
+  public function traerEvento()
   {
-    $service = $this->getService();
     $idActividades = $_POST['data'];
     $Nombre = $_POST['data2'];
+    $sub = $this->model->traerSubactividades($idActividades);
     try {
-      if ($Nombre=="Funcional") {
-        echo $this->model->mostrarFuncional($service);
-      }else {
-        echo $this->model->mostrar($idActividades, $service);
+      if (count($sub) == 0) {
+        echo json_encode([$this->model->traerEvento($idActividades, $this->getService()), 'primary']);
+      } else {
+        $CalendarId = $this->model->getCalendarId($Nombre, $this->getService());
+        if ($CalendarId == null) {
+          $CalendarId = $this->model->crearCalendario($Nombre, $this->getService());
+        }
+        $eventos = $this->model->traerCalendario($idActividades, $CalendarId, $this->getService());
+        $sub = array_fill_keys($sub, null);
+        if ($eventos != 'no papu') {
+          $outp = [];
+          foreach ($sub as $key => $value) {
+            for ($j=0; $j < count($eventos); $j++) {
+              if ($key == $eventos[$j]['Nombre']) {
+                $sub[$key] = $eventos[$j];
+              }
+            }
+          }
+        }
+        echo json_encode([$sub, $CalendarId]);
       }
     } catch (Exception $e) {
       $this->miCatch($e);
     }
   }
 
-  public function editarActividad() {
-    $actividad = json_decode($_POST['data1'], TRUE);
-    $actividad2 = json_decode($_POST['data2'], TRUE);
-    $actividad3 = json_decode($_POST['data3'], TRUE);
-    $evento = $this->model->format($actividad);
+  public function editarEvento() {
+    $actividades = json_decode($_POST['data'], TRUE);
+    $idCalendario = $_POST['data2'];
     try {
-      if ($actividad2 != null && $actividad3 != null) {
-        $evento2 = $this->model->format($actividad2);
-        $evento3 = $this->model->format($actividad3);
-        $this->model->editarEvento($evento, $actividad["idActividades"], $this->getService(), '1q94qi39cv04kvsfpb0lpq295g@group.calendar.google.com');
-        $this->model->editarEvento($evento2, $actividad2["idActividades"], $this->getService(), '1q94qi39cv04kvsfpb0lpq295g@group.calendar.google.com');
-        $this->model->editarEvento($evento3, $actividad3["idActividades"], $this->getService(), '1q94qi39cv04kvsfpb0lpq295g@group.calendar.google.com');
-      }else {
-        $this->model->editarEvento($evento, $actividad["idActividades"], $this->getService());
+      for ($i=0; $i < count($actividades); $i++) {
+        $evento = $this->model->setFormat($actividades[$i]);
+        $this->model->editarEvento($evento, $this->getService(), $idCalendario);
       }
     } catch (Exception $e) {
       $this->miCatch($e);
     }
   }
-  public function addActividad() {
-    $actividad = json_decode($_POST['data1'], TRUE);
-    $actividad2 = json_decode($_POST['data2'], TRUE);
-    $actividad3 = json_decode($_POST['data3'], TRUE);
-    $evento = $this->model->format($actividad);
+  public function addEvento() {
+    $idCalendario = $_POST['data2'];
+    $actividades = json_decode($_POST['data'], TRUE);
     try {
-      if ($actividad2 != null && $actividad3 != null) {
-        $evento2 = $this->model->format($actividad2);
-        $evento3 = $this->model->format($actividad3);
-        $this->model->agregarEvento($evento, $this->getService(), '1q94qi39cv04kvsfpb0lpq295g@group.calendar.google.com');
-        $this->model->agregarEvento($evento2, $this->getService(), '1q94qi39cv04kvsfpb0lpq295g@group.calendar.google.com');
-        $this->model->agregarEvento($evento3, $this->getService(), '1q94qi39cv04kvsfpb0lpq295g@group.calendar.google.com');
-      }else {
-        $this->model->agregarEvento($evento, $this->getService());
+      for ($i=0; $i < count($actividades); $i++) {
+        $evento = $this->model->setFormat($actividades[$i]);
+        $this->model->agregarEvento($evento, $this->getService(), $idCalendario);
       }
     } catch (Exception $e) {
       $this->miCatch($e);

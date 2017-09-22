@@ -30,7 +30,12 @@ class Model {
   }
 
   public function eliminar($tipo, $id) {
-    $this->db->query("DELETE FROM ?n WHERE ?n = ?i", strtolower($tipo), 'id' . $tipo, $id);
+    try {
+      $this->db->query("DELETE FROM ?n WHERE ?n = ?i", strtolower($tipo), 'id' . $tipo, $id);
+    } catch (Exception $e) {
+      var_dump($e);
+    }
+
   }
 
   public function formatDeuda($outp) {

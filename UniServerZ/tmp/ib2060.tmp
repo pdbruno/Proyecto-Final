@@ -1,0 +1,2 @@
+,
+  CONSTRAINT `subactividades_ibfk_1` FOREIGN KEY (`idActividades`) REFERENCES `actividades` (`idActividades`)

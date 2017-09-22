@@ -14,36 +14,15 @@ var Elementos = {
   diadelasemana : document.getElementById("diadelasemana"),
   DiaFin : document.getElementById("DiaFin"),
   NumVeces : document.getElementById("NumVeces"),
-  Resumen1 : document.getElementById("resumen1"),
-  Resumen2 : document.getElementById("resumen2"),
-  Resumen3 : document.getElementById("resumen3")
 };
 var rule = {};
 var turno = "1";
-$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-  turno = "" + e.target.id;
-})
-var form1 = [{COLUMN_NAME: "idActividades1"},{COLUMN_NAME: "Nombre1"},{COLUMN_NAME: "Fecha1"},{COLUMN_NAME: "Inicio1"},{COLUMN_NAME: "Finalizacion1"},{COLUMN_NAME: "Recurrencia1"}];
-var form2 = [{COLUMN_NAME: "idActividades2"},{COLUMN_NAME: "Nombre2"},{COLUMN_NAME: "Fecha2"},{COLUMN_NAME: "Inicio2"},{COLUMN_NAME: "Finalizacion2"},{COLUMN_NAME: "Recurrencia2"}];
-var form3 = [{COLUMN_NAME: "idActividades3"},{COLUMN_NAME: "Nombre3"},{COLUMN_NAME: "Fecha3"},{COLUMN_NAME: "Inicio3"},{COLUMN_NAME: "Finalizacion3"},{COLUMN_NAME: "Recurrencia3"}];
-for (var i = 0; i < form1.length; i++) {
-  setProp(form1[i]);
-  setProp(form2[i]);
-  setProp(form3[i]);
-}
-for (var i = 1; i < 4; i++) {
-  ElemForm["Inicio" + i + "Form"].timepicker({ 'timeFormat': 'H:i:s' });
-  ElemForm["Finalizacion" + i + "Form"].timepicker({ 'timeFormat': 'H:i:s' });
-  ElemForm["Fecha" + i + "Form"].datepicker({
-    language: "es",
-    startDate: "today",
-    autoclose: true,
-    format: 'yyyy-mm-dd'
-  });
-}
+
 
 document.getElementById("BtnAgregar").addEventListener("click", function() {
-  armarFormulario();
+  eventoUnico();
+  crearFormulario();
+  modoInput();
 });
 document.getElementById("RepSelect").addEventListener("click", function() {
   byebye();
@@ -188,19 +167,9 @@ document.getElementById("optionsRadios3").addEventListener("click", function() {
   Elementos.DiaFin.disabled = false;
 });
 
-ElemForm["Recurrencia1Form"].click(function(){
-  ElemForm["Recurrencia1Select"].toggleClass('hidden');
-});
-ElemForm["Recurrencia2Form"].click(function(){
-  ElemForm["Recurrencia2Select"].toggleClass('hidden');
-});
-ElemForm["Recurrencia3Form"].click(function(){
-  ElemForm["Recurrencia3Select"].toggleClass('hidden');
-});
-
 document.getElementById("BtnModificar").addEventListener("click", function() {
   modoFormulario('Modificar');
-  for (var i = 1; i < 4; i++) {
+  for (var i = 1; i < largo + 1; i++) {
     ElemForm["Nombre" + i + "Form"].prop("disabled", true);
     if (ElemForm["Recurrencia" + i + "Form"].prop('checked')) {
       ElemForm["Recurrencia" + i + "Select"].removeClass('hidden');
@@ -218,36 +187,45 @@ function err(Nom){
   bien = false;
 }
 
-function format(form, j){
+function format(){
 
-  for (let i = 1; i < 5; i++) {
+  let l = ElemForm.Columns.length;
+
+  for (let i = 1; i < l; i++) {
     bien = true;
-    ElemForm[form[i].COLUMN_NAME + "Group"].removeClass("has-error");
-    ElemForm[form[i].COLUMN_NAME + "Error"].addClass("hidden").text("Campo Obligatorio");
-    if (ElemForm[form[i].COLUMN_NAME + "Form"].val() == "") {
-      ElemForm[form[i].COLUMN_NAME + "Group"].addClass("has-error");
-      ElemForm[form[i].COLUMN_NAME + "Error"].removeClass("hidden");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Group"].removeClass("has-error");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Error"].addClass("hidden").text("Campo Obligatorio");
+    if (ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].val() == "") {
+      ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Group"].addClass("has-error");
+      ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Error"].removeClass("hidden");
       bien = false;
     }
   }
+  for (var i = 1; i < largo + 1; i++) {
+    if (ElemForm["Finalizacion" + i + "Form"].val().length != 8 && ElemForm["Finalizacion" + i + "Form"].val().length != 0) {
+      err("Finalizacion");
+    }
+    if (ElemForm["Inicio" + i + "Form"].val().length != 8 && ElemForm["Inicio" + i + "Form"].val().length != 0) {
+      err("Inicio");
+    }
+    if (ElemForm["Fecha" + i + "Form"].val().length != 10 && ElemForm["Fecha" + i + "Form"].val().length != 0) {
+      err("Fecha");
+    }
+  }
 
-  if (ElemForm[form[4].COLUMN_NAME + "Form"].val().length != 8 && ElemForm[form[4].COLUMN_NAME + "Form"].val().length != 0) {
-    err("Finalizacion");
-  }
-  if (ElemForm[form[3].COLUMN_NAME + "Form"].val().length != 8 && ElemForm[form[3].COLUMN_NAME + "Form"].val().length != 0) {
-    err("Inicio");
-  }
-  if (ElemForm[form[2].COLUMN_NAME + "Form"].val().length != 10 && ElemForm[form[2].COLUMN_NAME + "Form"].val().length != 0) {
-    err("Fecha");
-  }
   if (bien) {
-    let datos = {};
-    datos['idActividades'] = ElemForm[form[0].COLUMN_NAME + "Form"].val();
-    datos['Inicio'] = ElemForm[form[2].COLUMN_NAME + "Form"].val() +'T'+ ElemForm[form[3].COLUMN_NAME + "Form"].val() +'-03:00';
-    datos['Finalizacion'] = ElemForm[form[2].COLUMN_NAME + "Form"].val() +'T'+ ElemForm[form[4].COLUMN_NAME + "Form"].val() +'-03:00';
-    datos['Nombre'] = ElemForm[form[1].COLUMN_NAME + "Form"].val();
-    datos['Recurrencia'] = (ElemForm[form[5].COLUMN_NAME + "Form"].val() == "SI") ? 'RRULE:' + rule[j].toString().substr(25) : 'no';
-    return "data" + j + "=" + JSON.stringify(datos);
+    let final = [];
+    for (var i = 1; i < largo + 1; i++) {
+      let datos = {};
+      datos['idActividades'] = ElemForm["idActividades" + i + "Form"].val();
+      datos['idEvento'] = ElemForm["idEvento" + i + "Form"].val();
+      datos['Inicio'] = ElemForm["Fecha" + i + "Form"].val() +'T'+ ElemForm["Inicio" + i + "Form"].val() +'-03:00';
+      datos['Finalizacion'] = ElemForm["Fecha" + i + "Form"].val() +'T'+ ElemForm["Finalizacion" + i + "Form"].val() +'-03:00';
+      datos['Nombre'] = ElemForm["Nombre" + i + "Form"].val();
+      datos['Recurrencia'] = (ElemForm["Recurrencia" + i + "Form"].prop('checked')) ? 'RRULE:' + rule[i].toString().substr(25) : 'no';
+      final.push(datos);
+    }
+    return final;
   }else {
     return 'no'
   }
@@ -256,39 +234,22 @@ function format(form, j){
 var NotFound = false;
 
 document.getElementById("BtnAceptar").addEventListener("click", function() {
-  let zafa = true;
-  let datos = [];
-  datos.push(format(form1, 1));
-  if (!Elementos.$tabs.hasClass("hidden")) {
-    datos.push(format(form2, 2));
-    datos.push(format(form3, 3));
-  }
-  for (var i = 0; i < datos.length; i++) {
-    if (datos[i] == 'no') {
-      zafa = false;
-    }
-  }
-  if (zafa) {
+  let datos = format();
+  if (datos != 'no') {
     let url;
-    if (datos[0]['idActividades']=="" || NotFound) {
-      url = "addActividad";
+    if (datos[0]['idEvento']=="" || NotFound) {
+      url = "addEvento";
     }else{
-      url = "editarActividad";
+      url = "editarEvento";
     }
-    let textofinal = "";
-    for (var i = 0; i < datos.length; i++) {
-      textofinal += datos[i];
-      textofinal += "&";
-    }
-    textofinal = textofinal.slice(0, textofinal.length-1);
     var request = $.ajax({
       url: "<?php echo URL; ?>actividad/" + url,
       type: "post",
-      data: textofinal,
+      data: "data=" + JSON.stringify(datos) + "&data2=" + CalendarId,
     });
     request.done(function (respuesta){
       afterEnviar();
-      for (var i = 1; i < 4; i++) {
+      for (var i = 1; i < largo + 1; i++) {
         Elementos["Resumen" + i].innerHTML="";
         ElemForm["Recurrencia" + i + "Form"].addClass("hidden");
         ElemForm["Recurrencia" + i + "Select"].addClass("hidden");
@@ -297,91 +258,252 @@ document.getElementById("BtnAceptar").addEventListener("click", function() {
   }
 });
 
-function armarFormulario(){
+function modoInput($element = ""){
   Elementos.$tabs.addClass("hidden");
   rule = {};
   $('#ModalPropiedades').modal('show');
-  $("form .form-control").removeClass('hidden').val("");
+  $("form .form-control").removeClass('hidden').val("").prop("disabled", false);
   $("form .form-control-static").addClass('hidden');
   ElemForm.$BtnAceptar.removeClass("hidden");
   ElemForm.$BtnModificar.addClass("hidden");
-  for (var i = 1; i < 4; i++) {
+  for (var i = 1; i < largo + 1; i++) {
+    if ($element != "") {
+      ElemForm["idActividades" + i + "Form"].val($element.idActividades);
+      ElemForm["Nombre" + i + "Form"].val($element.Nombre).prop("disabled", true);
+    }
     ElemForm["Recurrencia" + i + "Form"].prop("disabled", false).removeClass("hidden");
   }
 }
-
+var largo = 0;
+function eventoUnico(){
+  largo = 1;
+  let ul = document.createElement("ul");
+  ul.style = "padding-left: 0px";
+  let form = document.createElement("form");
+  form.className = "form-horizontal";
+  form.id = "Formu" + largo;
+  ul.appendChild(form);
+  ElemForm.Formu.innerHTML = "";
+  ElemForm.Formu.appendChild(ul);
+}
+var CalendarId;
 $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
   $('.success').removeClass('success');
   $(field).addClass('success');
   $('#tabs a:first').tab('show');
-  for (var i = 1; i < 4; i++) {
-  }
   let request = $.ajax({
-    url: "<?php echo URL; ?>actividad/mostrar",
+    url: "<?php echo URL; ?>actividad/traerEvento",
     type: "post",
     data: "data=" + $element.idActividades + "&data2=" + $element.Nombre,
   });
   request.done(function (respuesta)
   {
-    if($element.Nombre == "Funcional"){
-      if (respuesta == "Not Found" || respuesta == '"no papu"') {
-        alert('No hay un evento en Google Calendar asignado a esta actividad. Por favor llene los datos');
-        NotFound = true;
-        armarFormulario();
+    largo = 0;
+    let asd = JSON.parse(respuesta);
+    respuestaParse = asd[0];
+    CalendarId = asd[1];
+    NotFound = false;
+    turno = "1";
+    ElemForm.Columns = [];
+    ElemForm.Formu.innerHTML = "";
+    if (respuestaParse === "Not Found") {
+      //Si hay 1 solo evento no establecido
+      alert('No hay un evento en Google Calendar asignado a esta actividad. Por favor llene los datos');
+      NotFound = true;
+      eventoUnico();
+      crearFormulario();
+      modoInput($element);
+      ElemForm["idEvento1Form"].val($element.idActividades);
+    }else {
+      largo = 0;
+      if('Nombre' in respuestaParse && 'idEvento' in respuestaParse && 'idActividades' in respuestaParse && 'Finalizacion' in respuestaParse && 'Inicio' in respuestaParse && 'Fecha' in respuestaParse && 'Recurrencia' in respuestaParse){
+        //Si hay 1 solo evento establecido
+        eventoUnico();
       }else {
-        NotFound = false;
-        var obj = JSON.parse(respuesta);
-        for (var i = 0; i < obj.length; i++) {
-          let j = i+1;
-          clickFilaa(obj[i], i + 1);
-          rule["" + j] = rrulestr(obj[i]["Recurrencia"][0]);
-          let cucu = rule["" + j].toText();
-          cucu = cucu.charAt(0).toUpperCase() + cucu.slice(1);
-          Elementos["Resumen" + j].innerHTML = cucu;
-          ElemForm["Recurrencia" + j + "Form"].prop("checked");
+        //Si hay multiples eventos
+        for (evento in respuestaParse) {
+          if (respuestaParse[evento] == null) {
+            NotFound = true;
+          }
+        }
+        if (NotFound) {
+          //Si alguno de ellos no esta establecido
+          alert('No están asignadas correctamente todas las subactividades. Por favor llene los datos');
+        }
+        let texto = '<ul class="nav nav-tabs nav-justified" role="tablist" id="tabs">';
+        let tabcontent = document.createElement("div");
+        tabcontent.className = "tab-content";
+        for (x in respuestaParse) {
+          largo++;
+          if (largo === 1) {
+            texto += '<li role="presentation" class="active"><a href="#'+ x.replace(/ /g,"") +'" id="'+ largo +'" role="tab" onclick="turno = this.id" data-toggle="tab">'+ x +'</a></li>';
+          }else {
+            texto += '<li role="presentation"><a href="#'+ x.replace(/ /g,"") +'" id="'+ largo +'" role="tab" onclick="turno = this.id" data-toggle="tab">'+ x +'</a></li>';
+          }
+          let tabpane = document.createElement("div");
+          tabpane.id = x.replace(/ /g,"");
+          tabpane.role = "tabpanel";
+          if (largo === 1) {
+            tabpane.className = "tab-pane fade in active";
+          }else {
+            tabpane.className = "tab-pane fade";
+          }
+          let ul = document.createElement("ul");
+          ul.style = "padding-left: 0px";
+          let form = document.createElement("form");
+          form.className = "form-horizontal";
+          form.id = "Formu" + largo;
+          ul.appendChild(form);
+          tabpane.appendChild(ul);
+          tabcontent.appendChild(tabpane);
+        }
+        texto += '</ul>';
+        ElemForm.Formu.innerHTML = texto;
+        ElemForm.Formu.appendChild(tabcontent);
+      }
+      crearFormulario();
+      //Una vez creado el formulario, se llena con la info recibida
+      if (!NotFound) {
+        if(largo > 1){
+          let i = 1;
+          for (evento in respuestaParse) {
+            clickFilaa(respuestaParse[evento], i);
+            i++;
+          }
+        }else {
+          clickFilaa(respuestaParse);
+        }
+      }else {
+        modoInput($element);
+        let i = 1;
+        for (evento in respuestaParse) {
+          ElemForm["Nombre" + i + "Form"].val(evento).prop("disabled", true);
+          i++;
         }
       }
-      ElemForm.Nombre1Form.prop('disabled', true).val("Funcional Mañana");
-      ElemForm.Nombre2Form.prop('disabled', true).val("Funcional Tarde");
-      ElemForm.Nombre3Form.prop('disabled', true).val("Funcional Noche");
-      Elementos.$tabs.removeClass("hidden");
-    }else {
-      Elementos.$tabs.addClass("hidden");
-      if (respuesta == "Not Found") {
-        alert('No hay un evento en Google Calendar asignado a esta actividad. Por favor llene los datos');
-        NotFound = true;
-        armarFormulario();
-      } else {
-        NotFound = false;
-        var obj = JSON.parse(respuesta);
-        clickFilaa(obj);
-      }
-      ElemForm.Nombre1Form.val($element.Nombre);
-      ElemForm.Nombre1.text($element.Nombre);
-      ElemForm.idActividades1Form.val($element.idActividades);
-      ElemForm.idActividades1.text($element.idActividades);
     }
   });
 });
+
+function crearFormulario(){
+  for (let i = 1; i < largo + 1; i++) {
+    let campos = [
+      {
+        IS_NULLABLE: "NO",
+        COLUMN_NAME: "idActividades" + i,
+        DATA_TYPE: "int",
+        COLUMN_COMMENT: "idActividades",
+        COLUMN_KEY: "PRI"
+      },
+      {
+        IS_NULLABLE: "NO",
+        COLUMN_NAME: "idEvento" + i,
+        DATA_TYPE: "text",
+        COLUMN_COMMENT: "idEvento",
+        COLUMN_KEY: "PRI"
+      },
+      {
+        IS_NULLABLE: "NO",
+        COLUMN_NAME: "Nombre" + i,
+        DATA_TYPE: "text",
+        COLUMN_COMMENT: "Nombre",
+        COLUMN_KEY: ""
+      },
+      {
+        IS_NULLABLE: "NO",
+        COLUMN_NAME: "Fecha" + i,
+        DATA_TYPE: "date",
+        COLUMN_COMMENT: "Fecha",
+        COLUMN_KEY: ""
+      },
+      {
+        IS_NULLABLE: "NO",
+        COLUMN_NAME: "Inicio" + i,
+        DATA_TYPE: "text",
+        COLUMN_COMMENT: "Inicio",
+        COLUMN_KEY: ""
+      },
+      {
+        IS_NULLABLE: "NO",
+        COLUMN_NAME: "Finalizacion" + i,
+        DATA_TYPE: "text",
+        COLUMN_COMMENT: "Finalizacion",
+        COLUMN_KEY: ""
+      },
+      {
+        IS_NULLABLE: "NO",
+        COLUMN_NAME: "Recurrencia" + i,
+        DATA_TYPE: "tinyint",
+        COLUMN_COMMENT: "Se repite",
+        COLUMN_KEY: ""
+      }
+    ];
+    crearCampos(campos, document.getElementById("Formu" + i));
+    ElemForm["Inicio" + i + "Form"].timepicker({ 'timeFormat': 'H:i:s' });
+    ElemForm["Finalizacion" + i + "Form"].timepicker({ 'timeFormat': 'H:i:s' });
+    ElemForm["Fecha" + i + "Form"].datepicker('destroy');
+    ElemForm["Fecha" + i + "Form"].datepicker({
+      language: "es",
+      startDate: "today",
+      autoclose: true,
+      format: 'yyyy-mm-dd'
+    });
+    let label = document.createElement("label");
+    label.className = "col-sm-2 control-label";
+    label.innerHTML = "Se repite";
+
+    let col1 = document.createElement("div");
+    col1.className = "col-sm-1";
+    let checkbox = document.createElement("input");
+    checkbox.className = "checkbox hidden";
+    checkbox.type = "checkbox";
+    checkbox.value = "SI";
+    checkbox.id = "Recurrencia" + i + "Form";
+    checkbox.disabled = true;
+    col1.appendChild(checkbox);
+    ElemForm["Recurrencia" + i +"Form"] = $(checkbox);
+    let col3 = document.createElement("div");
+    col3.className = "col-sm-3";
+    let button = '<button type="button" id="Recurrencia'+ i +'Select" class="btn btn-link hidden" data-toggle="modal" data-target="#RepEdit">Elegir repetición</button>';
+    col3.innerHTML = button;
+    ElemForm["Recurrencia" + i +"Select"] = $(col3.firstChild);
+    checkbox.addEventListener('click',function(){
+      $(ElemForm["Recurrencia" + i +"Select"]).toggleClass("hidden");
+    });
+    let col6 = document.createElement("div");
+    col6.className = "col-sm-6";
+    Elementos["Resumen" + i] = document.createElement("p");
+    Elementos["Resumen" + i].id = "Resumen" + i;
+    col6.appendChild(Elementos["Resumen" + i]);
+    ElemForm["Recurrencia"+ i +"Group"].html("");
+    ElemForm["Recurrencia"+ i +"Group"].append(label, col1, col3, col6);
+  }
+}
+
 function clickFilaa(obj, i = 1){
   $('#ModalPropiedades').modal('show');
+
   for (x in obj) {
     if (x != "Recurrencia") {
       ElemForm[x + i].removeClass("hidden").text(obj[x]);
       ElemForm[x + i +"Form"].addClass("hidden").val(obj[x]);
+    }else {
+      ElemForm[x + i +"Form"].removeClass("hidden").prop('disabled', true);
     }
   }
-  ElemForm["Nombre" + i +"Form"].prop('disabled', true);
-  ElemForm["Recurrencia" + i +"Form"].removeClass('hidden').prop('disabled', true);
+
+  ElemForm["Nombre" + i +"Form"].prop('disabled', true).val(obj["Nombre"]);
   if (obj["Recurrencia"] != null) {
-    rule["" + 1] = rrulestr(obj["Recurrencia"][0]);
-    let cucu = rule["" + 1].toText();
+    rule["" + i] = rrulestr(obj["Recurrencia"][0]);
+    let cucu = rule["" + i].toText();
     cucu = cucu.charAt(0).toUpperCase() + cucu.slice(1);
     Elementos["Resumen" + i].innerHTML = cucu;
+
     ElemForm["Recurrencia" + i +"Form"].prop("checked", true);
   } else {
     ElemForm["Recurrencia" + i +"Form"].prop("checked", false);
     Elementos["Resumen" + i].innerHTML = "";
+
   }
   ElemForm.$BtnAceptar.addClass("hidden");
   ElemForm.$BtnAgregar.removeClass("hidden");

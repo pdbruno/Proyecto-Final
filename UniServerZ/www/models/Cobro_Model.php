@@ -21,8 +21,8 @@ class Cobro_Model extends Model {
   public function listado($tipo) {
     $sql = "SELECT actividadesaranceles.*, actividades.Nombre as actNombre, modalidades.Nombre as modNombre, modosdepago.Nombre as pagNombre
     FROM actividadesaranceles
-    LEFT JOIN modosdepago ON actividadesaranceles.idModosDePago = modosdepago.idModosDePago
-    LEFT JOIN actividades ON actividadesaranceles.idActividades = actividades.idActividades
+    INNER JOIN modosdepago ON actividadesaranceles.idModosDePago = modosdepago.idModosDePago
+    INNER JOIN actividades ON actividadesaranceles.idActividades = actividades.idActividades
     LEFT JOIN modalidades ON actividadesaranceles.idModalidades = modalidades.idModalidades
     GROUP BY idActividades, idModosDePago, idModalidades";
     $outp = $this->db->getAll($sql);

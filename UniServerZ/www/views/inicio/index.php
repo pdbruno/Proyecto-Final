@@ -1,6 +1,32 @@
 <link rel="stylesheet" href="<?php echo URL; ?>views/recursos/bootstrap-table/bootstrap-table.min.css">
+<!-- Morris Charts CSS -->
+<link href="<?php echo URL; ?>views/recursos/vendor/morrisjs/morris.css" rel="stylesheet">
 <link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
 <link href="<?php echo URL; ?>views/recursos/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
+<div class="row">
+  <div class="col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Seleccione una actividad</h3>
+          <select class="form-control" id="IdActividadesSelect1"></select>
+        </div>
+        <div class="panel-body">
+          <div id="GraficoLinea"></div>
+        </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Seleccione una actividad</h3>
+          <select class="form-control" id="IdActividadesSelect2"></select>
+        </div>
+        <div class="panel-body">
+          <div id="GraficoBarra"></div>
+        </div>
+    </div>
+  </div>
+</div>
 <div class="row">
   <div class="col-lg-6">
     <ul class="nav nav-tabs nav-justified" role="tablist">

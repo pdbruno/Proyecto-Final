@@ -34,7 +34,6 @@ class calendar extends Controller {
       $redirect_uri = URL . 'calendar/manejar/' . $url[0] . '/' . $url[1];
       header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
     }
-
   }
 
   public function manejar($controller, $pagina)

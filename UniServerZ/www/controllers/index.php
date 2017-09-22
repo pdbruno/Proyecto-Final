@@ -16,6 +16,18 @@ class index extends Controller {
     $this->model->productosGanancias($sql);
   }
 
+  function graficoSexoActividad()
+  {
+    $id = $_POST['data'];
+    $this->model->graficoSexoActividad($id);
+  }
+
+  function graficoEdadActividad()
+  {
+    $id = $_POST['data'];
+    $this->model->graficoEdadActividad($id);
+  }
+
   function corteFinan()
   {
     $sql = $this->model->corteProd(json_decode($_POST['data'], TRUE));
