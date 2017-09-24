@@ -19,6 +19,7 @@ var Elementos = {
   FechaFinan2: document.getElementById("FechaFinan2"),
   GraficoLinea: document.getElementById("GraficoLinea"),
   GraficoBarra: document.getElementById("GraficoBarra"),
+  porcentajeMeses: document.getElementById("porcentajeMeses"),
 
   TotEgr: document.getElementById("TotEgr"),
   TotCom: document.getElementById("TotCom"),
@@ -46,6 +47,23 @@ request.done(function (respuesta){
   Elementos.IdActividadesSelect2.innerHTML = op;
 });
 
+Elementos.porcentajeMeses.addEventListener('change', function(){
+  var request = $.ajax({
+    url: "<?php echo URL; ?>index/porcentajeAsistencias",
+    type: "post",
+    data: "data=" + Elementos.porcentajeMeses.value
+  });
+  request.done(function (respuesta){
+    Elementos.TablaPorcentaje.innerHTML = "";
+    respuesta = JSON.parse(respuesta);
+    let columnas = {Nombres: 'Nombre', Porcentaje: 'Porcentaje de asistencias este mes (%)'};
+    for (act in respuesta) {
+      Elementos.TablaPorcentaje.appendChild(generarTablaCheta(columnas, respuesta[act], act, 'idActividades'));
+    }
+  });
+});
+
+
 Elementos.IdActividadesSelect2.addEventListener('change', function(){
   var request = $.ajax({
     url: "<?php echo URL; ?>index/graficoSexoActividad",
@@ -63,7 +81,7 @@ Elementos.IdActividadesSelect2.addEventListener('change', function(){
       labels: ['Hombres', 'Mujeres']
     });
   });
-    });
+});
 
 Elementos.IdActividadesSelect1.addEventListener('change', function(){
   var request = $.ajax({
@@ -72,10 +90,14 @@ Elementos.IdActividadesSelect1.addEventListener('change', function(){
     data: "data=" + Elementos.IdActividadesSelect1.value
   });
   request.done(function (respuesta){
+    respuesta = JSON.parse(respuesta);
+    respuesta.sort(function(a, b) {
+      return a.Edad - b.Edad;
+    });
     Elementos.GraficoLinea.innerHTML="";
     Morris.Line({
       element: 'GraficoLinea',
-      data: JSON.parse(respuesta),
+      data: respuesta,
       xkey: 'Edad',
       ykeys: ['CantidadMuj', 'CantidadHom'],
       parseTime: false,
@@ -214,17 +236,6 @@ request.done(function (respuesta){
   }
 });
 
-var request = $.ajax({
-  url: "<?php echo URL; ?>index/porcentajeAsistencias",
-  type: "post",
-});
-request.done(function (respuesta){
-  respuesta = JSON.parse(respuesta);
-  let columnas = {Nombres: 'Nombre', Porcentaje: 'Porcentaje de asistencias este mes (%)'};
-  for (act in respuesta) {
-    Elementos.TablaPorcentaje.appendChild(generarTablaCheta(columnas, respuesta[act], act, 'idActividades'));
-  }
-});
 
 var request = $.ajax({
   url: "<?php echo URL; ?>index/morososMatricula",

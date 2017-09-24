@@ -10,6 +10,16 @@ class cliente extends Controller {
     $idClientes = $_POST['data'];
     echo json_encode($this->model->actCliente($idClientes));
   }
+  public function listadoInstructores() {
+    $this->model->listadoInstructores();
+  }
+
+  public function cantidadBloques() {
+    $idClientes = $_POST['data1'];
+    $mes = $_POST['data2'];
+    $this->model->cantidadBloques($idClientes, $mes);
+  }
+
   public function agregarModificarCliente() {
     $cliente = json_decode($_POST['data1'], TRUE);
     $actividades = json_decode($_POST['data2'], TRUE);

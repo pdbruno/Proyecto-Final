@@ -14,6 +14,7 @@ var Elementos = {
 var VecAsistio = [];
 var VecProfes = [];
 var idActividades = "";
+var idEvento = "";
 var Fecha = "";
 var eventos = {};
 var d = new Date().toISOString().substr(0,10);
@@ -28,12 +29,14 @@ Elementos.$FechaForm.datepicker({
   autoclose: true,
   todayHighlight: true
 });
-
+$( document ).ajaxError(function( event, jqxhr, settings, thrownError ) {
+  location.reload(true);
+});
 Elementos.BTNenviar.addEventListener("click", function() {
   let request = $.ajax({
     url: "<?php echo URL; ?>actividad/asignarAsistencia",
     type: "post",
-    data: "data=" + JSON.stringify(VecAsistio) + "&data2="+idActividades + "&data3="+JSON.stringify(VecProfes) + "&data4=" + Fecha,
+    data: "data=" + JSON.stringify(VecAsistio) + "&data2="+idActividades + "&data3="+JSON.stringify(VecProfes) + "&data4=" + Fecha + "&data5=" + idEvento,
   });
   request.done(function (respuesta){
     alert('Se ha asignado la asistencia al evento');
@@ -105,6 +108,11 @@ function traerEvento(boton){
     if (filas[row].id == boton.id) {
       $("#" + filas[row].id).addClass("success");
       idActividades = eventos[boton.id].idActividades;
+      if (eventos[boton.id].idActividades != eventos[boton.id].idEvento) {
+        idEvento = eventos[boton.id].idEvento;
+      }else {
+        idEvento = "";
+      }
       Fecha = eventos[boton.id].Fecha;
     } else {
       $("#" + filas[row].id).removeClass("success");

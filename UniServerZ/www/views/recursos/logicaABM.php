@@ -355,7 +355,7 @@ function modoFormulario(modo){
   for (var i = 0; i < l; i++) {
     ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Group"].removeClass("has-error");
     ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Error"].addClass("hidden");
-    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"].removeClass("hidden");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"].removeClass("hidden").prop("selectedIndex", 0);
     ElemForm[ElemForm.Columns[i].COLUMN_NAME].addClass("hidden");
     ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].removeClass("hidden").attr('disabled', false);
     if (modo == "Agregar") {

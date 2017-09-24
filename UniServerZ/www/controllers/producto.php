@@ -15,12 +15,12 @@ class producto extends Controller {
 
   function ingresostock() {
     $this->view->tit = "Registrar Compra";
-    $this->view->renderForm('ingresostock');
+    $this->view->renderTempSimple('ingresostock','form');
   }
 
   function egresostock() {
     $this->view->tit = "Registrar Venta";
-    $this->view->renderForm('egresostock');
+    $this->view->renderTempSimple('egresostock','form');
   }
 
 
@@ -36,11 +36,6 @@ class producto extends Controller {
 
   function registrarVenta() {
     $caca = json_decode($_POST['data'], TRUE);
-    //        VALIDAR
-    //        $caca['Fecha']
-    //        $caca['idProductos']
-    //        $caca['Monto']
-    //        $caca['Cantidad']
     $datos = $this->model->registrarVenta($caca);
     echo $datos;
   }

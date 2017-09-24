@@ -17,6 +17,9 @@ var Elementos = {
   $Enviar: $('#Enviar'),
   TablaMor : document.getElementById("TablaMor")
 };
+$( document ).ajaxError(function( event, jqxhr, settings, thrownError ) {
+  location.reload(true);
+});
 var YaMultiplicado = false;
 Elementos.$MesForm.datepicker({
   format: "yyyy-mm-dd",

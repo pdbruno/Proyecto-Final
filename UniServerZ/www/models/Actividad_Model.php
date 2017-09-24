@@ -8,7 +8,28 @@ class actividad_Model extends Model {
   public function eliminarElemento($tipo, $idActividades) {
     $this->eliminar("Actividades", $idActividades);
   }
-  public function traerEventos($data, $servicio, $calendar = 'primary') {
+
+
+  public function listCals($servicio) {
+    $calendarList = $servicio->calendarList->listCalendarList();
+
+    while(true) {
+      foreach ($calendarList->getItems() as $calendarListEntry) {
+        $datos[] = $calendarListEntry['id'];
+      }
+      $pageToken = $calendarList->getNextPageToken();
+      if ($pageToken) {
+        $optParams = array('pageToken' => $pageToken);
+        $calendarList = $servicio->calendarList->listCalendarList($optParams);
+      } else {
+        break;
+      }
+    }
+    return $datos;
+  }
+
+
+  public function traerEventos($data, $servicio, $calendar) {
     $optParams = array(
       'orderBy' => 'startTime',
       'singleEvents' => TRUE,
@@ -18,9 +39,10 @@ class actividad_Model extends Model {
     $results = $servicio->events->listEvents($calendar, $optParams);
     foreach ($results->getItems() as $event) {
       $evento['idEvento'] = $event['recurringEventId'];
-      $evento['idActividades'] = $event['extendedProperties']['private']['idActividades'];
-      $evento['Nombre'] = $event->getSummary();
-      $evento["Fecha"] = substr($event->getStart()->dateTime,0,10);
+      $evento['idEvento'] = ($event['recurringEventId']) ? $event['recurringEventId'] : $event['id'];
+      $evento['idActividades'] = $event['description'];
+      $evento['Nombre'] = $event['summary'];
+      $evento["Fecha"] = substr($event['start']['dateTime'],0,10);
       $datos[] = $evento;
     }
     return $datos;
@@ -63,33 +85,25 @@ class actividad_Model extends Model {
   {
     return $this->db->getCol("SELECT Nombre FROM `subactividades` WHERE `idActividades` = ?i", $idActividades);
   }
+  public function traeridCalendario($idActividades)
+  {
+    return $this->db->getOne("SELECT IFNULL(idCalendario, 'primary') FROM `actividades`  WHERE `idActividades` = ?i", $idActividades);
+  }
+  public function asignarCalendario($idActividades, $CalendarId)
+  {
+    $this->db->query("UPDATE `actividades` SET idCalendario = ?s  WHERE `idActividades` = ?i", $CalendarId, $idActividades);
+  }
+
+  public function setidEvento($actividad)
+  {
+    $this->db->query("UPDATE `subactividades` SET idEvento = ?s  WHERE `Nombre` = ?s", $actividad['idEvento'], $actividad['Nombre']);
+  }
 
   public function traerEvento($idActividades, $servicio)
   {
     $event = $servicio->events->get('primary', $idActividades);
-    return $this->getFormat($event, $idActividades);
+    return $this->getFormat($event);
   }
-
-
-  public function getCalendarId($Nombre, $servicio)
-  {
-    $calendarList = $servicio->calendarList->listCalendarList();
-    while(true) {
-      foreach ($calendarList->getItems() as $calendarListEntry) {
-        if ($Nombre == $calendarListEntry->getSummary()) {
-          return $calendarListEntry->getId();
-        }
-      }
-      $pageToken = $calendarList->getNextPageToken();
-      if ($pageToken) {
-        $optParams = array('pageToken' => $pageToken);
-        $calendarList = $service->calendarList->listCalendarList($optParams);
-      } else {
-        return;
-      }
-    }
-  }
-
 
 
   public function crearCalendario($Nombre, $servicio)
@@ -102,28 +116,28 @@ class actividad_Model extends Model {
   }
 
 
-  public function traerCalendario($idActividades, $CalendarId, $servicio)
+  public function traerCalendario($CalendarId, $servicio)
   {
     $results = $servicio->events->listEvents($CalendarId);
     if (count($results->getItems()) == 0) {
       return "no papu";
     } else {
       foreach ($results->getItems() as $event) {
-        $datos[] = $this->getFormat($event, $idActividades);
+        $datos[] = $this->getFormat($event);
       }
     }
     return $datos;
   }
 
-  private function getFormat($event, $idActividades)
+  private function getFormat($event)
   {
-    $evento["Nombre"] = $event->getSummary();
+    $evento["Nombre"] = $event['summary'];
     $evento["idEvento"] = $event['id'];
-    $evento["idActividades"] = $idActividades;
-    $evento["Finalizacion"] = substr($event->getEnd()->dateTime,11,8);
-    $evento["Inicio"] = substr($event->getStart()->dateTime,11,8);
-    $evento["Fecha"] = substr($event->getStart()->dateTime,0,10);
-    $evento["Recurrencia"] = $event->getRecurrence();
+    $evento["idActividades"] = $event['description'];
+    $evento["Finalizacion"] = substr($event['end']['dateTime'],11,8);
+    $evento["Inicio"] = substr($event['start']['dateTime'],11,8);
+    $evento["Fecha"] = substr($event['start']['dateTime'],0,10);
+    $evento["Recurrencia"] = $event['recurrence'];
     return $evento;
   }
 
@@ -148,13 +162,13 @@ class actividad_Model extends Model {
     return $evento;
   }
 
-  public function editarEvento($data, $servicio, $calendar = 'primary')
+  public function editarEvento($data, $servicio, $calendar)
   {
     $event = new Google_Service_Calendar_Event($data);
     try {
       $servicio->events->update($calendar, $data['id'], $event);
     } catch (Exception $e) {
-      var_dump($e);
+      var_dump($data);
     }
 
   }
@@ -166,10 +180,10 @@ class actividad_Model extends Model {
     }
   }
 
-  public function asignarAsistencia($data, $idActividades, $fecha)
+  public function asignarAsistencia($data, $idActividades, $fecha, $idEvento)
   {
     for ($i = 0; $i < count($data); $i++) {
-      echo $this->db->query("INSERT INTO `asistencias` SET `idClientes`= ?i, `idActividades`= ?s, `Fecha`= ?s", $data[$i], $idActividades, $fecha);
+      echo $this->db->query("INSERT INTO `asistencias` SET `idClientes`= ?i, `idActividades`= ?s, `Fecha`= ?s, idSubactividades = (SELECT idSubactividades FROM `subactividades` WHERE `idEvento` = ?s)", $data[$i], $idActividades, $fecha, $idEvento);
     }
   }
 
@@ -179,7 +193,6 @@ class actividad_Model extends Model {
     try {
       $servicio->events->insert($calendar, $event);
     } catch (Exception $e) {
-      var_dump($calendar);
       var_dump($data);
     }
   }

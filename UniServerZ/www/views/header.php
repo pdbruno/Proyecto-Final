@@ -95,6 +95,9 @@
               <a href="<?php echo URL; ?>cobro/"><i class="fa fa-money fa-fw"></i> Cobro</a>
             </li>
             <li>
+              <a href="<?php echo URL; ?>cobro/pagosueldos"><i class="fa fa-money fa-fw"></i> Pago de Sueldos</a>
+            </li>
+            <li>
               <a href="<?php echo URL; ?>help/index/Fondos"><i class="fa fa-line-chart fa-fw"></i> Fondos</a>
             </li>
             <li>

@@ -5,11 +5,11 @@ class index_Model extends Model {
     parent::__construct();
   }
 
-  function porcentajeAsistencias()
+  function porcentajeAsistencias($mes)
   {
     $act = $this->db->getAll("SELECT `idActividades`, `Nombre` FROM `actividades`");
     for ($i = 0; $i < count($act); $i++) {
-      $cosa = $this->db->getAll("SELECT idActividades, CONCAT(clientes.Nombres,' ',clientes.Apellidos) AS Nombres, IFNULL((SELECT COUNT(*) FROM `asistencias` WHERE MONTH(Fecha) = MONTH(CURDATE()) AND idActividades = ?i) / (SELECT COUNT(*) FROM `asistencias` WHERE MONTH(Fecha) = MONTH(CURDATE()) AND idActividades = ?i AND idClientes = clientesactividades.idClientes) * 100, 0) AS Porcentaje FROM `clientesactividades` INNER JOIN clientes on clientes.idClientes = clientesactividades.idClientes WHERE idActividades = ?i", $act[$i]["idActividades"], $act[$i]["idActividades"], $act[$i]["idActividades"]);
+      $cosa = $this->db->getAll("SELECT idActividades, CONCAT(clientes.Nombres,' ',clientes.Apellidos) AS Nombres, IFNULL((SELECT COUNT(*) FROM `asistencias` WHERE YEAR(Fecha) = YEAR(CURDATE()) AND MONTH(Fecha) = ?i AND idActividades = ?i AND idClientes = clientesactividades.idClientes) / (SELECT COUNT(*) FROM `asistencias` WHERE YEAR(Fecha) = YEAR(CURDATE()) AND MONTH(Fecha) = ?i AND idActividades = ?i) * 100, 0) AS Porcentaje FROM `clientesactividades` INNER JOIN clientes on clientes.idClientes = clientesactividades.idClientes WHERE idActividades = ?i", $mes, $act[$i]["idActividades"], $mes, $act[$i]["idActividades"], $act[$i]["idActividades"]);
       if(count($cosa) != 0){
         $outp[$act[$i]['Nombre']] = $cosa;
       }

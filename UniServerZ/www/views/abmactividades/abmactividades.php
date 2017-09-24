@@ -16,6 +16,7 @@ var request = $.ajax({
 request.done(function (respuesta){
   let myObj = JSON.parse(respuesta);
   crearCampos(myObj);
+  ElemForm['idCalendarioGroup'].addClass('hidden');
 });
 function deshacerModal(){
   Elementos["idSubactividadesForm0"] = document.createElement("input");

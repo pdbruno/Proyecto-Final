@@ -42,7 +42,8 @@ class index extends Controller {
 
   function porcentajeAsistencias()
   {
-    $this->model->porcentajeAsistencias();
+    $mes = $_POST['data'];
+    $this->model->porcentajeAsistencias($mes);
   }
 
   function finanzasEgresos()

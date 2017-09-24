@@ -6,12 +6,10 @@ class Cobro_Model extends Model {
     parent::__construct();
   }
 
-  public function updateFondo($data) {
-    $recaud = $this->db->getOne("SELECT `Recaudacion` FROM `fondos` WHERE `idFondos` = (SELECT `idFondos` FROM `actividades` WHERE `idActividades` = ?i)", substr($data['idActividades'], 0, 11));
-    if ($recaud != false) {
-      $this->db->query("UPDATE fondos SET Recaudacion = ?i WHERE `idFondos` = (SELECT `idFondos` FROM `actividades` WHERE `idActividades` = ?i)", $recaud + $data['Monto'], substr($data['idActividades'], 0, 11));
-    }
+  public function traerSueldos() {
+    echo json_encode($this->db->getInd('idCategorias', "SELECT idCategorias, MontoXBloque FROM `categoriassueldos`"));
   }
+
 
   public function updateAsistencias($data) {
     $sql = "UPDATE `asistencias` SET `Abonado`= 1 WHERE `idClientes` = ?i AND `idActividades` = ?i AND (`Fecha` BETWEEN ?s AND ?s)";

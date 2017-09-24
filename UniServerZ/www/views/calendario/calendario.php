@@ -18,6 +18,9 @@ var Elementos = {
 var rule = {};
 var turno = "1";
 
+$( document ).ajaxError(function( event, jqxhr, settings, thrownError ) {
+  location.reload(true);
+});
 
 document.getElementById("BtnAgregar").addEventListener("click", function() {
   eventoUnico();
@@ -33,7 +36,7 @@ document.getElementById("CancelarModal").addEventListener("change", function() {
 });
 
 document.getElementById("AceptarModal").addEventListener("click", function() {
-  let repeticion = {dtstart: new Date(ElemForm["Fecha" + turno + "Form"].val())};
+  let repeticion = {};
   Elementos.$RepEdit.modal('hide');
   switch (Elementos.RepSelect.value) {
     case "0":
@@ -222,7 +225,7 @@ function format(){
       datos['Inicio'] = ElemForm["Fecha" + i + "Form"].val() +'T'+ ElemForm["Inicio" + i + "Form"].val() +'-03:00';
       datos['Finalizacion'] = ElemForm["Fecha" + i + "Form"].val() +'T'+ ElemForm["Finalizacion" + i + "Form"].val() +'-03:00';
       datos['Nombre'] = ElemForm["Nombre" + i + "Form"].val();
-      datos['Recurrencia'] = (ElemForm["Recurrencia" + i + "Form"].prop('checked')) ? 'RRULE:' + rule[i].toString().substr(25) : 'no';
+      datos['Recurrencia'] = (ElemForm["Recurrencia" + i + "Form"].prop('checked')) ? 'RRULE:' + rule[i].toString() : 'no';
       final.push(datos);
     }
     return final;

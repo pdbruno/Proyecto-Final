@@ -1,0 +1,5 @@
+,
+  CONSTRAINT `eventosinstructores_ibfk_1` FOREIGN KEY (`idClientes`) REFERENCES `clientes` (`idClientes`),
+  CONSTRAINT `eventosinstructores_ibfk_2` FOREIGN KEY (`idActividades`) REFERENCES `actividades` (`idActividades`),
+  CONSTRAINT `eventosinstructores_ibfk_3` FOREIGN KEY (`idSubactividades`) REFERENCES `subactividades` (`idSubactividades`)RENCES `categorias` (`idCategorias`),
+  CONSTRAINT `clientes_ibfk_9` FOREIGN KEY (`idGrupoFactorSanguineo`) REFERENCES `grupofactorsanguineo` (`idGrupoFactorSanguineo`)

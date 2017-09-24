@@ -73,12 +73,17 @@ class actividad extends calendar {
   }
 
   public function traerEventos() {
-    $data = $_POST['data'];
-    $data = json_decode($data, TRUE);
+    $data = json_decode($_POST['data'], TRUE);
     try {
-      $pri = $this->model->traerEventos($data, $this->getService());
-      $seg = $this->model->traerEventos($data, $this->getService(), '1q94qi39cv04kvsfpb0lpq295g@group.calendar.google.com');
-      echo json_encode(array_merge($pri,$seg));
+      $cals = $this->model->listCals($this->getService());
+      $outp = [];
+      for ($i=0; $i < count($cals); $i++) {
+        $ev = $this->model->traerEventos($data, $this->getService(), $cals[$i]);
+        for ($j=0; $j < count($ev); $j++) {
+          $outp[] = $ev[$j];
+        }
+      }
+      echo json_encode($outp);
     } catch (Exception $e) {
       $this->miCatch($e);
     }
@@ -89,8 +94,9 @@ class actividad extends calendar {
     $alumnos = json_decode($_POST['data'], TRUE);
     $id = trim($_POST['data2']);
     $fecha = trim($_POST['data4']);
+    $idEvento = trim($_POST['data5']);
     $profes = json_decode($_POST['data3'], TRUE);
-    echo $this->model->asignarAsistencia($alumnos, $id, $fecha);
+    echo $this->model->asignarAsistencia($alumnos, $id, $fecha, $idEvento);
     echo $this->model->asignarProfes($profes, $id, $fecha);
   }
   public function traerAnotados() {
@@ -113,15 +119,19 @@ class actividad extends calendar {
     $idActividades = $_POST['data'];
     $Nombre = $_POST['data2'];
     $sub = $this->model->traerSubactividades($idActividades);
+    $idCalendario = $this->model->traeridCalendario($idActividades);
+
     try {
+
+      if (count($sub)>0 && $idCalendario == 'primary') {
+        $idCalendario = $this->model->crearCalendario($Nombre, $this->getService());
+        $this->model->asignarCalendario($idActividades, $idCalendario);
+      }
+
       if (count($sub) == 0) {
-        echo json_encode([$this->model->traerEvento($idActividades, $this->getService()), 'primary']);
+        echo json_encode([$this->model->traerEvento($idActividades, $this->getService()), $idCalendario]);
       } else {
-        $CalendarId = $this->model->getCalendarId($Nombre, $this->getService());
-        if ($CalendarId == null) {
-          $CalendarId = $this->model->crearCalendario($Nombre, $this->getService());
-        }
-        $eventos = $this->model->traerCalendario($idActividades, $CalendarId, $this->getService());
+        $eventos = $this->model->traerCalendario($idCalendario, $this->getService());
         $sub = array_fill_keys($sub, null);
         if ($eventos != 'no papu') {
           $outp = [];
@@ -133,7 +143,7 @@ class actividad extends calendar {
             }
           }
         }
-        echo json_encode([$sub, $CalendarId]);
+        echo json_encode([$sub, $idCalendario]);
       }
     } catch (Exception $e) {
       $this->miCatch($e);
@@ -145,6 +155,7 @@ class actividad extends calendar {
     $idCalendario = $_POST['data2'];
     try {
       for ($i=0; $i < count($actividades); $i++) {
+        $this->model->setidEvento($actividades[$i]);
         $evento = $this->model->setFormat($actividades[$i]);
         $this->model->editarEvento($evento, $this->getService(), $idCalendario);
       }

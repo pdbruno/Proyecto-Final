@@ -8,6 +8,14 @@ class cliente_Model extends Model {
     parent::__construct();
   }
 
+  public function listadoInstructores() {
+    echo json_encode($this->db->getAll("SELECT `idClientes` as id, CONCAT(`Nombres`,' ',`Apellidos`) AS Nombre, idCategorias FROM `clientesactivos` WHERE `EsInstructor` = 1"));
+  }
+
+  public function cantidadBloques($idClientes, $mes) {
+    echo $this->db->getOne("SELECT Count(*) FROM `eventosinstructores` WHERE idClientes = ?i AND MONTH(Fecha) = ?i", $idClientes, $mes);
+  }
+
   public function listado($tipo) {
     $sql = "SELECT idClientes, Nombres, Apellidos FROM clientes";
     $outp = $this->db->getAll($sql);

@@ -10,7 +10,6 @@ class cobro extends calendar {
   public function addCobro() {
     $data = json_decode($_POST['data'], TRUE);
     $this->model->agregarModificar('Cobros', $data);
-    $this->model->updateFondo($data);
     $this->model->updateAsistencias($data);
   }
 
@@ -19,11 +18,19 @@ class cobro extends calendar {
     $this->model->modSueldo($Sueldo);
   }
 
+  public function traerSueldos() {
+    $this->model->traerSueldos();
+  }
+
   public function index() {
     $this->manejar("cobro","index");
     $this->view->lista = URL . "cliente/listarElementos/Clientes";
     $this->view->th = "<th data-field='Nombres' data-sortable='true'>Nombres</th><th data-field='Apellidos' data-sortable='true'>Apellidos</th>";
     $this->view->renderTabla('cobro');
+  }
+  public function pagosueldos() {
+    $this->view->tit = "Pagar Sueldo";
+    $this->view->renderTempSimple('pagosueldos','form');
   }
 
   public function listarSueldos(){

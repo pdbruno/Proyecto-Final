@@ -1,0 +1,3 @@
+,
+  CONSTRAINT `registroventas_ibfk_1` FOREIGN KEY (`idProductos`) REFERENCES `productos` (`idProductos`),
+  CONSTRAINT `registroventas_ibfk_2` FOREIGN KEY (`idFondos`) REFERENCES `productos` (`idProductos`)INT `pagodesueldos_ibfk_3` FOREIGN KEY (`idMeses`) REFERENCES `meses` (`idMeses`)
