@@ -63,6 +63,7 @@
     <div class="panel panel-success">
       <div class="panel-heading">
         <h3 class="panel-title">Finanzas</h3>
+        <select class="form-control" id="idFondosSelect"></select>
       </div>
       <ul class="nav nav-tabs nav-justified" role="tablist">
         <li role="presentation" class="active"><a href="#Egresos" aria-controls="matricula" role="tab" data-toggle="tab">Egresos</a></li>
@@ -73,22 +74,17 @@
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="Egresos">
           <div class="panel-body">
-            <dl class="dl-horizontal">
-              <dt>El total de los egresos es de $</dt>
-              <dd id="TotEgr">...</dd>
-              <dt>El total de las compras de stock es de $</dt>
-              <dd id="TotCom">...</dd>
-              <dt>El egreso total de la academia es de $</dt>
-              <dd id="TotTotEgr">...</dd>
+            <dl class="dl-horizontal" id="ResumenEg">
             </dl>
           </div>
 
           <div class="table-responsive">
-            <table id="TablaEgresos" class="table table-hover" data-toggle="table" data-url="<?php echo URL;?>index/finanzasEgresos" data-search='true' cellspacing="0" width="100%"  >
+            <table id="TablaEgresos" class="table table-hover" data-toggle="table" data-search='true' cellspacing="0" width="100%"  >
               <thead>
                 <tr>
                   <th data-field='Fecha' data-sortable='true'>Fecha</th>
                   <th data-field='Nombre' data-sortable='true'>Nombre</th>
+                  <th data-field='Tipo' data-sortable='true'>Tipo</th>
                   <th data-field='Monto' data-sortable='true'>Monto ($)</th>
                 </tr>
               </thead>
@@ -98,22 +94,17 @@
         <div role="tabpanel" class="tab-pane fade" id="Ingresos">
 
           <div class="panel-body">
-            <dl class="dl-horizontal">
-              <dt>El total de los cobros es de $</dt>
-              <dd id="TotCob">...</dd>
-              <dt>El total de las ventas de stock es de $</dt>
-              <dd id="TotVen">...</dd>
-              <dt>El ingreso total de la academia es de $</dt>
-              <dd id="TotTotIng">...</dd>
+            <dl class="dl-horizontal" id="ResumenIn">
             </dl>
           </div>
 
           <div class="table-responsive">
-            <table id="TablaIngresos" class="table table-hover" data-toggle="table" data-url="<?php echo URL;?>index/finanzasIngresos" data-search='true' cellspacing="0" width="100%"  >
+            <table id="TablaIngresos" class="table table-hover" data-toggle="table" data-search='true' cellspacing="0" width="100%"  >
               <thead>
                 <tr>
                   <th data-field='Fecha' data-sortable='true'>Fecha</th>
                   <th data-field='Nombre' data-sortable='true'>Nombre</th>
+                  <th data-field='Tipo' data-sortable='true'>Tipo</th>
                   <th data-field='Monto' data-sortable='true'>Monto ($)</th>
                 </tr>
               </thead>
@@ -123,7 +114,7 @@
         <div role="tabpanel" class="tab-pane fade" id="Balance">
           <div class="panel-body">
             <dl class="dl-horizontal">
-              <dt>El balance es de $</dt>
+              <dt>El balance es de</dt>
               <dd id="TotBal">...</dd>
             </dl>
           </div>
@@ -135,6 +126,7 @@
                 <tr>
                   <th data-field='Fecha' data-sortable='true'>Fecha</th>
                   <th data-field='Nombre' data-sortable='true'>Nombre</th>
+                  <th data-field='Tipo' data-sortable='true'>Tipo</th>
                   <th data-field='Monto' data-sortable='true'>Monto ($)</th>
                 </tr>
               </thead>
@@ -244,4 +236,17 @@
         </tbody>
       </table>
     </div></div>
-</div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Gráfico temporal de fondos
+        </div>
+        <div class="panel-body">
+          <div id="GraficoFondos">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

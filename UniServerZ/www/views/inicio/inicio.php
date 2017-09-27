@@ -19,33 +19,104 @@ var Elementos = {
   FechaFinan2: document.getElementById("FechaFinan2"),
   GraficoLinea: document.getElementById("GraficoLinea"),
   GraficoBarra: document.getElementById("GraficoBarra"),
+  GraficoFondos: document.getElementById("GraficoFondos"),
   porcentajeMeses: document.getElementById("porcentajeMeses"),
 
-  TotEgr: document.getElementById("TotEgr"),
-  TotCom: document.getElementById("TotCom"),
-  TotTotEgr: document.getElementById("TotTotEgr"),
-  TotCob: document.getElementById("TotCob"),
-  TotVen: document.getElementById("TotVen"),
-  TotTotIng: document.getElementById("TotTotIng"),
+  ResumenEg: document.getElementById("ResumenEg"),
+  ResumenIn: document.getElementById("ResumenIn"),
   TotBal: document.getElementById("TotBal"),
   IdActividadesSelect1: document.getElementById("IdActividadesSelect1"),
   IdActividadesSelect2: document.getElementById("IdActividadesSelect2"),
+  idFondosSelect: document.getElementById("idFondosSelect"),
   $TablaVentas: $("#TablaVentas"),
   $TablaGanancias: $("#TablaGanancias"),
   $TablaEgresos: $("#TablaEgresos"),
   $TablaIngresos: $("#TablaIngresos"),
   $TablaBalance: $("#TablaBalance"),
 };
-var request = $.ajax({
+var idActividades = $.ajax({
   url: "<?php echo URL; ?>help/Dropdown/idActividades",
+  type: "post"
+});
+
+var idSubctividades = $.ajax({
+  url: "<?php echo URL; ?>help/Dropdown/idSubactividades",
+  type: "post"
+});
+
+
+$.when( idActividades, idSubctividades ).done(function ( v1, v2 ) {
+  let actividades = JSON.parse(v1[0])[0]; // "Fish"
+  let subactividades = JSON.parse(v2[0])[0]; // "Fish"
+  let todo = optionCrear(actividades.concat(subactividades));
+  Elementos.IdActividadesSelect1.innerHTML = todo;
+  Elementos.IdActividadesSelect2.innerHTML = todo;
+});
+
+
+function traerFinanzas(datos = ""){
+  request = $.ajax({
+    url: "<?php echo URL; ?>index/finanzas",
+    type: "post",
+    data: "idFondos=" + Elementos.idFondosSelect.value + "&data=" + datos
+  });
+  request.done(function (respuesta){
+    respuesta = JSON.parse(respuesta);
+    Elementos.$TablaEgresos.bootstrapTable('load', respuesta[0]);
+    Elementos.$TablaIngresos.bootstrapTable('load', respuesta[1]);
+    Elementos.$TablaBalance.bootstrapTable('load', respuesta[2]);
+    Elementos.ResumenEg.innerHTML = "";
+    Elementos.ResumenIn.innerHTML = "";
+    for (tot in respuesta[3]) {
+      let dt = document.createElement("dt");
+      dt.innerHTML = tot;
+      let dd = document.createElement("dd");
+      dd.innerHTML = "$" + respuesta[3][tot].Total;
+      Elementos.ResumenEg.appendChild(dt);
+      Elementos.ResumenEg.appendChild(dd);
+    }
+    for (tot in respuesta[4]) {
+      let dt = document.createElement("dt");
+      dt.innerHTML = tot;
+      let dd = document.createElement("dd");
+      dd.innerHTML = "$" + respuesta[4][tot].Total;
+      Elementos.ResumenIn.appendChild(dt);
+      Elementos.ResumenIn.appendChild(dd);
+    }
+    Elementos.TotBal.innerHTML = "$" + (respuesta[4]['Ingreso Total']['Total'] - respuesta[3]['Egreso Total']['Total']);
+  });
+}
+
+request = $.ajax({
+  url: "<?php echo URL; ?>help/Dropdown/idFondos",
+  type: "post"
+});
+request.done(function (respuesta){
+  Elementos.idFondosSelect.innerHTML = optionCrear(JSON.parse(respuesta)[0]);
+});
+Elementos.idFondosSelect.addEventListener('change', function(){
+  traerFinanzas();
+});
+
+
+request = $.ajax({
+  url: "<?php echo URL; ?>index/mesesFondos",
   type: "post"
 });
 request.done(function (respuesta){
   respuesta = JSON.parse(respuesta);
-  let op = optionCrear(respuesta[0]);
-  Elementos.IdActividadesSelect1.innerHTML = op;
-  Elementos.IdActividadesSelect2.innerHTML = op;
+  Elementos.GraficoFondos.innerHTML="";
+  Morris.Area({
+    element: 'GraficoFondos',
+    data: respuesta[0],
+    xkey: 'Fecha',
+    ykeys: respuesta[1],
+    behaveLikeLine: true,
+    labels: respuesta[1]
+  });
 });
+
+
 
 Elementos.porcentajeMeses.addEventListener('change', function(){
   var request = $.ajax({
@@ -95,7 +166,7 @@ Elementos.IdActividadesSelect1.addEventListener('change', function(){
       return a.Edad - b.Edad;
     });
     Elementos.GraficoLinea.innerHTML="";
-    Morris.Line({
+    Morris.Bar({
       element: 'GraficoLinea',
       data: respuesta,
       xkey: 'Edad',
@@ -106,19 +177,6 @@ Elementos.IdActividadesSelect1.addEventListener('change', function(){
   });
 });
 
-
-Elementos.$TablaEgresos.on('load-success.bs.table', function (e, data) {
-  sortAppend(data);
-});
-Elementos.$TablaIngresos.on('load-success.bs.table', function (e, data) {
-  sortAppend(data);
-});
-function sortAppend(data){
-  Elementos.$TablaBalance.bootstrapTable('append', data);
-  let caca = Elementos.$TablaBalance.bootstrapTable('getData');
-  caca.sort(function(a,b){return new Date(b.Fecha) - new Date(a.Fecha);});
-  Elementos.$TablaBalance.bootstrapTable('load', caca);
-}
 $('.collapse').collapse();
 $('.input-daterange').datepicker({
   format: "yyyy/mm/dd",
@@ -132,12 +190,10 @@ $('.input-daterange').datepicker({
 });
 
 function rowStyle(row, index){
-  if(row.Tipo == "Egreso"){
+  if(row.Tipo == "Egreso" || row.Tipo == "Pago de sueldo" || row.Tipo == "Compra de stock"){
     return {classes: "danger"};
   }else{
-    if(row.Tipo == "Ingreso"){
-      return {classes: "success"};
-    }
+    return {classes: "success"};
   }
 }
 
@@ -157,60 +213,9 @@ Elementos.FechaProd.addEventListener('click', function(){
 });
 
 Elementos.FechaFinan.addEventListener('click', function(){
-  var request = $.ajax({
-    url: "<?php echo URL; ?>index/corteFinan",
-    type: "post",
-    data: "data=" + JSON.stringify({Fecha1: Elementos.FechaFinan1.value, Fecha2: Elementos.FechaFinan2.value})
-  });
-  request.done(function (respuesta){
-    respuesta = respuesta.split("_");
-    let l = respuesta.length;
-    for (var i = 0; i < l; i++) {
-      respuesta[i] = JSON.parse(respuesta[i]);
-    }
-    Elementos.$TablaEgresos.bootstrapTable('load', respuesta[0]);
-    Elementos.$TablaIngresos.bootstrapTable('load', respuesta[1]);
-    Elementos.$TablaBalance.bootstrapTable('removeAll');
-    sortAppend(respuesta[0]);
-    sortAppend(respuesta[1]);
-    Elementos.TotEgr.innerHTML = respuesta[2][0]["SUM(Monto)"];
-    Elementos.TotCom.innerHTML = respuesta[2][1]["SUM(Monto)"];
-    Elementos.TotTotEgr.innerHTML = Number(respuesta[2][0]["SUM(Monto)"]) + Number(respuesta[2][1]["SUM(Monto)"]);
-    Elementos.TotCob.innerHTML = respuesta[2][0]["SUM(Monto)"];
-    Elementos.TotVen.innerHTML = respuesta[2][1]["SUM(Monto)"];
-    Elementos.TotTotIng.innerHTML = Number(respuesta[2][0]["SUM(Monto)"]) + Number(respuesta[2][1]["SUM(Monto)"]);
-    Elementos.TotBal.innerHTML = Number(respuesta[2][0]["SUM(Monto)"]) + Number(respuesta[2][1]["SUM(Monto)"]) - Number(respuesta[2][0]["SUM(Monto)"]) - Number(respuesta[2][1]["SUM(Monto)"]);
-
-  });
+  traerFinanzas(JSON.stringify({Fecha1: Elementos.FechaFinan1.value, Fecha2: Elementos.FechaFinan2.value}));
 });
 
-var EgresosTotal = $.ajax({
-  url: "<?php echo URL; ?>index/finanzasEgresosTotal",
-  type: "post",
-});
-EgresosTotal.done(function (respuesta){
-  respuesta = JSON.parse(respuesta);
-  Elementos.TotEgr.innerHTML = respuesta[0]["SUM(Monto)"];
-  Elementos.TotCom.innerHTML = respuesta[1]["SUM(Monto)"];
-  Elementos.TotTotEgr.innerHTML = Number(respuesta[0]["SUM(Monto)"]) + Number(respuesta[1]["SUM(Monto)"]);
-});
-
-var IngresosTotal = $.ajax({
-  url: "<?php echo URL; ?>index/finanzasIngresosTotal",
-  type: "post",
-});
-IngresosTotal.done(function (respuesta){
-  respuesta = JSON.parse(respuesta);
-  Elementos.TotCob.innerHTML = respuesta[0]["SUM(Monto)"];
-  Elementos.TotVen.innerHTML = respuesta[1]["SUM(Monto)"];
-  Elementos.TotTotIng.innerHTML = Number(respuesta[0]["SUM(Monto)"]) + Number(respuesta[1]["SUM(Monto)"]);
-});
-
-$.when(IngresosTotal, EgresosTotal).done(function(a1, a2){
-  a1 = JSON.parse(a1[0]);
-  a2 = JSON.parse(a2[0]);
-  Elementos.TotBal.innerHTML = Number(a1[0]["SUM(Monto)"]) + Number(a1[1]["SUM(Monto)"]) - Number(a2[0]["SUM(Monto)"]) - Number(a2[1]["SUM(Monto)"]);
-});
 
 var request = $.ajax({
   url: "<?php echo URL; ?>index/morososActividad",

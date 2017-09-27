@@ -26,7 +26,7 @@ class Bootstrap {
       $params = $this->_url;
       unset( $params[0] ); // removing controller
       unset( $params[1] ); // removing method
-      call_user_func_array( array( $this->_controller, $this->_url[1] ) , $params );
+      array($this->_controller, $this->_url[1])(...$params);
     }else{
       $this->_controller->index();
     }

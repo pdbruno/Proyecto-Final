@@ -1,0 +1,3 @@
+SELECT (Ing.MontoIngreso - Eg.MontoEgreso) AS Monto FROM (SELECT SUM(Monto) as MontoIngreso, MONTH(FECHA) as Fecha FROM ingresosbrutos GROUP BY MONTH(FECHA)) as Ing 
+
+FULL JOIN (SELECT SUM(Monto) as MontoEgreso, MONTH(FECHA) as Fecha FROM egresosbrutos GROUP BY MONTH(FECHA)) as Eg ON Ing.Fecha = Eg.Fecha

@@ -10,6 +10,8 @@ use PMA\libraries\config\ConfigFile;
 use PMA\libraries\config\FormDisplay;
 use PMA\libraries\config\ServerConfigChecks;
 use PMA\libraries\LanguageManager;
+use PMA\libraries\URL;
+use PMA\libraries\Sanitize;
 
 if (!defined('PHPMYADMIN')) {
     exit;
@@ -18,7 +20,6 @@ if (!defined('PHPMYADMIN')) {
 /**
  * Core libraries.
  */
-require_once './libraries/display_select_lang.lib.php';
 require_once './setup/lib/index.lib.php';
 require_once './libraries/config/FormDisplay.tpl.php';
 
@@ -27,7 +28,6 @@ $all_languages = LanguageManager::getInstance()->sortedLanguages();
 
 /** @var ConfigFile $cf */
 $cf = $GLOBALS['ConfigFile'];
-$separator = PMA_URL_getArgSeparator('html');
 
 // message handling
 PMA_messagesBegin();
@@ -61,7 +61,7 @@ $text .= '</a>';
 PMA_messagesSet('notice', 'no_https', __('Insecure connection'), $text);
 
 echo '<form id="select_lang" method="post">';
-echo PMA_URL_getHiddenInputs();
+echo URL::getHiddenInputs();
 echo '<bdo lang="en" dir="ltr"><label for="lang">';
 echo __('Language') , (__('Language') != 'Language' ? ' - Language' : '');
 echo '</label></bdo><br />';
@@ -85,7 +85,7 @@ case 'config_saved':
     /* Use uniqid to display this message every time configuration is saved */
     PMA_messagesSet(
         'notice', uniqid('config_saved'), __('Configuration saved.'),
-        PMA_sanitize(
+        Sanitize::sanitize(
             __(
                 'Configuration saved to file config/config.inc.php in phpMyAdmin '
                 . 'top level directory, copy it to top level one and delete '
@@ -98,7 +98,7 @@ case 'config_not_saved':
     /* Use uniqid to display this message every time configuration is saved */
     PMA_messagesSet(
         'notice', uniqid('config_not_saved'), __('Configuration not saved!'),
-        PMA_sanitize(
+        Sanitize::sanitize(
             __(
                 'Please create web server writable folder [em]config[/em] in '
                 . 'phpMyAdmin top level directory as described in '
@@ -156,12 +156,10 @@ if ($cf->getServerCount() > 0) {
         echo '<td>' , htmlspecialchars($cf->getServerDSN($id)) , '</td>';
         echo '<td style="white-space: nowrap">';
         echo '<small>';
-        echo '<a href="' , PMA_URL_getCommon() , $separator , 'page=servers'
-            , $separator , 'mode=edit' , $separator , 'id=' , $id , '">'
+        echo '<a href="' , URL::getCommon(array('page' => 'servers', 'mode' => 'edit', 'id' => $id)), '">'
             , __('Edit') , '</a>';
         echo ' | ';
-        echo '<a href="' , PMA_URL_getCommon() , $separator , 'page=servers'
-            , $separator , 'mode=remove' , $separator , 'id=' , $id , '">'
+        echo '<a href="' , URL::getCommon(array('page' => 'servers', 'mode' => 'remove', 'id' => $id)), '">'
             , __('Delete') , '</a>';
         echo '</small>';
         echo '</td>';
@@ -269,6 +267,6 @@ echo '<div id="footer">';
 echo '<a href="../url.php?url=https://www.phpmyadmin.net/">' , __('phpMyAdmin homepage') , '</a>';
 echo '<a href="../url.php?url=https://www.phpmyadmin.net/donate/">'
     ,  __('Donate') , '</a>';
-echo '<a href="' ,  PMA_URL_getCommon() , $separator , 'version_check=1">'
+echo '<a href="' ,  URL::getCommon(array('version_check' => '1')), '">'
     , __('Check for latest version') , '</a>';
 echo '</div>';
