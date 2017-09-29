@@ -1969,3 +1969,9 @@
 [Tue Sep 26 23:15:07.355006 2017] [php7:notice] [pid 9056:tid 1808] [client ::1:58608] PHP Notice:  Undefined offset: 1 in E:\\Proyecto-Final\\UniServerZ\\www\\models\\index_model.php on line 29, referer: http://localhost/
 =======
 >>>>>>> 2c32b813ce98603004297960fcad582eeab1ec7e
+[Thu Sep 28 23:43:16.951898 2017] [core:warn] [pid 4660:tid 556] AH00098: pid file E:/Proyecto-Final/UniServerZ/core/apache2/logs/httpd.pid overwritten -- Unclean shutdown of previous Apache run?
+[Thu Sep 28 23:43:17.608152 2017] [mpm_winnt:notice] [pid 4660:tid 556] AH00455: Apache/2.4.25 (Win32) PHP/7.1.1 configured -- resuming normal operations
+[Thu Sep 28 23:43:17.608152 2017] [mpm_winnt:notice] [pid 4660:tid 556] AH00456: Apache Lounge VC14 Server built: Dec 17 2016 10:42:52
+[Thu Sep 28 23:43:17.608152 2017] [core:notice] [pid 4660:tid 556] AH00094: Command line: 'E:\\Proyecto-Final\\UniServerZ\\core\\apache2\\bin\\httpd_z.exe -d E:/Proyecto-Final/UniServerZ/core/apache2 -f E:\\Proyecto-Final\\UniServerZ\\core\\apache2\\conf\\httpd.conf -d E:\\Proyecto-Final\\UniServerZ\\core\\apache2'
+[Thu Sep 28 23:43:17.623803 2017] [mpm_winnt:notice] [pid 4660:tid 556] AH00418: Parent: Created child process 12028
+[Thu Sep 28 23:43:18.873781 2017] [mpm_winnt:notice] [pid 12028:tid 4] AH00354: Child: Starting 150 worker threads.
