@@ -2,10 +2,10 @@
 var ElemForm = {
   checkboxes: document.getElementById("Formu").getElementsByClassName("checkbox"),
   intros: document.getElementById("Formu").getElementsByClassName("intro"),
-  $BtnAceptar: $("#BtnAceptar"),
-  $BtnAgregar: $("#BtnAgregar"),
-  $BtnModificar: $("#BtnModificar"),
-  $BtnEliminar: $("#BtnEliminar"),
+  BtnAceptar: document.getElementById("BtnAceptar"),
+  BtnAgregar: document.getElementById("BtnAgregar"),
+  BtnModificar: document.getElementById("BtnModificar"),
+  BtnEliminar: document.getElementById("BtnEliminar"),
   $Tabla: $('#Tabla'),
   Columns: [],
   Formu: document.getElementById("Formu"),
@@ -99,9 +99,10 @@ function crearCampos(myObj, Formulario = ElemForm.Formu){
   for (var i = 0; i < l; i++) {
     let listgroupitem = document.createElement("li");
     listgroupitem.className = "list-group-item";
-    let formgroup = document.createElement("div");
-    formgroup.className = "form-group";
-    formgroup.id = myObj[i].COLUMN_NAME + "Group";
+
+    ElemForm[myObj[i].COLUMN_NAME + "Group"] = document.createElement("div");
+    ElemForm[myObj[i].COLUMN_NAME + "Group"].className = "form-group";
+    ElemForm[myObj[i].COLUMN_NAME + "Group"].id = myObj[i].COLUMN_NAME + "Group";
 
     let controllabel = document.createElement("label");
     controllabel.className = "col-sm-2 control-label";
@@ -110,71 +111,70 @@ function crearCampos(myObj, Formulario = ElemForm.Formu){
     let col10 = document.createElement("div");
     col10.className = "col-sm-10";
 
-    let formcontrolstatic = document.createElement("p");
-    formcontrolstatic.id = myObj[i].COLUMN_NAME;
+    ElemForm[myObj[i].COLUMN_NAME] = document.createElement("p");
+    ElemForm[myObj[i].COLUMN_NAME].id = myObj[i].COLUMN_NAME;
     if (myObj[i].DATA_TYPE=="tinyint") {
-      formcontrolstatic.className = "intro hidden";
+      ElemForm[myObj[i].COLUMN_NAME].className = "intro hidden";
     }else{
-      formcontrolstatic.className = "form-control-static";
+      ElemForm[myObj[i].COLUMN_NAME].className = "form-control-static";
     }
-    let formcontrol = document.createElement("input");
-    formcontrol.id = myObj[i].COLUMN_NAME + "Form";
-    formcontrol.placeholder = myObj[i].COLUMN_COMMENT;
-    let select;
+    ElemForm[myObj[i].COLUMN_NAME + "Form"] = document.createElement("input");
+    ElemForm[myObj[i].COLUMN_NAME + "Form"].id = myObj[i].COLUMN_NAME + "Form";
+    ElemForm[myObj[i].COLUMN_NAME + "Form"].placeholder = myObj[i].COLUMN_COMMENT;
     switch (myObj[i].DATA_TYPE) {
       case "tinyint":
-      formcontrol.type = 'checkbox';
-      formcontrol.className = "checkbox hidden";
-      formcontrol.disabled = true;
+      ElemForm[myObj[i].COLUMN_NAME + "Form"].type = 'checkbox';
+      ElemForm[myObj[i].COLUMN_NAME + "Form"].className = "checkbox hidden";
+      ElemForm[myObj[i].COLUMN_NAME + "Form"].disabled = true;
       break;
       case "date":
-      formcontrol.className = "form-control date hidden";
-      formcontrol.type = 'text';
-      formcontrol.disabled = true;
+      ElemForm[myObj[i].COLUMN_NAME + "Form"].className = "form-control date hidden";
+      ElemForm[myObj[i].COLUMN_NAME + "Form"].type = 'text';
+      ElemForm[myObj[i].COLUMN_NAME + "Form"].disabled = true;
       break;
       case "text":
       case "int":
       case "decimal":
-      formcontrol.disabled = true;
-      formcontrol.className = "form-control hidden";
-      formcontrol.type = 'text';
+      ElemForm[myObj[i].COLUMN_NAME + "Form"].disabled = true;
+      ElemForm[myObj[i].COLUMN_NAME + "Form"].className = "form-control hidden";
+      ElemForm[myObj[i].COLUMN_NAME + "Form"].type = 'text';
       switch (myObj[i].COLUMN_KEY) {
         case "MUL":
-        formcontrol.className = "form-control hidden";
-        formcontrol.type = 'text';
-        formcontrol.style.display = 'none';
-        formcontrol.style.visibility = 'hidden';
-        select = document.createElement("select");
-        hacemeUnDropdown(myObj[i].COLUMN_NAME, select);
-        select.className = "form-control hidden";
-        select.id = myObj[i].COLUMN_NAME + "Select";
+        ElemForm[myObj[i].COLUMN_NAME + "Form"].className = "form-control hidden";
+        ElemForm[myObj[i].COLUMN_NAME + "Form"].type = 'text';
+        ElemForm[myObj[i].COLUMN_NAME + "Form"].style.display = 'none';
+        ElemForm[myObj[i].COLUMN_NAME + "Form"].style.visibility = 'hidden';
+        ElemForm[myObj[i].COLUMN_NAME + "Select"] = document.createElement("select");
+        hacemeUnDropdown(myObj[i].COLUMN_NAME, ElemForm[myObj[i].COLUMN_NAME + "Select"]);
+        ElemForm[myObj[i].COLUMN_NAME + "Select"].className = "form-control hidden";
+        ElemForm[myObj[i].COLUMN_NAME + "Select"].id = myObj[i].COLUMN_NAME + "Select";
         break;
         case "PRI":
-        formcontrol.className = "form-control hidden";
-        formcontrol.type = 'text';
+        ElemForm[myObj[i].COLUMN_NAME + "Form"].className = "form-control hidden";
+        ElemForm[myObj[i].COLUMN_NAME + "Form"].type = 'text';
         listgroupitem.className = 'list-group-item hidden';
       }
     }
     if (myObj[i].COLUMN_KEY == 'MUL') {
-      col10.appendChild(formcontrolstatic);
-      col10.appendChild(select);
-      col10.appendChild(formcontrol);
+      col10.appendChild(ElemForm[myObj[i].COLUMN_NAME]);
+      col10.appendChild(ElemForm[myObj[i].COLUMN_NAME + "Select"]);
+      col10.appendChild(ElemForm[myObj[i].COLUMN_NAME + "Form"]);
     }else {
-      col10.appendChild(formcontrolstatic);
-      col10.appendChild(formcontrol);
+      col10.appendChild(ElemForm[myObj[i].COLUMN_NAME]);
+      col10.appendChild(ElemForm[myObj[i].COLUMN_NAME + "Form"]);
     }
     if (myObj[i].IS_NULLABLE === "NO"  && myObj[i].COLUMN_KEY != "PRI") {
-      let errorlabel = document.createElement("label");
-      errorlabel.id = myObj[i].COLUMN_NAME + "Error";
-      errorlabel.className = "control-label hidden";
-      errorlabel.innerHTML = "Este campo es obligatorio";
-      col10.appendChild(errorlabel);
+      ElemForm[myObj[i].COLUMN_NAME + "Error"] = document.createElement("label");
+      ElemForm[myObj[i].COLUMN_NAME + "Error"].id = myObj[i].COLUMN_NAME + "Error";
+      ElemForm[myObj[i].COLUMN_NAME + "Error"].className = "control-label hidden";
+      ElemForm[myObj[i].COLUMN_NAME + "Error"].innerHTML = "Este campo es obligatorio";
+      col10.appendChild(ElemForm[myObj[i].COLUMN_NAME + "Error"]);
     }
-    formgroup.appendChild(controllabel);
-    formgroup.appendChild(col10);
-    listgroupitem.appendChild(formgroup);
+    ElemForm[myObj[i].COLUMN_NAME + "Group"].appendChild(controllabel);
+    ElemForm[myObj[i].COLUMN_NAME + "Group"].appendChild(col10);
+    listgroupitem.appendChild(ElemForm[myObj[i].COLUMN_NAME + "Group"]);
     Formulario.appendChild(listgroupitem);
-    setProp(myObj[i]);
+    ElemForm.Columns.push(myObj[i]);
   }
   let dates  = $(".date");
   if (dates.length != 0) {
@@ -187,44 +187,42 @@ function crearCampos(myObj, Formulario = ElemForm.Formu){
   }
 }
 function hacemeUnDropdown(nombre, select){
-  let request = $.ajax({
-    url: "<?php echo URL; ?>help/Dropdown/" + nombre,
-    type: "post"
-  });
-  request.done(function (respuesta){
-    respuesta = JSON.parse(respuesta);
-    select.innerHTML = optionCrear(respuesta[0]);
-    if (respuesta[1] == 2) {
-      select.innerHTML += "<option onclick=\"addOpt('" + nombre + "')\">+Agregar</option>";
-      let isChrome = !!window.chrome && !!window.chrome.webstore;
-      if (isChrome) {
-        select.addEventListener("change", function() {
-          this.options[this.selectedIndex].onclick();
-        });
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "<?php echo URL; ?>help/Dropdown/" + nombre);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function() {
+    if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      let respuesta = JSON.parse(xhr.responseText);
+      select.innerHTML = optionCrear(respuesta[0]);
+      if (respuesta[1] == 2) {
+        select.innerHTML += "<option onclick=\"addOpt('" + nombre + "')\">+Agregar</option>";
+        let isChrome = !!window.chrome && !!window.chrome.webstore;
+        if (isChrome) {
+          select.addEventListener("change", function() {
+            this.options[this.selectedIndex].onclick();
+          });
+        }
       }
     }
-  });
+  };
+  xhr.send();
+
 }
 function addOpt(nombre){
   let nuevaopcion = prompt("Ingrese la nueva opción");
   if (nuevaopcion != null) {
-    var request = $.ajax({
-      url: "<?php echo URL; ?>help/agregarModificarElemento/" + nombre.substr(2).toLowerCase(),
-      type: "post",
-      data: "data=" + JSON.stringify({Nombre : nuevaopcion}),
-    });
-    request.done(function (respuesta){
-      hacemeUnDropdown(nombre, document.getElementById(nombre + "Select"));
-    });
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "<?php echo URL; ?>help/agregarModificarElemento/" + nombre.substr(2).toLowerCase());
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        hacemeUnDropdown(nombre, document.getElementById(nombre + "Select"));
+      }
+    };
+    xhr.send("data=" + JSON.stringify({Nombre : nuevaopcion}));
+
   }
-}
-function setProp(myObj){
-  ElemForm.Columns.push(myObj);
-  ElemForm[myObj.COLUMN_NAME + "Select"] = $("#" + myObj.COLUMN_NAME + "Select");
-  ElemForm[myObj.COLUMN_NAME] = $("#" + myObj.COLUMN_NAME);
-  ElemForm[myObj.COLUMN_NAME + "Form"] = $("#" + myObj.COLUMN_NAME + "Form");
-  ElemForm[myObj.COLUMN_NAME + "Group"] = $("#" + myObj.COLUMN_NAME + "Group");
-  ElemForm[myObj.COLUMN_NAME + "Error"] = $("#" + myObj.COLUMN_NAME+ "Error");
 }
 
 function optionCrear(vec) {
@@ -240,46 +238,56 @@ function optionCrear(vec) {
 function clickFila(obj){
   $("#noti").remove();
   for (x in obj) {
-    ElemForm[x + "Group"].removeClass("has-error");
-    ElemForm[x + "Error"].addClass("hidden");
-    ElemForm[x + "Select"].addClass("hidden");
-    ElemForm[x].removeClass("hidden").text(obj[x]);
-    ElemForm[x + "Form"].addClass("hidden");
-    if (ElemForm[x + "Form"].attr("type") == 'checkbox') {
+    ElemForm[x + "Group"].classList.remove("has-error");
+    if (ElemForm[x + "Error"]) {
+      ElemForm[x + "Error"].classList.add("hidden");
+    }
+    if (ElemForm[x + "Select"]) {
+      ElemForm[x + "Select"].classList.add("hidden");
+    }
+    ElemForm[x].classList.remove("hidden");
+    ElemForm[x].innerHTML = obj[x];
+    ElemForm[x + "Form"].classList.add("hidden");
+    if (ElemForm[x + "Form"].type == 'checkbox') {
       if (obj[x] == 1) {
-        ElemForm[x + "Form"].attr("checked", true);
+        ElemForm[x + "Form"].checked = true;
       } else {
-        ElemForm[x + "Form"].attr("checked", false);
+        ElemForm[x + "Form"].checked = false;
       }
     } else {
-      ElemForm[x + "Form"].val(obj[x]);
+      ElemForm[x + "Form"].value = obj[x];
     }
   }
   let l = ElemForm.intros.length;
   if (l>0) {
     for (let i = 0; i < l; i++) {
-      $("#" + ElemForm.checkboxes[i].id).removeClass("hidden");
+      ElemForm.checkboxes[i].classList.remove("hidden");
       ElemForm.checkboxes[i].disabled = true;
       if (ElemForm.intros[i].innerHTML == 1 || ElemForm.intros[i].innerHTML == "YES") {
         ElemForm.checkboxes[i].checked = true;
       } else {
         ElemForm.checkboxes[i].checked = false;
       }
-      $("#" + ElemForm.intros[i].id).addClass("hidden");
+      ElemForm.intros[i].classList.add("hidden");
     }
   }
   $('#ModalPropiedades').modal('show');
-  ElemForm.$BtnAceptar.addClass("hidden");
-  ElemForm.$BtnAgregar.removeClass("hidden");
-  ElemForm.$BtnModificar.removeClass("hidden");
-  ElemForm.$BtnEliminar.removeClass("hidden");
+  ElemForm.BtnAceptar.classList.add("hidden");
+  ElemForm.BtnAgregar.classList.remove("hidden");
+  ElemForm.BtnModificar.classList.remove("hidden");
+  if (ElemForm.BtnEliminar) {
+    ElemForm.BtnEliminar.classList.remove("hidden");
+  }
 }
 function afterEnviar(){
   let l = ElemForm.Columns.length;
   for (var i = 0; i < l; i++) {
-    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"].addClass("hidden");
-    ElemForm[ElemForm.Columns[i].COLUMN_NAME].removeClass("hidden").html("");
-    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].addClass("hidden");
+    if (ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"]) {
+      ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"].classList.add("hidden");
+    }
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME].classList.remove("hidden");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME].innerHTML="";
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].classList.add("hidden");
   }
   l = ElemForm.checkboxes.length;
   if (l>0) {
@@ -288,10 +296,14 @@ function afterEnviar(){
     }
   }
   ElemForm.modal.modal('hide');
-  ElemForm.$BtnAceptar.addClass("hidden");
-  ElemForm.$BtnAgregar.removeClass("hidden");
-  ElemForm.$BtnModificar.addClass("hidden");
-  ElemForm.$BtnEliminar.addClass("hidden");
+
+  ElemForm.BtnAceptar.classList.add("hidden");
+  ElemForm.BtnAgregar.classList.remove("hidden");
+  ElemForm.BtnModificar.classList.add("hidden");
+  if (ElemForm.BtnEliminar) {
+    ElemForm.BtnEliminar.classList.add("hidden");
+  }
+
   ElemForm.$Tabla.bootstrapTable('refresh');
 }
 function beforeEnviar(){
@@ -305,23 +317,24 @@ function beforeEnviar(){
   }
   l = ElemForm.Columns.length;
   for (var i = 0; i < l; i++) {
-    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Group"].removeClass("has-error");
-    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Error"].addClass("hidden");
-
-    let sel = document.getElementById(ElemForm.Columns[i].COLUMN_NAME + "Select");
-    if ( sel != null) {
-      ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].val(sel.value);
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Group"].classList.remove("has-error");
+    if (ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Error"]) {
+      ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Error"].classList.add("hidden");
     }
-    if (ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].val() === "") {
+
+    if ( ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"]) {
+      ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].value = ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"].value;
+    }
+    if (ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].value === "") {
       if (ElemForm.Columns[i].IS_NULLABLE === 'NO' && ElemForm.Columns[i].DATA_TYPE != "tinyint" && ElemForm.Columns[i].COLUMN_KEY != "PRI") {
-        ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Group"].addClass("has-error");
-        ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Error"].removeClass("hidden");
+        ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Group"].classList.add("has-error");
+        ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Error"].classList.remove("hidden");
         mal = true;
       }else {
-        ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].val(null);
+        ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].value = null;
       }
     }
-    vec[ElemForm.Columns[i].COLUMN_NAME] = ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].val();
+    vec[ElemForm.Columns[i].COLUMN_NAME] = ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].value;
   }
   if (mal) {
     if(document.getElementById("noti") == null){
@@ -348,26 +361,37 @@ function modoFormulario(modo){
   if (modo == "Agregar") {
     $('#ModalPropiedades').modal('show');
   }
-  ElemForm.$BtnAceptar.removeClass("hidden");
-  ElemForm.$BtnModificar.addClass("hidden");
-  ElemForm.$BtnEliminar.addClass("hidden");
+  if (ElemForm.BtnAceptar) {
+    ElemForm.BtnAceptar.classList.remove("hidden");
+  }
+  if (ElemForm.BtnModificar) {
+    ElemForm.BtnModificar.classList.add("hidden");
+  }
+  if (ElemForm.BtnEliminar) {
+    ElemForm.BtnEliminar.classList.add("hidden");
+  }
   let l = ElemForm.Columns.length;
   for (var i = 0; i < l; i++) {
-    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Group"].removeClass("has-error");
-    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Error"].addClass("hidden");
-    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"].removeClass("hidden").prop("selectedIndex", 0);
-    ElemForm[ElemForm.Columns[i].COLUMN_NAME].addClass("hidden");
-    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].removeClass("hidden").attr('disabled', false);
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Group"].classList.remove("has-error");
+    if (ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Error"]) {
+      ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Error"].classList.add("hidden");
+    }
+    if (ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"]) {
+      ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"].classList.remove("hidden");
+      ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"].selectedIndex = 0;
+    }
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME].classList.add("hidden");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].classList.remove("hidden");
+    ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].disabled = false;
     if (modo == "Agregar") {
-      ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].val(null);
+      ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].value = null;
     }else {
-      let select = document.getElementById(ElemForm.Columns[i].COLUMN_NAME + "Select");
-      if (select != null) {
-        let opciones = select.options;
-        let l = select.length;
+      if (ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"]) {
+        let opciones = ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"].options;
+        let l = ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"].length;
         for (let j = 0; j < l; j++) {
-          if (opciones[j].text == ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].val()) {
-            select.selectedIndex = j;
+          if (opciones[j].innerHTML == ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Form"].value) {
+            ElemForm[ElemForm.Columns[i].COLUMN_NAME + "Select"].selectedIndex = j;
             break;
           }
         }

@@ -3,48 +3,55 @@
 var Instructores = [];
 var Sueldos = {};
 
-var request = $.ajax({
-  url: "<?php echo URL; ?>actividad/tabla/pagodesueldos",
-  type: "post",
-});
-request.done(function (respuesta){
-  let myObj = JSON.parse(respuesta);
-  crearCampos(myObj);
-  ElemForm.idMesesSelect[0].remove(13);
-  ElemForm.idClientesSelect[0].addEventListener("input", traerSueldo);
-  ElemForm.idMesesSelect[0].addEventListener("input", traerSueldo);
-  modoFormulario("Agregar");
+var tabla = new XMLHttpRequest();
+tabla.open("POST", "<?php echo URL; ?>actividad/tabla/pagodesueldos");
+tabla.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+tabla.onreadystatechange = function() {
+  if(tabla.readyState === XMLHttpRequest.DONE && tabla.status === 200) {
+    let myObj = JSON.parse(tabla.responseText);
+    crearCampos(myObj);
+    ElemForm.idMesesSelect.remove(13);
+    ElemForm.idClientesSelect.addEventListener("input", traerSueldo);
+    ElemForm.idMesesSelect.addEventListener("input", traerSueldo);
+    modoFormulario("Agregar");
+    let listadoInstructores = new XMLHttpRequest();
+    listadoInstructores.open("POST", "<?php echo URL; ?>cliente/listadoInstructores");
+    listadoInstructores.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    listadoInstructores.onreadystatechange = function() {
+      if(listadoInstructores.readyState === XMLHttpRequest.DONE && listadoInstructores.status === 200) {
+        Instructores = JSON.parse(listadoInstructores.responseText);
+        ElemForm.idClientesSelect.innerHTML = optionCrear(Instructores);
+      }
+    };
+    listadoInstructores.send();
+  }
+};
+tabla.send();
 
-  var request = $.ajax({
-    url: "<?php echo URL; ?>cliente/listadoInstructores",
-    type: "post",
-  });
-  request.done(function (respuesta){
-    Instructores = JSON.parse(respuesta);
-    ElemForm.idClientesSelect[0].innerHTML = optionCrear(Instructores);
-  });
-});
-
-request = $.ajax({
-  url: "<?php echo URL; ?>cobro/traerSueldos",
-  type: "post"
-});
-request.done(function (respuesta){
-  Sueldos = JSON.parse(respuesta);
-});
-
+let traerSueldos = new XMLHttpRequest();
+traerSueldos.open("POST", "<?php echo URL; ?>cobro/traerSueldos");
+traerSueldos.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+traerSueldos.onreadystatechange = function() {
+  if(traerSueldos.readyState === XMLHttpRequest.DONE && traerSueldos.status === 200) {
+    Sueldos = JSON.parse(traerSueldos.responseText);
+  }
+};
+traerSueldos.send();
 
 
 function traerSueldo(){
-  if (ElemForm.idClientesSelect[0].value && ElemForm.idMesesSelect[0].value) {
-    let request = $.ajax({
-      url: "<?php echo URL; ?>cliente/cantidadBloques",
-      type: "post",
-      data: "data1=" + ElemForm.idClientesSelect[0].value + "&data2=" + ElemForm.idMesesSelect[0].value,
-    });
-    request.done(function (respuesta){
-      ElemForm.MontoForm[0].value = respuesta * Sueldos[Instructores[ElemForm.idClientesSelect[0].selectedIndex - 1].idCategorias].MontoXBloque;
-    });
+  if (ElemForm.idClientesSelect.value && ElemForm.idMesesSelect.value) {
+
+    let cantidadBloques = new XMLHttpRequest();
+    cantidadBloques.open("POST", "<?php echo URL; ?>cliente/cantidadBloques");
+    cantidadBloques.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    cantidadBloques.onreadystatechange = function() {
+      if(cantidadBloques.readyState === XMLHttpRequest.DONE && cantidadBloques.status === 200) {
+        ElemForm.MontoForm.value = cantidadBloques.responseText * Sueldos[Instructores[ElemForm.idClientesSelect.selectedIndex - 1].idCategorias].MontoXBloque;
+      }
+    };
+    cantidadBloques.send("data1=" + ElemForm.idClientesSelect.value + "&data2=" + ElemForm.idMesesSelect.value);
+
   }
 }
 
@@ -54,15 +61,18 @@ function traerSueldo(){
 document.getElementById("BtnAgregar").addEventListener("click", function() {
   let vec = beforeEnviar();
   if (vec != 'no') {
-    let request = $.ajax({
-      url: "<?php echo URL; ?>help/agregarModificarElemento/PagoDeSueldos",
-      type: "post",
-      data: "data=" + JSON.stringify(vec),
-    });
-    request.done(function (respuesta){
-      alert("Gracias por colaborar con el gremio de Instructores BBG, se ha pagado el sueldo exitosamente");
-      modoFormulario("Agregar");
-    });
+
+    let agregarModificarElemento = new XMLHttpRequest();
+    agregarModificarElemento.open("POST", "<?php echo URL; ?>help/agregarModificarElemento/PagoDeSueldos");
+    agregarModificarElemento.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    agregarModificarElemento.onreadystatechange = function() {
+      if(agregarModificarElemento.readyState === XMLHttpRequest.DONE && agregarModificarElemento.status === 200) {
+        alert("Gracias por colaborar con el gremio de Instructores BBG, se ha pagado el sueldo exitosamente");
+        modoFormulario("Agregar");
+      }
+    };
+    traerSueldos.send("data=" + JSON.stringify(vec));
+
   }
 });
 </script>

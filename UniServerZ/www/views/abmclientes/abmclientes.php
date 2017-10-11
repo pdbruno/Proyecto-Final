@@ -1,12 +1,17 @@
 <script>
 var Elementos = {
-  Selec: document.getElementById("Selec")
+  Selec: document.getElementById("Selec"),
+  idActividadesSelect: document.getElementById("idActividadesSelect"),
+  idActividadesVer: document.getElementById("idActividadesVer"),
+  TablaActividades: document.getElementById("TablaActividades"),
+  $ModalSel: $('#ModalSel'),
+  $ModalVer: $('#ModalVer'),
 };
 document.getElementById("CerrarVer").addEventListener("click", function() {
-  $('#ModalVer').modal('hide');
+  Elementos.$ModalVer.modal('hide');
 });
 document.getElementById("deshacerModal").addEventListener("click", function() {
-  $('#ModalSel').modal('hide');
+  Elementos.$ModalVer.modal('hide');
   deshacerModal();
 });
 function deshacerModal(){
@@ -22,32 +27,58 @@ function deshacerModal(){
   Elementos.Selec.innerHTML = "";
   AddAct(0);
 }
-var request = $.ajax({
-  url: "<?php echo URL; ?>cliente/tabla/clientes",
-  type: "post"
-});
-request.done(function (respuesta){
-  let myObj = JSON.parse(respuesta);
-  crearCampos(myObj);
-});
-var idModalidades = $.ajax({
-  url: "<?php echo URL; ?>help/Dropdown/idModalidades",
-  type: "post"
-});
-var idActividades = $.ajax({
-  url: "<?php echo URL; ?>help/Dropdown/idActividades",
-  type: "post"
-});
-var idModosDePago = $.ajax({
-  url: "<?php echo URL; ?>help/Dropdown/idModosDePago",
-  type: "post"
-});
-$.when(idModalidades, idActividades, idModosDePago).done(function(a1, a2, a3){
-  VecModalidades = optionCrear(JSON.parse(a1[0])[0]);
-  VecActividades = optionCrear(JSON.parse(a2[0])[0]);
-  VecModosDePago = optionCrear(JSON.parse(a3[0])[0]);
-  deshacerModal();
-});
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "<?php echo URL; ?>cliente/tabla/clientes");
+xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xhr.onreadystatechange = function () {
+  if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+    let myObj = JSON.parse(xhr.responseText);
+    crearCampos(myObj);
+  }
+};
+xhr.send();
+
+  var idModalidades = new Promise(function(resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "<?php echo URL; ?>help/Dropdown/idModalidades");
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        resolve(xhr.responseText);
+      }
+    };
+    xhr.send();
+  });
+  var idActividades = new Promise(function(resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "<?php echo URL; ?>help/Dropdown/idActividades");
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        resolve(xhr.responseText);
+      }
+    };
+    xhr.send();
+  });
+  var idModosDePago = new Promise(function(resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "<?php echo URL; ?>help/Dropdown/idModosDePago");
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        resolve(xhr.responseText);
+      }
+    };
+    xhr.send();
+  });
+
+  Promise.all([idModalidades, idActividades, idModosDePago]).then(values => {
+    VecModalidades = optionCrear(JSON.parse(values[0])[0]);
+    VecActividades = optionCrear(JSON.parse(values[1])[0]);
+    VecModosDePago = optionCrear(JSON.parse(values[2])[0]);
+    deshacerModal();
+  });
+
 
 function AddAct(i) {
   if ((Elementos["idActividadesSelect" + i].selectedIndex == "0" || Elementos["idModosDePagoSelect" + i].selectedIndex == "0") || (Elementos["idModosDePagoSelect" + i].selectedIndex == "2" && Elementos["idModalidadesSelect" + i].selectedIndex == "0")) {
@@ -106,14 +137,14 @@ function AddAct(i) {
     select2.innerHTML = Elementos["idModosDePagoSelect" + i].innerHTML;
     select3.innerHTML = Elementos["idModalidadesSelect" + i].innerHTML;
   }
-
 }
-$('#FechaNacimientoForm').datepicker({
+$(ElemForm["FechaNacimientoForm"]).datepicker({
   format: "yyyy/mm/dd",
   endDate: "today",
   language: "es",
   autoclose: true,
 });
+
 var VecActividades = "";
 var VecModalidades = "";
 var VecModosDePago = "";
@@ -123,7 +154,7 @@ var final = [];
 document.getElementById("aceptarModal").addEventListener("click", function() {
   final = [];
   bien = true;
-  $('#ModalSel').modal('hide');
+  Elementos.$ModalVer.modal('hide');
   let l = document.getElementById("Selec").getElementsByClassName("activ").length;
   for (var i = 1; i <= l; i++) {
     if ((Elementos["idActividadesSelect" + i].selectedIndex == "0" || Elementos["idModosDePagoSelect" + i].selectedIndex == "0") || (Elementos["idModosDePagoSelect" + i].selectedIndex == "2" && Elementos["idModalidadesSelect" + i].selectedIndex == "0")) {
@@ -134,37 +165,37 @@ document.getElementById("aceptarModal").addEventListener("click", function() {
   }
 });
 
-document.getElementById("BtnAgregar").addEventListener("click", function() {
-  $("#IdActividadesSelect").removeClass("hidden");
-  $("#IdActividadesVer").addClass("hidden");
+ElemForm['BtnAgregar'].addEventListener("click", function() {
+  Elementos.idActividadesSelect.classList.remove("hidden");
+  Elementos.idActividadesVer.classList.add("hidden");
   modoFormulario("Agregar");
   deshacerModal();
-  document.getElementById("ActivoForm").checked = true;
+  ElemForm["ActivoForm"].checked = true;
 });
-document.getElementById("BtnModificar").addEventListener("click", function() {
-  $("#IdActividadesSelect").removeClass("hidden");
-  $("#IdActividadesVer").addClass("hidden");
+ElemForm['BtnModificar'].addEventListener("click", function() {
+  Elementos.idActividadesSelect.classList.remove("hidden");
+  Elementos.idActividadesVer.classList.add("hidden");
   modoFormulario("Modificar");
   deshacerModal();
 });
-document.getElementById("BtnAceptar").addEventListener("click", function() {
-  document.getElementById("IdActividadesSelect").innerHTML = 'Seleccionar actividad/es';
+ElemForm['BtnAceptar'].addEventListener("click", function() {
+  Elementos.idActividadesSelect.innerHTML = 'Seleccionar actividad/es';
   if (bien == false){
-    document.getElementById("IdActividadesSelect").innerHTML+= '<span class="label label-danger">!</span>';
+    Elementos.idActividadesSelect.innerHTML+= '<span class="label label-danger">!</span>';
   }else {
     let vec = beforeEnviar();
     if (vec != 'no')
     {
-      let vec = beforeEnviar();
-      request = $.ajax({
-        url: "<?php echo URL; ?>cliente/agregarModificarCliente",
-        type: "post",
-        data:  "data1=" + JSON.stringify(vec) + "&data2=" + JSON.stringify(final)
-      });
-      request.done(function (respuesta){
-        $("#IdActividadesSelect").addClass("hidden");
-        afterEnviar();
-      });
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "<?php echo URL; ?>cliente/agregarModificarCliente");
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function () {
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          Elementos.idActividadesSelect.classList.add("hidden");
+          afterEnviar();
+        }
+      };
+      xhr.send("data1=" + JSON.stringify(vec) + "&data2=" + JSON.stringify(final));
     }
   }
 });
@@ -172,47 +203,49 @@ document.getElementById("BtnEliminar").addEventListener("click", function() {
   var r = confirm("Estás muy recontra segurísima/o que querés borrar a este cliente?\n\
   Esta funcionalidad se ha creado solo para casos extremos.");
   if (r == true) {
-    request = $.ajax({
-      url: "<?php echo URL; ?>cliente/eliminarElemento/Clientes",
-      type: "post",
-      data: "data=" + document.getElementById("idClientes").innerHTML,
-    });
-    request.done(function (respuesta){
-      eliminarError(respuesta);
-    });
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "<?php echo URL; ?>cliente/eliminarElemento/Clientes");
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        eliminarError(xhr.responseText);
+      }
+    };
+    xhr.send("data=" + ElemForm["idClientes"].innerHTML);
   }
 });
 var idClientes;
 $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
-  idClientes = $element.idClientes;
   $('.success').removeClass('success');
   $(field).addClass('success');
-  request = $.ajax({
-    url: "<?php echo URL; ?>cliente/traerElemento/Clientes",
-    type: "post",
-    data: "data=" + idClientes,
-  });
-  request.done(function (respuesta)
-  {
-    clickFila(JSON.parse(respuesta)[0][0]);
-    var actividades = JSON.parse(respuesta)[1][0];
-    var texto = "";
-    for (var i = 0; i < actividades.length; i++) {
-      texto += "<tr>";
-      texto+="<td>" + actividades[i].NombreAct + "</td>";
-      texto+="<td>" + actividades[i].NombrePag + "</td>";
-      if (actividades[i].NombreMod == null) {
-        texto+="<td>-</td>";
-      }else {
-        texto+="<td>" + actividades[i].NombreMod + "</td>";
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "<?php echo URL; ?>cliente/traerElemento/Clientes");
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function () {
+    if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      clickFila(JSON.parse(xhr.responseText)[0][0]);
+      var actividades = JSON.parse(xhr.responseText)[1][0];
+      var texto = "";
+      for (var i = 0; i < actividades.length; i++) {
+        texto += "<tr>";
+        texto+="<td>" + actividades[i].NombreAct + "</td>";
+        texto+="<td>" + actividades[i].NombrePag + "</td>";
+        if (actividades[i].NombreMod == null) {
+          texto+="<td>-</td>";
+        }else {
+          texto+="<td>" + actividades[i].NombreMod + "</td>";
+        }
+        texto+="</tr>";
+        final.push({idClientes: idClientes, idActividades: actividades[i].idActividades, idModosDePago: actividades[i].idModosDePago, idModalidades: actividades[i].idModalidades});
+        bien = true;
       }
-      texto+="</tr>";
-      final.push({idClientes: idClientes, idActividades: actividades[i].idActividades, idModosDePago: actividades[i].idModosDePago, idModalidades: actividades[i].idModalidades});
-      bien = true;
+      Elementos.TablaActividades.innerHTML = texto;
+      Elementos.idActividadesSelect.classList.add("hidden");
+      Elementos.idActividadesVer.classList.remove("hidden");
     }
-    $("#TablaActividades").html(texto);
-    $("#IdActividadesSelect").addClass("hidden");
-    $("#IdActividadesVer").removeClass("hidden");
-  });
+  };
+  xhr.send("data=" + $element.idClientes);
 });
 </script>

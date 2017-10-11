@@ -1,23 +1,30 @@
 <script>
 var Elementos = {
-  Selec: document.getElementById("Selec")
+  Selec: document.getElementById("Selec"),
+  idSubactividadesSelect: document.getElementById("idSubactividadesSelect"),
+  idSubactividadesVer: document.getElementById("idSubactividadesVer"),
+  TablaSubactividades: document.getElementById("TablaSubactividades"),
+  $ModalVer: $('#ModalVer'),
+  $ModalSel: $('#ModalSel'),
 };
 document.getElementById("CerrarVer").addEventListener("click", function() {
-  $('#ModalVer').modal('hide');
+  Elementos.$ModalVer.modal('hide');
 });
 document.getElementById("deshacerModal").addEventListener("click", function() {
-  $('#ModalSel').modal('hide');
+  Elementos.$ModalVer.modal('hide');
   deshacerModal();
 });
-var request = $.ajax({
-  url: "<?php echo URL; ?>actividad/tabla/actividades",
-  type: "post",
-});
-request.done(function (respuesta){
-  let myObj = JSON.parse(respuesta);
-  crearCampos(myObj);
-  ElemForm['idCalendarioGroup'].addClass('hidden');
-});
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "<?php echo URL; ?>actividad/tabla/actividades");
+xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xhr.onreadystatechange = function () {
+  if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+    let myObj = JSON.parse(xhr.responseText);
+    crearCampos(myObj);
+    ElemForm['idCalendarioGroup'].classList.add('hidden');
+  }
+};
+xhr.send();
 function deshacerModal(){
   Elementos["idSubactividadesForm0"] = document.createElement("input");
   Elementos.Selec.innerHTML = "";
@@ -57,7 +64,7 @@ function AddAct(i) {
 
 var final = [];
 document.getElementById("aceptarModal").addEventListener("click", function() {
-  $('#ModalSel').modal('hide');
+  Elementos.$ModalVer.modal('hide');
   final = [];
   var l = document.getElementById("Selec").getElementsByClassName("sub").length;
   for (let i = 1; i <= l; i++) {
@@ -67,71 +74,74 @@ document.getElementById("aceptarModal").addEventListener("click", function() {
   }
 });
 
-document.getElementById("BtnAgregar").addEventListener("click", function() {
+ElemForm['BtnAgregar'].addEventListener("click", function() {
   $('#ModalPropiedades').modal('show');
   modoFormulario("Agregar");
-  $("#idSubactividadesSelect").removeClass("hidden");
-  $("#idSubactividadesVer").addClass("hidden");
+  Elementos.idSubactividadesSelect.classList.remove("hidden");
+  Elementos.idSubactividadesVer.classList.add("hidden");
   deshacerModal();
 });
-document.getElementById("BtnModificar").addEventListener("click", function() {
+ElemForm['BtnModificar'].addEventListener("click", function() {
   modoFormulario("Modificar");
-  $("#idSubactividadesSelect").removeClass("hidden");
-  $("#idSubactividadesVer").addClass("hidden");
+  Elementos.idSubactividadesSelect.classList.remove("hidden");
+  Elementos.idSubactividadesVer.classList.add("hidden");
   deshacerModal();
 });
-document.getElementById("BtnAceptar").addEventListener("click", function() {
+ElemForm['BtnAceptar'].addEventListener("click", function() {
   let vec = beforeEnviar();
   if (vec != 'no')
   {
-    request = $.ajax({
-      url: "<?php echo URL; ?>actividad/agregarModificarActividad",
-      type: "post",
-      data:  "data1=" + JSON.stringify(vec) + "&data2=" + JSON.stringify(final)
-    });
-    request.done(function (respuesta){
-      afterEnviar();
-    });
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "<?php echo URL; ?>actividad/agregarModificarActividad");
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        afterEnviar();
+      }
+    };
+    xhr.send("data1=" + JSON.stringify(vec) + "&data2=" + JSON.stringify(final));
   }
 });
-document.getElementById("BtnEliminar").addEventListener("click", function() {
+ElemForm['BtnEliminar'].addEventListener("click", function() {
   var r = confirm("Estás muy recontra segurísima/o que querés borrar esta actividad?");
   if (r == true) {
-    request = $.ajax({
-      url: "<?php echo URL; ?>actividad/eliminarElemento/Actividades",
-      type: "post",
-      data: "data=" + document.getElementById("idActividades").innerHTML,
-    });
-    request.done(function (respuesta){
-      eliminarError(respuesta);
-    });
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "<?php echo URL; ?>actividad/eliminarElemento/Actividades");
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        eliminarError(xhr.responseText);
+      }
+    };
+    xhr.send("data=" + ElemForm["idActividades"].innerHTML);
   }
 });
 $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
   $('.success').removeClass('success');
   $(field).addClass('success');
-  request = $.ajax({
-    url: "<?php echo URL; ?>actividad/traerElemento/Actividades",
-    type: "post",
-    data: "data=" + $element.idActividades,
-  });
-  request.done(function (respuesta)
-  {
-    clickFila(JSON.parse(respuesta)[0][0]);
-    let subactividades = JSON.parse(respuesta)[1];
-    let texto = "";
-    let l = subactividades.length;
-    for (var i = 0; i < l; i++) {
-      texto += "<tr>";
-      texto+="<td>" + subactividades[i].Nombre + "</td>";
-      texto+="</tr>";
-      final.push(subactividades[i].Nombre);
-      bien = true;
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "<?php echo URL; ?>actividad/traerElemento/Actividades");
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function () {
+    if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      clickFila(JSON.parse(xhr.responseText)[0][0]);
+      let subactividades = JSON.parse(xhr.responseText)[1];
+      let texto = "";
+      let l = subactividades.length;
+      for (var i = 0; i < l; i++) {
+        texto += "<tr>";
+        texto+="<td>" + subactividades[i].Nombre + "</td>";
+        texto+="</tr>";
+        final.push(subactividades[i].Nombre);
+        bien = true;
+      }
+      Elementos.TablaSubactividades.innerHTML = texto;
+      Elementos.idSubactividadesSelect.classList.add("hidden");
+      Elementos.idSubactividadesVer.classList.remove("hidden");
     }
-    $("#TablaSubactividades").html(texto);
-    $("#idSubactividadesSelect").addClass("hidden");
-    $("#idSubactividadesVer").removeClass("hidden");
-  });
+  };
+  xhr.send("data=" + $element.idActividades);
 });
 
 </script>

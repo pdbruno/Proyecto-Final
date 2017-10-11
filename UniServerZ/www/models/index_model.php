@@ -1,10 +1,8 @@
 <?php
-
 class index_Model extends Model {
   public function __construct() {
     parent::__construct();
   }
-
   function porcentajeAsistencias($mes)
   {
     $act = $this->db->getAll("SELECT `idActividades`, `Nombre` FROM `actividades`");
@@ -16,7 +14,6 @@ class index_Model extends Model {
     }
     echo json_encode($outp);
   }
-
   function graficoSexoActividad($id)
   {
     if (strlen($id) == 11) {
@@ -29,7 +26,6 @@ class index_Model extends Model {
     $outp[0]['CantMuj'] = $res[1]['Cantidad'];
     echo json_encode($outp);
   }
-
   function graficoEdadActividad($id)
   {
     if (strlen($id) == 11) {
@@ -53,13 +49,11 @@ class index_Model extends Model {
     }
     echo json_encode($outp);
   }
-
   function morososMatricula()
   {
     $outp = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS Nombres FROM `clientesactivos` WHERE YEAR(CURDATE()) - YEAR(`PagoMatricula`) != 0");
     echo json_encode($outp);
   }
-
   function between($data)
   {
     if ($data['Fecha1'] == "" && $data['Fecha2'] == "" ) {
@@ -68,61 +62,51 @@ class index_Model extends Model {
       return $this->db->parse(" AND `Fecha` BETWEEN ?s AND ?s", $data['Fecha1'], $data['Fecha2']);
     }
   }
-
   function productosVentas($corte = "")
   {
     $outp = $this->db->getAll("SELECT productos.Nombre, COUNT(0) AS Cantidad FROM `registroventas` INNER JOIN productos on registroventas.idProductos = productos.idProductos ?p GROUP BY registroventas.idProductos ORDER BY Cantidad DESC", $corte);
     echo json_encode($outp);
   }
-
   function productosGanancias($corte = "")
   {
     $outp = $this->db->getAll("SELECT productos.Nombre, SUM(Monto) AS Monto FROM `registroventas` INNER JOIN productos on registroventas.idProductos = productos.idProductos ?p GROUP BY registroventas.idProductos ORDER BY SUM(Monto) DESC", $corte);
     echo json_encode($outp);
   }
-
   function morososExceso()
   {
     $outp = $this->db->getAll("SELECT * FROM excesoasistencia");
     echo json_encode($this->formatDeuda($outp));
   }
-
   function traerFondos()
   {
     $outp = $this->db->getAll("SELECT * FROM fondos");
     return $outp;
   }
-
   function morososActividad()
   {
     $outp = $this->db->getAll("SELECT * FROM deudas");
     echo json_encode($this->formatDeuda($outp));
   }
-
   function finanzasBalance($idFondos, $corte = "")
   {
     $outp = $this->db->getAll("SELECT Nombre, Monto, Fecha, Tipo FROM `egresosbrutos` WHERE idFondos = ?i ?p UNION SELECT Nombre, Monto, Fecha, Tipo FROM `ingresosbrutos` WHERE idFondos = ?i ?p ORDER BY Fecha DESC", $idFondos, $corte, $idFondos, $corte);
     return $outp;
   }
-
   function finanzasEgresos($idFondos, $corte = "")
   {
     $outp = $this->db->getAll("SELECT Nombre, Monto, Fecha, Tipo FROM `egresosbrutos` WHERE idFondos = ?i ?p", $idFondos, $corte);
     return $outp;
   }
-
   function finanzasEgresosTotal($idFondos, $corte = "")
   {
     $outp = $this->db->getInd('Tipo',"SELECT Tipo, SUM(Monto) as Total FROM `egresosbrutos` WHERE idFondos = ?i ?p GROUP BY Tipo", $idFondos, $corte);
     return $outp;
   }
-
   function finanzasIngresosTotal($idFondos, $corte = "")
   {
     $outp = $this->db->getInd('Tipo',"SELECT Tipo, SUM(Monto) as Total FROM `ingresosbrutos` WHERE idFondos = ?i ?p GROUP BY Tipo", $idFondos, $corte);
     return $outp;
   }
-
   function finanzasIngresos($idFondos, $corte = "")
   {
     $outp = $this->db->getAll("SELECT Nombre, Monto, Fecha, Tipo FROM `ingresosbrutos` WHERE idFondos = ?i ?p", $idFondos, $corte);

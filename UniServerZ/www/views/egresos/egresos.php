@@ -1,25 +1,27 @@
 <script>
-var request = $.ajax({
-  url: "<?php echo URL; ?>actividad/tabla/egresos",
-  type: "post",
-});
-request.done(function (respuesta){
-  let myObj = JSON.parse(respuesta);
-  crearCampos(myObj);
-  modoFormulario("Agregar");
-});
-
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "<?php echo URL; ?>actividad/tabla/egresos");
+xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xhr.onreadystatechange = function () {
+  if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+    let myObj = JSON.parse(xhr.responseText);
+    crearCampos(myObj);
+    modoFormulario("Agregar");
+  }
+};
+xhr.send();
 document.getElementById("BtnAgregar").addEventListener("click", function() {
   let vec = beforeEnviar();
   if (vec != 'no') {
-    let request = $.ajax({
-      url: "<?php echo URL; ?>help/agregarModificarElemento/Egresos",
-      type: "post",
-      data: "data=" + JSON.stringify(vec),
-    });
-    request.done(function (respuesta){
-      modoFormulario("Agregar");
-    });
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "<?php echo URL; ?>help/agregarModificarElemento/Egresos");
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        modoFormulario("Agregar");
+      }
+    };
+    xhr.send("data=" + JSON.stringify(vec));
   }
 });
 </script>

@@ -210,7 +210,7 @@
     <div class="panel panel-warning">
       <div class="panel-heading">
         <h3 class="panel-title">Porcentaje de asistencias</h3>
-        <select class="form-control" id="porcentajeMeses">
+        <select class="form-control" id="idMesesSelect">
           <option value="1">Enero</option>
           <option value="2">Febrero</option>
           <option value="3">Marzo</option>

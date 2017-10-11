@@ -30,7 +30,7 @@ class cliente extends Controller {
       $this->view->lista = URL . "cliente/listarElementos/Clientes";
       $this->view->titmodal ="Cliente";
       $this->view->th = "<th data-field='Nombres' data-sortable='true'>Nombres</th><th data-field='Apellidos' data-sortable='true'>Apellidos</th>";
-      $this->view->modal2 = '<button type="button" id="IdActividadesVer" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalVer">Ver actividad/es</button>
+      $this->view->modal2 = '<button type="button" id="idActividadesVer" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalVer">Ver actividad/es</button>
       <div class="modal fade" tabindex="-1" role="dialog" id="ModalVer">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -58,7 +58,7 @@ class cliente extends Controller {
         </div> <!--/.modal -->
       </div>
 
-      <button type="button" id="IdActividadesSelect" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalSel">Seleccionar actividad/es</button>
+      <button type="button" id="idActividadesSelect" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalSel">Seleccionar actividad/es</button>
 
       <div class="modal fade" tabindex="-1" role="dialog" id="ModalSel">
         <div class="modal-dialog" role="document" >

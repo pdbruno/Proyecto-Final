@@ -19,14 +19,15 @@ var funcAllamar = function($element){
   funcAllamar = function($element, field){
     $('.success').removeClass('success');
     $(field).addClass('success');
-    let request = $.ajax({
-      url: "<?php echo URL; ?>help/traerColumna/" + tabla,
-      type: "post",
-      data: "data=" + $element.COLUMN_NAME,
-    });
-    request.done(function (respuesta){
-      clickFila(JSON.parse(respuesta)[0]);
-    });
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "<?php echo URL; ?>help/traerColumna/" + tabla);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        clickFila(JSON.parse(xhr.responseText)[0]);
+      }
+    };
+    xhr.send("data=" + $element.COLUMN_NAME);
   };
 };
 crearCampos([
@@ -81,11 +82,11 @@ llenarDropdowns([[
     Nombre: "Verdadero/Falso"
   }
 ]]);
-document.getElementById("BtnAgregar").addEventListener("click", function() {
+ElemForm.BtnAgregar.addEventListener("click", function() {
   modoFormulario('Agregar');
   accion = 'Agregar';
 });
-document.getElementById("BtnModificar").addEventListener("click", function() {
+ElemForm.BtnModificar.addEventListener("click", function() {
   NombrePrevio = document.getElementById("COLUMN_NAME").innerHTML;
   modoFormulario('Modificar');
   accion = 'Modificar';
@@ -99,7 +100,7 @@ document.getElementById("BtnModificar").addEventListener("click", function() {
     }
   }
 });
-document.getElementById("BtnAceptar").addEventListener("click", function() {
+ElemForm.BtnAceptar.addEventListener("click", function() {
   let vec = beforeEnviar();
   if (vec != 'no') {
     vec.IS_NULLABLE = (vec.IS_NULLABLE === "0") ? "NOT NULL " : "";
@@ -110,14 +111,15 @@ document.getElementById("BtnAceptar").addEventListener("click", function() {
       url = "editarColumna/";
       vec.NombrePrevio = NombrePrevio;
     }
-    var request = $.ajax({
-      url: "<?php echo URL; ?>help/" + url + tabla,
-      type: "post",
-      data: "data=" + JSON.stringify(vec),
-    });
-    request.done(function (respuesta){
-      afterEnviar();
-    });
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "<?php echo URL; ?>help/" + url + tabla);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        afterEnviar();
+      }
+    };
+    xhr.send("data=" + JSON.stringify(vec));
   }
 
 });

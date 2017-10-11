@@ -8,7 +8,7 @@ class producto_Model extends Model {
 
   public function listadoPrecio($tipo) {
     $sql = "SELECT idProductos, Precio FROM productos";
-    $outp = $this->db->getAll($sql);
+    $outp = $this->db->getIndCol("idProductos", $sql);
     echo json_encode($outp);
   }
 

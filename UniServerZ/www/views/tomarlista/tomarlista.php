@@ -1,9 +1,9 @@
 <script type="text/javascript">
 var Elementos = {
-  $Asistencia : $("#Asistencia"),
-  $Profesorado : $("#Profesorado"),
-  $FechaForm : $('#FechaForm'),
-  $ListaEventos : $('#ListaEventos'),
+  Asistencia : document.getElementById("Asistencia"),
+  Profesorado : document.getElementById("Profesorado"),
+  FechaForm : document.getElementById("FechaForm"),
+  ListaEventos : document.getElementById("ListaEventos"),
   TablaActividades : document.getElementById("TablaActividades"),
   ListaClientes: document.getElementById("ListaClientes"),
   ListaInstructores: document.getElementById("ListaInstructores"),
@@ -17,9 +17,8 @@ var idActividades = "";
 var idEvento = "";
 var Fecha = "";
 var eventos = {};
-var d = new Date().toISOString().substr(0,10);
-Elementos.$FechaForm.val(d);
-Elementos.$FechaForm.datepicker({
+Elementos.FechaForm.value = new Date().toISOString().substr(0,10);
+$(Elementos.FechaForm).datepicker({
   format: "yyyy-mm-dd",
   startDate: "01/01/2017",
   endDate: "today",
@@ -33,80 +32,85 @@ $( document ).ajaxError(function( event, jqxhr, settings, thrownError ) {
   location.reload(true);
 });
 Elementos.BTNenviar.addEventListener("click", function() {
-  let request = $.ajax({
-    url: "<?php echo URL; ?>actividad/asignarAsistencia",
-    type: "post",
-    data: "data=" + JSON.stringify(VecAsistio) + "&data2="+idActividades + "&data3="+JSON.stringify(VecProfes) + "&data4=" + Fecha + "&data5=" + idEvento,
-  });
-  request.done(function (respuesta){
-    alert('Se ha asignado la asistencia al evento');
-    VecAsistio=[];
-    Elementos.$Asistencia.addClass("hidden");
-    Elementos.$Profesorado.addClass("hidden");
-  });
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "<?php echo URL; ?>actividad/asignarAsistencia");
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function () {
+    if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      alert('Se ha asignado la asistencia al evento');
+      VecAsistio=[];
+      Elementos.Asistencia.classList.add("hidden");
+      Elementos.Profesorado.classList.add("hidden");
+    }
+  };
+  xhr.send("data=" + JSON.stringify(VecAsistio) + "&data2="+idActividades + "&data3="+JSON.stringify(VecProfes) + "&data4=" + Fecha + "&data5=" + idEvento);
 });
+
 document.getElementById("BTNfecha").addEventListener("click", function() {
-  if (Elementos.$FechaForm.val() == "") {
+  if (Elementos.FechaForm.value == "") {
     alert("Ingrese una fecha");
   }else {
-    Elementos.$Asistencia.addClass("hidden");
-    Elementos.$Profesorado.addClass("hidden");
+    Elementos.Asistencia.classList.add("hidden");
+    Elementos.Profesorado.classList.add("hidden");
     let dia={};
-    Elementos.fecha = Elementos.$FechaForm.val();
-    dia["timeMax"] = Elementos.$FechaForm.val() +'T23:59:59-03:00';
-    dia["timeMin"] = Elementos.$FechaForm.val() +'T00:00:00-03:00';
-    let request = $.ajax({
-      url: "<?php echo URL; ?>actividad/traerEventos",
-      type: "post",
-      data: "data=" + JSON.stringify(dia),
-    });
-    request.done(function (respuesta){
-      if (respuesta == "null") {
-        alert('No hay eventos para ese día')
-      }else {
-        eventos = JSON.parse(respuesta);
-        let texto = "";
-        let l = eventos.length;
-        for (var i = 0; i < l; i++) {
-          texto += "<tr onclick='traerEvento(this)' id='" + i + "'>";
-          texto += "<td>" + eventos[i].Nombre + " </td>";
-          texto += "</tr>";
+    Elementos.fecha = Elementos.FechaForm.value
+    dia["timeMax"] = Elementos.FechaForm.value +'T23:59:59-03:00';
+    dia["timeMin"] = Elementos.FechaForm.value +'T00:00:00-03:00';
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "<?php echo URL; ?>actividad/traerEventos");
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        if (xhr.responseText == "null") {
+          alert('No hay eventos para ese día')
+        }else {
+          eventos = JSON.parse(xhr.responseText);
+          let texto = "";
+          let l = eventos.length;
+          for (var i = 0; i < l; i++) {
+            texto += "<tr onclick='traerEvento(this)' id='" + i + "'>";
+            texto += "<td>" + eventos[i].Nombre + " </td>";
+            texto += "</tr>";
+          }
+          texto += "</tr>"
+          Elementos.ListaEventos.classList.remove('hidden');
+          Elementos.TablaActividades.innerHTML = texto;
         }
-        texto += "</tr>"
-        Elementos.$ListaEventos.removeClass('hidden');
-        Elementos.TablaActividades.innerHTML = texto;
       }
-    });
+    };
+    xhr.send("data=" + JSON.stringify(dia));
   }
 });
 
-function elegir($boton, id){
-  $boton.toggleClass("list-group-item-info");
+function elegir(boton, id){
+  boton.classList.toggle("list-group-item-info");
   if (VecAsistio.indexOf(id) == -1) {
     VecAsistio.push(id);
   } else {
     VecAsistio.splice(VecAsistio.indexOf(id), 1);
   }
 }
-function elegir2($boton, id){
-  $boton.toggleClass("list-group-item-info");
+function elegir2(boton, id){
+  boton.classList.toggle("list-group-item-info");
   if (VecProfes.indexOf(id) == -1) {
     VecProfes.push(id);
   } else {
     VecProfes.splice(VecProfes.indexOf(id), 1);
   }
 }
+
 var alumnos = {};
 var profes = {};
 function traerEvento(boton){
-  Elementos.$Asistencia.addClass("hidden");
-  Elementos.$Profesorado.addClass("hidden");
+  Elementos.Asistencia.classList.add("hidden");
+  Elementos.Profesorado.classList.add("hidden");
   VecAsistio = [];
   VecProfes = [];
   let filas = Elementos.TablaActividades.rows;
-  for (row in filas) {
-    if (filas[row].id == boton.id) {
-      $("#" + filas[row].id).addClass("success");
+  let l = filas.length;
+  for (var i = 0; i < l; i++) {
+    if (filas[i].id == boton.id) {
+      filas[i].classList.add("success");
       idActividades = eventos[boton.id].idActividades;
       if (eventos[boton.id].idActividades != eventos[boton.id].idEvento) {
         idEvento = eventos[boton.id].idEvento;
@@ -115,39 +119,42 @@ function traerEvento(boton){
       }
       Fecha = eventos[boton.id].Fecha;
     } else {
-      $("#" + filas[row].id).removeClass("success");
+      filas[i].classList.remove("success");
     }
   }
-  let request = $.ajax({
-    url: "<?php echo URL; ?>actividad/traerAnotados",
-    type: "post",
-    data: "data=" + idActividades + "&data2=" + Elementos.$FechaForm.val(),
-  });
-  request.done(function (respuesta){
-    respuesta = JSON.parse(respuesta);
-    let profes = respuesta[1];
-    let alumnos = respuesta[0];
-    let texto = "";
-    Elementos.$Asistencia.removeClass("hidden");
-    if (profes == 'nana') {
-      Elementos.BTNenviar.disabled = true;
-      for (usuario in alumnos) {
-        texto+= "<button type='button' class='list-group-item' disabled>" + alumnos[usuario].name + "</button>"
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "<?php echo URL; ?>actividad/traerAnotados");
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function () {
+    if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      respuesta = JSON.parse(xhr.responseText);
+      let profes = respuesta[1];
+      let alumnos = respuesta[0];
+      let texto = "";
+      Elementos.Asistencia.classList.remove("hidden");
+      if (profes == 'nana') {
+        Elementos.BTNenviar.disabled = true;
+        for (usuario in alumnos) {
+          texto+= "<button type='button' class='list-group-item' disabled>" + alumnos[usuario].name + "</button>"
+        }
+      }else {
+        Elementos.BTNenviar.disabled = false;
+        Elementos.Profesorado.classList.remove("hidden");
+        let texto2 = "";
+        for (usuario in alumnos) {
+          texto+= "<button type='button' class='list-group-item' onclick='elegir(this,"+alumnos[usuario].idClientes+")' >" + alumnos[usuario].name + "</button>"
+        }
+        for (usuario in profes) {
+          texto2+= "<button type='button' class='list-group-item' onclick='elegir2(this,"+profes[usuario].idClientes+")' >" + profes[usuario].name + "</button>"
+        }
+        Elementos.ListaInstructores.innerHTML = texto2;
       }
-    }else {
-      Elementos.BTNenviar.disabled = false;
-      Elementos.$Profesorado.removeClass("hidden");
-      let texto2 = "";
-      for (usuario in alumnos) {
-        texto+= "<button type='button' class='list-group-item' onclick='elegir($(this),"+alumnos[usuario].idClientes+")' >" + alumnos[usuario].name + "</button>"
-      }
-      for (usuario in profes) {
-        texto2+= "<button type='button' class='list-group-item' onclick='elegir2($(this),"+profes[usuario].idClientes+")' >" + profes[usuario].name + "</button>"
-      }
-      Elementos.ListaInstructores.innerHTML = texto2;
+      Elementos.ListaClientes.innerHTML = texto;
     }
-    Elementos.ListaClientes.innerHTML = texto;
-  });
+  };
+  xhr.send("data=" + idActividades + "&data2=" + Elementos.FechaForm.value);
+
 }
 
 Elementos.$NombreForm.typeahead('destroy');
