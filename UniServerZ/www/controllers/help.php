@@ -7,6 +7,7 @@ class Help extends Controller {
   }
 
   function index($sujeto) {
+    $this->view->titpag = $sujeto;
     $this->view->lista = URL . "help/listarElementos/" . $sujeto;
     $this->view->tabla = URL . "help/tabla/" . $sujeto;
     $this->view->agregarModificar = URL . "help/agregarModificarElemento/" . $sujeto;
@@ -22,6 +23,7 @@ class Help extends Controller {
   }
 
   function tablas() {
+    $this->view->titpag = "Tablas";
     $this->view->lista = URL . "help/listarTablas/";
     $this->view->titmodal ="Columna";
     $this->view->th = "<th data-field='Tables_in_dbproyectofinal' data-sortable='true'>Nombre</th>";

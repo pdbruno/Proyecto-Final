@@ -8,12 +8,14 @@ class actividad extends calendar {
 
   public function calendario() {
     $this->manejar("actividad","calendario");
+    $this->view->titpag = "Calendario";
     $this->view->lista = URL . "actividad/listarElementos/Actividades";
     $this->view->th = "<th data-field='Nombre' data-sortable='true'>Nombre</th>";
     $this->view->renderTabla('calendario');
   }
 
   public function index() {
+    $this->view->titpag = "Actividades";
     $this->view->lista = URL . "actividad/listarElementos/Actividades";
     $this->view->titmodal ="Actividad";
     $this->view->th = "<th data-field='Nombre' data-sortable='true'>Nombre</th>";
@@ -69,6 +71,7 @@ class actividad extends calendar {
 
   public function tomarlista() {
     $this->manejar("actividad","tomarlista");
+    $this->view->titpag = "Tomar Lista";
     $this->view->render('tomarlista');
   }
 
@@ -102,7 +105,11 @@ class actividad extends calendar {
   public function traerAnotados() {
     $idActividades = $_POST['data'];
     $Fecha = $_POST['data2'];
-    echo $this->model->traerAnotados($idActividades, $Fecha);
+    $this->model->traerAnotados($idActividades, $Fecha);
+  }
+
+  public function traerInstructores() {
+    $this->model->traerInstructores();
   }
 
   public function agregarModificarActividad() {

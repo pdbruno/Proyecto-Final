@@ -17,12 +17,14 @@ class Cobro_Model extends Model {
   }
 
   public function listado($tipo) {
-    $sql = "SELECT actividadesaranceles.*, actividades.Nombre as actNombre, modalidades.Nombre as modNombre, modosdepago.Nombre as pagNombre
-    FROM actividadesaranceles
-    INNER JOIN modosdepago ON actividadesaranceles.idModosDePago = modosdepago.idModosDePago
-    INNER JOIN actividades ON actividadesaranceles.idActividades = actividades.idActividades
-    LEFT JOIN modalidades ON actividadesaranceles.idModalidades = modalidades.idModalidades
-    GROUP BY idActividades, idModosDePago, idModalidades";
+    $sql = "SELECT * FROM
+    (SELECT actividadesaranceles.*, actividades.Nombre as actNombre, modalidades.Nombre as modNombre, modosdepago.Nombre as pagNombre
+      FROM actividadesaranceles
+      INNER JOIN modosdepago ON actividadesaranceles.idModosDePago = modosdepago.idModosDePago
+      INNER JOIN actividades ON actividadesaranceles.idActividades = actividades.idActividades
+      LEFT JOIN modalidades ON actividadesaranceles.idModalidades = modalidades.idModalidades
+      ORDER BY `FechaInicio` DESC )asd
+      GROUP BY idActividades, idModosDePago, idModalidades";
     $outp = $this->db->getAll($sql);
     echo json_encode($outp);
   }
@@ -34,10 +36,7 @@ class Cobro_Model extends Model {
     $outp = $this->db->getAll($sql);
     return json_encode($outp);
   }
-  public function addArancel($data) {
-    $sql = "INSERT INTO `actividadesaranceles` SET ?u";
-    $this->db->query($sql, $data);
-  }
+
   public function modSueldo($data) {
     $sql = "UPDATE `categoriassueldos` SET `MontoXBloque`= ?s WHERE idCategoriasSueldos = ?i";
     $this->db->query($sql, $data['MontoXBloque'], $data['idCategoriasSueldos']);

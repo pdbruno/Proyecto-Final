@@ -18,7 +18,7 @@
   <script src="<?php echo URL; ?>views/recursos/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 
-  <title>Hola</title>
+  <title><?php echo $this->titpag; ?></title>
 </head>
 <body>
   <div id="wrapper" style="height: 100vh;">
@@ -40,6 +40,7 @@
             <li>
               <a href="<?php echo URL; ?>cliente"><i class="fa fa-users fa-fw"></i> Clientes</a>
             </li>
+
             <li>
               <a href="#"><i class="fa fa-gears fa-fw"></i> Manejo Secundario<span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
@@ -55,56 +56,113 @@
                 <li>
                   <a href="<?php echo URL; ?>help/index/Modalidades"><i class="fa fa-clock-o fa-fw"></i> Modalidades</a>
                 </li>
-                <li>
-                  <a href="<?php echo URL; ?>help/index/FuentesDeEgresos"><i class="fa fa-sign-out fa-fw"></i> Fuentes De Egresos</a>
-                </li>
-                <li>
-                  <a href="<?php echo URL; ?>cobro/aranceles"><i class="fa fa-usd fa-fw"></i> Aranceles</a>
-                </li>
-                <li>
-                  <a href="<?php echo URL; ?>cobro/sueldos"><i class="fa fa-bank fa-fw"></i> Sueldos</a>
-                </li>
+
               </ul>
               <!-- /.nav-second-level -->
             </li>
+
             <li>
-              <a href="<?php echo URL; ?>producto/"><i class="fa fa-dropbox fa-fw"></i> Productos</a>
+              <a href="#"><i class="fa fa-dropbox fa-fw"></i> Productos<span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level">
+
+                <li>
+                  <a href="<?php echo URL; ?>producto/"><i class="fa fa-wrench fa-fw"></i> Administrar Productos</a>
+                </li>
+
+                <li>
+                  <a href="#"><i class="fa fa-exchange fa-fw"></i> Stock<span class="fa arrow"></span></a>
+                  <ul class="nav nav-third-level">
+                    <li>
+                      <a href="<?php echo URL; ?>producto/ingresostock"><i class="fa fa-arrow-down fa-fw"></i> Comprar Stock</a>
+                    </li>
+
+                    <li>
+                      <a href="<?php echo URL; ?>producto/egresostock"><i class="fa fa-arrow-up fa-fw"></i> Vender Stock</a>
+                    </li>
+                  </ul>
+                  <!-- /.nav-third-level -->
+                </li>
+
+              </ul>
+              <!-- /.nav-second-level -->
             </li>
+
+
+
             <li>
-              <a href="#"><i class="fa fa-exchange fa-fw"></i> Stock<span class="fa arrow"></span></a>
+              <a href="#"><i class="fa fa-futbol-o fa-fw"></i> Actividades<span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
                 <li>
-                  <a href="<?php echo URL; ?>producto/ingresostock"><i class="fa fa-arrow-down fa-fw"></i> Comprar Stock</a>
+                  <a href="<?php echo URL; ?>actividad/tomarlista/"><i class="fa fa-check-square-o fa-fw"></i> Tomar Lista</a>
                 </li>
+
                 <li>
-                  <a href="<?php echo URL; ?>producto/egresostock"><i class="fa fa-arrow-up fa-fw"></i> Vender Stock</a>
+                  <a href="<?php echo URL; ?>actividad/calendario/"><i class="fa fa-calendar fa-fw"></i> Calendario</a>
+                </li>
+
+                <li>
+                  <a href="<?php echo URL; ?>actividad/"><i class="fa fa-wrench fa-fw"></i> Administrar Actividades</a>
                 </li>
               </ul>
               <!-- /.nav-second-level -->
             </li>
+
+
             <li>
-              <a href="<?php echo URL; ?>actividad/tomarlista/"><i class="fa fa-check-square-o fa-fw"></i> Tomar Lista</a>
+              <a href="#"><i class="fa fa-line-chart fa-fw"></i> Finanzas<span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level">
+
+                <li>
+                  <a href="<?php echo URL; ?>cobro/"><i class="fa fa-money fa-fw"></i> Cobro</a>
+                </li>
+
+                <li>
+                  <a href="#"><i class="fa fa-wrench fa-fw"></i> Administrar<span class="fa arrow"></span></a>
+                  <ul class="nav nav-third-level">
+                    <li>
+                      <a href="<?php echo URL; ?>help/index/Fondos"> Fondos</a>
+                    </li>
+
+                    <li>
+                      <a href="<?php echo URL; ?>help/index/FuentesDeEgresos"> Fuentes De Egresos</a>
+                    </li>
+                  </ul>
+                  <!-- /.nav-third-level -->
+                </li>
+
+                <li>
+                  <a href="#"><i class="fa fa-sign-out fa-fw"></i> Registrar<span class="fa arrow"></span></a>
+                  <ul class="nav nav-third-level">
+                    <li>
+                      <a href="<?php echo URL; ?>cobro/egresos/"> Egresos</a>
+                    </li>
+
+                    <li>
+                      <a href="<?php echo URL; ?>cobro/pagosueldos"> Pago de Sueldos</a>
+                    </li>
+                  </ul>
+                  <!-- /.nav-third-level -->
+                </li>
+
+                <li>
+                  <a href="#"><i class="fa fa-usd fa-fw"></i> Tarifas<span class="fa arrow"></span></a>
+                  <ul class="nav nav-third-level">
+                    <li>
+                      <a href="<?php echo URL; ?>cobro/aranceles"></i> Aranceles</a>
+                    </li>
+
+                    <li>
+                      <a href="<?php echo URL; ?>cobro/sueldos"></i> Sueldos</a>
+                    </li>
+                  </ul>
+                  <!-- /.nav-third-level -->
+                </li>
+              </ul>
+              <!-- /.nav-second-level -->
             </li>
-            <li>
-              <a href="<?php echo URL; ?>actividad/calendario/"><i class="fa fa-calendar fa-fw"></i> Calendario</a>
-            </li>
-            <li>
-              <a href="<?php echo URL; ?>actividad/"><i class="fa fa-futbol-o fa-fw"></i> Actividades</a>
-            </li>
-            <li>
-              <a href="<?php echo URL; ?>cobro/"><i class="fa fa-money fa-fw"></i> Cobro</a>
-            </li>
-            <li>
-              <a href="<?php echo URL; ?>cobro/pagosueldos"><i class="fa fa-money fa-fw"></i> Pago de Sueldos</a>
-            </li>
-            <li>
-              <a href="<?php echo URL; ?>help/index/Fondos"><i class="fa fa-line-chart fa-fw"></i> Fondos</a>
-            </li>
+
             <li>
               <a href="<?php echo URL; ?>help/tablas/"><i class="fa fa-magic fa-fw"></i> Backoffice</a>
-            </li>
-            <li>
-              <a href="<?php echo URL; ?>cobro/egresos/"><i class="fa fa-sign-out fa-fw"></i> Egresos</a>
             </li>
           </ul>
         </div>

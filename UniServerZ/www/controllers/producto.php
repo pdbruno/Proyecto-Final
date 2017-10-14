@@ -3,6 +3,7 @@
 class producto extends Controller {
 
   function index() {
+    $this->view->titpag = "Productos";
     $this->view->lista = URL . "producto/listarElementos/Productos";
     $this->view->tabla = URL . "producto/tabla/productos";
     $this->view->agregarModificar = URL . "producto/agregarModificarElemento/Productos";
@@ -14,11 +15,13 @@ class producto extends Controller {
   }
 
   function ingresostock() {
+    $this->view->titpag = "Registrar Compra";
     $this->view->tit = "Registrar Compra";
     $this->view->renderTempSimple('ingresostock','form');
   }
 
   function egresostock() {
+    $this->view->titpag = "Registrar Venta";
     $this->view->tit = "Registrar Venta";
     $this->view->renderTempSimple('egresostock','form');
   }

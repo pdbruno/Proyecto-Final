@@ -67,18 +67,21 @@ class actividad_Model extends Model {
   public function traerAnotados($idActividades, $Fecha)
   {
     $idActividades = substr($idActividades,0,11);
-    $outp = $this->db->getAll("SELECT CONCAT(clientes.`Nombres`,' ',clientes.`Apellidos`) AS name FROM `asistencias` INNER JOIN clientes ON asistencias.idClientes = clientes.idClientes WHERE `idActividades` = ?i AND `Fecha` = ?s", $idActividades, $Fecha);
-    if (count($outp) == 0) {
-      $UsersFinal[] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos` WHERE `idClientes` IN (SELECT `idClientes` FROM `clientesactividades` WHERE `idActividades` = ?i)", $idActividades);
-      if (count($UsersFinal) == 0) {
-        $UsersFinal[0] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos`");
+    $Clientes = $this->db->getAll("SELECT CONCAT(clientes.`Nombres`,' ',clientes.`Apellidos`) AS name FROM `asistencias` INNER JOIN clientes ON asistencias.idClientes = clientes.idClientes WHERE `idActividades` = ?i AND `Fecha` = ?s", $idActividades, $Fecha);
+    $Found = true;
+    if (count($Clientes) == 0) {
+      $Found = false;
+      $Clientes = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos` WHERE `idClientes` IN (SELECT `idClientes` FROM `clientesactividades` WHERE `idActividades` = ?i)", $idActividades);
+      if (count($Clientes) == 0) {
+        $Clientes = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos`");
       }
-      $UsersFinal[] = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos` WHERE `EsInstructor` = 1");
-    }else {
-      $UsersFinal[] = $outp;
-      $UsersFinal[] = "nana";
     }
-    return json_encode($UsersFinal);
+    return json_encode([$Clientes, $Found]);
+  }
+
+  public function traerInstructores()
+  {
+    echo json_encode($this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos` WHERE `EsInstructor` = 1"));
   }
 
   public function traerSubactividades($idActividades)

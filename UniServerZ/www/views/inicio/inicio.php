@@ -267,7 +267,7 @@ morososExceso.onreadystatechange = function() {
     let respuesta = JSON.parse(morososExceso.responseText);
     let columnas = {Actividad: 'Actividad', Fecha: 'La semana del', Asistencias: 'Cantidad de asistencias', MaxXSemana: 'Máximo permitido'};
     for (pers in respuesta) {
-      Elementos.TablaExc.appendChild(generarTablaCheta(columnas, respuesta[pers], pers, 'idClientes'));
+      Elementos.TablaExc.appendChild(generarTablaCheta(columnas, respuesta[pers], pers, 'idClientes', true));
     }
   }
 };

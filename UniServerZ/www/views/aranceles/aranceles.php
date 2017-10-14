@@ -43,7 +43,7 @@ xhr.send();
 function Enviar(i)
 {
   let xhr = new XMLHttpRequest();
-  xhr.open("POST", "<?php echo URL; ?>cobro/listarElementos/Aranceles");
+  xhr.open("POST", "<?php echo URL; ?>cobro/agregarModificarElemento/actividadesaranceles");
   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhr.send("data=" + JSON.stringify({Precio: $("#Clase" + i).val(), idModosDePago: MyObj[i].idModosDePago, idActividades: MyObj[i].idActividades, idModalidades: MyObj[i].idModalidades}));
 }

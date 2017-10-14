@@ -17,6 +17,22 @@ var idActividades = "";
 var idEvento = "";
 var Fecha = "";
 var eventos = {};
+var alumnos = {};
+var instructores = new XMLHttpRequest();
+instructores.open("POST", "<?php echo URL; ?>actividad/traerInstructores");
+instructores.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+instructores.onreadystatechange = function () {
+  if(instructores.readyState === XMLHttpRequest.DONE && instructores.status === 200) {
+    instructores = JSON.parse(instructores.responseText);
+    let texto2 = "";
+    for (usuario in instructores) {
+      texto2+= "<button type='button' class='list-group-item' onclick='elegir2(this,"+instructores[usuario].idClientes+")' >" + instructores[usuario].name + "</button>"
+    }
+    Elementos.ListaInstructores.innerHTML = texto2;
+  }
+};
+instructores.send();
+
 Elementos.FechaForm.value = new Date().toISOString().substr(0,10);
 $(Elementos.FechaForm).datepicker({
   format: "yyyy-mm-dd",
@@ -99,8 +115,6 @@ function elegir2(boton, id){
   }
 }
 
-var alumnos = {};
-var profes = {};
 function traerEvento(boton){
   Elementos.Asistencia.classList.add("hidden");
   Elementos.Profesorado.classList.add("hidden");
@@ -128,12 +142,12 @@ function traerEvento(boton){
   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhr.onreadystatechange = function () {
     if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-      respuesta = JSON.parse(xhr.responseText);
-      let profes = respuesta[1];
+      let respuesta = JSON.parse(xhr.responseText);
+      let encontrado = respuesta[1];
       let alumnos = respuesta[0];
       let texto = "";
       Elementos.Asistencia.classList.remove("hidden");
-      if (profes == 'nana') {
+      if (encontrado) {
         Elementos.BTNenviar.disabled = true;
         for (usuario in alumnos) {
           texto+= "<button type='button' class='list-group-item' disabled>" + alumnos[usuario].name + "</button>"
@@ -141,14 +155,9 @@ function traerEvento(boton){
       }else {
         Elementos.BTNenviar.disabled = false;
         Elementos.Profesorado.classList.remove("hidden");
-        let texto2 = "";
         for (usuario in alumnos) {
           texto+= "<button type='button' class='list-group-item' onclick='elegir(this,"+alumnos[usuario].idClientes+")' >" + alumnos[usuario].name + "</button>"
         }
-        for (usuario in profes) {
-          texto2+= "<button type='button' class='list-group-item' onclick='elegir2(this,"+profes[usuario].idClientes+")' >" + profes[usuario].name + "</button>"
-        }
-        Elementos.ListaInstructores.innerHTML = texto2;
       }
       Elementos.ListaClientes.innerHTML = texto;
     }
@@ -179,7 +188,7 @@ Elementos.$NombreForm.typeahead({
 
 Elementos.$ProfeForm.typeahead('destroy');
 Elementos.$ProfeForm.typeahead({
-  source: profes,
+  source: instructores,
   afterSelect: function(item){
     var botones =  Elementos.ListaInstructores.getElementsByTagName("button");
     for (row in botones) {

@@ -3,25 +3,36 @@ class index extends Controller {
   function __construct() {
     parent::__construct();
   }
+
+  public function descartarexceso()
+  {
+    $this->model->descartarexceso($_POST['data']);
+  }
+
   function index() {
+    $this->view->titpag = "Home Sistema BBG";
     $this->view->render('inicio');
   }
+
   function corteProd()
   {
     $sql = $this->model->between(json_decode($_POST['data'], TRUE));
     $this->model->productosVentas($sql);
     $this->model->productosGanancias($sql);
   }
+
   function graficoSexoActividad()
   {
     $id = $_POST['data'];
     $this->model->graficoSexoActividad($id);
   }
+
   function graficoEdadActividad()
   {
     $id = $_POST['data'];
     $this->model->graficoEdadActividad($id);
   }
+
   public function finanzasEgresosTotal($idFondos, $sql){
     $egtot = $this->model->finanzasEgresosTotal($idFondos, $sql);
     $egtot['Egreso Total']['Total'] = 0;
@@ -30,6 +41,7 @@ class index extends Controller {
     }
     return $egtot;
   }
+
   public function finanzasIngresosTotal($idFondos, $sql){
     $intot = $this->model->finanzasIngresosTotal($idFondos, $sql);
     $intot['Ingreso Total']['Total'] = 0;

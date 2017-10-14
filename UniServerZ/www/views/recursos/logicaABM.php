@@ -34,7 +34,7 @@ function llenarDropdowns(youknow){
   }
 }
 
-function generarTablaCheta(columnas, respuesta, pers, id){
+function generarTablaCheta(columnas, respuesta, pers, id, dismiss = false){
   let trpricipal = document.createElement("tr");
   let tdpricipal = document.createElement("td");
   tdpricipal.style.padding = 0;
@@ -73,17 +73,19 @@ function generarTablaCheta(columnas, respuesta, pers, id){
     th.innerHTML = columnas[x];
     trsecundario.appendChild(th);
   }
+  let th = document.createElement("th");
+  trsecundario.appendChild(th);
 
   let tbody = document.createElement("tbody");
   table.appendChild(tbody);
   let ll = respuesta.length;
   for (let i = 0; i < ll; i++) {
-    tbody.appendChild(verDeudas(respuesta[i], columnas));
+    tbody.appendChild(verDeudas(respuesta[i], columnas, dismiss));
   }
   return trpricipal;
 }
 
-function verDeudas(Obj, columnas){
+function verDeudas(Obj, columnas, dismiss){
   let ll = Obj.length;
   let trsecundariobody = document.createElement("tr");
   for (x in columnas) {
@@ -91,6 +93,31 @@ function verDeudas(Obj, columnas){
     td.innerHTML = Obj[x];
     trsecundariobody.appendChild(td);
   }
+  if (dismiss) {
+    let td = document.createElement("td");
+    trsecundariobody.appendChild(td);
+    let button = document.createElement("button");
+    button.type = "button";
+    button.className = "close";
+    button.addEventListener('click', function(){
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "<?php echo URL; ?>index/descartarexceso");
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function() {
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          //RECARGAR TABLA
+          alert(xhr.responseText);
+        }
+      };
+      xhr.send("data=" + JSON.stringify(Obj.FakeId));
+    });
+    let span = document.createElement("span");
+    span.innerHTML = "&times;";
+    td.appendChild(button);
+    button.appendChild(span);
+    trsecundariobody.appendChild(td);
+  }
+
   return trsecundariobody;
 }
 
