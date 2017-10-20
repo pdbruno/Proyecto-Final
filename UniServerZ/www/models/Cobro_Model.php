@@ -44,7 +44,7 @@ class Cobro_Model extends Model {
 
   public function traerElemento($tipo,$data) {
     $data = json_decode($data);
-    $sql = "SELECT `Precio` FROM `actividadesaranceles` WHERE idActividades = ?i AND idModosDePago = ?i AND idModalidades = ?s ORDER BY FechaInicio DESC LIMIT 1";
+    $sql = "SELECT `Precio` FROM `actividadesaranceles` WHERE idActividades = ?i AND idModosDePago = ?i AND idModalidades <=> ?s ORDER BY FechaInicio DESC LIMIT 1";
     return $this->db->getOne($sql, $data->idActividades, $data->idModosDePago, $data->idModalidades);
   }
 }

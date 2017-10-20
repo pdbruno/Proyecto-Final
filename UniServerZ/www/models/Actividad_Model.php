@@ -76,7 +76,7 @@ class actividad_Model extends Model {
         $Clientes = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos`");
       }
     }
-    return json_encode([$Clientes, $Found]);
+    echo json_encode([$Clientes, $Found]);
   }
 
   public function traerInstructores()

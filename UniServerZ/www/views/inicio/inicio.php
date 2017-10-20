@@ -25,7 +25,8 @@ var Elementos = {
   ResumenEg: document.getElementById("ResumenEg"),
   ResumenIn: document.getElementById("ResumenIn"),
   TotBal: document.getElementById("TotBal"),
-  idMesesSelect: document.getElementById("idMesesSelect"),
+  idMesesSelectAsis: document.getElementById("idMesesSelectAsis"),
+  idMesesSelectExceso: document.getElementById("idMesesSelectExceso"),
   IdActividadesSelect1: document.getElementById("IdActividadesSelect1"),
   IdActividadesSelect2: document.getElementById("IdActividadesSelect2"),
   idFondosSelect: document.getElementById("idFondosSelect"),
@@ -41,7 +42,12 @@ var Elementos = {
   idMeses.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   idMeses.onreadystatechange = function() {
     if(idMeses.readyState === XMLHttpRequest.DONE && idMeses.status === 200) {
-      Elementos.idMesesSelect.innerHTML = optionCrear(JSON.parse(idMeses.responseText)[0]);
+      Elementos.idMesesSelectAsis.innerHTML = optionCrear(JSON.parse(idMeses.responseText)[0]);
+      Elementos.idMesesSelectExceso.innerHTML = optionCrear(JSON.parse(idMeses.responseText)[0]);
+      let index = new Date().getMonth() + 1;
+      Elementos.idMesesSelectAsis.selectedIndex = index;
+      Elementos.idMesesSelectExceso.selectedIndex = index;
+
     }
   };
   idMeses.send();
@@ -142,8 +148,8 @@ mesesFondos.onreadystatechange = function() {
 };
 mesesFondos.send();
 
-
-Elementos.idMesesSelect.addEventListener('change', function(){
+traerAsistencias(new Date().getMonth() + 1)
+function traerAsistencias(mes) {
   let porcentajeAsistencias = new XMLHttpRequest();
   porcentajeAsistencias.open("POST", "<?php echo URL; ?>index/porcentajeAsistencias");
   porcentajeAsistencias.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -157,8 +163,18 @@ Elementos.idMesesSelect.addEventListener('change', function(){
       }
     }
   };
-  porcentajeAsistencias.send("data=" + Elementos.idMesesSelect.value);
+  porcentajeAsistencias.send("data=" + mes);
+}
+
+Elementos.idMesesSelectAsis.addEventListener('change', function(){
+  Elementos.TablaPorcentaje.innerHTML = "";
+  traerAsistencias(idMesesSelectAsis.value);
 });
+Elementos.idMesesSelectExceso.addEventListener('change', function(){
+  Elementos.TablaExc.innerHTML = "";
+  esaRequest(Elementos.TablaExc, {Actividad: 'Actividad', Fecha: 'La semana del', Asistencias: 'Cantidad de asistencias', MaxXSemana: 'Máximo permitido'}, "morososExceso", "data=" + idMesesSelectExceso.value);
+});
+
 
 
 Elementos.IdActividadesSelect2.addEventListener('change', function(){
@@ -245,33 +261,23 @@ Elementos.FechaFinan.addEventListener('click', function(){
   traerFinanzas(JSON.stringify({Fecha1: Elementos.FechaFinan1.value, Fecha2: Elementos.FechaFinan2.value}));
 });
 
-var morososActividad = new XMLHttpRequest();
-morososActividad.open("POST", "<?php echo URL; ?>index/morososActividad");
-morososActividad.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-morososActividad.onreadystatechange = function() {
-  if(morososActividad.readyState === XMLHttpRequest.DONE && morososActividad.status === 200) {
-    let respuesta = JSON.parse(morososActividad.responseText);
-    let columnas = {Actividad: 'Actividad', Fecha: 'Fecha/Mes', Monto: 'Monto debido'};
-    for (pers in respuesta) {
-      Elementos.TablaDeud.appendChild(generarTablaCheta(columnas, respuesta[pers], pers, 'idClientes'));
-    }
-  }
-};
-morososActividad.send();
+esaRequest(Elementos.TablaDeud, {Actividad: 'Actividad', Fecha: 'Fecha/Mes', Monto: 'Monto debido'}, "morososActividad");
+esaRequest(Elementos.TablaExc, {Actividad: 'Actividad', Fecha: 'La semana del', Asistencias: 'Cantidad de asistencias', MaxXSemana: 'Máximo permitido'}, "morososExceso", "data=" +  new Date().getMonth() + 1);
 
-var morososExceso = new XMLHttpRequest();
-morososExceso.open("POST", "<?php echo URL; ?>index/morososExceso");
-morososExceso.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-morososExceso.onreadystatechange = function() {
-  if(morososExceso.readyState === XMLHttpRequest.DONE && morososExceso.status === 200) {
-    let respuesta = JSON.parse(morososExceso.responseText);
-    let columnas = {Actividad: 'Actividad', Fecha: 'La semana del', Asistencias: 'Cantidad de asistencias', MaxXSemana: 'Máximo permitido'};
-    for (pers in respuesta) {
-      Elementos.TablaExc.appendChild(generarTablaCheta(columnas, respuesta[pers], pers, 'idClientes', true));
+function esaRequest(tabla, columnas, url, mensaje = ""){
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "<?php echo URL; ?>index/" + url);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function() {
+    if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      let respuesta = JSON.parse(xhr.responseText);
+      for (pers in respuesta) {
+        tabla.appendChild(generarTablaCheta(columnas, respuesta[pers], pers, 'idClientes', url));
+      }
     }
-  }
-};
-morososExceso.send();
+  };
+  xhr.send(mensaje);
+}
 
 var morososMatricula = new XMLHttpRequest();
 morososMatricula.open("POST", "<?php echo URL; ?>index/morososMatricula");

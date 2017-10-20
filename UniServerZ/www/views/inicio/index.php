@@ -48,6 +48,8 @@
           </table>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="Exceso">
+          <select class="form-control" id="idMesesSelectExceso">
+          </select>
           <table class="table table-bordered">
             <thead>
               <tr>
@@ -210,19 +212,7 @@
     <div class="panel panel-warning">
       <div class="panel-heading">
         <h3 class="panel-title">Porcentaje de asistencias</h3>
-        <select class="form-control" id="idMesesSelect">
-          <option value="1">Enero</option>
-          <option value="2">Febrero</option>
-          <option value="3">Marzo</option>
-          <option value="4">Abril</option>
-          <option value="5">Mayo</option>
-          <option value="6">Junio</option>
-          <option value="7">Julio</option>
-          <option value="8">Agosto</option>
-          <option value="9">Septiembre</option>
-          <option value="10">Octubre</option>
-          <option value="11">Noviembre</option>
-          <option value="12">Diciembre</option>
+        <select class="form-control" id="idMesesSelectAsis">
         </select>
 
       </div>

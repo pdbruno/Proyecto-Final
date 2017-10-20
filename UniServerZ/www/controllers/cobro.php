@@ -1,6 +1,6 @@
 <?php
 require_once 'controllers/calendar.php';
-class cobro extends calendar {
+class Cobro extends calendar {
 
   public function addCobro() {
     $data = json_decode($_POST['data'], TRUE);

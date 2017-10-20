@@ -170,4 +170,4 @@
       </div>
       <!-- /.navbar-static-side -->
     </nav>
-    <div id="page-wrapper" style="height: 92vh">
+    <div id="page-wrapper" style="min-height: 92vh">

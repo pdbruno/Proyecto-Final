@@ -72,13 +72,11 @@ class index_Model extends Model {
     $outp = $this->db->getAll("SELECT productos.Nombre, SUM(Monto) AS Monto FROM `registroventas` INNER JOIN productos on registroventas.idProductos = productos.idProductos ?p GROUP BY registroventas.idProductos ORDER BY SUM(Monto) DESC", $corte);
     echo json_encode($outp);
   }
-  
-  function morososExceso()
+
+  function morososExceso($mes)
   {
-
-    $outp = $this->db->getAll("SELECT * FROM (SELECT excesoasistencia.*, @rownum := @rownum + 1 AS FakeId FROM `excesoasistencia`,(SELECT @rownum := 0) AS R)asd");
+    $outp = $this->db->getAll("SELECT * FROM excesoasistencia WHERE MONTH(Fecha) = ?i", $mes);
     echo json_encode($this->formatDeuda($outp));
-
   }
 
   public function descartarexceso()

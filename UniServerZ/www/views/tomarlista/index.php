@@ -8,7 +8,7 @@
       </span>
     </div>
   </div>
-  <div class="row hidden" id="ListaEventos">
+  <div class="row hidden" id="ListaEventos" style="max-height: 50vh; overflow-y:scroll;">
     <div class="panel panel-default">
       <div class="panel-heading">Listado de Eventos Recientes
       </div>
@@ -27,13 +27,13 @@
   </div>
   <div class="row hidden" id="Profesorado">
     <input type="text" class="form-control" id="ProfeForm" name="ProfeForm" data-provide="typeahead" placeholder="Nombe o Apellido del instructor">
-    <div class="list-group" id="ListaInstructores">
+    <div class="list-group" id="ListaInstructores" style="max-height: 30vh; overflow-y:scroll;">
     </div>
   </div>
 </div>
 <div class="col-lg-9 hidden" id="Asistencia">
   <input type="text" class="form-control" id="NombreForm" name="NombreForm" data-provide="typeahead" placeholder="Nombe o Apellido del alumno">
-  <div class="list-group" id="ListaClientes">
+  <div class="list-group" id="ListaClientes" style="max-height: 85vh; overflow-y:scroll;">
   </div>
   <button class="btn btn-default" id="BTNenviar" type="button">Enviar lista de asistencia</button>
 </div>

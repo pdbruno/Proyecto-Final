@@ -1,6 +1,6 @@
 <?php
 require_once 'controllers/calendar.php';
-class actividad extends calendar {
+class Actividad extends Calendar {
 
   function __construct() {
     parent::__construct();
@@ -20,11 +20,11 @@ class actividad extends calendar {
     $this->view->titmodal ="Actividad";
     $this->view->th = "<th data-field='Nombre' data-sortable='true'>Nombre</th>";
     $this->view->modal2 = '<button type="button" id="idSubactividadesVer" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalVer">Ver subactividades</button>
-    <div class="modal fade" tabindex="-1" role="dialog" id="ModalVer">
+    <div class="modal fade" tabindex="-1" role="dialog" id="ModalVer" data-backdrop="false">
     <div class="modal-dialog" role="document">
     <div class="modal-content">
     <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <button type="button" class="close CerrarVer" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title">Subactividades</h4>
     </div>
     <div class="modal-body">
@@ -38,18 +38,18 @@ class actividad extends calendar {
     </tbody>
     </table>
     <div class="modal-footer">
-    <button type="button" class="btn btn-default" id="CerrarVer" >Close</button>
+    <button type="button" class="btn btn-default CerrarVer">Cerrar</button>
     </div>
     </div><!-- /.modal-content-->
     </div> <!--/.modal-dialog -->
     </div> <!--/.modal -->
     </div>
     <button type="button" id="idSubactividadesSelect" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalSel">Seleccionar subactividades</button>
-    <div class="modal fade" tabindex="-1" role="dialog" id="ModalSel">
+    <div class="modal fade" tabindex="-1" role="dialog" id="ModalSel" data-backdrop="false">
     <div class="modal-dialog" role="document" >
     <div class="modal-content">
     <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <button type="button" class="close deshacerModal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title">Seleccionar subactividades</h4>
     </div>
     <div class="modal-body">
@@ -60,7 +60,7 @@ class actividad extends calendar {
     </div>
     </div>
     <div class="modal-footer">
-    <button type="button" class="btn btn-default" id="deshacerModal" data-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-default deshacerModal" >Cancelar</button>
     <button type="button" class="btn btn-primary" id="aceptarModal">Aceptar</button>
     </div>
     </div>

@@ -1,6 +1,6 @@
 <?php
 
-class producto extends Controller {
+class Producto extends Controller {
 
   function index() {
     $this->view->titpag = "Productos";

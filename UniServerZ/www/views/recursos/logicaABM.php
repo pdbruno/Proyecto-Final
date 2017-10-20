@@ -10,7 +10,10 @@ var ElemForm = {
   Columns: [],
   Formu: document.getElementById("Formu"),
   alertdiv: "",
-  modal: $("#ModalPropiedades")
+  modal: $("#ModalPropiedades"),
+  deshacerModal: document.getElementsByClassName("deshacerModal"),
+  $ModalVer: $('#ModalVer'),
+  CerrarVer: document.getElementsByClassName("CerrarVer")
 };
 
 $(document).on('show.bs.modal', '.modal', function (event) {
@@ -20,6 +23,16 @@ $(document).on('show.bs.modal', '.modal', function (event) {
     $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
   }, 0);
 });
+
+for (var i = 0; i < 2; i++) {
+  ElemForm.deshacerModal[i].addEventListener("click", function() {
+    deshacerModal();
+  });
+  ElemForm.CerrarVer[i].addEventListener("click", function() {
+    ElemForm.$ModalVer.modal('hide');
+  });
+}
+
 
 function llenarDropdowns(youknow){
   let VecElementos = [];
@@ -34,7 +47,7 @@ function llenarDropdowns(youknow){
   }
 }
 
-function generarTablaCheta(columnas, respuesta, pers, id, dismiss = false){
+function generarTablaCheta(columnas, respuesta, pers, id, url = ""){
   let trpricipal = document.createElement("tr");
   let tdpricipal = document.createElement("td");
   tdpricipal.style.padding = 0;
@@ -47,7 +60,7 @@ function generarTablaCheta(columnas, respuesta, pers, id, dismiss = false){
 
   let listgroupitem = document.createElement("a");
   listgroupitem.className = "list-group-item";
-  listgroupitem.href = "#" + respuesta[0][id];
+  listgroupitem.href = "#" + url + respuesta[0][id];
   listgroupitem.innerHTML = pers;
   listgroupitem.style.border = "none";
   listgroupitem.setAttribute("data-toggle", "collapse");
@@ -55,7 +68,7 @@ function generarTablaCheta(columnas, respuesta, pers, id, dismiss = false){
 
   let collapse = document.createElement("div");
   collapse.className = "collapse";
-  collapse.id = respuesta[0][id];
+  collapse.id = url + respuesta[0][id];
   tdpricipal.appendChild(collapse);
 
   let table = document.createElement("table");
@@ -80,41 +93,17 @@ function generarTablaCheta(columnas, respuesta, pers, id, dismiss = false){
   table.appendChild(tbody);
   let ll = respuesta.length;
   for (let i = 0; i < ll; i++) {
-    tbody.appendChild(verDeudas(respuesta[i], columnas, dismiss));
+    tbody.appendChild(verDeudas(respuesta[i], columnas));
   }
   return trpricipal;
 }
 
-function verDeudas(Obj, columnas, dismiss){
+function verDeudas(Obj, columnas){
   let ll = Obj.length;
   let trsecundariobody = document.createElement("tr");
   for (x in columnas) {
     let td = document.createElement("td");
     td.innerHTML = Obj[x];
-    trsecundariobody.appendChild(td);
-  }
-  if (dismiss) {
-    let td = document.createElement("td");
-    trsecundariobody.appendChild(td);
-    let button = document.createElement("button");
-    button.type = "button";
-    button.className = "close";
-    button.addEventListener('click', function(){
-      let xhr = new XMLHttpRequest();
-      xhr.open("POST", "<?php echo URL; ?>index/descartarexceso");
-      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      xhr.onreadystatechange = function() {
-        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-          //RECARGAR TABLA
-          alert(xhr.responseText);
-        }
-      };
-      xhr.send("data=" + JSON.stringify(Obj.FakeId));
-    });
-    let span = document.createElement("span");
-    span.innerHTML = "&times;";
-    td.appendChild(button);
-    button.appendChild(span);
     trsecundariobody.appendChild(td);
   }
 

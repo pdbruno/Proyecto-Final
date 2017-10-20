@@ -1,5 +1,5 @@
 <?php
-class index extends Controller {
+class Index extends Controller {
   function __construct() {
     parent::__construct();
   }
@@ -117,7 +117,8 @@ class index extends Controller {
   }
   function morososExceso()
   {
-    $this->model->morososExceso();
+    $mes = $_POST['data'];
+    $this->model->morososExceso($mes);
   }
   function morososActividad()
   {

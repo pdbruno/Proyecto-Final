@@ -158,6 +158,9 @@ document.getElementById("Semestre").addEventListener("click", function() {
   if (!YaMultiplicado) {
     Elementos.Monto.value = Elementos.Monto.value * 5;
     YaMultiplicado = true;
+  }else {
+    Elementos.Monto.value = Elementos.Monto.value / 5;
+    YaMultiplicado = false;
   }
 });
 function Reset(){

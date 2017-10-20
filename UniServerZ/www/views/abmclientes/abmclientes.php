@@ -5,16 +5,10 @@ var Elementos = {
   idActividadesVer: document.getElementById("idActividadesVer"),
   TablaActividades: document.getElementById("TablaActividades"),
   $ModalSel: $('#ModalSel'),
-  $ModalVer: $('#ModalVer'),
 };
-document.getElementById("CerrarVer").addEventListener("click", function() {
-  Elementos.$ModalVer.modal('hide');
-});
-document.getElementById("deshacerModal").addEventListener("click", function() {
-  Elementos.$ModalVer.modal('hide');
-  deshacerModal();
-});
+
 function deshacerModal(){
+  Elementos.$ModalSel.modal('hide');
   Elementos.idActividadesSelect0 = document.createElement("select");
   Elementos.idModosDePagoSelect0 = document.createElement("select");
   Elementos.idModalidadesSelect0 = document.createElement("select");
@@ -154,7 +148,7 @@ var final = [];
 document.getElementById("aceptarModal").addEventListener("click", function() {
   final = [];
   bien = true;
-  Elementos.$ModalVer.modal('hide');
+  Elementos.$ModalSel.modal('hide');
   let l = document.getElementById("Selec").getElementsByClassName("activ").length;
   for (var i = 1; i <= l; i++) {
     if ((Elementos["idActividadesSelect" + i].selectedIndex == "0" || Elementos["idModosDePagoSelect" + i].selectedIndex == "0") || (Elementos["idModosDePagoSelect" + i].selectedIndex == "2" && Elementos["idModalidadesSelect" + i].selectedIndex == "0")) {

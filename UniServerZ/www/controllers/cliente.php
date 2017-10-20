@@ -1,10 +1,6 @@
 <?php
 
-//namespace Controllers;
-//
-//use Models\Cliente as Cliente;
-
-class cliente extends Controller {
+class Cliente extends Controller {
 
   public function actCliente() {
     $idClientes = $_POST['data'];
@@ -32,11 +28,11 @@ class cliente extends Controller {
     $this->view->titmodal ="Cliente";
     $this->view->th = "<th data-field='Nombres' data-sortable='true'>Nombres</th><th data-field='Apellidos' data-sortable='true'>Apellidos</th>";
     $this->view->modal2 = '<button type="button" id="idActividadesVer" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalVer">Ver actividad/es</button>
-    <div class="modal fade" tabindex="-1" role="dialog" id="ModalVer">
+    <div class="modal fade" tabindex="-1" role="dialog" id="ModalVer" data-backdrop="false">
     <div class="modal-dialog" role="document">
     <div class="modal-content">
     <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <button type="button" class="close CerrarVer" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title">Actividades</h4>
     </div>
     <div class="modal-body">
@@ -52,7 +48,7 @@ class cliente extends Controller {
     </tbody>
     </table>
     <div class="modal-footer">
-    <button type="button" class="btn btn-default" id="CerrarVer" >Cerrar</button>
+    <button type="button" class="btn btn-default CerrarVer">Cerrar</button>
     </div>
     </div><!-- /.modal-content-->
     </div> <!--/.modal-dialog -->
@@ -61,11 +57,11 @@ class cliente extends Controller {
 
     <button type="button" id="idActividadesSelect" class="btn btn-link hidden" data-toggle="modal" data-target="#ModalSel">Seleccionar actividad/es</button>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="ModalSel">
+    <div class="modal fade" tabindex="-1" role="dialog" id="ModalSel" data-backdrop="false">
     <div class="modal-dialog" role="document" >
     <div class="modal-content" >
     <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <button type="button" class="close deshacerModal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title">Seleccionar actividad/es</h4>
     </div>
     <div class="modal-body">
@@ -82,7 +78,7 @@ class cliente extends Controller {
     </div>
     </div>
     <div class="modal-footer">
-    <button type="button" class="btn btn-default" id="deshacerModal" data-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-default deshacerModal" >Cancelar</button>
     <button type="button" class="btn btn-primary" id="aceptarModal"> Aceptar</button>
     </div>
     </div>

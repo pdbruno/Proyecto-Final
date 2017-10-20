@@ -1,5 +1,5 @@
 <?php
-class calendar extends Controller {
+class Calendar extends Controller {
 
   function __construct() {
     parent::__construct();

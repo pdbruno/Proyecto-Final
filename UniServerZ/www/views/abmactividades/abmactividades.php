@@ -4,16 +4,9 @@ var Elementos = {
   idSubactividadesSelect: document.getElementById("idSubactividadesSelect"),
   idSubactividadesVer: document.getElementById("idSubactividadesVer"),
   TablaSubactividades: document.getElementById("TablaSubactividades"),
-  $ModalVer: $('#ModalVer'),
   $ModalSel: $('#ModalSel'),
 };
-document.getElementById("CerrarVer").addEventListener("click", function() {
-  Elementos.$ModalVer.modal('hide');
-});
-document.getElementById("deshacerModal").addEventListener("click", function() {
-  Elementos.$ModalVer.modal('hide');
-  deshacerModal();
-});
+
 var xhr = new XMLHttpRequest();
 xhr.open("POST", "<?php echo URL; ?>actividad/tabla/actividades");
 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -26,6 +19,7 @@ xhr.onreadystatechange = function () {
 };
 xhr.send();
 function deshacerModal(){
+  Elementos.$ModalSel.modal('hide');
   Elementos["idSubactividadesForm0"] = document.createElement("input");
   Elementos.Selec.innerHTML = "";
   AddAct(0);
@@ -64,7 +58,7 @@ function AddAct(i) {
 
 var final = [];
 document.getElementById("aceptarModal").addEventListener("click", function() {
-  Elementos.$ModalVer.modal('hide');
+  Elementos.$ModalSel.modal('hide');
   final = [];
   var l = document.getElementById("Selec").getElementsByClassName("sub").length;
   for (let i = 1; i <= l; i++) {
