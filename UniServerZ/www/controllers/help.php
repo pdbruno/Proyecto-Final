@@ -7,6 +7,7 @@ class Help extends Controller {
   }
 
   function index($sujeto) {
+    $this->checkRol(2);
     $this->view->titpag = $sujeto;
     $this->view->lista = URL . "help/listarElementos/" . $sujeto;
     $this->view->tabla = URL . "help/tabla/" . $sujeto;
@@ -18,11 +19,9 @@ class Help extends Controller {
     $this->view->renderTabla(null, true);
   }
 
-  function Dropdown($tipo) {
-    $this->model->Dropdown($tipo);
-  }
 
   function tablas() {
+    $this->checkRol(1);
     $this->view->titpag = "Tablas";
     $this->view->lista = URL . "help/listarTablas/";
     $this->view->titmodal ="Columna";
@@ -31,24 +30,30 @@ class Help extends Controller {
   }
 
   function listarTablas(){
+    $this->checkRol(1);
     $this->model->listarTablas();
   }
 
   function traerTabla($tabla){
+    $this->checkRol(1);
     $this->model->traerTabla($tipo);
   }
   function addColumna($tabla){
+    $this->checkRol(1);
     $data = json_decode($_POST['data'], TRUE);
     $this->model->addColumna($tabla, $data);
   }
   function editarColumna($tabla){
+    $this->checkRol(1);
     $data = json_decode($_POST['data'], TRUE);
     $this->model->editarColumna($tabla, $data);
   }
   public function listarColumnas($tipo) {
+    $this->checkRol(1);
     echo $datos = $this->model->listarColumnas($tipo);
   }
   public function traerColumna($tipo) {
+    $this->checkRol(1);
     $data = $_POST['data'];
     echo $datos = $this->model->traerColumna($tipo, $data);
   }

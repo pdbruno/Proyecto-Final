@@ -1,6 +1,5 @@
 <?php
 
-//namespace Models;
 
 class cliente_Model extends Model {
 
@@ -10,6 +9,24 @@ class cliente_Model extends Model {
 
   public function listadoInstructores() {
     echo json_encode($this->db->getAll("SELECT `idClientes` as id, CONCAT(`Nombres`,' ',`Apellidos`) AS Nombre, idCategorias FROM `clientesactivos` WHERE `EsInstructor` = 1"));
+  }
+
+  public function posponerExamen($idClientes) {
+    $outp = $this->db->getOne("SELECT SemestresRestraso FROM clientes WHERE idClientes = ?i", $idClientes);
+    if ($outp) {
+      $this->db->query("UPDATE clientes SET SemestresRestraso = ?i WHERE idClientes = ?i", $outp + 1, $idClientes);
+    }else {
+      $this->db->query("UPDATE clientes SET SemestresRestraso = ?i WHERE idClientes = ?i", 1, $idClientes);
+    }
+  }
+
+  public function listadoPlanillitaEsteban() {
+    echo json_encode($this->db->getAll("SELECT
+      idClientes,
+      CONCAT(Nombres, ' ', Apellidos) AS Nombre,
+      (SELECT MAX(Fecha) FROM registroexamenes WHERE registroexamenes.idClientes = clientesactivos.idClientes) AS UltimoExamen ,
+      DATE_ADD((SELECT MAX(Fecha) FROM registroexamenes WHERE registroexamenes.idClientes = clientesactivos.idClientes), INTERVAL IF(SemestresRestraso IS NULL, (idCategorias - 9) * 12, (idCategorias - 9) * 12 + SemestresRestraso * 6) MONTH) AS ProximoExamen
+      FROM `clientesactivos` WHERE idCategorias > 10 "));
   }
 
   public function cantidadBloques($idClientes, $mes) {
@@ -31,8 +48,11 @@ class cliente_Model extends Model {
   }
 
   public function eliminarElemento($tipo, $idClientes) {
-    $this->model->db->query("DELETE FROM clientesactividades WHERE idClientes = ?i", $idClientes);
     $datos = $this->model->eliminar('Clientes',$idClientes);
+  }
+
+  public function updateCategoria($data) {
+    $this->db->query("UPDATE clientes SET idCategorias = ?i, SemestresRestraso  = NULL WHERE idClientes = ?i", $data['idCategorias'], $data['idClientes']);
   }
 
   public function asignarActividades($actividades, $idClientes) {
@@ -84,7 +104,7 @@ class cliente_Model extends Model {
     categorias.Nombre as idCategorias, sedes.Nombre as idSedes, sexos.Nombre as idSexos
     FROM clientes
     INNER JOIN sexos ON clientes.idSexos = sexos.idSexos
-    INNER JOIN categorias ON clientes.idCategorias = categorias.idCategorias
+    LEFT JOIN categorias ON clientes.idCategorias = categorias.idCategorias
     LEFT JOIN grupofactorsanguineo ON clientes.idGrupoFactorSanguineo = grupofactorsanguineo.idGrupoFactorSanguineo
     LEFT JOIN localidades ON clientes.idLocalidades = localidades.idLocalidades
     INNER JOIN sedes ON clientes.idSedes = sedes.idSedes

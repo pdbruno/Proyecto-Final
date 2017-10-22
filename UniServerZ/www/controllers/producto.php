@@ -2,7 +2,12 @@
 
 class Producto extends Controller {
 
+    public function __construct() {
+      parent::__construct();
+    }
+
   function index() {
+    $this->checkRol(2);
     $this->view->titpag = "Productos";
     $this->view->lista = URL . "producto/listarElementos/Productos";
     $this->view->tabla = URL . "producto/tabla/productos";
@@ -17,7 +22,9 @@ class Producto extends Controller {
   function ingresostock() {
     $this->view->titpag = "Registrar Compra";
     $this->view->tit = "Registrar Compra";
-    $this->view->renderTempSimple('ingresostock','form');
+    $this->view->Tabla = "registrocompras";
+    $this->view->Alta = "producto/agregarRegistro/RegistroCompras";
+    $this->view->renderTempSimple('ingresostock','form', true);
   }
 
   function egresostock() {
@@ -35,16 +42,6 @@ class Producto extends Controller {
     $caca = json_decode($_POST['data'], TRUE);
     $this->model->agregarModificar($tipo, $caca);
     $this->model->actualizarStock($caca);
-  }
-
-  function registrarVenta() {
-    $caca = json_decode($_POST['data'], TRUE);
-    $datos = $this->model->registrarVenta($caca);
-    echo $datos;
-  }
-
-  public function __construct() {
-    parent::__construct();
   }
 
 }

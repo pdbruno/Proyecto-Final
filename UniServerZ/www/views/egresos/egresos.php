@@ -10,7 +10,7 @@ xhr.onreadystatechange = function () {
   }
 };
 xhr.send();
-document.getElementById("BtnAgregar").addEventListener("click", function() {
+ElemForm.BtnAgregar.addEventListener("click", function() {
   let vec = beforeEnviar();
   if (vec != 'no') {
     let xhr = new XMLHttpRequest();

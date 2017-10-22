@@ -7,6 +7,7 @@ class Actividad extends Calendar {
   }
 
   public function calendario() {
+    $this->checkRol(2);
     $this->manejar("actividad","calendario");
     $this->view->titpag = "Calendario";
     $this->view->lista = URL . "actividad/listarElementos/Actividades";
@@ -15,6 +16,7 @@ class Actividad extends Calendar {
   }
 
   public function index() {
+    $this->checkRol(2);
     $this->view->titpag = "Actividades";
     $this->view->lista = URL . "actividad/listarElementos/Actividades";
     $this->view->titmodal ="Actividad";
@@ -70,12 +72,14 @@ class Actividad extends Calendar {
   }
 
   public function tomarlista() {
+    
     $this->manejar("actividad","tomarlista");
     $this->view->titpag = "Tomar Lista";
     $this->view->render('tomarlista');
   }
 
   public function traerEventos() {
+
     $data = json_decode($_POST['data'], TRUE);
     try {
       $cals = $this->model->listCals($this->getService());
@@ -94,6 +98,7 @@ class Actividad extends Calendar {
 
   public function asignarAsistencia()
   {
+
     $alumnos = json_decode($_POST['data'], TRUE);
     $id = trim($_POST['data2']);
     $fecha = trim($_POST['data4']);
@@ -103,16 +108,19 @@ class Actividad extends Calendar {
     echo $this->model->asignarProfes($profes, $id, $fecha);
   }
   public function traerAnotados() {
+
     $idActividades = $_POST['data'];
     $Fecha = $_POST['data2'];
     $this->model->traerAnotados($idActividades, $Fecha);
   }
 
   public function traerInstructores() {
+
     $this->model->traerInstructores();
   }
 
   public function agregarModificarActividad() {
+    $this->checkRol(2);
     $caca = json_decode($_POST['data1'], TRUE);
     $subactividades = json_decode($_POST['data2'], TRUE);
     $this->model->agregarModificar('Actividades',$caca);
@@ -123,6 +131,7 @@ class Actividad extends Calendar {
 
   public function traerEvento()
   {
+    $this->checkRol(2);
     $idActividades = $_POST['data'];
     $Nombre = $_POST['data2'];
     $sub = $this->model->traerSubactividades($idActividades);
@@ -158,6 +167,7 @@ class Actividad extends Calendar {
   }
 
   public function editarEvento() {
+    $this->checkRol(2);
     $actividades = json_decode($_POST['data'], TRUE);
     $idCalendario = $_POST['data2'];
     try {
@@ -171,6 +181,7 @@ class Actividad extends Calendar {
     }
   }
   public function addEvento() {
+    $this->checkRol(2);
     $idCalendario = $_POST['data2'];
     $actividades = json_decode($_POST['data'], TRUE);
     try {

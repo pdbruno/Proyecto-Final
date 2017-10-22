@@ -3,10 +3,10 @@ class Calendar extends Controller {
 
   function __construct() {
     parent::__construct();
-    session_start();
   }
   protected function miCatch($e)
   {
+
     $error = json_decode($e->getMessage())->error->code;
     if ($error != 404) {
       $url = isset($_GET['url']) ? $_GET['url'] : null;
@@ -20,6 +20,7 @@ class Calendar extends Controller {
     }
   }
   protected function getService() {
+
     if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
       $client = new Google_Client();
       $google_token= $_SESSION['access_token'];
@@ -38,6 +39,7 @@ class Calendar extends Controller {
 
   public function manejar($controller, $pagina)
   {
+
     $_SESSION['page'] = $pagina;
     $_SESSION['controller'] = $controller;
     $client = new Google_Client();
@@ -53,6 +55,7 @@ class Calendar extends Controller {
     }
   }
   public function calendar() {
+
     $client = new Google_Client();
     $client->setAuthConfigFile('client_secrets.json');
     $client->setRedirectUri(URL . 'calendar/calendar');

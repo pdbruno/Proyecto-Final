@@ -2,6 +2,47 @@
 
 class Cliente extends Controller {
 
+  public function __construct() {
+    parent::__construct();
+  }
+
+  function registroexamen() {
+    $this->checkRol(2);
+    $this->view->titpag = "Registrar Obtención de Categoría";
+    $this->view->tit = "Registrar Obtención de Categoría";
+    $this->view->lista = URL . "cliente/listarElementos/Clientes";
+    $this->view->th = "<th data-field='Nombres' data-sortable='true'>Nombres</th><th data-field='Apellidos' data-sortable='true'>Apellidos</th>";
+    $this->view->renderTabla('examen');
+  }
+
+
+  public function planillitaEsteban() {
+    $this->checkRol(2);
+    $this->view->titpag = "Exámenes de Cinturones Negros";
+    $this->view->tit = "Exámenes de Cinturones Negros";
+    $this->view->th = "
+    <th>Nombre</th>
+    <th>Último Examen</th>
+    <th>Próximo Examen</th>";
+    $this->view->renderTempSimple('planillitaEsteban', 'tablatonta');
+  }
+
+  public function listadoPlanillitaEsteban() {
+    $this->model->listadoPlanillitaEsteban();
+  }
+
+  public function posponerExamen() {
+    $idClientes = $_POST['data'];
+    $this->model->posponerExamen($idClientes);
+  }
+
+  public function registrarExamen() {
+    $this->checkRol(2);
+    $data = json_decode($_POST['data'], TRUE);
+    $this->model->agregarModificar('RegistroExamenes', $data);
+    $this->model->updateCategoria($data);
+  }
+
   public function actCliente() {
     $idClientes = $_POST['data'];
     echo json_encode($this->model->actCliente($idClientes));
@@ -11,18 +52,21 @@ class Cliente extends Controller {
   }
 
   public function cantidadBloques() {
+    $this->checkRol(2);
     $idClientes = $_POST['data1'];
     $mes = $_POST['data2'];
     $this->model->cantidadBloques($idClientes, $mes);
   }
 
   public function agregarModificarCliente() {
+    $this->checkRol(2);
     $cliente = json_decode($_POST['data1'], TRUE);
     $actividades = json_decode($_POST['data2'], TRUE);
     $this->model->agregarModificar('Clientes', $cliente);
     $this->model->asignarActividades($actividades, $cliente['idClientes']);
   }
   function index() {
+    $this->checkRol(2);
     $this->view->titpag = "Clientes";
     $this->view->lista = URL . "cliente/listarElementos/Clientes";
     $this->view->titmodal ="Cliente";
@@ -85,9 +129,6 @@ class Cliente extends Controller {
     </div><!-- /.modal-content-->
     </div> <!--/.modal-dialog -->';
     $this->view->render2modales('abmclientes');
-  }
-  public function __construct() {
-    parent::__construct();
   }
 
 }

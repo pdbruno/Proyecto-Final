@@ -42,7 +42,7 @@ $(Elementos.FechaForm).datepicker({
   autoclose: true,
   todayHighlight: true
 });
-var Enviar = {idActividades:"", idClientes:"", Monto : "", FechaCobro: "", Fecha1:"", Fecha2:""};
+var Enviar = {idActividades:"", idClientes:"", Monto : "", Fecha: "", Fecha1:"", Fecha2:""};
 var Globales = {actividadElegida:"", ListaActividades:[]};
 document.getElementById("BtnAgregar").remove();
 document.getElementById("Enviar").addEventListener("click", function() {
@@ -69,7 +69,7 @@ document.getElementById("Enviar").addEventListener("click", function() {
   let bien = true;
   Enviar.Monto = Elementos.Monto.value;
   Enviar.idActividades = Globales.actividadElegida.idActividades;
-  Enviar.FechaCobro = new Date().toISOString().slice(0,10);
+  Enviar.Fecha = new Date().toISOString().slice(0,10);
   for (x in Enviar) {
     if (Enviar[x]==""||Enviar[x]==null) {
       bien = false;

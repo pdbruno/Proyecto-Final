@@ -1,0 +1,6 @@
+,
+  CONSTRAINT `clientes_ibfk_10` FOREIGN KEY (`idLocalidades`) REFERENCES `localidades` (`idLocalidades`),
+  CONSTRAINT `clientes_ibfk_11` FOREIGN KEY (`idSedes`) REFERENCES `sedes` (`idSedes`),
+  CONSTRAINT `clientes_ibfk_12` FOREIGN KEY (`idSexos`) REFERENCES `sexos` (`idSexos`),
+  CONSTRAINT `clientes_ibfk_8` FOREIGN KEY (`idCategorias`) REFERENCES `categorias` (`idCategorias`),
+  CONSTRAINT `clientes_ibfk_9` FOREIGN KEY (`idGrupoFactorSanguineo`) REFERENCES `grupofactorsanguineo` (`idGrupoFactorSanguineo`)

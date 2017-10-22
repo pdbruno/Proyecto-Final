@@ -37,9 +37,60 @@
       <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
           <ul class="nav" id="side-menu">
+
+            <?php if (!Session::get('logueado')): ?>
+              <li>
+                <a href="<?php echo URL; ?>login/"><i class="fa fa-sign-in fa-fw"></i> LogIn</a>
+              </li>
+            <?php else: ?>
+
+              <li>
+                <a href="<?php echo URL; ?>login/logout"><i class="fa fa-sign-out fa-fw"></i> LogOut</a>
+              </li>
+              <?php if (Session::get('rol') == 3): ?>
+
+                <li>
+                  <a href="#"><i class="fa fa-exchange fa-fw"></i> Stock<span class="fa arrow"></span></a>
+                  <ul class="nav nav-second-level">
+                    <li>
+                      <a href="<?php echo URL; ?>producto/ingresostock"><i class="fa fa-arrow-down fa-fw"></i> Comprar Stock</a>
+                    </li>
+
+                    <li>
+                      <a href="<?php echo URL; ?>producto/egresostock"><i class="fa fa-arrow-up fa-fw"></i> Vender Stock</a>
+                    </li>
+                  </ul>
+                  <!-- /.nav-third-level -->
+                </li>
+
+                <li>
+                  <a href="<?php echo URL; ?>actividad/tomarlista/"><i class="fa fa-check-square-o fa-fw"></i> Tomar Lista</a>
+                </li>
+
+                <li>
+                  <a href="<?php echo URL; ?>cobro/"><i class="fa fa-money fa-fw"></i> Cobro</a>
+                </li>
+
+              <?php else: ?>
+
+
             <li>
-              <a href="<?php echo URL; ?>cliente"><i class="fa fa-users fa-fw"></i> Clientes</a>
+              <a href="#"><i class="fa fa-users fa-fw"></i> Clientes<span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level">
+                <li>
+                  <a href="<?php echo URL; ?>cliente"><i class="fa fa-wrench fa-fw"></i> Administrar Clientes</a>
+                </li>
+                <li>
+                  <a href="<?php echo URL; ?>cliente/registroexamen"><i class="fa fa-user-plus fa-fw"></i> Registrar Obtención de Categoría</a>
+                </li>
+                <li>
+                  <a href="<?php echo URL; ?>cliente/planillitaEsteban"><i class="fa fa-calendar fa-fw"></i> La Planillita de Esteban</a>
+                </li>
+
+              </ul>
+              <!-- /.nav-second-level -->
             </li>
+
 
             <li>
               <a href="#"><i class="fa fa-gears fa-fw"></i> Manejo Secundario<span class="fa arrow"></span></a>
@@ -55,6 +106,9 @@
                 </li>
                 <li>
                   <a href="<?php echo URL; ?>help/index/Modalidades"><i class="fa fa-clock-o fa-fw"></i> Modalidades</a>
+                </li>
+                <li>
+                  <a href="<?php echo URL; ?>help/index/Categorias"><i class="fa fa-list-ul fa-fw"></i> Categorías</a>
                 </li>
 
               </ul>
@@ -131,39 +185,37 @@
                 </li>
 
                 <li>
-                  <a href="#"><i class="fa fa-sign-out fa-fw"></i> Registrar<span class="fa arrow"></span></a>
+                  <a href="#"><i class="fa fa-exchange fa-fw"></i> Registrar<span class="fa arrow"></span></a>
                   <ul class="nav nav-third-level">
                     <li>
-                      <a href="<?php echo URL; ?>cobro/egresos/"> Egresos</a>
+                      <a href="<?php echo URL; ?>cobro/egresos"> Egresos</a>
                     </li>
 
                     <li>
                       <a href="<?php echo URL; ?>cobro/pagosueldos"> Pago de Sueldos</a>
+                    </li>
+
+                    <li>
+                      <a href="<?php echo URL; ?>cobro/cobroescuelas"> Cobro a Escuelas</a>
                     </li>
                   </ul>
                   <!-- /.nav-third-level -->
                 </li>
 
                 <li>
-                  <a href="#"><i class="fa fa-usd fa-fw"></i> Tarifas<span class="fa arrow"></span></a>
-                  <ul class="nav nav-third-level">
-                    <li>
-                      <a href="<?php echo URL; ?>cobro/aranceles"></i> Aranceles</a>
-                    </li>
-
-                    <li>
-                      <a href="<?php echo URL; ?>cobro/sueldos"></i> Sueldos</a>
-                    </li>
-                  </ul>
-                  <!-- /.nav-third-level -->
+                  <a href="<?php echo URL; ?>cobro/aranceles"><i class="fa fa-usd fa-fw"></i> Aranceles</a>
                 </li>
+
               </ul>
               <!-- /.nav-second-level -->
             </li>
-
-            <li>
-              <a href="<?php echo URL; ?>help/tablas/"><i class="fa fa-magic fa-fw"></i> Backoffice</a>
-            </li>
+          <?php endif; ?>
+            <?php if (Session::get('rol') == 1): ?>
+              <li>
+                <a href="<?php echo URL; ?>help/tablas/"><i class="fa fa-magic fa-fw"></i> Backoffice</a>
+              </li>
+            <?php endif; ?>
+          <?php endif; ?>
           </ul>
         </div>
         <!-- /.sidebar-collapse -->

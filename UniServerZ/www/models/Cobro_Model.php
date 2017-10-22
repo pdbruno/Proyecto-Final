@@ -7,7 +7,7 @@ class Cobro_Model extends Model {
   }
 
   public function traerSueldos() {
-    echo json_encode($this->db->getInd('idCategorias', "SELECT idCategorias, MontoXBloque FROM `categoriassueldos`"));
+    echo json_encode($this->db->getInd('idCategorias', "SELECT idCategorias, MontoXBloque FROM `categorias`"));
   }
 
 
@@ -27,14 +27,6 @@ class Cobro_Model extends Model {
       GROUP BY idActividades, idModosDePago, idModalidades";
     $outp = $this->db->getAll($sql);
     echo json_encode($outp);
-  }
-
-  public function listarSueldos(){
-    $sql = "SELECT categoriassueldos.idCategoriasSueldos, categorias.Nombre as catNombre, categoriassueldos.MontoXBloque
-    FROM categoriassueldos
-    LEFT JOIN categorias ON categoriassueldos.idCategorias = categorias.idCategorias";
-    $outp = $this->db->getAll($sql);
-    return json_encode($outp);
   }
 
   public function modSueldo($data) {

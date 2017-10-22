@@ -6,15 +6,6 @@ var Elementos = {
   Error: document.getElementById("Error"),
   Grupo: document.getElementById("Grupo"),
 };
-var xhr = new XMLHttpRequest();
-xhr.open("POST", "<?php echo URL; ?>help/Dropdown/idUsuarios");
-xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-xhr.onreadystatechange = function () {
-  if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-    Elementos.idUsuariosSelect.innerHTML = optionCrear(JSON.parse(xhr.responseText)[0]);
-  }
-};
-xhr.send();
 
 Elementos.BtnAceptar.addEventListener("click", function() {
   Elementos.Grupo.className = "form-group";
@@ -30,7 +21,13 @@ Elementos.BtnAceptar.addEventListener("click", function() {
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
       if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-          console.log(xhr.responseText);
+        if (xhr.responseText == "no") {
+          Elementos.Error.innerHTML = "Contraseña Incorrecta";
+          Elementos.Error.classList.remove("hidden");
+          Elementos.Grupo.classList.add("has-error");
+        }else {
+          window.location.replace("<?php echo URL; ?>");
+        }
       }
     };
     xhr.send("data=" + JSON.stringify({idUsuarios: Elementos.idUsuariosSelect.value, Password: Elementos.Password.value}));

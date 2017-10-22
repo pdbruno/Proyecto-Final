@@ -54,19 +54,27 @@ class index_Model extends Model {
     $outp = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS Nombres FROM `clientesactivos` WHERE YEAR(CURDATE()) - YEAR(`PagoMatricula`) != 0");
     echo json_encode($outp);
   }
-  function between($data)
+  function between($data, $con = "AND")
   {
     if ($data['Fecha1'] == "" && $data['Fecha2'] == "" ) {
       return "";
     }else {
-      return $this->db->parse(" AND `Fecha` BETWEEN ?s AND ?s", $data['Fecha1'], $data['Fecha2']);
+      return $this->db->parse(" $con `Fecha` BETWEEN ?s AND ?s", $data['Fecha1'], $data['Fecha2']);
     }
   }
+
   function productosVentas($corte = "")
   {
     $outp = $this->db->getAll("SELECT productos.Nombre, COUNT(0) AS Cantidad FROM `registroventas` INNER JOIN productos on registroventas.idProductos = productos.idProductos ?p GROUP BY registroventas.idProductos ORDER BY Cantidad DESC", $corte);
     echo json_encode($outp);
   }
+
+  function graficoExamen($corte)
+  {
+    $outp = $this->db->getAll("SELECT categorias.Nombre, COUNT(0) AS Cantidad FROM `registroexamenes` INNER JOIN categorias ON registroexamenes.idCategorias = categorias.idCategorias ?p GROUP BY categorias.Nombre ORDER BY registroexamenes.idCategorias ", $corte);
+    echo json_encode($outp);
+  }
+
   function productosGanancias($corte = "")
   {
     $outp = $this->db->getAll("SELECT productos.Nombre, SUM(Monto) AS Monto FROM `registroventas` INNER JOIN productos on registroventas.idProductos = productos.idProductos ?p GROUP BY registroventas.idProductos ORDER BY SUM(Monto) DESC", $corte);

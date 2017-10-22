@@ -5,43 +5,44 @@ class View {
 	function __construct() {
 	}
 
-	public function render($name, $noInclude = false)
+	public function render($Nombre, $NoInclude = false)
 	{
-		if ($noInclude == true) {
-			require 'views/' . $name . '/index.php';
+		if ($NoInclude == true) {
+			require 'views/' . $Nombre . '/index.php';
 		}
 		else {
 			require 'views/header.php';
-			require 'views/' . $name . '/index.php';
+			require 'views/' . $Nombre . '/index.php';
 			require 'views/recursos/logicaABM.php';
-			require 'views/' . $name . '/' . $name . '.php';
+			require 'views/' . $Nombre . '/' . $Nombre . '.php';
 			require 'views/footer.php';
 		}
 	}
 
-	public function render2modales($name, $ConDrop = false)
+	public function render2modales($Nombre)
 	{
 		require 'views/header.php';
-		if ($ConDrop == true) {
-			require 'views/tablas/index.php';
-		}
 		require 'views/bstable/index.php';
 		require 'views/modalprop/index.php';
 		require 'views/recursos/logicaABM.php';
-		require 'views/' . $name . '/' . $name . '.php';
+		require 'views/' . $Nombre . '/' . $Nombre . '.php';
 		require 'views/footer.php';
 	}
 
-	public function renderTempSimple($name, $temp)
+	public function renderTempSimple($Nombre, $Template, $DefaultJS = false)
 	{
 		require 'views/header.php';
-		require 'views/' . $temp . '/index.php';
+		require 'views/' . $Template . '/index.php';
 		require 'views/recursos/logicaABM.php';
-		require 'views/' . $name . '/' . $name . '.php';
+		if ($DefaultJS) {
+			require 'views/' . $Template . '/' . $Template . '.php';
+		} else {
+			require 'views/' . $Nombre . '/' . $Nombre . '.php';
+		}
 		require 'views/footer.php';
 	}
 
-	public function renderTabla($name = "", $ConModal = false)
+	public function renderTabla($Nombre = "", $ConModal = false)
 	{
 		require 'views/header.php';
 		require 'views/bstable/index.php';
@@ -50,9 +51,9 @@ class View {
 			require 'views/recursos/logicaABM.php';
 			require 'views/modalprop/modalprop.php';
 		}else {
-			require 'views/' . $name . '/index.php';
+			require 'views/' . $Nombre . '/index.php';
 			require 'views/recursos/logicaABM.php';
-			require 'views/' . $name . '/' . $name . '.php';
+			require 'views/' . $Nombre . '/' . $Nombre . '.php';
 		}
 		require 'views/footer.php';
 	}

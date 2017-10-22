@@ -2,11 +2,34 @@
 
 class Controller {
 
-  function __construct() {
+  function __construct($LoginController = false) {
     $this->view = new View();
+    Session::init();
+    if (!$LoginController) {
+      $Logueado = Session::get('logueado');
+      if (!$Logueado) {
+        Session::destroy();
+        $this->view->titpag = "No en mi guardia";
+        $this->view->msg = "Te podés loguear porfis? Gracias";
+        $this->view->render('error');
+        exit;
+      }
+    }
+
+  }
+
+  protected function checkRol($MaxPrivilegio){
+    $Rol = Session::get('rol');
+    if ($MaxPrivilegio < $Rol) {
+      $this->view->titpag = "Dónde pensas que vas bebé?";
+      $this->view->msg = "Usted no tiene permiso para acceder a esta página. JAJA.";
+      $this->view->render('error');
+      exit;
+    }
   }
 
   public function eliminarElemento($Tipo) {
+    $this->checkRol(2);
     $this->model->eliminar($Tipo,  $_POST['data']);
   }
 
@@ -27,11 +50,19 @@ class Controller {
     $this->model->tabla($tipo);
   }
 
+  function Dropdown($tipo) {
+    $this->model->Dropdown($tipo);
+  }
+
   public function agregarModificarElemento($tipo) {
+    $this->checkRol(2);
     $this->model->agregarModificar($tipo, json_decode($_POST['data'], TRUE));
   }
 
   public function traerElemento($tipo) {
+    if ($tipo != "Arancel") {
+      $this->checkRol(2);
+    }
     echo $datos = $this->model->traerElemento($tipo, $_POST['data']);
   }
 

@@ -4,24 +4,24 @@
   <div class="row hidden escondible" id="PanelDeudas">
     <div class="col-lg-12">
       <div class="panel panel-default">
-    <div class="panel-heading" role="button" id="headingOne" data-toggle="collapse" href="#collapseOne" class="panel-title">
-    </div>
-    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel">
-      <div class="panel-body">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Actividad</th>
-              <th>Fecha</th>
-              <th>Monto</th>
-            </tr>
-          </thead>
-          <tbody id="TablaMor">
-          </tbody>
-        </table>
+        <div class="panel-heading" role="button" id="headingOne" data-toggle="collapse" href="#collapseOne" class="panel-title">
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel">
+          <div class="panel-body">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Actividad</th>
+                  <th>Fecha</th>
+                  <th>Monto</th>
+                </tr>
+              </thead>
+              <tbody id="TablaMor">
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
     </div>
   </div>
   <div class="row hidden escondible" id="PanelActividades">

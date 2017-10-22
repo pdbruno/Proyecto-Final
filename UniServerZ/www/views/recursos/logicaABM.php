@@ -25,12 +25,17 @@ $(document).on('show.bs.modal', '.modal', function (event) {
 });
 
 for (var i = 0; i < 2; i++) {
-  ElemForm.deshacerModal[i].addEventListener("click", function() {
-    deshacerModal();
-  });
-  ElemForm.CerrarVer[i].addEventListener("click", function() {
-    ElemForm.$ModalVer.modal('hide');
-  });
+  if (ElemForm.deshacerModal[i]) {
+    ElemForm.deshacerModal[i].addEventListener("click", function() {
+      deshacerModal();
+    });
+  }
+  if (ElemForm.CerrarVer[i]) {
+    ElemForm.CerrarVer[i].addEventListener("click", function() {
+      ElemForm.$ModalVer.modal('hide');
+    });
+  }
+
 }
 
 
@@ -227,7 +232,6 @@ function hacemeUnDropdown(nombre, select){
 function addOpt(nombre){
   let nuevaopcion = prompt("Ingrese la nueva opción");
   if (nuevaopcion != null) {
-
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "<?php echo URL; ?>help/agregarModificarElemento/" + nombre.substr(2).toLowerCase());
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -237,7 +241,6 @@ function addOpt(nombre){
       }
     };
     xhr.send("data=" + JSON.stringify({Nombre : nuevaopcion}));
-
   }
 }
 
