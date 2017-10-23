@@ -1,5 +1,5 @@
 <?php
-require_once 'controllers/calendar.php';
+require 'controllers/calendar.php';
 class Actividad extends Calendar {
 
   function __construct() {
