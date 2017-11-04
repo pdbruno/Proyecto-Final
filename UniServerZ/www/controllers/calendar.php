@@ -6,7 +6,6 @@ class Calendar extends Controller {
   }
   protected function miCatch($e)
   {
-
     $error = json_decode($e->getMessage())->error->code;
     if ($error != 404) {
       $url = isset($_GET['url']) ? $_GET['url'] : null;

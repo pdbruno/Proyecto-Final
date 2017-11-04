@@ -4,11 +4,9 @@ class Controller {
 
   function __construct($LoginController = false) {
     $this->view = new View();
-    Session::init();
     if (!$LoginController) {
-      $Logueado = Session::get('logueado');
-      if (!$Logueado) {
-        Session::destroy();
+      if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] == false) {
+        $this->destroySession();
         $this->view->titpag = "No en mi guardia";
         $this->view->msg = "Te podés loguear porfis? Gracias";
         $this->view->render('error');
@@ -18,9 +16,13 @@ class Controller {
 
   }
 
+  protected function destroySession(){
+    session_unset();
+    session_destroy();
+  }
+
   protected function checkRol($MaxPrivilegio){
-    $Rol = Session::get('rol');
-    if ($MaxPrivilegio < $Rol) {
+    if (isset($_SESSION['rol']) && $_SESSION['rol'] && $MaxPrivilegio < $_SESSION['rol']) {
       $this->view->titpag = "Dónde pensas que vas bebé?";
       $this->view->msg = "Usted no tiene permiso para acceder a esta página. JAJA.";
       $this->view->render('error');

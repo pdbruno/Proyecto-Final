@@ -10,9 +10,8 @@ class logIn_Model extends Model {
   {
       $outp = $this->db->getRow("SELECT * FROM usuarios WHERE idUsuarios = ?i", $data->idUsuarios);
       if (password_verify($data->Password, $outp['Password'])) {
-        Session::init();
-        Session::set('logueado', true);
-        Session::set('rol', $data->idUsuarios);
+        $_SESSION['logueado'] = true;
+        $_SESSION['rol'] = $data->idUsuarios;
         echo "si";
       } else {
         echo "no";

@@ -15593,3 +15593,1397 @@ Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
 2017-10-21 18:39:33 7808 [Note] Shutting down plugin 'binlog'
 2017-10-21 18:39:33 7808 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
 
+2017-10-24 09:27:00 1216 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 09:27:00 1216 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 09:27:00 1216 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 09:27:00 1216 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 09:27:00 1216 [Note] InnoDB: Memory barrier is not used
+2017-10-24 09:27:00 1216 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 09:27:00 1216 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 09:27:00 1216 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 09:27:00 1216 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 09:27:00 1216 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 09:27:01 1216 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 09:27:01 1216 [Note] InnoDB: Waiting for purge to start
+2017-10-24 09:27:01 1216 [Note] InnoDB: 5.6.35 started; log sequence number 17906589
+2017-10-24 09:27:01 1216 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 09:27:01 1216 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 09:27:01 1216 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 09:27:01 1216 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 09:27:01 1216 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 10:03:54 1216 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 10:03:54 1216 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 10:03:54 1216 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 10:03:54 1216 [Note] Shutting down slave threads
+2017-10-24 10:03:54 1216 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 10:03:54 1216 [Note] Binlog end
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'partition'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 10:03:54 1216 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 10:03:54 1216 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 10:03:54 1216 [Note] InnoDB: Starting shutdown...
+2017-10-24 10:03:55 1216 [Note] InnoDB: Shutdown completed; log sequence number 17906609
+2017-10-24 10:03:55 1216 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 10:03:55 1216 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 10:03:55 1216 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 10:03:55 1216 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 10:03:55 1216 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 10:03:55 1216 [Note] Shutting down plugin 'CSV'
+2017-10-24 10:03:55 1216 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 10:03:55 1216 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 10:03:55 1216 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 10:03:55 1216 [Note] Shutting down plugin 'binlog'
+2017-10-24 10:03:55 1216 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 10:04:07 7000 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 10:04:07 7000 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 10:04:07 7000 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 10:04:07 7000 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 10:04:07 7000 [Note] InnoDB: Memory barrier is not used
+2017-10-24 10:04:07 7000 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 10:04:07 7000 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 10:04:07 7000 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 10:04:07 7000 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 10:04:07 7000 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 10:04:08 7000 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 10:04:08 7000 [Note] InnoDB: Waiting for purge to start
+2017-10-24 10:04:08 7000 [Note] InnoDB: 5.6.35 started; log sequence number 17906609
+2017-10-24 10:04:08 7000 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 10:04:08 7000 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 10:04:08 7000 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 10:04:08 7000 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 10:04:08 7000 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 10:05:24 7000 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 10:05:24 7000 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 10:05:24 7000 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 10:05:24 7000 [Note] Shutting down slave threads
+2017-10-24 10:05:24 7000 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 10:05:24 7000 [Note] Binlog end
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'partition'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 10:05:24 7000 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 10:05:24 7000 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 10:05:24 7000 [Note] InnoDB: Starting shutdown...
+2017-10-24 10:05:26 7000 [Note] InnoDB: Shutdown completed; log sequence number 17906619
+2017-10-24 10:05:26 7000 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 10:05:26 7000 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 10:05:26 7000 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 10:05:26 7000 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 10:05:26 7000 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 10:05:26 7000 [Note] Shutting down plugin 'CSV'
+2017-10-24 10:05:26 7000 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 10:05:26 7000 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 10:05:26 7000 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 10:05:26 7000 [Note] Shutting down plugin 'binlog'
+2017-10-24 10:05:26 7000 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 10:08:05 6588 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 10:08:05 6588 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 10:08:05 6588 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 10:08:05 6588 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 10:08:05 6588 [Note] InnoDB: Memory barrier is not used
+2017-10-24 10:08:05 6588 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 10:08:05 6588 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 10:08:05 6588 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 10:08:05 6588 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 10:08:05 6588 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 10:08:06 6588 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 10:08:06 6588 [Note] InnoDB: Waiting for purge to start
+2017-10-24 10:08:06 6588 [Note] InnoDB: 5.6.35 started; log sequence number 17906619
+2017-10-24 10:08:06 6588 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 10:08:06 6588 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 10:08:06 6588 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 10:08:06 6588 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 10:08:06 6588 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 10:28:18 6588 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 10:28:18 6588 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 10:28:18 6588 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 10:28:18 6588 [Note] Shutting down slave threads
+2017-10-24 10:28:18 6588 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 10:28:18 6588 [Note] Binlog end
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'partition'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 10:28:18 6588 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 10:28:18 6588 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 10:28:18 6588 [Note] InnoDB: Starting shutdown...
+2017-10-24 10:28:20 6588 [Note] InnoDB: Shutdown completed; log sequence number 17906629
+2017-10-24 10:28:20 6588 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 10:28:20 6588 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 10:28:20 6588 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 10:28:20 6588 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 10:28:20 6588 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 10:28:20 6588 [Note] Shutting down plugin 'CSV'
+2017-10-24 10:28:20 6588 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 10:28:20 6588 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 10:28:20 6588 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 10:28:20 6588 [Note] Shutting down plugin 'binlog'
+2017-10-24 10:28:20 6588 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 10:28:22 5240 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 10:28:22 5240 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 10:28:22 5240 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 10:28:22 5240 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 10:28:22 5240 [Note] InnoDB: Memory barrier is not used
+2017-10-24 10:28:22 5240 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 10:28:22 5240 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 10:28:22 5240 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 10:28:22 5240 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 10:28:22 5240 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 10:28:23 5240 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 10:28:23 5240 [Note] InnoDB: Waiting for purge to start
+2017-10-24 10:28:23 5240 [Note] InnoDB: 5.6.35 started; log sequence number 17906629
+2017-10-24 10:28:23 5240 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 10:28:23 5240 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 10:28:23 5240 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 10:28:24 5240 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 10:28:24 5240 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 10:30:52 5240 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 10:30:52 5240 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 10:30:52 5240 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 10:30:52 5240 [Note] Shutting down slave threads
+2017-10-24 10:30:52 5240 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 10:30:52 5240 [Note] Binlog end
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'partition'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 10:30:52 5240 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 10:30:52 5240 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 10:30:52 5240 [Note] InnoDB: Starting shutdown...
+2017-10-24 10:30:53 5240 [Note] InnoDB: Shutdown completed; log sequence number 17906639
+2017-10-24 10:30:53 5240 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 10:30:53 5240 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 10:30:53 5240 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 10:30:53 5240 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 10:30:53 5240 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 10:30:53 5240 [Note] Shutting down plugin 'CSV'
+2017-10-24 10:30:53 5240 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 10:30:53 5240 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 10:30:53 5240 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 10:30:53 5240 [Note] Shutting down plugin 'binlog'
+2017-10-24 10:30:53 5240 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 10:31:24 3024 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 10:31:24 3024 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 10:31:24 3024 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 10:31:24 3024 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 10:31:24 3024 [Note] InnoDB: Memory barrier is not used
+2017-10-24 10:31:24 3024 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 10:31:24 3024 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 10:31:24 3024 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 10:31:24 3024 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 10:31:24 3024 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 10:31:25 3024 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 10:31:25 3024 [Note] InnoDB: Waiting for purge to start
+2017-10-24 10:31:25 3024 [Note] InnoDB: 5.6.35 started; log sequence number 17906639
+2017-10-24 10:31:25 3024 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 10:31:25 3024 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 10:31:25 3024 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 10:31:25 3024 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 10:31:25 3024 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 10:37:27 3024 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 10:37:27 3024 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 10:37:27 3024 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 10:37:27 3024 [Note] Shutting down slave threads
+2017-10-24 10:37:27 3024 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 10:37:27 3024 [Note] Binlog end
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'partition'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 10:37:27 3024 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 10:37:27 3024 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 10:37:27 3024 [Note] InnoDB: Starting shutdown...
+2017-10-24 10:37:29 3024 [Note] InnoDB: Shutdown completed; log sequence number 17906649
+2017-10-24 10:37:29 3024 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 10:37:29 3024 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 10:37:29 3024 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 10:37:29 3024 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 10:37:29 3024 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 10:37:29 3024 [Note] Shutting down plugin 'CSV'
+2017-10-24 10:37:29 3024 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 10:37:29 3024 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 10:37:29 3024 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 10:37:29 3024 [Note] Shutting down plugin 'binlog'
+2017-10-24 10:37:29 3024 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 14:37:38 3436 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 14:37:38 3436 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 14:37:38 3436 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 14:37:38 3436 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 14:37:38 3436 [Note] InnoDB: Memory barrier is not used
+2017-10-24 14:37:38 3436 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 14:37:38 3436 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 14:37:38 3436 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 14:37:38 3436 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 14:37:38 3436 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 14:37:40 3436 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 14:37:40 3436 [Note] InnoDB: Waiting for purge to start
+2017-10-24 14:37:40 3436 [Note] InnoDB: 5.6.35 started; log sequence number 17906649
+2017-10-24 14:37:40 3436 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 14:37:40 3436 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 14:37:40 3436 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 14:37:40 3436 [ERROR] Can't start server: Bind on TCP/IP port: No such file or directory
+2017-10-24 14:37:40 3436 [ERROR] Do you already have another mysqld server running on port: 3306 ?
+2017-10-24 14:37:40 3436 [ERROR] Aborting
+
+2017-10-24 14:37:40 3436 [Note] Binlog end
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'partition'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 14:37:40 3436 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 14:37:40 3436 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 14:37:40 3436 [Note] InnoDB: Starting shutdown...
+2017-10-24 14:37:41 3436 [Note] InnoDB: Shutdown completed; log sequence number 17906659
+2017-10-24 14:37:41 3436 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 14:37:41 3436 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 14:37:41 3436 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 14:37:41 3436 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 14:37:41 3436 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 14:37:41 3436 [Note] Shutting down plugin 'CSV'
+2017-10-24 14:37:41 3436 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 14:37:41 3436 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 14:37:41 3436 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 14:37:41 3436 [Note] Shutting down plugin 'binlog'
+2017-10-24 14:37:41 3436 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 14:39:37 7176 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 14:39:37 7176 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 14:39:37 7176 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 14:39:37 7176 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 14:39:37 7176 [Note] InnoDB: Memory barrier is not used
+2017-10-24 14:39:37 7176 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 14:39:37 7176 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 14:39:37 7176 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 14:39:37 7176 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 14:39:37 7176 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 14:39:38 7176 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 14:39:38 7176 [Note] InnoDB: Waiting for purge to start
+2017-10-24 14:39:38 7176 [Note] InnoDB: 5.6.35 started; log sequence number 17906659
+2017-10-24 14:39:38 7176 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 14:39:38 7176 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 14:39:38 7176 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 14:39:39 7176 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 14:39:39 7176 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 14:49:31 7176 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 14:49:31 7176 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 14:49:31 7176 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 14:49:31 7176 [Note] Shutting down slave threads
+2017-10-24 14:49:31 7176 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 14:49:31 7176 [Note] Binlog end
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'partition'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 14:49:31 7176 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 14:49:31 7176 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 14:49:31 7176 [Note] InnoDB: Starting shutdown...
+2017-10-24 14:49:32 7176 [Note] InnoDB: Shutdown completed; log sequence number 17906669
+2017-10-24 14:49:32 7176 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 14:49:32 7176 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 14:49:32 7176 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 14:49:32 7176 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 14:49:32 7176 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 14:49:32 7176 [Note] Shutting down plugin 'CSV'
+2017-10-24 14:49:32 7176 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 14:49:32 7176 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 14:49:32 7176 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 14:49:32 7176 [Note] Shutting down plugin 'binlog'
+2017-10-24 14:49:32 7176 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 15:02:49 4448 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 15:02:49 4448 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 15:02:49 4448 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 15:02:49 4448 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 15:02:49 4448 [Note] InnoDB: Memory barrier is not used
+2017-10-24 15:02:49 4448 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 15:02:49 4448 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 15:02:49 4448 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 15:02:49 4448 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 15:02:49 4448 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 15:02:50 4448 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 15:02:50 4448 [Note] InnoDB: Waiting for purge to start
+2017-10-24 15:02:50 4448 [Note] InnoDB: 5.6.35 started; log sequence number 17906669
+2017-10-24 15:02:50 4448 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 15:02:50 4448 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 15:02:50 4448 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 15:02:52 4448 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 15:02:52 4448 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 15:39:43 4448 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 15:39:43 4448 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 15:39:43 4448 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 15:39:43 4448 [Note] Shutting down slave threads
+2017-10-24 15:39:43 4448 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 15:39:43 4448 [Note] Binlog end
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'partition'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 15:39:43 4448 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 15:39:43 4448 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 15:39:43 4448 [Note] InnoDB: Starting shutdown...
+2017-10-24 15:39:44 4448 [Note] InnoDB: Shutdown completed; log sequence number 17906715
+2017-10-24 15:39:44 4448 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 15:39:44 4448 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 15:39:44 4448 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 15:39:44 4448 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 15:39:44 4448 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 15:39:44 4448 [Note] Shutting down plugin 'CSV'
+2017-10-24 15:39:44 4448 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 15:39:44 4448 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 15:39:44 4448 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 15:39:44 4448 [Note] Shutting down plugin 'binlog'
+2017-10-24 15:39:44 4448 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 15:40:28 7252 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 15:40:28 7252 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 15:40:28 7252 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 15:40:28 7252 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 15:40:28 7252 [Note] InnoDB: Memory barrier is not used
+2017-10-24 15:40:28 7252 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 15:40:28 7252 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 15:40:28 7252 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 15:40:28 7252 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 15:40:28 7252 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 15:40:28 7252 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 15:40:28 7252 [Note] InnoDB: Waiting for purge to start
+2017-10-24 15:40:28 7252 [Note] InnoDB: 5.6.35 started; log sequence number 17906715
+2017-10-24 15:40:28 7252 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 15:40:28 7252 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 15:40:28 7252 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 15:40:30 7252 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 15:40:30 7252 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 15:42:21 7252 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 15:42:21 7252 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 15:42:21 7252 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 15:42:21 7252 [Note] Shutting down slave threads
+2017-10-24 15:42:21 7252 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 15:42:21 7252 [Note] Binlog end
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'partition'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 15:42:21 7252 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 15:42:21 7252 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 15:42:21 7252 [Note] InnoDB: Starting shutdown...
+2017-10-24 15:42:22 7252 [Note] InnoDB: Shutdown completed; log sequence number 17906725
+2017-10-24 15:42:22 7252 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 15:42:22 7252 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 15:42:22 7252 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 15:42:22 7252 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 15:42:22 7252 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 15:42:22 7252 [Note] Shutting down plugin 'CSV'
+2017-10-24 15:42:22 7252 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 15:42:22 7252 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 15:42:22 7252 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 15:42:22 7252 [Note] Shutting down plugin 'binlog'
+2017-10-24 15:42:22 7252 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 15:42:23 9080 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 15:42:23 9080 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 15:42:23 9080 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 15:42:23 9080 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 15:42:23 9080 [Note] InnoDB: Memory barrier is not used
+2017-10-24 15:42:23 9080 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 15:42:23 9080 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 15:42:23 9080 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 15:42:23 9080 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 15:42:23 9080 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 15:42:24 9080 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 15:42:24 9080 [Note] InnoDB: Waiting for purge to start
+2017-10-24 15:42:24 9080 [Note] InnoDB: 5.6.35 started; log sequence number 17906725
+2017-10-24 15:42:24 9080 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 15:42:24 9080 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 15:42:24 9080 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 15:42:27 9080 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 15:42:27 9080 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 15:42:53 9080 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 15:42:53 9080 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 15:42:53 9080 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 15:42:53 9080 [Note] Shutting down slave threads
+2017-10-24 15:42:53 9080 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 15:42:53 9080 [Note] Binlog end
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'partition'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 15:42:53 9080 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 15:42:53 9080 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 15:42:53 9080 [Note] InnoDB: Starting shutdown...
+2017-10-24 15:42:54 9080 [Note] InnoDB: Shutdown completed; log sequence number 17906735
+2017-10-24 15:42:54 9080 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 15:42:54 9080 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 15:42:54 9080 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 15:42:54 9080 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 15:42:54 9080 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 15:42:54 9080 [Note] Shutting down plugin 'CSV'
+2017-10-24 15:42:54 9080 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 15:42:54 9080 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 15:42:54 9080 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 15:42:54 9080 [Note] Shutting down plugin 'binlog'
+2017-10-24 15:42:54 9080 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 15:42:56 7340 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 15:42:56 7340 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 15:42:56 7340 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 15:42:56 7340 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 15:42:56 7340 [Note] InnoDB: Memory barrier is not used
+2017-10-24 15:42:56 7340 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 15:42:56 7340 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 15:42:56 7340 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 15:42:56 7340 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 15:42:56 7340 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 15:42:57 7340 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 15:42:57 7340 [Note] InnoDB: Waiting for purge to start
+2017-10-24 15:42:57 7340 [Note] InnoDB: 5.6.35 started; log sequence number 17906735
+2017-10-24 15:42:57 7340 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 15:42:57 7340 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 15:42:57 7340 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 15:42:58 7340 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 15:42:58 7340 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 15:43:26 7340 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 15:43:26 7340 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 15:43:26 7340 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 15:43:26 7340 [Note] Shutting down slave threads
+2017-10-24 15:43:26 7340 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 15:43:26 7340 [Note] Binlog end
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'partition'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 15:43:26 7340 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 15:43:26 7340 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 15:43:26 7340 [Note] InnoDB: Starting shutdown...
+2017-10-24 15:43:27 7340 [Note] InnoDB: Shutdown completed; log sequence number 17906745
+2017-10-24 15:43:27 7340 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 15:43:27 7340 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 15:43:27 7340 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 15:43:27 7340 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 15:43:27 7340 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 15:43:27 7340 [Note] Shutting down plugin 'CSV'
+2017-10-24 15:43:27 7340 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 15:43:27 7340 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 15:43:27 7340 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 15:43:27 7340 [Note] Shutting down plugin 'binlog'
+2017-10-24 15:43:27 7340 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 15:43:42 1700 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 15:43:42 1700 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 15:43:42 1700 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 15:43:42 1700 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 15:43:42 1700 [Note] InnoDB: Memory barrier is not used
+2017-10-24 15:43:42 1700 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 15:43:42 1700 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 15:43:42 1700 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 15:43:42 1700 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 15:43:42 1700 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 15:43:43 1700 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 15:43:43 1700 [Note] InnoDB: Waiting for purge to start
+2017-10-24 15:43:43 1700 [Note] InnoDB: 5.6.35 started; log sequence number 17906745
+2017-10-24 15:43:43 1700 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 15:43:43 1700 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 15:43:43 1700 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 15:43:44 1700 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 15:43:44 1700 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 15:54:43 1700 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 15:54:43 1700 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 15:54:43 1700 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 15:54:43 1700 [Note] Shutting down slave threads
+2017-10-24 15:54:43 1700 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 15:54:43 1700 [Note] Binlog end
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'partition'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 15:54:43 1700 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 15:54:43 1700 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 15:54:43 1700 [Note] InnoDB: Starting shutdown...
+2017-10-24 15:54:44 1700 [Note] InnoDB: Shutdown completed; log sequence number 17906755
+2017-10-24 15:54:44 1700 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 15:54:44 1700 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 15:54:44 1700 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 15:54:44 1700 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 15:54:44 1700 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 15:54:44 1700 [Note] Shutting down plugin 'CSV'
+2017-10-24 15:54:44 1700 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 15:54:44 1700 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 15:54:44 1700 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 15:54:44 1700 [Note] Shutting down plugin 'binlog'
+2017-10-24 15:54:44 1700 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 21:33:14 292 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 21:33:14 292 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 21:33:14 292 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 21:33:14 292 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 21:33:14 292 [Note] InnoDB: Memory barrier is not used
+2017-10-24 21:33:14 292 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 21:33:14 292 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 21:33:14 292 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 21:33:15 292 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 21:33:15 292 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 21:33:16 292 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 21:33:16 292 [Note] InnoDB: Waiting for purge to start
+2017-10-24 21:33:16 292 [Note] InnoDB: 5.6.35 started; log sequence number 17906755
+2017-10-24 21:33:16 292 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 21:33:16 292 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 21:33:16 292 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 21:33:17 292 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 21:33:17 292 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 21:54:17 292 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 21:54:17 292 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 21:54:17 292 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 21:54:17 292 [Note] Shutting down slave threads
+2017-10-24 21:54:17 292 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 21:54:17 292 [Note] Binlog end
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'partition'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 21:54:17 292 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 21:54:17 292 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 21:54:17 292 [Note] InnoDB: Starting shutdown...
+2017-10-24 21:54:18 292 [Note] InnoDB: Shutdown completed; log sequence number 17906815
+2017-10-24 21:54:18 292 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 21:54:18 292 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 21:54:18 292 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 21:54:18 292 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 21:54:18 292 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 21:54:18 292 [Note] Shutting down plugin 'CSV'
+2017-10-24 21:54:18 292 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 21:54:18 292 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 21:54:18 292 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 21:54:18 292 [Note] Shutting down plugin 'binlog'
+2017-10-24 21:54:18 292 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 21:54:23 8144 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 21:54:23 8144 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 21:54:23 8144 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 21:54:23 8144 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 21:54:23 8144 [Note] InnoDB: Memory barrier is not used
+2017-10-24 21:54:23 8144 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 21:54:23 8144 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 21:54:23 8144 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 21:54:23 8144 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 21:54:23 8144 [ERROR] InnoDB: E:\Proyecto-Final\UniServerZ\core\mysql\data\ib_logfile0 can't be opened in read-write mode
+2017-10-24 21:54:23 8144 [ERROR] Plugin 'InnoDB' init function returned error.
+2017-10-24 21:54:23 8144 [ERROR] Plugin 'InnoDB' registration as a STORAGE ENGINE failed.
+2017-10-24 21:54:23 8144 [ERROR] Unknown/unsupported storage engine: InnoDB
+2017-10-24 21:54:23 8144 [ERROR] Aborting
+
+2017-10-24 21:54:23 8144 [Note] Binlog end
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'partition'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'CSV'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 21:54:23 8144 [Note] Shutting down plugin 'binlog'
+2017-10-24 21:54:23 8144 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 22:30:25 3516 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 22:30:25 3516 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 22:30:25 3516 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 22:30:25 3516 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 22:30:25 3516 [Note] InnoDB: Memory barrier is not used
+2017-10-24 22:30:25 3516 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 22:30:25 3516 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 22:30:25 3516 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 22:30:25 3516 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 22:30:25 3516 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 22:30:35 3516 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 22:30:35 3516 [Note] InnoDB: Waiting for purge to start
+2017-10-24 22:30:35 3516 [Note] InnoDB: 5.6.35 started; log sequence number 17906815
+2017-10-24 22:30:36 3516 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 22:30:36 3516 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 22:30:36 3516 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 22:30:42 3516 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 22:30:42 3516 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 22:31:28 3516 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 22:31:28 3516 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 22:31:28 3516 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 22:31:28 3516 [Note] Shutting down slave threads
+2017-10-24 22:31:28 3516 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 22:31:28 3516 [Note] Binlog end
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'partition'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 22:31:28 3516 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 22:31:28 3516 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 22:31:28 3516 [Note] InnoDB: Starting shutdown...
+2017-10-24 22:31:33 3516 [Note] InnoDB: Shutdown completed; log sequence number 17906825
+2017-10-24 22:31:33 3516 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 22:31:33 3516 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 22:31:33 3516 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 22:31:33 3516 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 22:31:33 3516 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 22:31:33 3516 [Note] Shutting down plugin 'CSV'
+2017-10-24 22:31:33 3516 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 22:31:33 3516 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 22:31:33 3516 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 22:31:33 3516 [Note] Shutting down plugin 'binlog'
+2017-10-24 22:31:33 3516 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 22:31:42 10264 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 22:31:42 10264 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 22:31:42 10264 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 22:31:42 10264 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 22:31:42 10264 [Note] InnoDB: Memory barrier is not used
+2017-10-24 22:31:42 10264 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 22:31:42 10264 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 22:31:42 10264 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 22:31:42 10264 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 22:31:42 10264 [ERROR] InnoDB: E:\Proyecto-Final\UniServerZ\core\mysql\data\ibdata1 can't be opened in read-write mode
+2017-10-24 22:31:42 10264 [ERROR] InnoDB: The system tablespace must be writable!
+2017-10-24 22:31:42 10264 [ERROR] Plugin 'InnoDB' init function returned error.
+2017-10-24 22:31:42 10264 [ERROR] Plugin 'InnoDB' registration as a STORAGE ENGINE failed.
+2017-10-24 22:31:42 10264 [ERROR] Unknown/unsupported storage engine: InnoDB
+2017-10-24 22:31:42 10264 [ERROR] Aborting
+
+2017-10-24 22:31:42 10264 [Note] Binlog end
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'partition'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'CSV'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 22:31:42 10264 [Note] Shutting down plugin 'binlog'
+2017-10-24 22:31:42 10264 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 22:34:18 8812 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 22:34:18 8812 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 22:34:18 8812 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 22:34:18 8812 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 22:34:18 8812 [Note] InnoDB: Memory barrier is not used
+2017-10-24 22:34:18 8812 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 22:34:18 8812 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 22:34:18 8812 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 22:34:18 8812 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 22:34:18 8812 [ERROR] InnoDB: E:\Proyecto-Final\UniServerZ\core\mysql\data\ib_logfile0 can't be opened in read-write mode
+2017-10-24 22:34:18 8812 [ERROR] Plugin 'InnoDB' init function returned error.
+2017-10-24 22:34:18 8812 [ERROR] Plugin 'InnoDB' registration as a STORAGE ENGINE failed.
+2017-10-24 22:34:18 8812 [ERROR] Unknown/unsupported storage engine: InnoDB
+2017-10-24 22:34:18 8812 [ERROR] Aborting
+
+2017-10-24 22:34:18 8812 [Note] Binlog end
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'partition'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'CSV'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 22:34:18 8812 [Note] Shutting down plugin 'binlog'
+2017-10-24 22:34:18 8812 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 22:34:23 8560 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 22:34:23 8560 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 22:34:23 8560 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 22:34:23 8560 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 22:34:23 8560 [Note] InnoDB: Memory barrier is not used
+2017-10-24 22:34:23 8560 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 22:34:23 8560 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 22:34:23 8560 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 22:34:23 8560 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 22:34:23 8560 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 22:34:32 8560 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 22:34:32 8560 [Note] InnoDB: Waiting for purge to start
+2017-10-24 22:34:33 8560 [Note] InnoDB: 5.6.35 started; log sequence number 17906825
+2017-10-24 22:34:33 8560 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 22:34:33 8560 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 22:34:33 8560 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 22:34:33 8560 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 22:34:33 8560 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 22:40:19 8560 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 22:40:19 8560 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 22:40:19 8560 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 22:40:19 8560 [Note] Shutting down slave threads
+2017-10-24 22:40:19 8560 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 22:40:19 8560 [Note] Binlog end
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'partition'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 22:40:19 8560 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 22:40:19 8560 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 22:40:19 8560 [Note] InnoDB: Starting shutdown...
+2017-10-24 22:40:22 8560 [Note] InnoDB: Shutdown completed; log sequence number 17906875
+2017-10-24 22:40:22 8560 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 22:40:22 8560 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 22:40:22 8560 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 22:40:22 8560 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 22:40:22 8560 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 22:40:22 8560 [Note] Shutting down plugin 'CSV'
+2017-10-24 22:40:22 8560 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 22:40:22 8560 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 22:40:22 8560 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 22:40:22 8560 [Note] Shutting down plugin 'binlog'
+2017-10-24 22:40:23 8560 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-10-24 22:40:27 10356 [Note] Plugin 'FEDERATED' is disabled.
+2017-10-24 22:40:27 10356 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-10-24 22:40:27 10356 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-10-24 22:40:27 10356 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-10-24 22:40:27 10356 [Note] InnoDB: Memory barrier is not used
+2017-10-24 22:40:27 10356 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-10-24 22:40:27 10356 [Note] InnoDB: Not using CPU crc32 instructions
+2017-10-24 22:40:27 10356 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-10-24 22:40:27 10356 [Note] InnoDB: Completed initialization of buffer pool
+2017-10-24 22:40:27 10356 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-10-24 22:40:32 10356 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-10-24 22:40:33 10356 [Note] InnoDB: Waiting for purge to start
+2017-10-24 22:40:33 10356 [Note] InnoDB: 5.6.35 started; log sequence number 17906875
+2017-10-24 22:40:33 10356 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-10-24 22:40:33 10356 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-10-24 22:40:33 10356 [Note] Server socket created on IP: '127.0.0.1'.
+2017-10-24 22:40:33 10356 [Note] Event Scheduler: Loaded 0 events
+2017-10-24 22:40:33 10356 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-10-24 23:06:12 10356 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-10-24 23:06:12 10356 [Note] Giving 0 client threads a chance to die gracefully
+2017-10-24 23:06:12 10356 [Note] Event Scheduler: Purging the queue. 0 events
+2017-10-24 23:06:12 10356 [Note] Shutting down slave threads
+2017-10-24 23:06:12 10356 [Note] Forcefully disconnecting 0 remaining clients
+2017-10-24 23:06:12 10356 [Note] Binlog end
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'partition'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_CMP'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'INNODB_TRX'
+2017-10-24 23:06:12 10356 [Note] Shutting down plugin 'InnoDB'
+2017-10-24 23:06:12 10356 [Note] InnoDB: FTS optimize thread exiting.
+2017-10-24 23:06:12 10356 [Note] InnoDB: Starting shutdown...
+2017-10-24 23:06:15 10356 [Note] InnoDB: Shutdown completed; log sequence number 17906905
+2017-10-24 23:06:15 10356 [Note] Shutting down plugin 'BLACKHOLE'
+2017-10-24 23:06:15 10356 [Note] Shutting down plugin 'ARCHIVE'
+2017-10-24 23:06:15 10356 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-10-24 23:06:15 10356 [Note] Shutting down plugin 'MyISAM'
+2017-10-24 23:06:15 10356 [Note] Shutting down plugin 'MEMORY'
+2017-10-24 23:06:15 10356 [Note] Shutting down plugin 'CSV'
+2017-10-24 23:06:15 10356 [Note] Shutting down plugin 'sha256_password'
+2017-10-24 23:06:15 10356 [Note] Shutting down plugin 'mysql_old_password'
+2017-10-24 23:06:15 10356 [Note] Shutting down plugin 'mysql_native_password'
+2017-10-24 23:06:15 10356 [Note] Shutting down plugin 'binlog'
+2017-10-24 23:06:15 10356 [Note] E:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+
+2017-11-03 08:48:03 884 [Note] Plugin 'FEDERATED' is disabled.
+2017-11-03 08:48:03 884 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2017-11-03 08:48:03 884 [Note] InnoDB: The InnoDB memory heap is disabled
+2017-11-03 08:48:03 884 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2017-11-03 08:48:03 884 [Note] InnoDB: Memory barrier is not used
+2017-11-03 08:48:03 884 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2017-11-03 08:48:03 884 [Note] InnoDB: Not using CPU crc32 instructions
+2017-11-03 08:48:03 884 [Note] InnoDB: Initializing buffer pool, size = 32.0M
+2017-11-03 08:48:03 884 [Note] InnoDB: Completed initialization of buffer pool
+2017-11-03 08:48:03 884 [Note] InnoDB: Highest supported file format is Barracuda.
+2017-11-03 08:48:04 884 [Note] InnoDB: 128 rollback segment(s) are active.
+2017-11-03 08:48:04 884 [Note] InnoDB: Waiting for purge to start
+2017-11-03 08:48:04 884 [Note] InnoDB: 5.6.35 started; log sequence number 17906905
+2017-11-03 08:48:04 884 [Note] Server hostname (bind-address): '127.0.0.1'; port: 3306
+2017-11-03 08:48:04 884 [Note]   - '127.0.0.1' resolves to '127.0.0.1';
+2017-11-03 08:48:04 884 [Note] Server socket created on IP: '127.0.0.1'.
+2017-11-03 08:48:05 884 [Note] Event Scheduler: Loaded 0 events
+2017-11-03 08:48:05 884 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: ready for connections.
+Version: '5.6.35'  socket: ''  port: 3306  MySQL Community Server (GPL)
+2017-11-03 09:54:23 884 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Normal shutdown
+
+2017-11-03 09:54:23 884 [Note] Giving 0 client threads a chance to die gracefully
+2017-11-03 09:54:23 884 [Note] Event Scheduler: Purging the queue. 0 events
+2017-11-03 09:54:23 884 [Note] Shutting down slave threads
+2017-11-03 09:54:23 884 [Note] Forcefully disconnecting 0 remaining clients
+2017-11-03 09:54:23 884 [Note] Binlog end
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'partition'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_METRICS'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_CMP'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_LOCKS'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'INNODB_TRX'
+2017-11-03 09:54:23 884 [Note] Shutting down plugin 'InnoDB'
+2017-11-03 09:54:23 884 [Note] InnoDB: FTS optimize thread exiting.
+2017-11-03 09:54:23 884 [Note] InnoDB: Starting shutdown...
+2017-11-03 09:54:24 884 [Note] InnoDB: Shutdown completed; log sequence number 17959088
+2017-11-03 09:54:24 884 [Note] Shutting down plugin 'BLACKHOLE'
+2017-11-03 09:54:24 884 [Note] Shutting down plugin 'ARCHIVE'
+2017-11-03 09:54:24 884 [Note] Shutting down plugin 'MRG_MYISAM'
+2017-11-03 09:54:24 884 [Note] Shutting down plugin 'MyISAM'
+2017-11-03 09:54:24 884 [Note] Shutting down plugin 'MEMORY'
+2017-11-03 09:54:24 884 [Note] Shutting down plugin 'CSV'
+2017-11-03 09:54:24 884 [Note] Shutting down plugin 'sha256_password'
+2017-11-03 09:54:24 884 [Note] Shutting down plugin 'mysql_old_password'
+2017-11-03 09:54:24 884 [Note] Shutting down plugin 'mysql_native_password'
+2017-11-03 09:54:24 884 [Note] Shutting down plugin 'binlog'
+2017-11-03 09:54:24 884 [Note] F:\Proyecto-Final\UniServerZ\core\mysql\bin\mysqld_z.exe: Shutdown complete
+

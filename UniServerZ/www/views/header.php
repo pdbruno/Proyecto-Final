@@ -38,7 +38,7 @@
         <div class="sidebar-nav navbar-collapse">
           <ul class="nav" id="side-menu">
 
-            <?php if (!Session::get('logueado')): ?>
+            <?php if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] == false): ?>
               <li>
                 <a href="<?php echo URL; ?>login/"><i class="fa fa-sign-in fa-fw"></i> LogIn</a>
               </li>
@@ -47,7 +47,7 @@
               <li>
                 <a href="<?php echo URL; ?>login/logout"><i class="fa fa-sign-out fa-fw"></i> LogOut</a>
               </li>
-              <?php if (Session::get('rol') == 3): ?>
+              <?php if ($_SESSION['rol'] == 3): ?>
 
                 <li>
                   <a href="#"><i class="fa fa-exchange fa-fw"></i> Stock<span class="fa arrow"></span></a>
@@ -210,7 +210,7 @@
               <!-- /.nav-second-level -->
             </li>
           <?php endif; ?>
-            <?php if (Session::get('rol') == 1): ?>
+            <?php if ($_SESSION['rol'] == 1): ?>
               <li>
                 <a href="<?php echo URL; ?>help/tablas/"><i class="fa fa-magic fa-fw"></i> Backoffice</a>
               </li>

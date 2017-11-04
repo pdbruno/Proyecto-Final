@@ -19,7 +19,7 @@ class LogIn extends Controller {
   }
 
   public function logOut() {
-    Session::destroy();
+    $this->destroySession();
     $this->view->render('login');
   }
 

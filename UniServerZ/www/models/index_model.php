@@ -104,7 +104,7 @@ class index_Model extends Model {
   }
   function finanzasBalance($idFondos, $corte = "")
   {
-    $outp = $this->db->getAll("SELECT Nombre, Monto, Fecha, Tipo FROM `egresosbrutos` WHERE idFondos = ?i ?p UNION SELECT Nombre, Monto, Fecha, Tipo FROM `ingresosbrutos` WHERE idFondos = ?i ?p ORDER BY Fecha DESC", $idFondos, $corte, $idFondos, $corte);
+    $outp = $this->db->getAll("SELECT Nombre, Monto, Fecha, CONVERT(Tipo USING utf8) AS Tipo FROM `egresosbrutos` WHERE idFondos = ?i ?p UNION SELECT Nombre, Monto, Fecha, CONVERT(Tipo USING utf8) AS Tipo FROM `ingresosbrutos` WHERE idFondos = ?i ?p ORDER BY Fecha DESC", $idFondos, $corte, $idFondos, $corte);
     return $outp;
   }
   function finanzasEgresos($idFondos, $corte = "")
