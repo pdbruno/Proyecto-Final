@@ -1,5 +1,5 @@
 <?php
-require_once 'controllers/calendar.php';
+require 'controllers/calendar.php';
 class Cobro extends calendar {
 
   public function __construct() {

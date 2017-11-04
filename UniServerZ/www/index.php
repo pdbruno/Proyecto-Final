@@ -1,8 +1,8 @@
 <?php
 session_start();
 spl_autoload_register(function ($class) {
-    include 'libs/' . $class . '.php';
+    require 'libs/' . $class . '.php';
 });
-require_once 'vendor/autoload.php';
-require_once 'config/paths.php';
+require 'vendor/autoload.php';
+require 'config/paths.php';
 $bootstrap = new Bootstrap();
