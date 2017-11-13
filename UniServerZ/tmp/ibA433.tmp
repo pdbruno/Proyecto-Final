@@ -1,4 +1,0 @@
-,
-  CONSTRAINT `actividadesmodalidadesniveles_ibfk_1` FOREIGN KEY (`idNiveles`) REFERENCES `niveles` (`idNiveles`),
-  CONSTRAINT `actividadesmodalidadesniveles_ibfk_2` FOREIGN KEY (`idModalidades`) REFERENCES `modalidades` (`idModalidades`),
-  CONSTRAINT `actividadesmodalidadesniveles_ibfk_3` FOREIGN KEY (`idActividades`) REFERENCES `actividades` (`idActividades`)REFERENCES `grupofactorsanguineo` (`idGrupoFactorSanguineo`)

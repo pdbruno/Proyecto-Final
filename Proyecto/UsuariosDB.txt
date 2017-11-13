@@ -1,0 +1,31 @@
+# Privilegios para `Administrador`@`%`
+
+GRANT USAGE ON *.* TO 'Administrador'@'%';
+
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, EXECUTE, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EVENT, TRIGGER ON `dbproyectofinal`.* TO 'Administrador'@'%';
+
+
+# Privilegios para `Gerente`@`%`
+
+GRANT USAGE ON *.* TO 'Gerente'@'%';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON `dbproyectofinal`.* TO 'Gerente'@'%';
+
+
+# Privilegios para `Instructor`@`%`
+
+GRANT USAGE ON *.* TO 'Instructor'@'%';
+
+GRANT SELECT, INSERT, UPDATE ON `dbproyectofinal`.* TO 'Instructor'@'%';
+
+
+# Privilegios para `NoLogIn`@`%`
+
+GRANT USAGE ON *.* TO 'NoLogIn'@'%';
+
+GRANT SELECT ON `dbproyectofinal`.`usuarios` TO 'NoLogIn'@'%';
+
+
+# Privilegios para `root`@`%`
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;

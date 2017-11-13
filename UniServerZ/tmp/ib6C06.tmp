@@ -1,1 +1,0 @@
-`dbproyectofinal`.`clientes`, CONSTRAINT `clientes_ibfk_8` FOREIGN KEY (`idCategorias`) REFERENCES `categorias` (`idCategorias`)

@@ -1,1 +1,0 @@
-`dbproyectofinal`.`clientes`, CONSTRAINT `fk_Clientes_Actividades1` FOREIGN KEY (`IdActividades`) REFERENCES `actividades` (`idActividades`) ON DELETE NO ACTION ON UPDATE NO ACTION
