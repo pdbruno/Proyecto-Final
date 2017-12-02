@@ -14,6 +14,11 @@ var Elementos = {
   FechaProd: document.getElementById("FechaProd"),
   FechaProd1: document.getElementById("FechaProd1"),
   FechaProd2: document.getElementById("FechaProd2"),
+
+  FechaAsis: document.getElementById("FechaAsis"),
+  FechaAsis1: document.getElementById("FechaAsis1"),
+  FechaAsis2: document.getElementById("FechaAsis2"),
+
   FechaExam: document.getElementById("FechaExam"),
   FechaExam1: document.getElementById("FechaExam1"),
   FechaExam2: document.getElementById("FechaExam2"),
@@ -32,7 +37,7 @@ var Elementos = {
   ResumenEg: document.getElementById("ResumenEg"),
   ResumenIn: document.getElementById("ResumenIn"),
   TotBal: document.getElementById("TotBal"),
-  idMesesSelectAsis: document.getElementById("idMesesSelectAsis"),
+
   idMesesSelectExceso: document.getElementById("idMesesSelectExceso"),
   IdActividadesSelect1: document.getElementById("IdActividadesSelect1"),
   IdActividadesSelect2: document.getElementById("IdActividadesSelect2"),
@@ -79,12 +84,9 @@ idMeses.open("POST", "<?php echo URL; ?>help/Dropdown/idMeses");
 idMeses.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 idMeses.onreadystatechange = function() {
   if(idMeses.readyState === XMLHttpRequest.DONE && idMeses.status === 200) {
-    Elementos.idMesesSelectAsis.innerHTML = optionCrear(JSON.parse(idMeses.responseText)[0]);
     Elementos.idMesesSelectExceso.innerHTML = optionCrear(JSON.parse(idMeses.responseText)[0]);
     let index = new Date().getMonth() + 1;
-    Elementos.idMesesSelectAsis.selectedIndex = index;
     Elementos.idMesesSelectExceso.selectedIndex = index;
-
   }
 };
 idMeses.send();
@@ -185,8 +187,11 @@ function traerFinanzas(datos = ""){
   };
   mesesFondos.send();
 
-  traerAsistencias(new Date().getMonth() + 1)
-  function traerAsistencias(mes) {
+  Elementos.FechaAsis.addEventListener('click', function(){
+    traerAsistencias("data=" + JSON.stringify({Fecha1: Elementos.FechaAsis1.value, Fecha2: Elementos.FechaAsis2.value}));
+  });
+  traerAsistencias("");
+  function traerAsistencias(send) {
     let porcentajeAsistencias = new XMLHttpRequest();
     porcentajeAsistencias.open("POST", "<?php echo URL; ?>reporte/porcentajeAsistencias");
     porcentajeAsistencias.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -200,13 +205,9 @@ function traerFinanzas(datos = ""){
         }
       }
     };
-    porcentajeAsistencias.send("data=" + mes);
+    porcentajeAsistencias.send(send);
   }
 
-  Elementos.idMesesSelectAsis.addEventListener('change', function(){
-    Elementos.TablaPorcentaje.innerHTML = "";
-    traerAsistencias(idMesesSelectAsis.value);
-  });
   Elementos.idMesesSelectExceso.addEventListener('change', function(){
     Elementos.TablaExc.innerHTML = "";
     esaRequest(Elementos.TablaExc, {Actividad: 'Actividad', Fecha: 'La semana del', Asistencias: 'Cantidad de asistencias', MaxXSemana: 'Máximo permitido'}, "morososExceso", "data=" + idMesesSelectExceso.value);

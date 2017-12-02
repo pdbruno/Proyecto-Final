@@ -19,6 +19,7 @@ xhr.onreadystatechange = function () {
 };
 xhr.send();
 function deshacerModal(){
+  final = [];
   Elementos.$ModalSel.modal('hide');
   Elementos["idSubactividadesForm0"] = document.createElement("input");
   Elementos.Selec.innerHTML = "";
@@ -119,6 +120,7 @@ $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhr.onreadystatechange = function () {
     if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      final = [];
       clickFila(JSON.parse(xhr.responseText)[0][0]);
       let subactividades = JSON.parse(xhr.responseText)[1];
       let texto = "";

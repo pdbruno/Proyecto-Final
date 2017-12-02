@@ -112,7 +112,7 @@
 
         <ul class="nav nav-tabs nav-justified" role="tablist">
           <li role="presentation" class="active"><a href="#Egresos" aria-controls="matricula" role="tab" data-toggle="tab">Egresos</a></li>
-          <li role="presentation"><a href="#Ingresos" aria-controls="deudas" role="tab" data-toggle="tab">Ingresos Brutos</a></li>
+          <li role="presentation"><a href="#Ingresos" aria-controls="deudas" role="tab" data-toggle="tab">Ingresos</a></li>
           <li role="presentation"><a href="#Balance" aria-controls="deudas" role="tab" data-toggle="tab">Balance</a></li>
         </ul>
 
@@ -209,8 +209,8 @@
         <h3 class="panel-title">Venta de productos</h3>
       </div>
       <ul class="nav nav-tabs nav-justified" role="tablist">
-        <li role="presentation" class="active"><a href="#ventas" aria-controls="matricula" role="tab" data-toggle="tab">Productos por ventas</a></li>
-        <li role="presentation"><a href="#ganancias" aria-controls="deudas" role="tab" data-toggle="tab">Productos por ganancias</a></li>
+        <li role="presentation" class="active"><a href="#ventas" aria-controls="matricula" role="tab" data-toggle="tab">Ventas por producto</a></li>
+        <li role="presentation"><a href="#ganancias" aria-controls="deudas" role="tab" data-toggle="tab">Ganancia por producto</a></li>
       </ul>
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="ventas">
@@ -255,8 +255,6 @@
     <div class="panel panel-warning">
       <div class="panel-heading">
         <h3 class="panel-title">Porcentaje de asistencias</h3>
-        <select class="form-control" id="idMesesSelectAsis">
-        </select>
 
       </div>
       <table class="table table-bordered">
@@ -268,7 +266,20 @@
         <tbody id="TablaPorcentaje">
         </tbody>
       </table>
-    </div></div>
+      <div class="panel-body">
+        <div class="col-lg-10">
+          <div class="input-daterange input-group" id="$datepickerAsis">
+            <input type="text" class="form-control" name="start" id="FechaAsis1" />
+            <span class="input-group-addon">hasta</span>
+            <input type="text" class="form-control" name="end" id="FechaAsis2" />
+          </div>
+        </div>
+        <div class="col-lg-2">
+          <button class="btn btn-default" id="FechaAsis" type="button">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
   </div>
   <div class="row">
     <div class="col-lg-12">

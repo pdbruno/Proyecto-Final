@@ -26,7 +26,7 @@ class cliente_Model extends Model {
       CONCAT(Nombres, ' ', Apellidos) AS Nombre,
       (SELECT MAX(Fecha) FROM registroexamenes WHERE registroexamenes.idClientes = clientesactivos.idClientes) AS UltimoExamen ,
       DATE_ADD((SELECT MAX(Fecha) FROM registroexamenes WHERE registroexamenes.idClientes = clientesactivos.idClientes), INTERVAL IF(SemestresRestraso IS NULL, (idCategorias - 9) * 12, (idCategorias - 9) * 12 + SemestresRestraso * 6) MONTH) AS ProximoExamen
-      FROM `clientesactivos` WHERE idCategorias > 10 "));
+      FROM `clientesactivos` WHERE idCategorias > 9 "));
   }
 
   public function cantidadBloques($idClientes, $mes) {

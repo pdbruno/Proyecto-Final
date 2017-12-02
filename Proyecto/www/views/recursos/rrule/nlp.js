@@ -172,24 +172,24 @@
           )
         }
 
-        this.text = [gettext('every')]
+        this.text = [gettext('todos los/as')]
         this[RRule.FREQUENCIES[this.options.freq]]()
 
         if (this.options.until) {
-          this.add(gettext('until'))
+          this.add(gettext('hasta'))
           var until = this.options.until
           this.add(this.language.monthNames[until.getMonth()])
             .add(until.getDate() + ',')
             .add(until.getFullYear())
         } else if (this.options.count) {
-          this.add(gettext('for'))
+          this.add(gettext('por'))
             .add(this.options.count)
-            .add(this.plural(this.options.count) ? gettext('times') :
-              gettext('time'))
+            .add(this.plural(this.options.count) ? gettext('veces') :
+              gettext('veces'))
         }
 
         if (!this.isFullyConvertible()) this.add(gettext(
-          '(~ approximate)'))
+          '(~ aproximadamente)'))
 
         return this.text.join('')
       },
@@ -210,14 +210,14 @@
 
         if (this.byweekday && this.byweekday.isWeekdays) {
           this.add(this.plural(this.options.interval) ? gettext(
-            'weekdays') : gettext('weekday'))
+            'días de semana') : gettext('días de semana'))
         } else {
           this.add(this.plural(this.options.interval) ? gettext(
-            'days') : gettext('day'))
+            'días') : gettext('día'))
         }
 
         if (this.origOptions.bymonth) {
-          this.add(gettext('in'))
+          this.add(gettext('en'))
           this._bymonth()
         }
 
@@ -235,22 +235,22 @@
 
         if (this.options.interval !== 1) {
           this.add(this.options.interval)
-            .add(this.plural(this.options.interval) ? gettext('weeks') :
-              gettext('week'))
+            .add(this.plural(this.options.interval) ? gettext('semanas') :
+              gettext('semana'))
         }
 
         if (this.byweekday && this.byweekday.isWeekdays) {
           if (this.options.interval === 1) {
             this.add(this.plural(this.options.interval) ? gettext(
-              'weekdays') : gettext('weekday'))
+              'días de semana') : gettext('días de semana'))
           } else {
-            this.add(gettext('on')).add(gettext('weekdays'))
+            this.add(gettext('los')).add(gettext('días de semana'))
           }
         } else {
-          if (this.options.interval === 1) this.add(gettext('week'))
+          if (this.options.interval === 1) this.add(gettext('semanas'))
 
           if (this.origOptions.bymonth) {
-            this.add(gettext('in'))
+            this.add(gettext('en'))
             this._bymonth()
           }
 
@@ -267,9 +267,9 @@
 
         if (this.origOptions.bymonth) {
           if (this.options.interval !== 1) {
-            this.add(this.options.interval).add(gettext('months'))
+            this.add(this.options.interval).add(gettext('meses'))
             if (this.plural(this.options.interval)) this.add(gettext(
-              'in'))
+              'en'))
           } else {
             // this.add(gettext('MONTH'))
           }
@@ -277,12 +277,12 @@
         } else {
           if (this.options.interval !== 1) this.add(this.options.interval)
           this.add(this.plural(this.options.interval) ? gettext(
-            'months') : gettext('month'))
+            'meses') : gettext('mes'))
         }
         if (this.bymonthday) {
           this._bymonthday()
         } else if (this.byweekday && this.byweekday.isWeekdays) {
-          this.add(gettext('on')).add(gettext('weekdays'))
+          this.add(gettext('los')).add(gettext('días de semana'))
         } else if (this.byweekday) {
           this._byweekday()
         }
@@ -294,7 +294,7 @@
         if (this.origOptions.bymonth) {
           if (this.options.interval !== 1) {
             this.add(this.options.interval)
-            this.add(gettext('years'))
+            this.add(gettext('años'))
           } else {
             // this.add(gettext('YEAR'))
           }
@@ -302,7 +302,7 @@
         } else {
           if (this.options.interval !== 1) this.add(this.options.interval)
           this.add(this.plural(this.options.interval) ? gettext(
-            'years') : gettext('year'))
+            'años') : gettext('año'))
         }
 
         if (this.bymonthday) {
@@ -312,31 +312,31 @@
         }
 
         if (this.options.byyearday) {
-          this.add(gettext('on the'))
+          this.add(gettext('el'))
             .add(this.list(this.options.byyearday, this.nth, gettext(
-              'and')))
-            .add(gettext('day'))
+              'y')))
+            .add(gettext('día'))
         }
 
         if (this.options.byweekno) {
-          this.add(gettext('in'))
+          this.add(gettext('en'))
             .add(this.plural(this.options.byweekno.length) ? gettext(
-              'weeks') : gettext('week'))
-            .add(this.list(this.options.byweekno, null, gettext('and')))
+              'semanas') : gettext('semana'))
+            .add(this.list(this.options.byweekno, null, gettext('y')))
         }
       },
 
       _bymonthday: function () {
         var gettext = this.gettext
         if (this.byweekday && this.byweekday.allWeeks) {
-          this.add(gettext('on'))
+          this.add(gettext('en'))
             .add(this.list(this.byweekday.allWeeks, this.weekdaytext,
-              gettext('or')))
-            .add(gettext('the'))
-            .add(this.list(this.bymonthday, this.nth, gettext('or')))
+              gettext('o')))
+            .add(gettext('el'))
+            .add(this.list(this.bymonthday, this.nth, gettext('o')))
         } else {
-          this.add(gettext('on the'))
-            .add(this.list(this.bymonthday, this.nth, gettext('and')))
+          this.add(gettext('el'))
+            .add(this.list(this.bymonthday, this.nth, gettext('y')))
         }
         // this.add(gettext('DAY'))
       },
@@ -344,29 +344,29 @@
       _byweekday: function () {
         var gettext = this.gettext
         if (this.byweekday.allWeeks && !this.byweekday.isWeekdays) {
-          this.add(gettext('on'))
+          this.add(gettext('los'))
             .add(this.list(this.byweekday.allWeeks, this.weekdaytext))
         }
 
         if (this.byweekday.someWeeks) {
-          if (this.byweekday.allWeeks) this.add(gettext('and'))
+          if (this.byweekday.allWeeks) this.add(gettext('y'))
 
-          this.add(gettext('on the'))
+          this.add(gettext('el'))
             .add(this.list(this.byweekday.someWeeks, this.weekdaytext,
-              gettext('and')))
+              gettext('y')))
         }
       },
 
       _byhour: function () {
         var gettext = this.gettext
 
-        this.add(gettext('at'))
-          .add(this.list(this.origOptions.byhour, null, gettext('and')))
+        this.add(gettext('a las'))
+          .add(this.list(this.origOptions.byhour, null, gettext('y')))
       },
 
       _bymonth: function () {
         this.add(this.list(this.options.bymonth, this.monthtext, this
-          .gettext('and')))
+          .gettext('y')))
       },
 
       nth: function (n) {
@@ -380,21 +380,38 @@
         case 1:
         case 21:
         case 31:
-          nth = npos + gettext('st')
+		case 3:
+		case 13:
+        case 23:
+          nth = npos + gettext('er')
           break
         case 2:
         case 22:
-          nth = npos + gettext('nd')
+          nth = npos + gettext('do')
           break
-        case 3:
-        case 23:
-          nth = npos + gettext('rd')
+        
+		case 7:
+		case 17:
+		case 27:
+		case 10:
+		case 20:
+		case 30:
+          nth = npos + gettext('mo')
+          break
+		case 8:
+		case 18:
+		case 28:
+          nth = npos + gettext('vo')
+		case 9:
+		case 19:
+		case 29:
+          nth = npos + gettext('no')
           break
         default:
-          nth = npos + gettext('th')
+          nth = npos + gettext('to')
         }
 
-        return n < 0 ? nth + ' ' + gettext('last') : nth
+        return n < 0 ? nth + ' ' + gettext('último/a') : nth
       },
 
       monthtext: function (m) {
@@ -944,55 +961,55 @@
 
     var ENGLISH = {
       dayNames: [
-        'Sunday', 'Monday', 'Tuesday', 'Wednesday',
-        'Thursday', 'Friday', 'Saturday'
+        'Domingos', 'Lunes', 'Martes', 'Miércoles',
+        'Jueves', 'Viernes', 'Sábados'
       ],
       monthNames: [
-        'January', 'February', 'March', 'April', 'May',
-        'June', 'July', 'August', 'September', 'October',
-        'November', 'December'
+        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+        'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
+        'Noviembre', 'Diciembre'
       ],
       tokens: {
         'SKIP': /^[ \r\n\t]+|^\.$/,
         'number': /^[1-9][0-9]*/,
         'numberAsText': /^(one|two|three)/i,
-        'every': /^every/i,
-        'day(s)': /^days?/i,
-        'weekday(s)': /^weekdays?/i,
-        'week(s)': /^weeks?/i,
-        'hour(s)': /^hours?/i,
-        'month(s)': /^months?/i,
-        'year(s)': /^years?/i,
-        'on': /^(on|in)/i,
-        'at': /^(at)/i,
-        'the': /^the/i,
-        'first': /^first/i,
-        'second': /^second/i,
-        'third': /^third/i,
-        'nth': /^([1-9][0-9]*)(\.|th|nd|rd|st)/i,
-        'last': /^last/i,
-        'for': /^for/i,
-        'time(s)': /^times?/i,
-        'until': /^(un)?til/i,
-        'monday': /^mo(n(day)?)?/i,
-        'tuesday': /^tu(e(s(day)?)?)?/i,
-        'wednesday': /^we(d(n(esday)?)?)?/i,
-        'thursday': /^th(u(r(sday)?)?)?/i,
-        'friday': /^fr(i(day)?)?/i,
-        'saturday': /^sa(t(urday)?)?/i,
-        'sunday': /^su(n(day)?)?/i,
-        'january': /^jan(uary)?/i,
-        'february': /^feb(ruary)?/i,
-        'march': /^mar(ch)?/i,
-        'april': /^apr(il)?/i,
-        'may': /^may/i,
-        'june': /^june?/i,
-        'july': /^july?/i,
-        'august': /^aug(ust)?/i,
-        'september': /^sep(t(ember)?)?/i,
-        'october': /^oct(ober)?/i,
-        'november': /^nov(ember)?/i,
-        'december': /^dec(ember)?/i,
+        'todos los/as': /^every/i,
+        'día(s)': /^days?/i,
+        'día(s) de semana': /^weekdays?/i,
+        'semana(s)': /^weeks?/i,
+        'hora(s)': /^hours?/i,
+        'mes(es)': /^months?/i,
+        'año(s)': /^years?/i,
+        'los/as': /^(on|in)/i,
+        'a las': /^(at)/i,
+        'el': /^the/i,
+        'primer': /^first/i,
+        'segundo': /^second/i,
+        'tercer': /^third/i,
+        '°': /^([1-9][0-9]*)(\.|th|nd|rd|st)/i,
+        'último/a': /^last/i,
+        'por': /^for/i,
+        'vez(ces)': /^times?/i,
+        'hasta': /^(un)?til/i,
+        'Lunes': /^mo(n(day)?)?/i,
+        'Martes': /^tu(e(s(day)?)?)?/i,
+        'Miércoles': /^we(d(n(esday)?)?)?/i,
+        'Jueves': /^th(u(r(sday)?)?)?/i,
+        'Viernes': /^fr(i(day)?)?/i,
+        'Sábados': /^sa(t(urday)?)?/i,
+        'Domingos': /^su(n(day)?)?/i,
+        'Enero': /^jan(uary)?/i,
+        'Febrero': /^feb(ruary)?/i,
+        'Marzo': /^mar(ch)?/i,
+        'Abril': /^apr(il)?/i,
+        'Mayo': /^may/i,
+        'Junio': /^june?/i,
+        'Julio': /^july?/i,
+        'Agosto': /^aug(ust)?/i,
+        'Septiembre': /^sep(t(ember)?)?/i,
+        'Noviembre': /^oct(ober)?/i,
+        'Noviembre': /^nov(ember)?/i,
+        'Diciembre': /^dec(ember)?/i,
         'comma': /^(,\s*|(and|or)\s*)+/i
       }
     }

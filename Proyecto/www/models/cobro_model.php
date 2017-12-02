@@ -10,6 +10,9 @@ class Cobro_Model extends Model {
     echo json_encode($this->db->getInd('idCategorias', "SELECT idCategorias, MontoXBloque FROM `categorias`"));
   }
 
+  public function traerEscuelas() {
+    echo json_encode($this->db->getAll("SELECT idSedes as id, Nombre FROM sedes WHERE EsEscuela = 1"));
+  }
 
   public function updateAsistencias($data) {
     $sql = "UPDATE `asistencias` SET `Abonado`= 1 WHERE `idClientes` = ?i AND `idActividades` = ?i AND (`Fecha` BETWEEN ?s AND ?s)";

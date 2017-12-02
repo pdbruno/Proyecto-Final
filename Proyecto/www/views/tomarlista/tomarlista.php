@@ -14,21 +14,21 @@ var Elementos = {
 var VecAsistio = [];
 var VecProfes = [];
 var idActividades = "";
+var TextoInstructores = "";
 var idEvento = "";
 var Fecha = "";
 var eventos = {};
-var alumnos = {};
 var instructores = new XMLHttpRequest();
 instructores.open("POST", "<?php echo URL; ?>actividad/traerInstructores");
 instructores.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 instructores.onreadystatechange = function () {
   if(instructores.readyState === XMLHttpRequest.DONE && instructores.status === 200) {
-    instructores = JSON.parse(instructores.responseText);
-    let texto2 = "";
-    for (usuario in instructores) {
-      texto2+= "<button type='button' class='list-group-item' onclick='elegir2(this,"+instructores[usuario].idClientes+")' >" + instructores[usuario].name + "</button>"
+    let profes = JSON.parse(instructores.responseText);
+    instructores = "";
+    let l = profes.length;
+    for (var i = 0; i < l; i++) {
+      instructores += "<button type='button' class='list-group-item' onclick='elegir2(this,"+profes[i].idClientes+")' >" + profes[i].name + "</button>"
     }
-    Elementos.ListaInstructores.innerHTML = texto2;
   }
 };
 instructores.send();
@@ -136,29 +136,90 @@ function traerEvento(boton){
       filas[i].classList.remove("success");
     }
   }
-
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "<?php echo URL; ?>actividad/traerAnotados");
   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhr.onreadystatechange = function () {
     if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
       let respuesta = JSON.parse(xhr.responseText);
-      let encontrado = respuesta[1];
+      let profesquedictaron = respuesta[1];
       let alumnos = respuesta[0];
+      let l = alumnos.length;
       let texto = "";
+
+      Elementos.$NombreForm.typeahead('destroy');
+      Elementos.$ProfeForm.typeahead('destroy');
       Elementos.Asistencia.classList.remove("hidden");
-      if (encontrado) {
+      Elementos.Profesorado.classList.remove("hidden");
+
+      if (profesquedictaron.length) {
         Elementos.BTNenviar.disabled = true;
-        for (usuario in alumnos) {
-          texto+= "<button type='button' class='list-group-item' disabled>" + alumnos[usuario].name + "</button>"
+
+        for (var i = 0; i < l; i++) {
+          texto+= "<button type='button' class='list-group-item' disabled>" + alumnos[i].name + "</button>"
         }
-      }else {
+
+        l = profesquedictaron.length;
+        Elementos.ListaInstructores.innerHTML = "";
+        for (var i = 0; i < l; i++) {
+          Elementos.ListaInstructores.innerHTML += "<button type='button' class='list-group-item' disabled>" + profesquedictaron[i].name + "</button>"
+        }
+
+        Elementos.$NombreForm.typeahead({
+          source: alumnos,
+        });
+        Elementos.$ProfeForm.typeahead({
+          source: profesquedictaron,
+        });
+
+      } else {
+
         Elementos.BTNenviar.disabled = false;
-        Elementos.Profesorado.classList.remove("hidden");
-        for (usuario in alumnos) {
-          texto+= "<button type='button' class='list-group-item' onclick='elegir(this,"+alumnos[usuario].idClientes+")' >" + alumnos[usuario].name + "</button>"
+
+        for (var i = 0; i < l; i++) {
+          texto += "<button type='button' class='list-group-item' onclick='elegir(this,"+alumnos[i].idClientes+")' >" + alumnos[i].name + "</button>"
         }
+
+        Elementos.ListaInstructores.innerHTML = instructores;
+
+        Elementos.$NombreForm.typeahead({
+          source: alumnos,
+          afterSelect: function(item){
+            let botones =  Elementos.ListaClientes.getElementsByTagName("button");
+            for (row in botones) {
+              if (botones[row].innerHTML == item.name) {
+                if (VecAsistio.indexOf(item.idClientes) == -1) {
+                  VecAsistio.push(item.idClientes);
+                  botones[row].className = "list-group-item list-group-item-info";
+                } else {
+                  VecAsistio.splice(VecAsistio.indexOf(item.idClientes), 1);
+                  botones[row].className = "list-group-item";
+                }
+              }
+            }
+            Elementos.$NombreForm.val("");
+          }
+        });
+        Elementos.$ProfeForm.typeahead({
+          source: instructores,
+          afterSelect: function(item){
+            var botones =  Elementos.ListaInstructores.getElementsByTagName("button");
+            for (row in botones) {
+              if (botones[row].innerHTML == item.name) {
+                if (VecProfes.indexOf(item.idClientes) == -1) {
+                  VecProfes.push(item.idClientes);
+                  botones[row].className = "list-group-item list-group-item-info";
+                } else {
+                  VecProfes.splice(VecProfes.indexOf(item.idClientes), 1);
+                  botones[row].className = "list-group-item";
+                }
+              }
+            }
+            Elementos.$ProfeForm.val("");
+          }
+        });
       }
+
       Elementos.ListaClientes.innerHTML = texto;
     }
   };
@@ -166,43 +227,5 @@ function traerEvento(boton){
 
 }
 
-Elementos.$NombreForm.typeahead('destroy');
-Elementos.$NombreForm.typeahead({
-  source: alumnos,
-  afterSelect: function(item){
-    var botones =  Elementos.ListaClientes.getElementsByTagName("button");
-    for (row in botones) {
-      if (botones[row].innerHTML == item.name) {
-        if (VecAsistio.indexOf(item.idClientes) == -1) {
-          VecAsistio.push(item.idClientes);
-          botones[row].className = "list-group-item list-group-item-info";
-        } else {
-          VecAsistio.splice(VecAsistio.indexOf(item.idClientes), 1);
-          botones[row].className = "list-group-item";
-        }
-      }
-    }
-    Elementos.$NombreForm.val("");
-  }
-});
 
-Elementos.$ProfeForm.typeahead('destroy');
-Elementos.$ProfeForm.typeahead({
-  source: instructores,
-  afterSelect: function(item){
-    var botones =  Elementos.ListaInstructores.getElementsByTagName("button");
-    for (row in botones) {
-      if (botones[row].innerHTML == item.name) {
-        if (VecProfes.indexOf(item.idClientes) == -1) {
-          VecProfes.push(item.idClientes);
-          botones[row].className = "list-group-item list-group-item-info";
-        } else {
-          VecProfes.splice(VecProfes.indexOf(item.idClientes), 1);
-          botones[row].className = "list-group-item";
-        }
-      }
-    }
-    Elementos.$ProfeForm.val("");
-  }
-});
 </script>

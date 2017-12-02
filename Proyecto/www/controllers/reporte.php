@@ -20,6 +20,16 @@ class Reporte extends Controller {
     $this->model->productosGanancias($sql, "WHERE");
   }
 
+  function porcentajeAsistencias()
+  {
+    $this->checkRol(2);
+    $sql = "";
+    if (isset($_POST['data']) && $_POST['data']) {
+      $sql = $this->model->between(json_decode($_POST['data'], TRUE));
+    }
+    $this->model->porcentajeAsistencias($sql);
+  }
+
   function graficoExamen()
   {
     $this->checkRol(2);
@@ -108,12 +118,7 @@ class Reporte extends Controller {
     $intot = $this->finanzasIngresosTotal($idFondos, $sql);
     echo json_encode([$eg, $in, $bal, $egtot, $intot]);
   }
-  function porcentajeAsistencias()
-  {
-    $this->checkRol(2);
-    $mes = $_POST['data'];
-    $this->model->porcentajeAsistencias($mes);
-  }
+
   function morososMatricula()
   {
     $this->checkRol(2);

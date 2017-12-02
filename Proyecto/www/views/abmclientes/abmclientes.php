@@ -8,6 +8,8 @@ var Elementos = {
 };
 
 function deshacerModal(){
+  bien = false;
+  final = [];
   Elementos.$ModalSel.modal('hide');
   Elementos.idActividadesSelect0 = document.createElement("select");
   Elementos.idModosDePagoSelect0 = document.createElement("select");
@@ -187,6 +189,7 @@ ElemForm['BtnAceptar'].addEventListener("click", function() {
         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
           Elementos.idActividadesSelect.classList.add("hidden");
           afterEnviar();
+
         }
       };
       xhr.send("data1=" + JSON.stringify(vec) + "&data2=" + JSON.stringify(final));
@@ -219,6 +222,8 @@ $('#Tabla').on('click-row.bs.table', function (row, $element, field) {
   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhr.onreadystatechange = function () {
     if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      bien = false;
+      final = [];
       clickFila(JSON.parse(xhr.responseText)[0][0]);
       var actividades = JSON.parse(xhr.responseText)[1][0];
       var texto = "";

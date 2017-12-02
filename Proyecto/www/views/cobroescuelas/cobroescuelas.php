@@ -7,6 +7,15 @@ xhr.onreadystatechange = function () {
     let myObj = JSON.parse(xhr.responseText);
     crearCampos(myObj);
     modoFormulario("Agregar");
+    let traerEscuelas = new XMLHttpRequest();
+    traerEscuelas.open("POST", "<?php echo URL; ?>cobro/traerEscuelas");
+    traerEscuelas.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    traerEscuelas.onreadystatechange = function() {
+      if(traerEscuelas.readyState === XMLHttpRequest.DONE && traerEscuelas.status === 200) {
+        ElemForm.idSedesSelect.innerHTML = optionCrear(JSON.parse(traerEscuelas.responseText));
+      }
+    };
+    traerEscuelas.send();
   }
 };
 xhr.send();

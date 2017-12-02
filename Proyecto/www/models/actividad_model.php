@@ -69,15 +69,14 @@ class actividad_Model extends Model {
   {
     $idActividades = substr($idActividades,0,11);
     $Clientes = $this->db->getAll("SELECT CONCAT(clientes.`Nombres`,' ',clientes.`Apellidos`) AS name FROM `asistencias` INNER JOIN clientes ON asistencias.idClientes = clientes.idClientes WHERE `idActividades` = ?i AND `Fecha` = ?s", $idActividades, $Fecha);
-    $Found = true;
+    $Instructores = $this->db->getAll("SELECT CONCAT(clientes.`Nombres`,' ',clientes.`Apellidos`) AS name FROM `eventosinstructores` INNER JOIN clientes ON eventosinstructores.idClientes = clientes.idClientes WHERE `idActividades` = ?i AND `Fecha` = ?s", $idActividades, $Fecha);
     if (count($Clientes) == 0) {
-      $Found = false;
       $Clientes = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos` WHERE `idClientes` IN (SELECT `idClientes` FROM `clientesactividades` WHERE `idActividades` = ?i)", $idActividades);
       if (count($Clientes) == 0) {
         $Clientes = $this->db->getAll("SELECT `idClientes`, CONCAT(`Nombres`,' ',`Apellidos`) AS name FROM `clientesactivos`");
       }
     }
-    echo json_encode([$Clientes, $Found]);
+    echo json_encode([$Clientes, $Instructores]);
   }
 
   public function traerInstructores()

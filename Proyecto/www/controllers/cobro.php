@@ -65,7 +65,12 @@ class Cobro extends calendar {
     $this->view->titpag = "Cobro a Escuelas";
     $this->view->Tabla = "cobrosescuelas";
     $this->view->Alta = "help/agregarModificarElemento/CobrosEscuelas";
-    $this->view->renderTempSimple('cobroescuelas','form', true);
+    $this->view->renderTempSimple('cobroescuelas','form');
+  }
+
+  public function traerEscuelas()
+  {
+    $this->model->traerEscuelas();
   }
 
 }
