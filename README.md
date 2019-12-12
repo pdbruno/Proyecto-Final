@@ -1,6 +1,3 @@
-# Proyecto-Final
-El mejor fucking project of the madafakin history
-
 INSTRUCCIONES DE INSTALACION	
 
 No hace falta explicar qué hacer con la carpeta www.
